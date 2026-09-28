@@ -88,7 +88,7 @@ coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0
 bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
 const ic=(n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"${c?` class="${c}"`:''}>${I[n]}</svg>`;
-const MENU=[['home','หน้าหลัก','home'],['org','โครงสร้างบุคลากร','users'],['div','งาน 4 ฝ่าย','grid',1],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap'],['att','การเข้าเรียน','cal'],['comm','สื่อสารโรงเรียน','chat'],['rep','รายงาน & Dashboard','chart']];
+const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap'],['att','การเข้าเรียน','cal'],['comm','สื่อสารโรงเรียน','chat'],['rep','รายงาน & Dashboard','chart']];
 const SYS=[['staff','ทะเบียนบุคลากร','users'],['usr','ผู้ใช้งาน / สิทธิ์การใช้งาน','user'],['set','ตั้งค่าระบบ','gear'],['bak','สำรองข้อมูล','db'],['ie','Import / Export','ud'],['api','API & Integration','code']];
 const DIV=[['academic','กลุ่มบริหารงานวิชาการ','cap','#2F6BFF'],['budget','กลุ่มบริหารงานแผนงานและงบประมาณ','coin','#F5A524'],['personnel','กลุ่มบริหารงานบุคคล','users','#8B5CF6'],['general','กลุ่มบริหารงานทั่วไป','bld','#22B573']];
 const E=(t='ยังไม่มีข้อมูล',h)=>`<div class="empty"${h?` style="min-height:${h}px"`:''}>${t}</div>`;
@@ -109,12 +109,13 @@ org:()=>PT('โครงสร้างบุคลากร','สายกา�
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P('แบบฟอร์ม / เอกสารดาวน์โหลด',E())}${P('ขั้นตอนการติดต่อราชการ',E())}${P('หนังสือเข้า / หนังสือออก',E())}${P('ช่องทางติดต่อ',E())}</div>`,
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
-const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" id="sub">${DIV.map(d=>`<a data-r="div:${d[0]}">${d[1]}</a>`).join('')}</div>`:'');
+V.hr=()=>PT('บุคลากร','ข้อมูลและโครงสร้างบุคลากรของโรงเรียน')+`<div class="grid g4"><div class="card dv" data-r="org"><div class="bx" style="background:#8B5CF6">${ic('users')}</div><h4>โครงสร้างบุคลากร</h4><span>เปิดดู ›</span></div></div>`;
+const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 function go(r){const[k,s]=r.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():V.gen(m[1]);
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='hr'?V.hr():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():V.gen(m[1]);
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==r));
-$('#sub').classList.toggle('open',k=='div');$('[data-r=div]').classList.toggle('op',k=='div');
+const g=k=='org'?'hr':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
 $('aside').classList.remove('show');scrollTo(0,0)}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-r]');if(a)go(a.dataset.r)});
 $('#burger').onclick=()=>{document.body.classList.toggle('hide');$('aside').classList.toggle('show')};
