@@ -56,6 +56,8 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:8px 16px;font:inherit;cursor:pointer}.btn.g{background:#22B573}.btn.r{background:var(--red)}.btn.o{background:#fff;color:var(--text);border:1px solid var(--line)}
 .rw{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}.rw small{display:block;color:var(--mute);font-size:.72rem}.rw em{color:var(--mute);font-size:.78rem;font-style:normal}
 .bd{margin-left:auto;background:var(--red);color:#fff;font-style:normal;font-size:.65rem;border-radius:9px;padding:0 6px}
+.tb{width:100%;border-collapse:collapse;font-size:.78rem;white-space:nowrap}.tb th{background:var(--soft);color:#1F3F99;text-align:left;padding:8px 10px;font-weight:500}.tb td{padding:8px 10px;border-bottom:1px solid var(--line)}
+.rd{color:var(--red);font-weight:500}.lb{display:block;font-size:.75rem;color:var(--mute)}.lb .in{margin:4px 0 0}.wrap{overflow-x:auto}.hid{display:none}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -70,6 +72,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 <div id="view"></div>
 <footer><span>School Management System v1.0.0 | โรงเรียนบ้านผาเยอ</span><span>© 2569 โรงเรียนบ้านผาเยอ สพป.แม่ฮ่องสอน เขต 2</span></footer>
 </div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 const $=q=>document.querySelector(q);
 const I={home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
@@ -109,7 +112,6 @@ org:()=>PT('โครงสร้างบุคลากร','สายกา�
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P('แบบฟอร์ม / เอกสารดาวน์โหลด',E())}${P('ขั้นตอนการติดต่อราชการ',E())}${P('หนังสือเข้า / หนังสือออก',E())}${P('ช่องทางติดต่อ',E())}</div>`,
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
-V.hr=()=>PT('บุคลากร','ข้อมูลและโครงสร้างบุคลากรของโรงเรียน')+`<div class="grid g4"><div class="card dv" data-r="org"><div class="bx" style="background:#8B5CF6">${ic('users')}</div><h4>โครงสร้างบุคลากร</h4><span>เปิดดู ›</span></div></div>`;
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 function go(r){const[k,s]=r.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
@@ -157,5 +159,37 @@ const u=U.find(t=>t.u==v);if(!u||u.role=='founder')return;
 if(k=='rm')U=U.filter(t=>t!=u);else u.st=k=='ok'?'approved':'rejected';LS('sch_users',U);mkNav();go('usr')});
 $('#auth').addEventListener('keydown',e=>{if(e.key=='Enter')$('#auth .btn')?.click()});
 $('#lo').innerHTML=ic('out');$('#lo').onclick=out;
+let PP=LS('sch_people')||[],ed=null,imMsg='';
+const nm=p=>(p.fn+' '+p.ln).trim(),tx=v=>String(v??'').trim(),uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const th=s=>{if(!s)return'-';const[y,m,d]=s.split('-');return`${+d}/${+m}/${+y+543}`};
+const dt=s=>new Date(s+'T00:00:00'),T0=()=>{const n=new Date();n.setHours(0,0,0,0);return n};
+const ymd=(a,b)=>{let y=b.getFullYear()-a.getFullYear(),m=b.getMonth()-a.getMonth(),d=b.getDate()-a.getDate();if(d<0){m--;d+=new Date(b.getFullYear(),b.getMonth(),0).getDate()}if(m<0){y--;m+=12}return`${y} ปี ${m} เดือน ${d} วัน`};
+const f2=(y,m,d)=>`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+const toISO=v=>{if(v===''||v==null)return'';let d,m;if(v instanceof Date){d=new Date(v.getTime()+43200000);return f2(d.getFullYear(),d.getMonth()+1,d.getDate())}
+if(typeof v=='number'){d=new Date(Math.round((v-25569)*864e5));return f2(d.getUTCFullYear(),d.getUTCMonth()+1,d.getUTCDate())}
+v=String(v).trim();m=v.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);if(m)return f2(+m[3]>2400?m[3]-543:+m[3],+m[2],+m[1]);
+m=v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(m)return f2(+m[1]>2400?m[1]-543:+m[1],+m[2],+m[3]);return''};
+const colKey=h=>{h=String(h).replace(/\s|\(.*?\)/g,'');return h.includes('นามสกุล')?'ln':h.includes('ชื่อ')?'fn':h.includes('เกิด')?'bd':h.includes('บรรจุ')?'ap':h.includes('ตำแหน่ง')?'po':h.includes('โทร')?'ph':h.includes('โท')?'ma':h.includes('ตรี')?'ba':/วิชาเอก|สาขา/.test(h)?'mj':h.includes('ที่อยู่')?'ad':/ใบประกอบ|หมดอายุ/.test(h)?'lc':''};
+const FL=[['fn','ชื่อ'],['ln','นามสกุล'],['bd','วัน/เดือน/ปีเกิด','date'],['ap','วันที่บรรจุ (เว้นว่างได้)','date'],['po','ตำแหน่ง'],['ph','เบอร์โทร'],['ba','วุฒิ: ปริญญาตรีหรือเทียบเท่า'],['ma','วุฒิ: ปริญญาโท'],['mj','วิชาเอก/สาขา'],['ad','ที่อยู่'],['lc','วันหมดอายุใบประกอบวิชาชีพ','date']];
+function persist(){LS('sch_people',PP);PP.forEach(p=>{const s=S.find(x=>x.id==p.id);s?(s.n=nm(p),s.p=p.po):S.push({id:p.id,n:nm(p),p:p.po,g:''})});LS('sch_staff',S)}
+function openF(id){ed=id||null;const p=PP.find(x=>x.id==id)||{};FL.forEach(f=>$('#p_'+f[0]).value=p[f[0]]||'');$('#pft').textContent=id?'แก้ไขข้อมูลบุคลากร':'เพิ่มข้อมูลบุคลากร';$('#pfm').classList.remove('hid');$('#pfm').scrollIntoView({behavior:'smooth'})}
+function savP(){const r={id:ed||uid()};FL.forEach(f=>r[f[0]]=$('#p_'+f[0]).value.trim());if(!r.fn)return alert('กรอกชื่อ');
+const i=PP.findIndex(x=>x.id==r.id);i<0?PP.push(r):PP[i]=r;ed=null;persist();go('hr')}
+function imp(f){if(!f)return;if(typeof XLSX=='undefined')return alert('โหลดตัวอ่าน Excel ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ต');
+const r=new FileReader();r.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:'array',cellDates:true}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:'',raw:true});let a=0,u=0;
+rows.forEach(w=>{const p={};for(const h in w){const k=colKey(h);if(k)p[k]=w[h]}if(!tx(p.fn))return;
+const c={fn:tx(p.fn),ln:tx(p.ln),bd:toISO(p.bd),ap:toISO(p.ap),po:tx(p.po),ph:typeof p.ph=='number'?String(p.ph).padStart(10,'0'):tx(p.ph),ba:tx(p.ba),ma:tx(p.ma),mj:tx(p.mj),ad:tx(p.ad),lc:toISO(p.lc)};
+const i=PP.findIndex(x=>nm(x)==nm(c));if(i<0){c.id=uid();PP.push(c);a++}else{PP[i]={...c,id:PP[i].id};u++}});
+persist();imMsg=`นำเข้าสำเร็จ: เพิ่มใหม่ ${a} รายการ, อัปเดต ${u} รายการ`}catch(x){imMsg='อ่านไฟล์ไม่สำเร็จ กรุณาใช้ไฟล์ตามแบบฟอร์ม'}go('hr')};r.readAsArrayBuffer(f)}
+function tpl(){if(typeof XLSX=='undefined')return alert('โหลดตัวอ่าน Excel ไม่สำเร็จ');const wb=XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['ชื่อ','นามสกุล','วันเกิด','วันที่บรรจุ','ตำแหน่ง','เบอร์โทร','ปริญญาตรีหรือเทียบเท่า','ปริญญาโท','วิชาเอก/สาขา','ที่อยู่','วันหมดอายุใบประกอบวิชาชีพ']]),'บุคลากร');XLSX.writeFile(wb,'แบบฟอร์มบุคลากร.xlsx')}
+V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
+const row=(p,i)=>{const lc=p.lc?dt(p.lc):null,ex=lc&&lc<t;return`<tr><td>${i+1}</td><td>${esc(nm(p))}</td><td>${esc(p.po)||'-'}</td><td>${th(p.bd)}</td><td>${p.bd?ymd(dt(p.bd),t):'-'}</td><td>${th(p.ap)}</td><td>${p.ap?ymd(dt(p.ap),t):'-'}</td><td>${esc(p.ph)||'-'}</td><td>${esc(p.ba)||'-'}</td><td>${esc(p.ma)||'-'}</td><td>${esc(p.mj)||'-'}</td><td>${esc(p.ad)||'-'}</td><td>${th(p.lc)}</td><td class="${ex?'rd':''}">${lc?(ex?'หมดอายุแล้ว '+ymd(lc,t):ymd(t,lc)):'-'}</td>${F?`<td><button class="btn o" data-q="e:${p.id}">แก้ไข</button> <button class="btn r" data-q="d:${p.id}">ลบ</button></td>`:''}</tr>`};
+return PT('บุคลากร','ข้อมูลและโครงสร้างบุคลากรของโรงเรียน')+`<div class="grid g4"><div class="card dv" data-r="org"><div class="bx" style="background:#8B5CF6">${ic('users')}</div><h4>โครงสร้างบุคลากร</h4><span>เปิดดู ›</span></div></div>`
++(F?`<div class="card"><h3>เพิ่มข้อมูล</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="openF()">＋ พิมพ์เพิ่มข้อมูล</button><button class="btn g" onclick="$('#xf').click()">อัปโหลดไฟล์ Excel</button><button class="btn o" onclick="tpl()">ดาวน์โหลดแบบฟอร์ม Excel</button><input id="xf" type="file" accept=".xlsx,.xls,.csv" hidden onchange="imp(this.files[0])"></div><p style="color:var(--mute);font-size:.75rem;margin:10px 0 0">ไฟล์ Excel ใช้หัวคอลัมน์ตามแบบฟอร์ม วันที่ใส่ได้ทั้ง พ.ศ. และ ค.ศ. (วว/ดด/ปปปป) ชื่อ-นามสกุลซ้ำจะอัปเดตข้อมูลเดิม</p>${m?`<div class="fm" style="color:#22B573;margin-top:8px">${m}</div>`:''}</div>
+<div class="card hid" id="pfm"><h3 id="pft">เพิ่มข้อมูลบุคลากร</h3><div class="grid g3">${FL.map(f=>`<label class="lb">${f[1]}<input class="in" id="p_${f[0]}" type="${f[2]||'text'}"></label>`).join('')}</div><p style="color:var(--mute);font-size:.75rem;margin:0 0 10px">ระบบคำนวณอายุ อายุราชการ และเวลาที่เหลือของใบประกอบวิชาชีพให้อัตโนมัติ</p><button class="btn" onclick="savP()">บันทึก</button> <button class="btn o" onclick="$('#pfm').classList.add('hid')">ยกเลิก</button></div>`:'')
++P(`รายชื่อบุคลากร (${PP.length})`,PP.length?`<div class="wrap"><table class="tb"><tr><th>#</th><th>ชื่อ-นามสกุล</th><th>ตำแหน่ง</th><th>วันเกิด</th><th>อายุ</th><th>วันที่บรรจุ</th><th>อายุราชการ</th><th>เบอร์โทร</th><th>ป.ตรี/เทียบเท่า</th><th>ป.โท</th><th>วิชาเอก/สาขา</th><th>ที่อยู่</th><th>ใบประกอบฯ หมดอายุ</th><th>เหลืออีก</th>${F?'<th></th>':''}</tr>${PP.map(row).join('')}</table></div>`:E('ยังไม่มีข้อมูลบุคลากร'))};
+document.addEventListener('click',e=>{const a=e.target.closest('[data-q]');if(!a||me?.role!='founder')return;const[k,v]=a.dataset.q.split(':');if(k=='e')return openF(v);
+if(confirm('ลบข้อมูลนี้?')){PP=PP.filter(p=>p.id!=v);S=S.filter(s=>s.id!=v);LS('sch_people',PP);LS('sch_staff',S);go('hr')}});
 (()=>{const s=localStorage.getItem('sch_sess');me=U.find(u=>u.u==s&&u.st=='approved')||null;me?enter():auth()})();
 </script></body></html>
