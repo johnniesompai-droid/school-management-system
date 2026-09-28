@@ -62,6 +62,11 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .lv{cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;font-size:.85rem}.lv:hover{border-color:var(--blue);background:var(--soft)}.lv b{display:block;color:var(--blue);font-size:1.1rem;margin-top:2px}.pt .bk{color:var(--blue);cursor:pointer}
 .stat[data-r]{cursor:pointer;transition:transform .15s}.stat[data-r]:hover{transform:translateY(-2px)}
 .sx{display:flex;justify-content:space-between;gap:16px;font-size:.8rem;color:var(--mute);line-height:1.6}.stat .sx b{display:inline;font-size:.9rem;color:var(--text);line-height:1.6}.sx.t{border-top:1px solid var(--line);margin-top:2px;padding-top:2px;color:var(--text)}.stat .sx.t b{font-size:1.2rem;color:var(--blue)}.stat>div:last-child{flex:1;min-width:0}
+.cal span{position:relative}.cal .ev:after{content:"";position:absolute;bottom:0;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:#F5A524}.cal .today.ev:after{background:#fff}
+.cg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.cw{text-align:center;color:var(--mute);font-size:.75rem;padding:4px}
+.cd{min-height:84px;border:1px solid var(--line);border-radius:8px;padding:4px 6px;cursor:pointer;font-size:.72rem;overflow:hidden;background:#fff}.cd:hover{border-color:var(--blue)}.cd.td{border-color:var(--blue)}.cd.sl{background:var(--soft);box-shadow:0 0 0 2px var(--blue) inset}.cd .n{font-weight:600}
+.cd .ep{background:var(--soft);color:#1F3F99;border-radius:4px;padding:1px 4px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cd.sl .ep{background:#fff}
+@media(max-width:560px){.cd{min-height:56px;padding:2px}.cd .ep{font-size:.6rem}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -104,21 +109,21 @@ const PT=(t,s='หน้านี้ยังไม่มีข้อมูล �
 const cal=()=>{const d=new Date(),y=d.getFullYear(),m=d.getMonth(),f=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate(),
 M='มกราคม กุมภาพันธ์ มีนาคม เมษายน พฤษภาคม มิถุนายน กรกฎาคม สิงหาคม กันยายน ตุลาคม พฤศจิกายน ธันวาคม'.split(' ');
 let h=`<div style="text-align:center;font-weight:600;margin-bottom:8px">${M[m]} ${y+543}</div><div class="cal">`+'อา จ อ พ พฤ ศ ส'.split(' ').map(x=>`<b>${x}</b>`).join('')+'<span></span>'.repeat(f);
-for(let i=1;i<=n;i++)h+=`<span${i==d.getDate()?' class="today"':''}>${i}</span>`;return h+'</div>'};
+for(let i=1;i<=n;i++){const c=[i==d.getDate()?'today':'',EV.some(e=>e.d==f2(y,m+1,i))?'ev':''].join(' ').trim();h+=`<span${c?` class="${c}"`:''}>${i}</span>`}return h+'</div>'};
 const detail=k=>{const d=DIV.find(x=>x[0]==k);return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid g2">${['บุคลากรที่รับผิดชอบ','งานที่รับผิดชอบ','เอกสารดาวน์โหลด','ช่องทางติดต่อ'].map(t=>P(t,E('',80))).join('')}</div></div>`};
 const V={
 home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map(s=>`<div class="card stat"${s[5]?` data-r="${s[5]}"`:''}><div class="bx" style="background:${s[2]}">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g3">${P('สรุปผลการเรียน',E())}${P('สถิติการเข้าเรียน',E())}${P('ผลประเมินบุคลากร',E())}</div>
 <div class="grid g3">${P('การประเมินบุคลากร (ล่าสุด)',E(),'ดูทั้งหมด')}${P('ผลสัมฤทธิ์ทางการเรียน',E())}${P('สถิตินักเรียน',E())}</div>
 <div class="grid g2">${['การเงิน & พัสดุ','งานเอกสาร & ธุรการ','งานซ่อม & อาคารสถานที่','สื่อสารโรงเรียน'].map(t=>P(t,E('',90),'ดูทั้งหมด')).join('')}</div></div>
-<div class="grid" style="align-content:start">${P('ข่าวประชาสัมพันธ์',E(),'ดูทั้งหมด')}${P('ปฏิทินกิจกรรม',cal(),'ดูทั้งหมด')}${P('AI ผู้ช่วยผู้บริหาร',E())}</div></div>`,
+<div class="grid" style="align-content:start">${P('ข่าวประชาสัมพันธ์',upc(),'ดูทั้งหมด')}<div data-r="cal:${new Date().getFullYear()}-${new Date().getMonth()+1}" style="cursor:pointer">${P('ปฏิทินกิจกรรม',cal(),'ดูทั้งหมด')}</div>${P('AI ผู้ช่วยผู้บริหาร',E())}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P('แบบฟอร์ม / เอกสารดาวน์โหลด',E())}${P('ขั้นตอนการติดต่อราชการ',E())}${P('หนังสือเข้า / หนังสือออก',E())}${P('ช่องทางติดต่อ',E())}</div>`,
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['par','ผู้ปกครอง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 function go(r){const[k,s]=r.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='hr'?V.hr():k=='stu'?V.stu():k=='stud'?V.stud(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():V.gen(m[1]);
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():V.gen(m[1]);
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==(k=='stud'?'stud':r)));
 const g=k=='org'?'hr':k=='stud'||k=='par'?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
 $('aside').classList.remove('show');scrollTo(0,0)}
@@ -219,5 +224,19 @@ function addHr(s){const v=$('#hs').value;if(!v)return;(HR[s]=HR[s]||[]).push(v);
 document.addEventListener('click',e=>{const a=e.target.closest('[data-h]');if(!a||!me)return;const[k,id]=a.dataset.h.split(':');if(confirm('เอาครูท่านนี้ออกจากครูประจำชั้น?')){HR[k]=(HR[k]||[]).filter(x=>x!=id);LS('sch_homeroom',HR);go('stud:'+k)}});
 const gd=t=>{t=(t||'').replace(/\s/g,'');return /นางสาว|นาง|หญิง|ด\.ญ\.|น\.ส\./.test(t)?'f':/นาย|ชาย|ด\.ช\.|ว่าที่/.test(t)?'m':''};
 const sx=(ts,a,b)=>{const m=ts.filter(t=>gd(t)=='m').length,f=ts.filter(t=>gd(t)=='f').length,u=ts.length-m-f;return `<div class="sx"><span>${a}</span><b>${m} คน</b></div><div class="sx"><span>${b}</span><b>${f} คน</b></div>${u?`<div class="sx"><span>ไม่ระบุเพศ</span><b>${u} คน</b></div>`:''}<div class="sx t"><span>รวม</span><b>${ts.length} คน</b></div>`};
+let EV=LS('sch_events')||[],cy=new Date().getFullYear(),cm=new Date().getMonth(),sel='';
+const TM='มกราคม กุมภาพันธ์ มีนาคม เมษายน พฤษภาคม มิถุนายน กรกฎาคม สิงหาคม กันยายน ตุลาคม พฤศจิกายน ธันวาคม'.split(' ');
+const upc=()=>{const t=T0(),l=EV.map(e=>({e,n:Math.round((dt(e.d)-t)/864e5)})).filter(x=>x.n>=0&&x.n<=7).sort((a,b)=>a.n-b.n||a.e.d.localeCompare(b.e.d));
+return `<div style="font-size:.72rem;color:var(--mute);margin-bottom:4px">กิจกรรมที่ใกล้ถึงวัน (ภายใน 7 วัน)</div>`+(l.length?l.map(x=>`<div class="rw" data-r="cal:${+x.e.d.slice(0,4)}-${+x.e.d.slice(5,7)}" style="cursor:pointer"><span><b>${esc(x.e.t)}</b><small>${th(x.e.d)}</small></span><em style="color:${x.n<=1?'var(--red)':'var(--blue)'};font-weight:500">${x.n==0?'วันนี้':x.n==1?'พรุ่งนี้':'อีก '+x.n+' วัน'}</em></div>`).join(''):E('ไม่มีกิจกรรมที่ใกล้ถึงวัน',80))};
+V.cal=s=>{if(s){const a=s.split('-');cy=+a[0];cm=+a[1]-1}
+const t=T0(),tk=f2(t.getFullYear(),t.getMonth()+1,t.getDate()),f=new Date(cy,cm,1).getDay(),n=new Date(cy,cm+1,0).getDate(),pv=cm==0?`${cy-1}-12`:`${cy}-${cm}`,nx=cm==11?`${cy+1}-1`:`${cy}-${cm+2}`;
+let c='<div></div>'.repeat(f);
+for(let i=1;i<=n;i++){const k=f2(cy,cm+1,i),es=EV.filter(e=>e.d==k);c+=`<div class="cd${k==tk?' td':''}${k==sel?' sl':''}" data-c="${k}"><span class="n">${i}</span>${es.slice(0,2).map(e=>`<div class="ep">${esc(e.t)}</div>`).join('')}${es.length>2?`<div class="ep">+${es.length-2} รายการ</div>`:''}</div>`}
+let dl=P('กิจกรรม',E('คลิกที่วันในปฏิทินเพื่อดูหรือเพิ่มกิจกรรม',60));
+if(sel){const[y,m,d]=sel.split('-'),es=EV.filter(e=>e.d==sel);dl=P(`กิจกรรมวันที่ ${+d} ${TM[+m-1]} ${+y+543}`,`${es.map(e=>`<div class="rw"><span>${esc(e.t)}</span><button class="btn r" data-ev="${e.id}">ลบ</button></div>`).join('')||E('ยังไม่มีกิจกรรมในวันนี้',60)}<div style="display:flex;gap:8px;margin-top:12px"><input class="in" id="et" placeholder="ชื่อกิจกรรม" style="margin:0" onkeydown="if(event.key=='Enter')addEv()"><button class="btn" onclick="addEv()">เพิ่มกิจกรรม</button></div>`)}
+return PT('ปฏิทินกิจกรรม','คลิกที่วันเพื่อดูหรือเพิ่มกิจกรรม')+`<div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><button class="btn o" data-r="cal:${pv}">‹</button><b style="flex:1;text-align:center;font-size:1.05rem">${TM[cm]} ${cy+543}</b><button class="btn o" data-r="cal:${nx}">›</button><button class="btn" data-r="cal:${t.getFullYear()}-${t.getMonth()+1}">วันนี้</button></div><div class="cg">${'อา จ อ พ พฤ ศ ส'.split(' ').map(x=>`<div class="cw">${x}</div>`).join('')}${c}</div></div>`+dl};
+function addEv(){const t=$('#et').value.trim();if(!t||!sel)return;EV.push({id:uid(),d:sel,t});LS('sch_events',EV);$('#view').innerHTML=V.cal();$('#et').focus()}
+document.addEventListener('click',e=>{if(!me)return;const a=e.target.closest('[data-c]');if(a){sel=a.dataset.c;$('#view').innerHTML=V.cal();return}
+const b=e.target.closest('[data-ev]');if(b&&confirm('ลบกิจกรรมนี้?')){EV=EV.filter(x=>x.id!=b.dataset.ev);LS('sch_events',EV);$('#view').innerHTML=V.cal()}});
 (()=>{const s=localStorage.getItem('sch_sess');me=U.find(u=>u.u==s&&u.st=='approved')||null;me?enter():auth()})();
 </script></body></html>
