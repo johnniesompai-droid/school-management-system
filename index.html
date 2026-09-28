@@ -61,6 +61,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .pc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:.78rem;margin-top:8px;text-align:left}.pc small{display:block;color:var(--mute);font-size:.68rem}.pc.dp{background:var(--soft);border-color:var(--blue)}
 .lv{cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;font-size:.85rem}.lv:hover{border-color:var(--blue);background:var(--soft)}.lv b{display:block;color:var(--blue);font-size:1.1rem;margin-top:2px}.pt .bk{color:var(--blue);cursor:pointer}
 .stat[data-r]{cursor:pointer;transition:transform .15s}.stat[data-r]:hover{transform:translateY(-2px)}
+.sx{display:flex;justify-content:space-between;gap:16px;font-size:.8rem;color:var(--mute);line-height:1.6}.stat .sx b{display:inline;font-size:.9rem;color:var(--text);line-height:1.6}.sx.t{border-top:1px solid var(--line);margin-top:2px;padding-top:2px;color:var(--text)}.stat .sx.t b{font-size:1.2rem;color:var(--blue)}.stat>div:last-child{flex:1;min-width:0}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -106,7 +107,7 @@ let h=`<div style="text-align:center;font-weight:600;margin-bottom:8px">${M[m]} 
 for(let i=1;i<=n;i++)h+=`<span${i==d.getDate()?' class="today"':''}>${i}</span>`;return h+'</div>'};
 const detail=k=>{const d=DIV.find(x=>x[0]==k);return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid g2">${['บุคลากรที่รับผิดชอบ','งานที่รับผิดชอบ','เอกสารดาวน์โหลด','ช่องทางติดต่อ'].map(t=>P(t,E('',80))).join('')}</div></div>`};
 const V={
-home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud'],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr'],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map(s=>`<div class="card stat"${s[5]?` data-r="${s[5]}"`:''}><div class="bx" style="background:${s[2]}">${ic(s[1])}</div><div><small>${s[0]}</small><b>${s[4]??'–'}</b><small>${s[3]}</small></div></div>`).join('')}</div>
+home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map(s=>`<div class="card stat"${s[5]?` data-r="${s[5]}"`:''}><div class="bx" style="background:${s[2]}">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g3">${P('สรุปผลการเรียน',E())}${P('สถิติการเข้าเรียน',E())}${P('ผลประเมินบุคลากร',E())}</div>
 <div class="grid g3">${P('การประเมินบุคลากร (ล่าสุด)',E(),'ดูทั้งหมด')}${P('ผลสัมฤทธิ์ทางการเรียน',E())}${P('สถิตินักเรียน',E())}</div>
 <div class="grid g2">${['การเงิน & พัสดุ','งานเอกสาร & ธุรการ','งานซ่อม & อาคารสถานที่','สื่อสารโรงเรียน'].map(t=>P(t,E('',90),'ดูทั้งหมด')).join('')}</div></div>
@@ -216,5 +217,7 @@ return P('ครูประจำชั้น',`<div style="display:flex;flex-w
 +(PP.length?`<select class="in" id="hs" style="max-width:360px;margin:0" onchange="addHr('${s}')"><option value="">+ เลือกครูจากข้อมูลบุคลากร</option>${av.map(p=>`<option value="${p.id}">${esc(dn(p))}${p.po?' · '+esc(p.po):''}</option>`).join('')}</select>`:'<div class="empty" style="min-height:60px">ยังไม่มีข้อมูลบุคลากร กรุณาเพิ่มในเมนูบุคลากรก่อน</div>'))};
 function addHr(s){const v=$('#hs').value;if(!v)return;(HR[s]=HR[s]||[]).push(v);LS('sch_homeroom',HR);go('stud:'+s)}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-h]');if(!a||!me)return;const[k,id]=a.dataset.h.split(':');if(confirm('เอาครูท่านนี้ออกจากครูประจำชั้น?')){HR[k]=(HR[k]||[]).filter(x=>x!=id);LS('sch_homeroom',HR);go('stud:'+k)}});
+const gd=t=>{t=(t||'').replace(/\s/g,'');return /นางสาว|นาง|หญิง|ด\.ญ\.|น\.ส\./.test(t)?'f':/นาย|ชาย|ด\.ช\.|ว่าที่/.test(t)?'m':''};
+const sx=(ts,a,b)=>{const m=ts.filter(t=>gd(t)=='m').length,f=ts.filter(t=>gd(t)=='f').length,u=ts.length-m-f;return `<div class="sx"><span>${a}</span><b>${m} คน</b></div><div class="sx"><span>${b}</span><b>${f} คน</b></div>${u?`<div class="sx"><span>ไม่ระบุเพศ</span><b>${u} คน</b></div>`:''}<div class="sx t"><span>รวม</span><b>${ts.length} คน</b></div>`};
 (()=>{const s=localStorage.getItem('sch_sess');me=U.find(u=>u.u==s&&u.st=='approved')||null;me?enter():auth()})();
 </script></body></html>
