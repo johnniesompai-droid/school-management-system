@@ -85,6 +85,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <script>
 const firebaseConfig={apiKey:"AIzaSyCetA8GzKLX805V9nEpPXjdoh8eGtVMqXY",authDomain:"phayoe-school.firebaseapp.com",projectId:"phayoe-school",storageBucket:"phayoe-school.firebasestorage.app",messagingSenderId:"1042321037121",appId:"1:1042321037121:web:a031c14b8f58d0262573c0"};
 </script>
@@ -141,7 +142,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-r]');if(a)
 $('#burger').onclick=()=>{document.body.classList.toggle('hide');$('aside').classList.toggle('show')};
 I.out='<path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/>';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const dbApp=firebase.initializeApp(firebaseConfig),db=firebase.firestore(),fbAuth=firebase.auth();
+const dbApp=firebase.initializeApp(firebaseConfig),db=firebase.firestore(),fbAuth=firebase.auth(),storage=firebase.storage();
 db.enablePersistence({synchronizeTabs:true}).catch(()=>{});
 let U=[],S=[],PP=[],ST=[],HR={},EV=[],me=null,founderExists=false,suppress=false,unsub=[];
 function auth(m){const fo=founderExists;m=fo?(m||'login'):'setup';
@@ -253,15 +254,51 @@ const LV=['ชั้นอนุบาล 2','ชั้นอนุบาล 3',
 const cnt=(t,i)=>ST.filter(s=>s.ty==t&&s.lv==i).length;
 const sumT=t=>{const l=ST.filter(x=>x.ty==t),m=l.filter(x=>gd(x.tt)=='m').length,f=l.filter(x=>gd(x.tt)=='f').length,u=l.length-m-f;
 return `<div style="font-size:.8rem;color:var(--mute);margin-bottom:14px">นักเรียนชาย <b style="color:var(--text)">${m}</b> คน · นักเรียนหญิง <b style="color:var(--text)">${f}</b> คน${u?` · ไม่ระบุเพศ <b style="color:var(--text)">${u}</b> คน`:''} · รวม <b style="color:var(--blue)">${l.length}</b> คน</div>`};
+const STFL=[['tt','คำนำหน้า'],['fn','ชื่อ'],['ln','นามสกุล'],['nid','เลขบัตรประชาชน (13 หลัก)'],['bd','วันเดือนปีเกิด','date'],['ad','ที่อยู่'],['rel','ศาสนา'],['nat','สัญชาติ'],['eth','เชื้อชาติ'],['fa','ชื่อบิดา'],['mo','ชื่อมารดา']];
+let sim='',stEd=null,stCls=null;
+function setSImg(v){sim=v;const p=$('#stprev');v?p.src=v:p.removeAttribute('src');p.classList.toggle('hid',!v);$('#stprm').classList.toggle('hid',!v)}
+function pickSImg(f){if(!f)return;const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=240;const sc=Math.min(im.width,im.height);c.getContext('2d').drawImage(im,(im.width-sc)/2,(im.height-sc)*.2,sc,sc,0,0,240,240);setSImg(c.toDataURL('image/jpeg',.8))};im.onerror=()=>alert('อ่านไฟล์รูปไม่สำเร็จ');im.src=e.target.result};r.readAsDataURL(f)}
+const docsBlock=s=>`<div class="lb" style="margin:14px 0 6px">เอกสารแนบ (PDF)</div>
+<div id="stdl">${(s.docs||[]).map((d,i)=>`<div class="rw"><span>📄 ${esc(d.name)}</span><span><a class="btn o" href="${d.url}" target="_blank" rel="noopener">เปิดดู</a> <button class="btn r" data-sd="${i}">ลบ</button></span></div>`).join('')||'<div class="empty" style="min-height:50px">ยังไม่มีไฟล์แนบ</div>'}</div>
+<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><input class="in" id="stdn" placeholder="ชื่อเอกสาร เช่น สำเนาบัตรประชาชน" style="max-width:240px;margin:0"><input type="file" id="stdf" accept="application/pdf"><button type="button" class="btn g" onclick="uploadStDoc()">แนบไฟล์</button></div><div id="stdmsg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`;
+function openStF(cls,id){stCls=cls;stEd=id||null;const s=id?ST.find(x=>x.id==id):{};
+STFL.forEach(f=>$('#st_'+f[0]).value=f[2]=='date'?(s[f[0]]?th(s[f[0]]):''):s[f[0]]||'');setSImg(s.im||'');
+$('#stft').textContent=id?'แก้ไขข้อมูลนักเรียน':'เพิ่มนักเรียน';
+$('#stdocs').innerHTML=id?docsBlock(s):'<p style="color:var(--mute);font-size:.75rem;margin-top:10px">บันทึกข้อมูลก่อน จึงจะแนบไฟล์เอกสารได้</p>';
+$('#stfm').classList.remove('hid');$('#stfm').scrollIntoView({behavior:'smooth'})}
+function closeStF(){$('#stfm').classList.add('hid')}
+async function saveSt(){const g=i=>$('#st_'+i).value.trim();let bad='';const r={ty:stCls[0],lv:+stCls.slice(1),im:sim};
+STFL.forEach(f=>{let v=g(f[0]);if(f[2]=='date'&&v){const iso=toISO(v);if(!iso||dt(iso).getDate()!=+iso.slice(8))bad=f[1];v=iso}r[f[0]]=v});
+if(!r.fn)return alert('กรอกชื่อ');if(bad)return alert('รูปแบบวันที่ไม่ถูกต้อง: '+bad+' (ใช้ ว/ด/ป เช่น 15/3/2560)');
+r.id=stEd||uid();const i=ST.findIndex(x=>x.id==r.id);i<0?ST.push(r):ST[i]={...ST[i],...r};
+try{await db.collection('students').doc(r.id).set(r,{merge:true})}catch(e){return alert('บันทึกไม่สำเร็จ: '+e.message)}
+stEd=r.id;render();openStF(stCls,r.id)}
+async function uploadStDoc(){const f=$('#stdf').files[0];if(!f)return alert('เลือกไฟล์ PDF ก่อน');if(f.type!='application/pdf')return alert('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
+const name=$('#stdn').value.trim()||f.name;$('#stdmsg').textContent='กำลังอัปโหลด...';
+try{const path=`students/${stEd}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
+const s=ST.find(x=>x.id==stEd),docs=[...(s.docs||[]),{name,url,path}];
+await db.collection('students').doc(stEd).set({docs},{merge:true});s.docs=docs;
+$('#stdn').value='';$('#stdf').value='';$('#stdmsg').textContent='';$('#stdocs').innerHTML=docsBlock(s)}
+catch(e){$('#stdmsg').textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
 const lvPage=s=>{const t=s[0],i=+s.slice(1);if(!CT[t]||!(i>=0&&i<CT[t][1]))return V.stud();const l=ST.filter(x=>x.ty==t&&x.lv==i);
 return `<div class="pt"><h2>${LV[i]}</h2><p><a class="bk" data-r="stud">‹ นักเรียน</a> / ${CT[t][0]} · ${l.length} คน</p></div>`
-+hrCard(s)+P('เพิ่มรายชื่อนักเรียน',`<div class="grid g3"><input class="in" id="s_tt" list="sttl" placeholder="คำนำหน้า"><input class="in" id="s_fn" placeholder="ชื่อ"><input class="in" id="s_ln" placeholder="นามสกุล"></div><datalist id="sttl"><option value="เด็กชาย"><option value="เด็กหญิง"><option value="ด.ช."><option value="ด.ญ."><option value="นาย"><option value="นางสาว"></datalist><button class="btn" onclick="addSt('${s}')">เพิ่มรายชื่อ</button>`)
-+P(`รายชื่อนักเรียน (${l.length})`,l.length?`<div class="wrap"><table class="tb"><tr><th>#</th><th style="width:100%">ชื่อ-นามสกุล</th><th></th></tr>${l.map((x,j)=>`<tr><td>${j+1}</td><td>${esc((x.tt||'')+x.fn+' '+x.ln)}</td><td><button class="btn r" data-s="${x.id}">ลบ</button></td></tr>`).join('')}</table></div>`:E())};
-function addSt(s){const g=i=>$('#s_'+i).value.trim(),fn=g('fn');if(!fn)return alert('กรอกชื่อ');const rec={id:uid(),ty:s[0],lv:+s.slice(1),tt:g('tt'),fn,ln:g('ln')};ST.push(rec);db.collection('students').doc(rec.id).set(rec).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message));go('stud:'+s)}
++hrCard(s)
++`<div class="card"><h3>รายชื่อนักเรียน (${l.length})<a onclick="openStF('${s}')">＋ เพิ่มนักเรียน</a></h3>
+${l.length?`<div class="wrap"><table class="tb"><tr><th>#</th><th style="width:100%">ชื่อ-นามสกุล</th><th>อายุ</th><th></th></tr>${l.map((x,j)=>`<tr><td>${j+1}</td><td>${esc((x.tt||'')+x.fn+' '+x.ln)}</td><td>${x.bd?ymd(dt(x.bd),T0()):'-'}</td><td><button class="btn o" onclick="openStF('${s}','${x.id}')">แก้ไข</button> <button class="btn r" data-s="${x.id}">ลบ</button></td></tr>`).join('')}</table></div>`:E()}
+<div class="card hid" id="stfm" style="margin-top:16px;box-shadow:none;border:1px solid var(--line)">
+<h3 id="stft">เพิ่มนักเรียน</h3>
+<div style="display:flex;gap:12px;align-items:center;margin-bottom:12px"><img id="stprev" class="ph hid"><input type="file" accept="image/*" onchange="pickSImg(this.files[0])"><button type="button" class="btn o hid" id="stprm" onclick="setSImg('')">ลบรูป</button></div>
+<div class="grid g3">${STFL.map(f=>`<label class="lb">${f[1]}<input class="in" id="st_${f[0]}" ${f[0]=='tt'?'list="sttl"':f[2]=='date'?'placeholder="ว/ด/ป (พ.ศ.) เช่น 15/3/2560" inputmode="numeric"':f[0]=='nid'?'maxlength="13" inputmode="numeric"':''}></label>`).join('')}</div>
+<datalist id="sttl"><option value="เด็กชาย"><option value="เด็กหญิง"><option value="ด.ช."><option value="ด.ญ."><option value="นาย"><option value="นางสาว"></datalist>
+<div id="stdocs"></div>
+<div style="margin-top:12px"><button class="btn" onclick="saveSt()">บันทึก</button> <button type="button" class="btn o" onclick="closeStF()">ปิด</button></div>
+</div></div>`};
+document.addEventListener('click',async e=>{const a=e.target.closest('[data-sd]');if(!a||!me)return;const idx=+a.dataset.sd,s=ST.find(x=>x.id==stEd);if(!s||!confirm('ลบไฟล์นี้?'))return;
+const d=s.docs[idx];try{await storage.ref(d.path).delete().catch(()=>{});const docs=s.docs.filter((_,i)=>i!=idx);await db.collection('students').doc(stEd).set({docs},{merge:true});s.docs=docs;$('#stdocs').innerHTML=docsBlock(s)}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 V.stu=()=>PT('นักเรียน & ผู้ปกครอง','เลือกหัวข้อที่ต้องการ')+`<div class="grid g4"><div class="card dv" data-r="stud"><div class="bx" style="background:#2F6BFF">${ic('cap')}</div><h4>นักเรียน</h4><span>เปิดดู ›</span></div><div class="card dv" data-r="par"><div class="bx" style="background:#22B573">${ic('users')}</div><h4>ผู้ปกครอง</h4><span>เปิดดู ›</span></div></div>`;
 V.stud=s=>s?lvPage(s):PT('นักเรียน','เลือกห้องเรียนเพื่อดูและเพิ่มรายชื่อนักเรียน')+Object.keys(CT).map(t=>P(CT[t][0],sumT(t)+`<div class="grid g4">${LV.slice(0,CT[t][1]).map((n,i)=>`<div class="lv" data-r="stud:${t}${i}">${n}<b>${cnt(t,i)} คน</b></div>`).join('')}</div>`)).join('');
 V.par=()=>V.gen('ผู้ปกครอง');
-document.addEventListener('click',e=>{const a=e.target.closest('[data-s]');if(!a||!me)return;const x=ST.find(t=>t.id==a.dataset.s);if(x&&confirm('ลบรายชื่อนี้?')){ST=ST.filter(t=>t!=x);db.collection('students').doc(x.id).delete().catch(()=>{});go('stud:'+x.ty+x.lv)}});
+document.addEventListener('click',e=>{const a=e.target.closest('[data-s]');if(!a||!me)return;const x=ST.find(t=>t.id==a.dataset.s);if(x&&confirm('ลบรายชื่อนี้?')){(x.docs||[]).forEach(d=>storage.ref(d.path).delete().catch(()=>{}));ST=ST.filter(t=>t!=x);db.collection('students').doc(x.id).delete().catch(()=>{});go('stud:'+x.ty+x.lv)}});
 const hrCard=s=>{const ids=HR[s]||[],ts=ids.map(id=>PP.find(p=>p.id==id)).filter(Boolean),av=PP.filter(p=>!ids.includes(p.id));
 return P('ครูประจำชั้น',`<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">${ts.map(p=>`<span class="pc dp" style="margin:0;display:flex;align-items:center;gap:10px"><span>${esc(dn(p))}<small>${esc(p.po)||'-'}</small></span><button class="btn r" style="padding:2px 9px" data-h="${s}:${p.id}" title="ลบครูประจำชั้น">✕</button></span>`).join('')||'<span style="color:var(--mute);font-size:.8rem">ยังไม่ได้เลือกครูประจำชั้น</span>'}</div>`
 +(PP.length?`<select class="in" id="hs" style="max-width:360px;margin:0" onchange="addHr('${s}')"><option value="">+ เลือกครูจากข้อมูลบุคลากร</option>${av.map(p=>`<option value="${p.id}">${esc(dn(p))}${p.po?' · '+esc(p.po):''}</option>`).join('')}</select>`:'<div class="empty" style="min-height:60px">ยังไม่มีข้อมูลบุคลากร กรุณาเพิ่มในเมนูบุคลากรก่อน</div>'))};
