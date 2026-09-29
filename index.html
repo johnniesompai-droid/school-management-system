@@ -7,7 +7,7 @@
 *{box-sizing:border-box}body{margin:0;font-family:'Kanit',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
 svg{width:18px;height:18px;flex-shrink:0}
 .app{display:flex;min-height:100vh}
-aside{width:232px;background:#fff;border-right:1px solid var(--line);padding:16px 12px;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0;z-index:20;transition:transform .2s}
+aside{width:232px;background:#fff;border-right:1px solid var(--line);padding:16px 12px;position:sticky;top:0;height:100vh;height:100dvh;overflow-y:auto;flex-shrink:0;z-index:20;transition:transform .2s}
 .brand{display:flex;gap:10px;align-items:center;padding:4px 6px 16px}.brand img{width:44px;height:44px;border-radius:50%}
 .brand b{display:block;font-size:.95rem;line-height:1.2}.brand small{color:var(--mute);font-size:.66rem;line-height:1.2;display:block}
 .nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;margin-bottom:2px;border-radius:10px;color:#3B4763;cursor:pointer;font-size:.85rem}
@@ -45,7 +45,7 @@ aside{width:232px;background:#fff;border-right:1px solid var(--line);padding:16p
 .brn>div{position:relative}.brn>div:before{content:"";position:absolute;top:-24px;left:50%;height:24px;border-left:2px solid #C9D4E8}
 footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding:14px 20px 22px;color:var(--mute);font-size:.72rem}
 @media(min-width:901px){.hide aside{display:none}}
-@media(max-width:900px){aside{position:fixed;left:0;top:0;transform:translateX(-100%)}aside.show{transform:none;box-shadow:var(--sh)}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.split{grid-template-columns:1fr}}
+@media(max-width:900px){aside{position:fixed;left:0;top:0;height:100vh;height:100dvh;transform:translateX(-100%)}aside.show{transform:none;box-shadow:var(--sh)}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.split{grid-template-columns:1fr}}
 @media(max-width:560px){.g4,.g2{grid-template-columns:1fr}.user span,.chip{display:none}.hero{aspect-ratio:2/1;background-position:75% 20%}}
 @media(prefers-reduced-motion:reduce){.hero{animation:none}}
 .auth{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:16px;background:linear-gradient(rgba(20,25,60,.6),rgba(20,25,60,.6)),var(--hero) center/cover}
