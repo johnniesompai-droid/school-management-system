@@ -127,15 +127,15 @@ home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรี�
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P('แบบฟอร์ม / เอกสารดาวน์โหลด',E())}${P('ขั้นตอนการติดต่อราชการ',E())}${P('หนังสือเข้า / หนังสือออก',E())}${P('ช่องทางติดต่อ',E())}</div>`,
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
-const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['par','ผู้ปกครอง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
+const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 let CUR='home';
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():V.gen(m?m[1]:'')}
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():V.gen(m?m[1]:'')}
 function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
-document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==(k=='stud'?'stud':r)));
-const g=k=='org'?'hr':k=='stud'||k=='par'?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
+document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd')?k:r)));
+const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
 $('aside').classList.remove('show');scrollTo(0,0)}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-r]');if(a)go(a.dataset.r)});
 $('#burger').onclick=()=>{document.body.classList.toggle('hide');$('aside').classList.toggle('show')};
@@ -175,14 +175,28 @@ function mkNav(){const f=me.role=='founder',sys=SYS.filter(m=>f||!['usr','staff'
 $('#nav').innerHTML=MENU.map(nav).join('')+'<h6>ระบบกลาง</h6>'+sys.map(nav).join('');
 const n=U.filter(u=>u.st=='pending').length,a=$('[data-r=usr]');if(a&&n)a.innerHTML+=`<i class="bd">${n}</i>`}
 function updateUserBadge(){const s=S.find(x=>x.id==me.sid);$('#un').textContent=me.n;$('#ur').textContent=me.role=='founder'?'ผู้ก่อตั้ง':(s&&s.p)||'สมาชิก'}
+let BD={ids:[]};
+const bdCnt=i=>ST.filter(s=>s.lv==i&&(BD.ids||[]).includes(s.id)).length;
+const gsum=l=>{const m=l.filter(x=>gd(x.tt)=='m').length,f=l.filter(x=>gd(x.tt)=='f').length,u=l.length-m-f;
+return `นักเรียนชาย <b style="color:var(--text)">${m}</b> คน · นักเรียนหญิง <b style="color:var(--text)">${f}</b> คน${u?` · ไม่ระบุเพศ <b style="color:var(--text)">${u}</b> คน`:''} · รวม <b style="color:var(--blue)">${l.length}</b> คน`};
+V.bd=s=>{if(s===undefined||s==='')return PT('นักเรียนพักนอน','เลือกชั้นเพื่อดูและเพิ่มรายชื่อนักเรียนพักนอน')+P('นักเรียนพักนอนทั้งหมด',`<div style="font-size:.8rem;color:var(--mute);margin-bottom:14px">${gsum(ST.filter(x=>(BD.ids||[]).includes(x.id)))}</div><div class="grid g4">${LV.map((n,i)=>`<div class="lv" data-r="bd:${i}">${n}<b>${bdCnt(i)} คน</b></div>`).join('')}</div>`);
+const i=+s;if(!(i>=0&&i<LV.length))return V.bd();
+const ids=BD.ids||[],ls=ST.filter(x=>x.lv==i&&ids.includes(x.id)),av=ST.filter(x=>x.lv==i&&!ids.includes(x.id));
+return `<div class="pt"><h2>${LV[i]} · นักเรียนพักนอน</h2><p><a class="bk" data-r="bd">‹ นักเรียนพักนอน</a></p></div>`
++P('สรุป',`<div style="font-size:.8rem;color:var(--mute)">${gsum(ls)}</div>`)
++P('รายชื่อนักเรียนพักนอน',`<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">${ls.map(x=>`<span class="pc dp" style="margin:0;display:flex;align-items:center;gap:10px"><span>${esc((x.tt||'')+x.fn+' '+x.ln)}<small>${esc(CT[x.ty][0])}</small></span><button class="btn r" style="padding:2px 9px" data-bd="${x.id}" title="เอาออกจากพักนอน">✕</button></span>`).join('')||'<span style="color:var(--mute);font-size:.8rem">ยังไม่มีนักเรียนพักนอนในชั้นนี้</span>'}</div>`)
++(av.length?`<select class="in" id="bs" style="max-width:360px;margin:0" onchange="addBd()"><option value="">+ เลือกนักเรียนจากชั้นนี้</option>${av.map(x=>`<option value="${x.id}">${esc((x.tt||'')+x.fn+' '+x.ln)} (${esc(CT[x.ty][0])})</option>`).join('')}</select>`:ST.some(x=>x.lv==i)?'<div style="color:var(--mute);font-size:.8rem">นักเรียนทุกคนในชั้นนี้อยู่ในรายชื่อพักนอนแล้ว</div>':'<div class="empty" style="min-height:60px">ยังไม่มีข้อมูลนักเรียนในชั้นนี้</div>')};
+function addBd(){const v=$('#bs').value;if(!v)return;const ids=[...(BD.ids||[]),v];BD={ids};db.collection('boarding').doc('list').set({ids}).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message));render()}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-bd]');if(!a||!me)return;if(confirm('เอาออกจากรายชื่อนักเรียนพักนอน?')){const ids=(BD.ids||[]).filter(x=>x!=a.dataset.bd);BD={ids};db.collection('boarding').doc('list').set({ids}).catch(()=>{});render()}});
 function attachListeners(){unsub.forEach(u=>u());unsub=[];
 unsub.push(db.collection('staff').onSnapshot(qs=>{S=qs.docs.map(d=>({id:d.id,...d.data()}));if(me)updateUserBadge();render()},e=>alert('โหลดข้อมูลบุคลากรไม่สำเร็จ: '+e.message)));
 unsub.push(db.collection('people').onSnapshot(qs=>{PP=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>alert('โหลดข้อมูลบุคลากรไม่สำเร็จ: '+e.message)));
 unsub.push(db.collection('students').onSnapshot(qs=>{ST=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>alert('โหลดข้อมูลนักเรียนไม่สำเร็จ: '+e.message)));
 unsub.push(db.collection('homeroom').onSnapshot(qs=>{HR={};qs.docs.forEach(d=>HR[d.id]=d.data().ids||[]);render()},e=>{}));
 unsub.push(db.collection('events').onSnapshot(qs=>{EV=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
+unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.data():{ids:[]};render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[]}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]}}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -237,13 +251,15 @@ return PT('โครงสร้างบุคลากร','จัดตาม
 return`<div><div class="node">${d[1]}</div>${ds.map(p=>pc(p,'dp')).join('')}${ms.map(p=>pc(p)).join('')}${ds.length||ms.length?'':'<div class="empty" style="margin-top:12px;min-height:70px">ยังไม่มีข้อมูล</div>'}</div>`}).join('')}</div></div>`+(gp.length?P(`ยังไม่ระบุงานที่รับผิดชอบ (${gp.length})`,gp.map(p=>pc(p)).join('')):'')};
 const LV=['ชั้นอนุบาล 2','ชั้นอนุบาล 3','ชั้นประถมศึกษาปีที่ 1','ชั้นประถมศึกษาปีที่ 2','ชั้นประถมศึกษาปีที่ 3','ชั้นประถมศึกษาปีที่ 4','ชั้นประถมศึกษาปีที่ 5','ชั้นประถมศึกษาปีที่ 6'],CT={m:['ห้องเรียนหลัก',8],b:['ห้องเรียนสาขา',5]};
 const cnt=(t,i)=>ST.filter(s=>s.ty==t&&s.lv==i).length;
+const sumT=t=>{const l=ST.filter(x=>x.ty==t),m=l.filter(x=>gd(x.tt)=='m').length,f=l.filter(x=>gd(x.tt)=='f').length,u=l.length-m-f;
+return `<div style="font-size:.8rem;color:var(--mute);margin-bottom:14px">นักเรียนชาย <b style="color:var(--text)">${m}</b> คน · นักเรียนหญิง <b style="color:var(--text)">${f}</b> คน${u?` · ไม่ระบุเพศ <b style="color:var(--text)">${u}</b> คน`:''} · รวม <b style="color:var(--blue)">${l.length}</b> คน</div>`};
 const lvPage=s=>{const t=s[0],i=+s.slice(1);if(!CT[t]||!(i>=0&&i<CT[t][1]))return V.stud();const l=ST.filter(x=>x.ty==t&&x.lv==i);
 return `<div class="pt"><h2>${LV[i]}</h2><p><a class="bk" data-r="stud">‹ นักเรียน</a> / ${CT[t][0]} · ${l.length} คน</p></div>`
 +hrCard(s)+P('เพิ่มรายชื่อนักเรียน',`<div class="grid g3"><input class="in" id="s_tt" list="sttl" placeholder="คำนำหน้า"><input class="in" id="s_fn" placeholder="ชื่อ"><input class="in" id="s_ln" placeholder="นามสกุล"></div><datalist id="sttl"><option value="เด็กชาย"><option value="เด็กหญิง"><option value="ด.ช."><option value="ด.ญ."><option value="นาย"><option value="นางสาว"></datalist><button class="btn" onclick="addSt('${s}')">เพิ่มรายชื่อ</button>`)
 +P(`รายชื่อนักเรียน (${l.length})`,l.length?`<div class="wrap"><table class="tb"><tr><th>#</th><th style="width:100%">ชื่อ-นามสกุล</th><th></th></tr>${l.map((x,j)=>`<tr><td>${j+1}</td><td>${esc((x.tt||'')+x.fn+' '+x.ln)}</td><td><button class="btn r" data-s="${x.id}">ลบ</button></td></tr>`).join('')}</table></div>`:E())};
 function addSt(s){const g=i=>$('#s_'+i).value.trim(),fn=g('fn');if(!fn)return alert('กรอกชื่อ');const rec={id:uid(),ty:s[0],lv:+s.slice(1),tt:g('tt'),fn,ln:g('ln')};ST.push(rec);db.collection('students').doc(rec.id).set(rec).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message));go('stud:'+s)}
 V.stu=()=>PT('นักเรียน & ผู้ปกครอง','เลือกหัวข้อที่ต้องการ')+`<div class="grid g4"><div class="card dv" data-r="stud"><div class="bx" style="background:#2F6BFF">${ic('cap')}</div><h4>นักเรียน</h4><span>เปิดดู ›</span></div><div class="card dv" data-r="par"><div class="bx" style="background:#22B573">${ic('users')}</div><h4>ผู้ปกครอง</h4><span>เปิดดู ›</span></div></div>`;
-V.stud=s=>s?lvPage(s):PT('นักเรียน','เลือกห้องเรียนเพื่อดูและเพิ่มรายชื่อนักเรียน')+Object.keys(CT).map(t=>P(CT[t][0],`<div class="grid g4">${LV.slice(0,CT[t][1]).map((n,i)=>`<div class="lv" data-r="stud:${t}${i}">${n}<b>${cnt(t,i)} คน</b></div>`).join('')}</div>`)).join('');
+V.stud=s=>s?lvPage(s):PT('นักเรียน','เลือกห้องเรียนเพื่อดูและเพิ่มรายชื่อนักเรียน')+Object.keys(CT).map(t=>P(CT[t][0],sumT(t)+`<div class="grid g4">${LV.slice(0,CT[t][1]).map((n,i)=>`<div class="lv" data-r="stud:${t}${i}">${n}<b>${cnt(t,i)} คน</b></div>`).join('')}</div>`)).join('');
 V.par=()=>V.gen('ผู้ปกครอง');
 document.addEventListener('click',e=>{const a=e.target.closest('[data-s]');if(!a||!me)return;const x=ST.find(t=>t.id==a.dataset.s);if(x&&confirm('ลบรายชื่อนี้?')){ST=ST.filter(t=>t!=x);db.collection('students').doc(x.id).delete().catch(()=>{});go('stud:'+x.ty+x.lv)}});
 const hrCard=s=>{const ids=HR[s]||[],ts=ids.map(id=>PP.find(p=>p.id==id)).filter(Boolean),av=PP.filter(p=>!ids.includes(p.id));
