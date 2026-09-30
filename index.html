@@ -140,9 +140,22 @@ const cal=()=>{const d=new Date(),y=d.getFullYear(),m=d.getMonth(),f=new Date(y,
 M='มกราคม กุมภาพันธ์ มีนาคม เมษายน พฤษภาคม มิถุนายน กรกฎาคม สิงหาคม กันยายน ตุลาคม พฤศจิกายน ธันวาคม'.split(' ');
 let h=`<div style="text-align:center;font-weight:600;margin-bottom:8px">${M[m]} ${y+543}</div><div class="cal">`+'อา จ อ พ พฤ ศ ส'.split(' ').map(x=>`<b>${x}</b>`).join('')+'<span></span>'.repeat(f);
 for(let i=1;i<=n;i++){const c=[i==d.getDate()?'today':'',EV.some(e=>e.d==f2(y,m+1,i))?'ev':''].join(' ').trim();h+=`<span${c?` class="${c}"`:''}>${i}</span>`}return h+'</div>'};
+let DD={};
+const canManageDiv=k=>{if(!me)return false;if(me.role=='founder')return true;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&(mp.wk||[]).includes(k))};
+const divDocsBlock=k=>{const files=DD[k]||[],can=canManageDiv(k);
+return `<div id="dd_${k}">${files.length?files.map((f,i)=>`<div class="rw"><span>📄 ${esc(f.name)}</span><span><a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>${can?` <button class="btn r" data-dd="${k}:${i}">ลบ</button>`:''}</span></div>`).join(''):E('ยังไม่มีเอกสาร',60)}</div>
+${can?`<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><input class="in" id="dd_name_${k}" placeholder="ชื่อเอกสาร" style="max-width:220px;margin:0"><input type="file" id="dd_file_${k}" accept="application/pdf"><button type="button" class="btn g" onclick="uploadDivDoc('${k}')">แนบไฟล์</button></div><div id="dd_msg_${k}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
+async function uploadDivDoc(k){const f=$('#dd_file_'+k).files[0];if(!f)return alert('เลือกไฟล์ PDF ก่อน');if(f.type!='application/pdf')return alert('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
+const name=$('#dd_name_'+k).value.trim()||f.name;$('#dd_msg_'+k).textContent='กำลังอัปโหลด...';
+try{const path=`divisions/${k}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
+const files=[...(DD[k]||[]),{name,url,path}];await db.collection('divdocs').doc(k).set({files},{merge:true});DD[k]=files;render()}
+catch(e){$('#dd_msg_'+k).textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
+document.addEventListener('click',async e=>{const a=e.target.closest('[data-dd]');if(!a||!me)return;const[k,idx]=a.dataset.dd.split(':');if(!canManageDiv(k))return;
+if(!confirm('ลบไฟล์นี้?'))return;const files=DD[k]||[],f=files[+idx];
+try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('divdocs').doc(k).set({files:nf},{merge:true});DD[k]=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).includes(k));
 const staffCard=P('บุคลากรที่รับผิดชอบ',ps.length?ps.map(p=>`<div class="pc" style="display:flex;gap:8px;align-items:center">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}</small></span></div>`).join(''):E('ยังไม่มีบุคลากรที่เลือกงานนี้ในหน้าบุคลากร',80));
-return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid g2">${staffCard}${['งานที่รับผิดชอบ','เอกสารดาวน์โหลด','ช่องทางติดต่อ'].map(t=>P(t,E('',80))).join('')}</div></div>`};
+return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid g2">${staffCard}${P('งานที่รับผิดชอบ',E('',80))}${P('เอกสารดาวน์โหลด',divDocsBlock(k))}${P('ช่องทางติดต่อ',E('',80))}</div></div>`};
 const V={
 home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map(s=>`<div class="card stat"${s[5]?` data-r="${s[5]}"`:''}><div class="bx" style="background:${s[2]}">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g3">${P('สรุปผลการเรียน',E())}${P('สถิติการเข้าเรียน',E())}${P('ผลประเมินบุคลากร',E())}</div>
@@ -220,8 +233,9 @@ unsub.push(db.collection('students').onSnapshot(qs=>{ST=qs.docs.map(d=>({id:d.id
 unsub.push(db.collection('homeroom').onSnapshot(qs=>{HR={};qs.docs.forEach(d=>HR[d.id]=d.data().ids||[]);render()},e=>{}));
 unsub.push(db.collection('events').onSnapshot(qs=>{EV=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
 unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.data():{ids:[]};render()},e=>{}));
+unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data().files||[]);render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]}}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={}}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -249,7 +263,9 @@ v=String(v).trim();m=v.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);if(m)r
 m=v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(m)return f2(+m[1]>2400?m[1]-543:+m[1],+m[2],+m[3]);return''};
 const colKey=h=>{h=String(h).replace(/\s/g,'');return /วิชาเอก|สาขา/.test(h)?(/โท/.test(h)?'mj2':'mj'):h.includes('คำนำหน้า')?'tt':h.includes('รับผิดชอบ')?'wk':h.includes('นามสกุล')?'ln':h.includes('ชื่อ')?'fn':h.includes('เกิด')?'bd':h.includes('บรรจุ')?'ap':h.includes('ตำแหน่ง')?'po':h.includes('โทร')?'ph':h.includes('โท')?'ma':h.includes('ตรี')?'ba':h.includes('ที่อยู่')?'ad':/ใบประกอบ|หมดอายุ/.test(h)?'lc':''};
 const FL=[['tt','คำนำหน้าชื่อ'],['fn','ชื่อ'],['ln','นามสกุล'],['bd','วัน/เดือน/ปีเกิด','date'],['ap','วันที่บรรจุ (เว้นว่างได้)','date'],['po','ตำแหน่ง'],['ph','เบอร์โทร'],['ba','วุฒิ: ปริญญาตรีหรือเทียบเท่า'],['mj','วิชาเอก/สาขา (ป.ตรี)'],['ma','วุฒิ: ปริญญาโท'],['mj2','วิชาเอก/สาขา (ป.โท)'],['ad','ที่อยู่'],['lc','วันหมดอายุใบประกอบวิชาชีพ','date']];
-function persist(changed){const batch=db.batch();changed.forEach(p=>{batch.set(db.collection('people').doc(p.id),p);batch.set(db.collection('staff').doc(p.id),{n:nm(p),p:p.po},{merge:true})});batch.commit().catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message))}
+async function syncUserWk(pid,wk){const u=U.find(x=>x.sid==pid&&x.st=='approved');if(!u)return;try{await db.collection('users').doc(u._id).set({wk:wk||[]},{merge:true});u.wk=wk||[]}catch(e){}}
+function persist(changed){const batch=db.batch();changed.forEach(p=>{batch.set(db.collection('people').doc(p.id),p);batch.set(db.collection('staff').doc(p.id),{n:nm(p),p:p.po},{merge:true})});
+batch.commit().then(()=>changed.forEach(p=>syncUserWk(p.id,p.wk))).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message))}
 function openF(id){ed=id||null;const p=PP.find(x=>x.id==id)||{};FL.forEach(f=>$('#p_'+f[0]).value=f[2]=='date'?(p[f[0]]?th(p[f[0]]):''):p[f[0]]||'');document.querySelectorAll('.wk').forEach(c=>c.checked=(p.wk||[]).includes(c.value));setImg(p.im||'');$('#pft').textContent=id?'แก้ไขข้อมูลบุคลากร':'เพิ่มข้อมูลบุคลากร';$('#pfm').classList.remove('hid');$('#pfm').scrollIntoView({behavior:'smooth'})}
 function savP(){const r={id:ed||uid()};let bad='';FL.forEach(f=>{let v=$('#p_'+f[0]).value.trim();if(f[2]=='date'&&v){const s=toISO(v);if(!s||dt(s).getDate()!=+s.slice(8))bad=f[1];v=s}r[f[0]]=v});if(bad)return alert('รูปแบบวันที่ไม่ถูกต้อง: '+bad+' (ใช้ ว/ด/ป เช่น 15/3/2530)');r.wk=[...document.querySelectorAll('.wk:checked')].map(c=>c.value);r.im=pim;if(!r.fn)return alert('กรอกชื่อ');
 const i=PP.findIndex(x=>x.id==r.id);i<0?PP.push(r):PP[i]=r;ed=null;persist([r]);go('hr')}
