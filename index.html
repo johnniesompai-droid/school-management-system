@@ -180,12 +180,6 @@ document.addEventListener('click',async e=>{const a=e.target.closest('[data-mm]'
 const m=MM.find(x=>x.id==a.dataset.mm);try{if(m&&m.files)for(const f of m.files)await storage.ref(f.path).delete().catch(()=>{});await db.collection('memos').doc(a.dataset.mm).delete()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-ackmm]');if(!a||!me)return;
 try{await db.collection('memos').doc(a.dataset.ackmm).set({ack:true,ackAt:new Date().toISOString()},{merge:true})}catch(err){alert('ดำเนินการไม่สำเร็จ: '+err.message)}});
-V.comm=()=>{const t=T0(),mine=MM.filter(m=>m.assigneeSid==me.sid).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
-return PT('หนังสือเข้า','หนังสือราชการที่ได้รับมอบหมายให้ดำเนินการ')+P(`รายการหนังสือ (${mine.length})`,mine.length?mine.map(m=>{const dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
-return `<div class="rw" style="flex-direction:column;align-items:stretch;gap:8px">
-<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><b>${esc(m.title)}</b><small>จาก ${esc(m.createdByName||'งานธุรการ')}${m.deadline?' · ดำเนินการภายใน '+th(m.deadline):''}</small></span>
-<em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'#F5A524'}">${m.ack?'รับแล้ว เมื่อ '+th(m.ackAt.slice(0,10)):overdue?'เลยกำหนดแล้ว':'รอดำเนินการ'}</em></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap">${(m.files||[]).map(f=>`<a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>`).join('')}${!m.ack?`<button type="button" class="btn g" data-ackmm="${m.id}">รับทราบ / กดรับหนังสือ</button>`:''}</div></div>`}).join(''):E('ยังไม่มีหนังสือที่ได้รับมอบหมาย'))};
 let AD={};
 const canManageAdmin=()=>{if(!me)return false;if(me.role=='founder')return true;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&/ธุรการ/.test(mp.po||''))};
 const adminContactCard=()=>{const as=PP.filter(p=>/ธุรการ/.test(p.po||''));
@@ -329,6 +323,12 @@ const i=PP.findIndex(x=>nm(x)==nm(c));if(i<0){c.id=uid();PP.push(c);a++;changed.
 persist(changed);imMsg=`นำเข้าสำเร็จ: เพิ่มใหม่ ${a} รายการ, อัปเดต ${u} รายการ`}catch(x){imMsg='อ่านไฟล์ไม่สำเร็จ กรุณาใช้ไฟล์ตามแบบฟอร์ม'}go('hr')};r.readAsArrayBuffer(f)}
 function tpl(){if(typeof XLSX=='undefined')return alert('โหลดตัวอ่าน Excel ไม่สำเร็จ');const wb=XLSX.utils.book_new();
 XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['คำนำหน้าชื่อ','ชื่อ','นามสกุล','วันเกิด','วันที่บรรจุ','ตำแหน่ง','เบอร์โทร','ปริญญาตรีหรือเทียบเท่า','วิชาเอก/สาขา (ป.ตรี)','ปริญญาโท','วิชาเอก/สาขา (ป.โท)','ที่อยู่','วันหมดอายุใบประกอบวิชาชีพ','งานที่รับผิดชอบ (วิชาการ/แผนงานและงบประมาณ/บุคคล/ทั่วไป)']]),'บุคลากร');XLSX.writeFile(wb,'แบบฟอร์มบุคลากร.xlsx')}
+V.comm=()=>{const t=T0(),mine=MM.filter(m=>m.assigneeSid==me.sid).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
+return PT('หนังสือเข้า','หนังสือราชการที่ได้รับมอบหมายให้ดำเนินการ')+P(`รายการหนังสือ (${mine.length})`,mine.length?mine.map(m=>{const dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
+return `<div class="rw" style="flex-direction:column;align-items:stretch;gap:8px">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><b>${esc(m.title)}</b><small>จาก ${esc(m.createdByName||'งานธุรการ')}${m.deadline?' · ดำเนินการภายใน '+th(m.deadline):''}</small></span>
+<em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'#F5A524'}">${m.ack?'รับแล้ว เมื่อ '+th(m.ackAt.slice(0,10)):overdue?'เลยกำหนดแล้ว':'รอดำเนินการ'}</em></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">${(m.files||[]).map(f=>`<a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>`).join('')}${!m.ack?`<button type="button" class="btn g" data-ackmm="${m.id}">รับทราบ / กดรับหนังสือ</button>`:''}</div></div>`}).join(''):E('ยังไม่มีหนังสือที่ได้รับมอบหมาย'))};
 V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
 const row=(p,i)=>{const lc=p.lc?dt(p.lc):null,ex=lc&&lc<t;return`<tr><td>${i+1}</td><td>${esc(dn(p))}</td><td>${esc(p.po)||'-'}</td><td>${th(p.bd)}</td><td>${p.bd?ymd(dt(p.bd),t):'-'}</td><td>${th(p.ap)}</td><td>${p.ap?ymd(dt(p.ap),t):'-'}</td><td>${esc(p.ph)||'-'}</td><td>${esc(p.ba)||'-'}</td><td>${esc(p.mj)||'-'}</td><td>${esc(p.ma)||'-'}</td><td>${esc(p.mj2)||'-'}</td><td>${esc(p.ad)||'-'}</td><td>${th(p.lc)}</td><td class="${ex?'rd':''}">${lc?(ex?'หมดอายุแล้ว '+ymd(lc,t):ymd(t,lc)):'-'}</td><td>${(p.wk||[]).map(k=>DIV.find(d=>d[0]==k)[1]).join(', ')||'-'}</td>${F?`<td><button class="btn o" data-q="e:${p.id}">แก้ไข</button> <button class="btn r" data-q="d:${p.id}">ลบ</button></td>`:''}</tr>`};
 return PT('บุคลากร','ข้อมูลและโครงสร้างบุคลากรของโรงเรียน')+`<div class="grid g4"><div class="card dv" data-r="org"><div class="bx" style="background:#8B5CF6">${ic('users')}</div><h4>โครงสร้างบุคลากร</h4><span>เปิดดู ›</span></div></div>`
