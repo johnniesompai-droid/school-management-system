@@ -26,7 +26,7 @@ aside{width:232px;background:#fff;border-right:1px solid var(--line);padding:16p
 .sres:last-child{border-bottom:none}.sres:hover{background:var(--soft)}
 .sres small{display:block;color:var(--mute);font-size:.72rem;margin-top:2px}
 .chip{margin-left:auto;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.8rem}
-.ico{color:#55607A;cursor:pointer}.user{display:flex;gap:10px;align-items:center;line-height:1.2}.user small{display:block;color:var(--mute);font-size:.7rem}
+.ico{color:#55607A;cursor:pointer;position:relative}.bell-badge{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-size:.6rem;line-height:1.5;border-radius:9px;padding:0 5px;font-style:normal}.user{display:flex;gap:10px;align-items:center;line-height:1.2}.user small{display:block;color:var(--mute);font-size:.7rem}
 .av{width:36px;height:36px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--blue)}
 #view{padding:20px;display:grid;gap:16px}
 .grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:minmax(0,1fr) 300px}
@@ -153,6 +153,39 @@ catch(e){$('#dd_msg_'+k).textContent='อัปโหลดไม่สำเร
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-dd]');if(!a||!me)return;const[k,idx]=a.dataset.dd.split(':');if(!canManageDiv(k))return;
 if(!confirm('ลบไฟล์นี้?'))return;const files=DD[k]||[],f=files[+idx];
 try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('divdocs').doc(k).set({files:nf},{merge:true});DD[k]=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
+let MM=[];
+function memoForm(){return `<div class="grid g3">
+<label class="lb">ชื่อเรื่อง<input class="in" id="mm_title" placeholder="ชื่อเรื่องหนังสือ"></label>
+<label class="lb">ดำเนินการภายในวันที่<input class="in" id="mm_deadline" type="date"></label>
+<label class="lb">มอบหมายให้<select class="in" id="mm_assignee"><option value="">-- เลือกครู --</option>${PP.map(p=>`<option value="${p.id}">${esc(dn(p))}${p.po?' · '+esc(p.po):''}</option>`).join('')}</select></label>
+</div>
+<label class="lb">แนบไฟล์ PDF (ไม่บังคับ)<input type="file" id="mm_file" accept="application/pdf"></label>
+<div style="margin-top:10px"><button type="button" class="btn" onclick="createMemo()">บันทึกและมอบหมาย</button></div>
+<div id="mm_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>
+<div style="border-top:1px solid var(--line);margin:16px 0"></div>`}
+async function createMemo(){const title=$('#mm_title').value.trim(),deadline=$('#mm_deadline').value,sid=$('#mm_assignee').value;
+if(!title)return alert('กรอกชื่อเรื่อง');if(!sid)return alert('เลือกผู้รับมอบหมาย');
+const p=PP.find(x=>x.id==sid),id=uid();let files=[];const f=$('#mm_file').files[0];
+$('#mm_msg').textContent='กำลังบันทึก...';
+try{if(f){if(f.type!='application/pdf')throw new Error('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)throw new Error('ไฟล์ใหญ่เกิน 10MB');
+const path=`memos/${id}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();files=[{name:f.name,url,path}]}
+await db.collection('memos').doc(id).set({title,deadline:deadline||'',assigneeSid:sid,assigneeName:dn(p),files,createdBy:me._id,createdByName:me.n,createdAt:new Date().toISOString(),ack:false,ackAt:null});
+$('#mm_title').value='';$('#mm_deadline').value='';$('#mm_assignee').value='';$('#mm_file').value='';$('#mm_msg').textContent='บันทึกและมอบหมายเรียบร้อย'}
+catch(e){$('#mm_msg').textContent='บันทึกไม่สำเร็จ: '+e.message}}
+function memoList(){if(!MM.length)return E('ยังไม่มีหนังสือที่เกษียน',60);const t=T0();
+return MM.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')).map(m=>{const dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
+return `<div class="rw"><span><b>${esc(m.title)}</b><small>มอบหมายให้ ${esc(m.assigneeName)}${m.deadline?' · ภายใน '+th(m.deadline):''}${(m.files&&m.files.length)?` · <a href="${m.files[0].url}" target="_blank" rel="noopener">เปิดไฟล์</a>`:''}</small></span><span style="text-align:right;flex-shrink:0"><em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'var(--mute)'}">${m.ack?'รับหนังสือแล้ว':overdue?'เลยกำหนดแล้ว':'ยังไม่รับ'}</em> <button type="button" class="btn r" data-mm="${m.id}">ลบ</button></span></div>`}).join('')}
+function memoSection(){return P('เกษียนหนังสือราชการ',canManageAdmin()?memoForm()+memoList():E('ดูหนังสือที่ได้รับมอบหมายได้ที่เมนู "หนังสือเข้า"',70))}
+document.addEventListener('click',async e=>{const a=e.target.closest('[data-mm]');if(!a||!canManageAdmin())return;if(!confirm('ลบหนังสือฉบับนี้?'))return;
+const m=MM.find(x=>x.id==a.dataset.mm);try{if(m&&m.files)for(const f of m.files)await storage.ref(f.path).delete().catch(()=>{});await db.collection('memos').doc(a.dataset.mm).delete()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
+document.addEventListener('click',async e=>{const a=e.target.closest('[data-ackmm]');if(!a||!me)return;
+try{await db.collection('memos').doc(a.dataset.ackmm).set({ack:true,ackAt:new Date().toISOString()},{merge:true})}catch(err){alert('ดำเนินการไม่สำเร็จ: '+err.message)}});
+V.comm=()=>{const t=T0(),mine=MM.filter(m=>m.assigneeSid==me.sid).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
+return PT('หนังสือเข้า','หนังสือราชการที่ได้รับมอบหมายให้ดำเนินการ')+P(`รายการหนังสือ (${mine.length})`,mine.length?mine.map(m=>{const dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
+return `<div class="rw" style="flex-direction:column;align-items:stretch;gap:8px">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><b>${esc(m.title)}</b><small>จาก ${esc(m.createdByName||'งานธุรการ')}${m.deadline?' · ดำเนินการภายใน '+th(m.deadline):''}</small></span>
+<em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'#F5A524'}">${m.ack?'รับแล้ว เมื่อ '+th(m.ackAt.slice(0,10)):overdue?'เลยกำหนดแล้ว':'รอดำเนินการ'}</em></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">${(m.files||[]).map(f=>`<a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>`).join('')}${!m.ack?`<button type="button" class="btn g" data-ackmm="${m.id}">รับทราบ / กดรับหนังสือ</button>`:''}</div></div>`}).join(''):E('ยังไม่มีหนังสือที่ได้รับมอบหมาย'))};
 let AD={};
 const canManageAdmin=()=>{if(!me)return false;if(me.role=='founder')return true;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&/ธุรการ/.test(mp.po||''))};
 const adminContactCard=()=>{const as=PP.filter(p=>/ธุรการ/.test(p.po||''));
@@ -178,13 +211,15 @@ home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรี�
 <div class="grid g2">${['การเงิน & พัสดุ','งานเอกสาร & ธุรการ','งานซ่อม & อาคารสถานที่','สื่อสารโรงเรียน'].map(t=>P(t,E('',90),'ดูทั้งหมด')).join('')}</div></div>
 <div class="grid" style="align-content:start">${P('ข่าวประชาสัมพันธ์',upc(),'ดูทั้งหมด')}<div data-r="cal:${new Date().getFullYear()}-${new Date().getMonth()+1}" style="cursor:pointer">${P('ปฏิทินกิจกรรม',cal(),'ดูทั้งหมด')}</div>${P('AI ผู้ช่วยผู้บริหาร',E())}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
-admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P('แบบฟอร์ม / เอกสารดาวน์โหลด',adminDocsBlock('forms'))}${P('ขั้นตอนการติดต่อราชการ',E())}${P('หนังสือเข้า / หนังสือออก',adminDocsBlock('inout'))}${P('ช่องทางติดต่อ',adminContactCard())}</div>`,
+admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P('แบบฟอร์ม / เอกสารดาวน์โหลด',adminDocsBlock('forms'))}${P('ขั้นตอนการติดต่อราชการ',E())}${P('หนังสือเข้า / หนังสือออก',adminDocsBlock('inout'))}${P('ช่องทางติดต่อ',adminContactCard())}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
-$('#ib').innerHTML=ic('bell');$('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
+$('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=()=>go('comm');
+$('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
+function updateBell(){if(!me||!$('#ib'))return;const n=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack).length;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge">${n}</i>`:'')}
 let CUR='home';
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():V.gen(m?m[1]:'')}
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():V.gen(m?m[1]:'')}
 function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd')?k:r)));
@@ -250,8 +285,9 @@ unsub.push(db.collection('events').onSnapshot(qs=>{EV=qs.docs.map(d=>({id:d.id,.
 unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.data():{ids:[]};render()},e=>{}));
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data().files||[]);render()},e=>{}));
 unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
+unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,...d.data()}));updateBell();render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={}}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};MM=[]}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
