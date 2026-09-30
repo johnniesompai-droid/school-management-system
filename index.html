@@ -48,6 +48,24 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 @media(max-width:900px){aside{position:fixed;left:0;top:0;height:100vh;height:100dvh;transform:translateX(-100%)}aside.show{transform:none;box-shadow:var(--sh)}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.split{grid-template-columns:1fr}}
 @media(max-width:560px){.g4,.g2{grid-template-columns:1fr}.user span,.chip{display:none}.hero{aspect-ratio:2/1;background-position:75% 20%}}
 @media(prefers-reduced-motion:reduce){.hero{animation:none}}
+.a4{background:#fff;max-width:210mm;min-height:297mm;margin:0 auto;padding:18mm 16mm;box-shadow:var(--sh);border-radius:6px;box-sizing:border-box}
+.pf-head{display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--blue);padding-bottom:14px;margin-bottom:6px}
+.pf-head img{width:56px;height:56px;border-radius:50%}.pf-head b{font-size:1.05rem;display:block}.pf-head small{color:var(--mute);font-size:.75rem}
+.pf-title{text-align:center;font-size:1rem;font-weight:600;color:var(--blue);margin:14px 0 18px}
+.pf-id{display:flex;gap:20px;align-items:center;margin-bottom:22px}
+.pf-photo{width:110px;height:110px;border-radius:12px;object-fit:cover;background:var(--soft);flex-shrink:0}
+.pf-id h2{margin:0 0 4px;font-size:1.25rem}.pf-pos{color:var(--mute);font-size:.9rem}.pf-wk{color:var(--blue);font-size:.78rem;margin-top:4px}
+.pf-sec{margin-bottom:20px}.pf-sec h4{font-size:.85rem;color:var(--blue);border-bottom:1px solid var(--line);padding-bottom:6px;margin:0 0 10px}
+.pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+.pf-row{display:flex;justify-content:space-between;gap:10px;font-size:.85rem;border-bottom:1px dotted var(--line);padding:4px 0}
+.pf-row span{color:var(--mute);flex-shrink:0}.pf-row b{text-align:right;font-weight:500}
+.pf-foot{text-align:center;color:var(--mute);font-size:.7rem;margin-top:30px;border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:700px){.a4{padding:8mm;min-height:0}.pf-grid{grid-template-columns:1fr}.pf-id{flex-direction:column;text-align:center}}
+@media print{
+  aside,.top,footer,.btn,.pt a,.pt{display:none !important}
+  body,#view,.main{background:#fff !important;padding:0 !important;margin:0 !important}
+  .a4{box-shadow:none;margin:0;max-width:none;min-height:0}
+}
 .auth{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:16px;background:linear-gradient(rgba(20,25,60,.6),rgba(20,25,60,.6)),var(--hero) center/cover}
 .ac{background:#fff;border-radius:16px;padding:26px;width:100%;max-width:380px;box-shadow:0 10px 40px rgba(0,0,0,.3);text-align:center}
 .ac img{width:64px;height:64px;border-radius:50%}.ac h2{margin:8px 0 2px}.ac p{margin:0 0 14px;color:var(--mute);font-size:.8rem}
@@ -134,7 +152,7 @@ const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</
 $('#ib').innerHTML=ic('bell');$('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 let CUR='home';
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():V.gen(m?m[1]:'')}
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():V.gen(m?m[1]:'')}
 function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd')?k:r)));
@@ -249,9 +267,27 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-q]');if(!a
 if(confirm('ลบข้อมูลนี้?')){PP=PP.filter(p=>p.id!=v);S=S.filter(s=>s.id!=v);db.collection('people').doc(v).delete().catch(()=>{});db.collection('staff').doc(v).delete().catch(()=>{});go('hr')}});
 const wkParse=v=>{v=tx(v);const R={academic:/วิชาการ/,budget:/แผนงาน|งบประมาณ/,personnel:/บุคคล/,general:/ทั่วไป/};return DIV.filter(d=>R[d[0]].test(v)).map(d=>d[0])};
 V.org=()=>{const dir=p=>/ผู้อำนวยการ/.test(p.po)&&!/รอง/.test(p.po),dep=p=>/รองผู้อำนวยการ/.test(p.po),has=(p,k)=>(p.wk||[]).includes(k),
-pc=(p,c)=>`<div class="pc ${c||''}" style="display:flex;gap:8px;align-items:center">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}</small></span></div>`,gp=PP.filter(p=>!dir(p)&&!(p.wk||[]).length);
-return PT('โครงสร้างบุคลากร','จัดตามตำแหน่งและงานที่รับผิดชอบจากข้อมูลในหน้าบุคลากร')+`<div class="card oc"><div class="node dark">ผู้อำนวยการโรงเรียน${PP.filter(dir).map(p=>`<div style="margin-top:8px">${p.im?`<img class="ph" style="width:64px;height:64px;border:2px solid #fff;display:block;margin:0 auto 4px" src="${p.im}">`:''}<b style="font-weight:500;font-size:.8rem;display:block">${esc(dn(p))}</b></div>`).join('')}</div><div class="vl"></div><div class="brn">${DIV.map(d=>{const ds=[],ms=PP.filter(p=>!dir(p)&&has(p,d[0]));
+pc=(p,c)=>`<div class="pc ${c||''}" style="display:flex;gap:8px;align-items:center;cursor:pointer" data-r="profile:${p.id}">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}</small></span></div>`,gp=PP.filter(p=>!dir(p)&&!(p.wk||[]).length);
+return PT('โครงสร้างบุคลากร','จัดตามตำแหน่งและงานที่รับผิดชอบจากข้อมูลในหน้าบุคลากร (กดที่ชื่อเพื่อดูรายละเอียด)')+`<div class="card oc"><div class="node dark">ผู้อำนวยการโรงเรียน${PP.filter(dir).map(p=>`<div style="margin-top:8px;cursor:pointer" data-r="profile:${p.id}">${p.im?`<img class="ph" style="width:64px;height:64px;border:2px solid #fff;display:block;margin:0 auto 4px" src="${p.im}">`:''}<b style="font-weight:500;font-size:.8rem;display:block">${esc(dn(p))}</b></div>`).join('')}</div><div class="vl"></div><div class="brn">${DIV.map(d=>{const ds=[],ms=PP.filter(p=>!dir(p)&&has(p,d[0]));
 return`<div><div class="node">${d[1]}</div>${ds.map(p=>pc(p,'dp')).join('')}${ms.map(p=>pc(p)).join('')}${ds.length||ms.length?'':'<div class="empty" style="margin-top:12px;min-height:70px">ยังไม่มีข้อมูล</div>'}</div>`}).join('')}</div></div>`+(gp.length?P(`ยังไม่ระบุงานที่รับผิดชอบ (${gp.length})`,gp.map(p=>pc(p)).join('')):'')};
+V.profile=id=>{const p=PP.find(x=>x.id==id);if(!p)return V.org();
+const t=T0(),rows=(arr)=>arr.filter(x=>x[1]).map(x=>`<div class="pf-row"><span>${x[0]}</span><b>${esc(x[1])}</b></div>`).join('')||'<div class="empty" style="min-height:40px">ยังไม่มีข้อมูล</div>';
+const age=p.bd?ymd(dt(p.bd),t):'',svc=p.ap?ymd(dt(p.ap),t):'',lc=p.lc?dt(p.lc):null,exp=lc?(lc<t?'หมดอายุแล้ว '+ymd(lc,t):'เหลืออีก '+ymd(t,lc)):'';
+const wks=(p.wk||[]).map(k=>DIV.find(d=>d[0]==k)?.[1]).filter(Boolean).join(', ');
+return `<div class="pt"><p><a class="bk" data-r="org">‹ โครงสร้างบุคลากร</a></p></div>
+<div class="a4" id="pfsheet">
+<div class="pf-head"><img src="${$('.brand img').src}"><div><b>โรงเรียนบ้านผาเยอ</b><small>สังกัดสำนักงานเขตพื้นที่การศึกษาประถมศึกษาแม่ฮ่องสอน เขต 2</small></div></div>
+<div class="pf-title">ประวัติและข้อมูลบุคลากร</div>
+<div class="pf-id">
+${p.im?`<img class="pf-photo" src="${p.im}">`:`<div class="pf-photo ph0" style="display:flex;align-items:center;justify-content:center">${ic('user')}</div>`}
+<div><h2>${esc(dn(p))}</h2><div class="pf-pos">${esc(p.po)||'-'}</div>${wks?`<div class="pf-wk">${esc(wks)}</div>`:''}</div>
+</div>
+<div class="pf-sec"><h4>ข้อมูลส่วนตัว</h4><div class="pf-grid">${rows([['วันเกิด',p.bd?th(p.bd):''],['อายุ',age],['ที่อยู่',p.ad],['เบอร์โทร',p.ph]])}</div></div>
+<div class="pf-sec"><h4>ข้อมูลราชการ</h4><div class="pf-grid">${rows([['วันที่บรรจุ',p.ap?th(p.ap):''],['อายุราชการ',svc],['วันหมดอายุใบประกอบวิชาชีพ',p.lc?th(p.lc):''],['สถานะใบประกอบวิชาชีพ',exp]])}</div></div>
+<div class="pf-sec"><h4>วุฒิการศึกษา</h4><div class="pf-grid">${rows([['ปริญญาตรีหรือเทียบเท่า',p.ba],['วิชาเอก/สาขา (ป.ตรี)',p.mj],['ปริญญาโท',p.ma],['วิชาเอก/สาขา (ป.โท)',p.mj2]])}</div></div>
+<div class="pf-foot">พิมพ์เมื่อ ${th(f2(t.getFullYear(),t.getMonth()+1,t.getDate()))} · ระบบสารสนเทศโรงเรียนบ้านผาเยอ</div>
+</div>
+<div style="text-align:center;margin-top:14px"><button class="btn o" onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button></div>`};
 const LV=['ชั้นอนุบาล 2','ชั้นอนุบาล 3','ชั้นประถมศึกษาปีที่ 1','ชั้นประถมศึกษาปีที่ 2','ชั้นประถมศึกษาปีที่ 3','ชั้นประถมศึกษาปีที่ 4','ชั้นประถมศึกษาปีที่ 5','ชั้นประถมศึกษาปีที่ 6'],CT={m:['ห้องเรียนหลัก',8],b:['ห้องเรียนสาขา',5]};
 const cnt=(t,i)=>ST.filter(s=>s.ty==t&&s.lv==i).length;
 const sumT=t=>{const l=ST.filter(x=>x.ty==t),m=l.filter(x=>gd(x.tt)=='m').length,f=l.filter(x=>gd(x.tt)=='f').length,u=l.length-m-f;
