@@ -153,6 +153,19 @@ catch(e){$('#dd_msg_'+k).textContent='อัปโหลดไม่สำเร
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-dd]');if(!a||!me)return;const[k,idx]=a.dataset.dd.split(':');if(!canManageDiv(k))return;
 if(!confirm('ลบไฟล์นี้?'))return;const files=DD[k]||[],f=files[+idx];
 try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('divdocs').doc(k).set({files:nf},{merge:true});DD[k]=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
+let AD={};
+const canManageAdmin=()=>{if(!me)return false;if(me.role=='founder')return true;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&/ธุรการ/.test(mp.po||''))};
+const adminDocsBlock=key=>{const files=AD[key]||[],can=canManageAdmin();
+return `<div id="ad_${key}">${files.length?files.map((f,i)=>`<div class="rw"><span>📄 ${esc(f.name)}</span><span><a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>${can?` <button class="btn r" data-ad="${key}:${i}">ลบ</button>`:''}</span></div>`).join(''):E('ยังไม่มีเอกสาร',60)}</div>
+${can?`<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><input class="in" id="ad_name_${key}" placeholder="ชื่อเอกสาร" style="max-width:220px;margin:0"><input type="file" id="ad_file_${key}" accept="application/pdf"><button type="button" class="btn g" onclick="uploadAdminDoc('${key}')">แนบไฟล์</button></div><div id="ad_msg_${key}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
+async function uploadAdminDoc(key){const f=$('#ad_file_'+key).files[0];if(!f)return alert('เลือกไฟล์ PDF ก่อน');if(f.type!='application/pdf')return alert('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
+const name=$('#ad_name_'+key).value.trim()||f.name;$('#ad_msg_'+key).textContent='กำลังอัปโหลด...';
+try{const path=`admin/${key}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
+const files=[...(AD[key]||[]),{name,url,path}];await db.collection('admindocs').doc(key).set({files},{merge:true});AD[key]=files;render()}
+catch(e){$('#ad_msg_'+key).textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
+document.addEventListener('click',async e=>{const a=e.target.closest('[data-ad]');if(!a||!me)return;const[key,idx]=a.dataset.ad.split(':');if(!canManageAdmin())return;
+if(!confirm('ลบไฟล์นี้?'))return;const files=AD[key]||[],f=files[+idx];
+try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('admindocs').doc(key).set({files:nf},{merge:true});AD[key]=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).includes(k));
 const staffCard=P('บุคลากรที่รับผิดชอบ',ps.length?ps.map(p=>`<div class="pc" style="display:flex;gap:8px;align-items:center">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}</small></span></div>`).join(''):E('ยังไม่มีบุคลากรที่เลือกงานนี้ในหน้าบุคลากร',80));
 return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid g2">${staffCard}${P('งานที่รับผิดชอบ',E('',80))}${P('เอกสารดาวน์โหลด',divDocsBlock(k))}${P('ช่องทางติดต่อ',E('',80))}</div></div>`};
@@ -163,7 +176,7 @@ home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรี�
 <div class="grid g2">${['การเงิน & พัสดุ','งานเอกสาร & ธุรการ','งานซ่อม & อาคารสถานที่','สื่อสารโรงเรียน'].map(t=>P(t,E('',90),'ดูทั้งหมด')).join('')}</div></div>
 <div class="grid" style="align-content:start">${P('ข่าวประชาสัมพันธ์',upc(),'ดูทั้งหมด')}<div data-r="cal:${new Date().getFullYear()}-${new Date().getMonth()+1}" style="cursor:pointer">${P('ปฏิทินกิจกรรม',cal(),'ดูทั้งหมด')}</div>${P('AI ผู้ช่วยผู้บริหาร',E())}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
-admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P('แบบฟอร์ม / เอกสารดาวน์โหลด',E())}${P('ขั้นตอนการติดต่อราชการ',E())}${P('หนังสือเข้า / หนังสือออก',E())}${P('ช่องทางติดต่อ',E())}</div>`,
+admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P('แบบฟอร์ม / เอกสารดาวน์โหลด',adminDocsBlock('forms'))}${P('ขั้นตอนการติดต่อราชการ',E())}${P('หนังสือเข้า / หนังสือออก',adminDocsBlock('inout'))}${P('ช่องทางติดต่อ',E())}</div>`,
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
@@ -234,8 +247,9 @@ unsub.push(db.collection('homeroom').onSnapshot(qs=>{HR={};qs.docs.forEach(d=>HR
 unsub.push(db.collection('events').onSnapshot(qs=>{EV=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
 unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.data():{ids:[]};render()},e=>{}));
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data().files||[]);render()},e=>{}));
+unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={}}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={}}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
