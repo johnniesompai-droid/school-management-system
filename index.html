@@ -19,8 +19,12 @@ aside{width:232px;background:#fff;border-right:1px solid var(--line);padding:16p
 .main{flex:1;min-width:0}
 .top{display:flex;align-items:center;gap:14px;background:#fff;border-bottom:1px solid var(--line);padding:12px 20px;position:sticky;top:0;z-index:10}
 .top>svg,.ico svg{width:20px;height:20px}
-.search{flex:1;max-width:520px;display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:12px;padding:9px 14px;color:var(--mute)}
+.search{position:relative;flex:1;max-width:520px;display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:12px;padding:9px 14px;color:var(--mute)}
 .search input{border:0;background:none;outline:0;flex:1;font:inherit;min-width:0}
+#searchResults{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh);max-height:340px;overflow-y:auto;z-index:50;text-align:left}
+.sres{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--line);font-size:.85rem;color:var(--text)}
+.sres:last-child{border-bottom:none}.sres:hover{background:var(--soft)}
+.sres small{display:block;color:var(--mute);font-size:.72rem;margin-top:2px}
 .chip{margin-left:auto;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.8rem}
 .ico{color:#55607A;cursor:pointer}.user{display:flex;gap:10px;align-items:center;line-height:1.2}.user small{display:block;color:var(--mute);font-size:.7rem}
 .av{width:36px;height:36px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--blue)}
@@ -93,7 +97,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 <nav class="nav" id="nav"></nav><div class="tag">Smart School<br>Better Future</div></aside>
 <div class="main">
 <div class="top"><span class="ico" id="burger" style="cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></span>
-<div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input placeholder="ค้นหานักเรียน, บุคลากร, เลขที่, หรือเมนูต่างๆ..."></div>
+<div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="gsearch" autocomplete="off" placeholder="ค้นหานักเรียน, บุคลากร, เลขที่, หรือเมนูต่างๆ..."><div id="searchResults"></div></div>
 <div class="chip">ภาคเรียนที่ 1/2569</div>
 <span class="ico" id="ib"></span><span class="ico" id="ic"></span><span class="ico" id="lo" title="ออกจากระบบ"></span>
 <div class="user"><div class="av" id="au"></div><span><b id="un">ชื่อผู้ใช้</b><small id="ur">ตำแหน่ง</small></span></div></div>
@@ -361,6 +365,23 @@ const b=e.target.closest('[data-ev]');if(b&&confirm('ลบกิจกรรม
 let pim='';
 function setImg(v){pim=v;const p=$('#pprev');v?p.src=v:p.removeAttribute('src');p.classList.toggle('hid',!v);$('#prm').classList.toggle('hid',!v)}
 function pickImg(f){if(!f)return;const r=new FileReader();r.onload=e=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');c.width=c.height=240;const s=Math.min(i.width,i.height);c.getContext('2d').drawImage(i,(i.width-s)/2,(i.height-s)*.2,s,s,0,0,240,240);setImg(c.toDataURL('image/jpeg',.8))};i.onerror=()=>alert('อ่านไฟล์รูปไม่สำเร็จ');i.src=e.target.result};r.readAsDataURL(f)}
+function buildIndex(){const idx=[];
+MENU.forEach(m=>idx.push({label:m[1],sub:'เมนู',route:m[0]}));
+SYS.forEach(m=>{if(me&&(me.role=='founder'||!['usr','staff'].includes(m[0])))idx.push({label:m[1],sub:'ระบบกลาง',route:m[0]})});
+DIV.forEach(d=>idx.push({label:d[1],sub:'งาน 4 ฝ่าย',route:'div:'+d[0]}));
+PP.forEach(p=>idx.push({label:dn(p).trim(),sub:'บุคลากร'+(p.po?' · '+p.po:''),route:'profile:'+p.id}));
+ST.forEach(s=>idx.push({label:((s.tt||'')+s.fn+' '+s.ln).trim(),sub:'นักเรียน · '+CT[s.ty][0]+' · '+LV[s.lv],route:'stud:'+s.ty+s.lv}));
+return idx}
+function runSearch(q){const box=$('#searchResults');q=q.trim().toLowerCase();
+if(!q){box.style.display='none';box.innerHTML='';return}
+const m=buildIndex().filter(x=>x.label.toLowerCase().includes(q)).slice(0,10);
+box.innerHTML=m.length?m.map(x=>`<div class="sres" data-r="${x.route}">${esc(x.label)}<small>${esc(x.sub)}</small></div>`).join(''):'<div class="sres" style="color:var(--mute);cursor:default">ไม่พบผลลัพธ์</div>';
+box.style.display='block'}
+$('#gsearch').addEventListener('input',e=>runSearch(e.target.value));
+$('#gsearch').addEventListener('focus',e=>{if(e.target.value)runSearch(e.target.value)});
+$('#gsearch').addEventListener('keydown',e=>{if(e.key=='Escape'){e.target.value='';$('#searchResults').style.display='none';e.target.blur()}});
+$('#searchResults').addEventListener('click',e=>{if(e.target.closest('.sres[data-r]')){$('#gsearch').value='';$('#searchResults').style.display='none'}});
+document.addEventListener('click',e=>{if(!e.target.closest('.search'))$('#searchResults').style.display='none'});
 (async()=>{try{const cfg=await db.collection('meta').doc('config').get();founderExists=cfg.exists&&!!cfg.data().founderUid}catch(e){}
 fbAuth.onAuthStateChanged(async fbUser=>{if(suppress)return;
 if(!fbUser){me=null;detachListeners();auth();return}
