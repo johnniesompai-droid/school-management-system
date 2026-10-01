@@ -130,7 +130,7 @@ coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0
 bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
 const ic=(n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"${c?` class="${c}"`:''}>${I[n]}</svg>`;
-const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['att','การเข้าเรียน','cal'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
+const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['att','การเข้าเรียน','cal'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
 const SYS=[['staff','ทะเบียนบุคลากร','users'],['usr','ผู้ใช้งาน / สิทธิ์การใช้งาน','user'],['set','ตั้งค่าระบบ','gear'],['bak','สำรองข้อมูล','db'],['ie','Import / Export','ud'],['api','API & Integration','code']];
 const DIV=[['academic','กลุ่มบริหารงานวิชาการ','cap','#2F6BFF'],['budget','กลุ่มบริหารงานแผนงานและงบประมาณ','coin','#F5A524'],['personnel','กลุ่มบริหารงานบุคคล','users','#8B5CF6'],['general','กลุ่มบริหารงานทั่วไป','bld','#22B573']];
 const E=(t='ยังไม่มีข้อมูล',h)=>`<div class="empty"${h?` style="min-height:${h}px"`:''}>${t}</div>`;
@@ -142,17 +142,30 @@ let h=`<div style="text-align:center;font-weight:600;margin-bottom:8px">${M[m]} 
 for(let i=1;i<=n;i++){const c=[i==d.getDate()?'today':'',EV.some(e=>e.d==f2(y,m+1,i))?'ev':''].join(' ').trim();h+=`<span${c?` class="${c}"`:''}>${i}</span>`}return h+'</div>'};
 let DD={};
 const canManageDiv=k=>{if(!me)return false;if(me.role=='founder')return true;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&(mp.wk||[]).includes(k))};
-const divDocsBlock=k=>{const files=DD[k]||[],can=canManageDiv(k);
+const divDocsBlock=k=>{const files=(DD[k]||{}).files||[],can=canManageDiv(k);
 return `<div id="dd_${k}">${files.length?files.map((f,i)=>`<div class="rw"><span>📄 ${esc(f.name)}</span><span><a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>${can?` <button class="btn r" data-dd="${k}:${i}">ลบ</button>`:''}</span></div>`).join(''):E('ยังไม่มีเอกสาร',60)}</div>
 ${can?`<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><input class="in" id="dd_name_${k}" placeholder="ชื่อเอกสาร" style="max-width:220px;margin:0"><input type="file" id="dd_file_${k}" accept="application/pdf"><button type="button" class="btn g" onclick="uploadDivDoc('${k}')">แนบไฟล์</button></div><div id="dd_msg_${k}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
 async function uploadDivDoc(k){const f=$('#dd_file_'+k).files[0];if(!f)return alert('เลือกไฟล์ PDF ก่อน');if(f.type!='application/pdf')return alert('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#dd_name_'+k).value.trim()||f.name;$('#dd_msg_'+k).textContent='กำลังอัปโหลด...';
 try{const path=`divisions/${k}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
-const files=[...(DD[k]||[]),{name,url,path}];await db.collection('divdocs').doc(k).set({files},{merge:true});DD[k]=files;render()}
+const files=[...((DD[k]||{}).files||[]),{name,url,path}];await db.collection('divdocs').doc(k).set({files},{merge:true});DD[k]={...(DD[k]||{}),files};render()}
 catch(e){$('#dd_msg_'+k).textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-dd]');if(!a||!me)return;const[k,idx]=a.dataset.dd.split(':');if(!canManageDiv(k))return;
-if(!confirm('ลบไฟล์นี้?'))return;const files=DD[k]||[],f=files[+idx];
-try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('divdocs').doc(k).set({files:nf},{merge:true});DD[k]=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
+if(!confirm('ลบไฟล์นี้?'))return;const files=(DD[k]||{}).files||[],f=files[+idx];
+try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('divdocs').doc(k).set({files:nf},{merge:true});DD[k]={...(DD[k]||{}),files:nf};render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
+
+const divFieldBlock=(k,field)=>{const can=canManageDiv(k),files=(DD[k]||{})[field]||[];
+return `<div id="ddf_${k}_${field}">${files.length?files.map((f,i)=>`<div class="rw"><span>📄 ${esc(f.name)}</span><span><a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>${can?` <button class="btn r" data-ddf="${k}:${field}:${i}">ลบ</button>`:''}</span></div>`).join(''):E('ยังไม่มีเอกสาร',60)}</div>
+${can?`<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><input class="in" id="ddfn_${k}_${field}" placeholder="ชื่อเอกสาร" style="max-width:220px;margin:0"><input type="file" id="ddff_${k}_${field}" accept="application/pdf"><button type="button" class="btn g" onclick="uploadDivField('${k}','${field}')">แนบไฟล์</button></div><div id="ddfm_${k}_${field}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
+async function uploadDivField(k,field){const f=$('#ddff_'+k+'_'+field).files[0];if(!f)return alert('เลือกไฟล์ PDF ก่อน');if(f.type!='application/pdf')return alert('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
+const name=$('#ddfn_'+k+'_'+field).value.trim()||f.name;$('#ddfm_'+k+'_'+field).textContent='กำลังอัปโหลด...';
+try{const path=`divisions/${k}/${field}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
+const cur=(DD[k]||{})[field]||[],files=[...cur,{name,url,path}];
+await db.collection('divdocs').doc(k).set({[field]:files},{merge:true});DD[k]={...(DD[k]||{}),[field]:files};render()}
+catch(e){$('#ddfm_'+k+'_'+field).textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
+document.addEventListener('click',async e=>{const a=e.target.closest('[data-ddf]');if(!a||!me)return;const[k,field,idx]=a.dataset.ddf.split(':');if(!canManageDiv(k))return;
+if(!confirm('ลบไฟล์นี้?'))return;const cur=(DD[k]||{})[field]||[],f=cur[+idx];
+try{await storage.ref(f.path).delete().catch(()=>{});const nf=cur.filter((_,i)=>i!=+idx);await db.collection('divdocs').doc(k).set({[field]:nf},{merge:true});DD[k]={...(DD[k]||{}),[field]:nf};render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 let MM=[];
 function memoForm(){return `<div class="grid g3">
 <label class="lb">ชื่อเรื่อง<input class="in" id="mm_title" placeholder="ชื่อเรื่องหนังสือ"></label>
@@ -197,7 +210,7 @@ if(!confirm('ลบไฟล์นี้?'))return;const files=AD[key]||[],f=fil
 try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('admindocs').doc(key).set({files:nf},{merge:true});AD[key]=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).includes(k));
 const staffCard=P('บุคลากรที่รับผิดชอบ',ps.length?ps.map(p=>`<div class="pc" style="display:flex;gap:8px;align-items:center">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}</small></span></div>`).join(''):E('ยังไม่มีบุคลากรที่เลือกงานนี้ในหน้าบุคลากร',80));
-return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid g2">${staffCard}${P('งานที่รับผิดชอบ',E('',80))}${P('เอกสารดาวน์โหลด',divDocsBlock(k))}${P('ช่องทางติดต่อ',E('',80))}</div></div>`};
+return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid g2">${staffCard}${P('งานที่รับผิดชอบ',E('',80))}${P('เอกสารดาวน์โหลด',divDocsBlock(k))}${P('ช่องทางติดต่อ',E('',80))}${k=='budget'?P('งานพัสดุ',divFieldBlock(k,'supply')):''}</div></div>`};
 const V={
 home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map(s=>`<div class="card stat"${s[5]?` data-r="${s[5]}"`:''}><div class="bx" style="background:${s[2]}">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g3">${P('สรุปผลการเรียน',E())}${P('สถิติการเข้าเรียน',E())}${P('ผลประเมินบุคลากร',E())}</div>
@@ -213,7 +226,7 @@ $('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 function updateBell(){if(!me||!$('#ib'))return;const n=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack).length;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge">${n}</i>`:'')}
 let CUR='home';
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():V.gen(m?m[1]:'')}
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):V.gen(m?m[1]:'')}
 function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd')?k:r)));
@@ -277,11 +290,12 @@ unsub.push(db.collection('students').onSnapshot(qs=>{ST=qs.docs.map(d=>({id:d.id
 unsub.push(db.collection('homeroom').onSnapshot(qs=>{HR={};qs.docs.forEach(d=>HR[d.id]=d.data().ids||[]);render()},e=>{}));
 unsub.push(db.collection('events').onSnapshot(qs=>{EV=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
 unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.data():{ids:[]};render()},e=>{}));
-unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data().files||[]);render()},e=>{}));
+unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data()||{});render()},e=>{}));
 unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
 unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,...d.data()}));updateBell();render()},e=>{}));
+unsub.push(db.collection('scoresheets').where('ownerUid','==',me._id).onSnapshot(qs=>{SC=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};MM=[]}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};MM=[];SC=[]}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -329,6 +343,45 @@ return `<div class="rw" style="flex-direction:column;align-items:stretch;gap:8px
 <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><b>${esc(m.title)}</b><small>จาก ${esc(m.createdByName||'งานธุรการ')}${m.deadline?' · ดำเนินการภายใน '+th(m.deadline):''}</small></span>
 <em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'#F5A524'}">${m.ack?'รับแล้ว เมื่อ '+th(m.ackAt.slice(0,10)):overdue?'เลยกำหนดแล้ว':'รอดำเนินการ'}</em></div>
 <div style="display:flex;gap:8px;flex-wrap:wrap">${(m.files||[]).map(f=>`<a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>`).join('')}${!m.ack?`<button type="button" class="btn g" data-ackmm="${m.id}">รับทราบ / กดรับหนังสือ</button>`:''}</div></div>`}).join(''):E('ยังไม่มีหนังสือที่ได้รับมอบหมาย'))};
+let SC=[];
+function classLabel(k){const ty=k[0],lv=+k.slice(1);return CT[ty]?CT[ty][0]+' · '+LV[lv]:''}
+function scoreForm(){return `<div class="grid g3">
+<label class="lb">ชั้นเรียน<select class="in" id="sc_cls"><option value="">-- เลือกชั้นเรียน --</option>${Object.keys(CT).map(t=>LV.slice(0,CT[t][1]).map((n,i)=>`<option value="${t}${i}">${CT[t][0]} · ${n}</option>`).join('')).join('')}</select></label>
+<label class="lb">รายวิชา<input class="in" id="sc_subject" placeholder="เช่น ภาษาไทย"></label>
+<label class="lb">รหัสวิชา<input class="in" id="sc_code" placeholder="เช่น ท11101"></label>
+</div>
+<label class="lb">ครูผู้สอน<select class="in" id="sc_teacher"><option value="">-- เลือกครูผู้สอน --</option>${PP.map(p=>`<option value="${p.id}">${esc(dn(p))}${p.po?' · '+esc(p.po):''}</option>`).join('')}</select></label>
+<div style="margin-top:10px"><button type="button" class="btn" onclick="createScoreSheet()">สร้างใบบันทึกคะแนน</button></div>
+<div id="sc_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>
+<div style="border-top:1px solid var(--line);margin:16px 0"></div>`}
+async function createScoreSheet(){const cls=$('#sc_cls').value,subject=$('#sc_subject').value.trim(),code=$('#sc_code').value.trim(),tid=$('#sc_teacher').value;
+if(!cls)return alert('เลือกชั้นเรียน');if(!subject)return alert('กรอกรายวิชา');
+const tp=PP.find(x=>x.id==tid),id=uid();
+$('#sc_msg').textContent='กำลังสร้าง...';
+try{await db.collection('scoresheets').doc(id).set({classKey:cls,subject,code,teacherSid:tid||null,teacherName:tp?dn(tp):'',ownerUid:me._id,ownerName:me.n,createdAt:new Date().toISOString(),scores:{}});go('score:'+id)}
+catch(e){$('#sc_msg').textContent='สร้างไม่สำเร็จ: '+e.message}}
+function scoreList(){const mine=SC.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
+return mine.length?mine.map(s=>`<div class="rw"><span style="cursor:pointer" data-r="score:${s.id}"><b>${esc(s.subject)}</b>${s.code?' ('+esc(s.code)+')':''}<small>${esc(classLabel(s.classKey))}${s.teacherName?' · ครูผู้สอน '+esc(s.teacherName):''}</small></span><span><button type="button" class="btn o" data-r="score:${s.id}">เปิด</button> <button type="button" class="btn r" data-scd="${s.id}">ลบ</button></span></div>`).join(''):E('ยังไม่มีใบบันทึกคะแนน')}
+function sumScore(r){const a=+r.a||0,b=+r.b||0,c=+r.c||0;return(r.a!=null||r.b!=null||r.c!=null)?(a+b+c):'-'}
+function scoreSheetPage(id){const sheet=SC.find(x=>x.id==id);if(!sheet)return V.score();
+const ty=sheet.classKey[0],lv=+sheet.classKey.slice(1),roster=ST.filter(x=>x.ty==ty&&x.lv==lv),sc=sheet.scores||{};
+return `<div class="pt"><h2>${esc(sheet.subject)}${sheet.code?' ('+esc(sheet.code)+')':''}</h2><p><a class="bk" data-r="score">‹ บันทึกคะแนนนักเรียน</a> / ${esc(classLabel(sheet.classKey))}${sheet.teacherName?' · ครูผู้สอน '+esc(sheet.teacherName):''}</p></div>
+<div class="card"><div class="wrap"><table class="tb">
+<tr><th>#</th><th style="width:100%">ชื่อนักเรียน</th><th>คะแนนเก็บ</th><th>สอบเก็บคะแนน</th><th>สอบปลายภาค</th><th>รวม</th></tr>
+${roster.length?roster.map((st,i)=>{const r=sc[st.id]||{};return `<tr><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td><td><input class="in sc-in" style="margin:0;max-width:90px" type="number" data-sid="${st.id}" data-f="a" value="${r.a??''}"></td><td><input class="in sc-in" style="margin:0;max-width:90px" type="number" data-sid="${st.id}" data-f="b" value="${r.b??''}"></td><td><input class="in sc-in" style="margin:0;max-width:90px" type="number" data-sid="${st.id}" data-f="c" value="${r.c??''}"></td><td><b class="sc-total">${sumScore(r)}</b></td></tr>`}).join(''):`<tr><td colspan="6">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
+</table></div>
+<div style="margin-top:12px"><button type="button" class="btn" onclick="saveScores('${id}')">บันทึกคะแนน</button></div>
+<div id="scv_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div></div>`}
+async function saveScores(id){const scores={};document.querySelectorAll('.sc-in').forEach(inp=>{const sid=inp.dataset.sid,f=inp.dataset.f,v=inp.value;if(!scores[sid])scores[sid]={};if(v!=='')scores[sid][f]=parseFloat(v)});
+$('#scv_msg').textContent='กำลังบันทึก...';
+try{await db.collection('scoresheets').doc(id).set({scores},{merge:true});$('#scv_msg').textContent='บันทึกคะแนนเรียบร้อย'}
+catch(e){$('#scv_msg').textContent='บันทึกไม่สำเร็จ: '+e.message}}
+V.score=s=>s?scoreSheetPage(s):PT('บันทึกคะแนนนักเรียน','สร้างและจัดการใบบันทึกคะแนนของคุณ (เห็นเฉพาะบัญชีที่สร้าง)')+P('สร้างใบบันทึกคะแนนนักเรียน',scoreForm())+P('ใบบันทึกคะแนนของฉัน',scoreList());
+document.addEventListener('input',e=>{if(!e.target.classList.contains('sc-in'))return;const row=e.target.closest('tr');if(!row)return;
+let sum=0,any=false;row.querySelectorAll('.sc-in').forEach(inp=>{const v=parseFloat(inp.value);if(!isNaN(v)){sum+=v;any=true}});
+const tot=row.querySelector('.sc-total');if(tot)tot.textContent=any?sum:'-'});
+document.addEventListener('click',async e=>{const a=e.target.closest('[data-scd]');if(!a)return;const s=SC.find(x=>x.id==a.dataset.scd);if(!s)return;
+if(!confirm('ลบใบบันทึกคะแนนนี้?'))return;try{await db.collection('scoresheets').doc(a.dataset.scd).delete()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
 const row=(p,i)=>{const lc=p.lc?dt(p.lc):null,ex=lc&&lc<t;return`<tr><td>${i+1}</td><td>${esc(dn(p))}</td><td>${esc(p.po)||'-'}</td><td>${th(p.bd)}</td><td>${p.bd?ymd(dt(p.bd),t):'-'}</td><td>${th(p.ap)}</td><td>${p.ap?ymd(dt(p.ap),t):'-'}</td><td>${esc(p.ph)||'-'}</td><td>${esc(p.ba)||'-'}</td><td>${esc(p.mj)||'-'}</td><td>${esc(p.ma)||'-'}</td><td>${esc(p.mj2)||'-'}</td><td>${esc(p.ad)||'-'}</td><td>${th(p.lc)}</td><td class="${ex?'rd':''}">${lc?(ex?'หมดอายุแล้ว '+ymd(lc,t):ymd(t,lc)):'-'}</td><td>${(p.wk||[]).map(k=>DIV.find(d=>d[0]==k)[1]).join(', ')||'-'}</td>${F?`<td><button class="btn o" data-q="e:${p.id}">แก้ไข</button> <button class="btn r" data-q="d:${p.id}">ลบ</button></td>`:''}</tr>`};
 return PT('บุคลากร','ข้อมูลและโครงสร้างบุคลากรของโรงเรียน')+`<div class="grid g4"><div class="card dv" data-r="org"><div class="bx" style="background:#8B5CF6">${ic('users')}</div><h4>โครงสร้างบุคลากร</h4><span>เปิดดู ›</span></div></div>`
