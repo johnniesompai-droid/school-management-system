@@ -343,8 +343,9 @@ return `<div class="rw" style="flex-direction:column;align-items:stretch;gap:8px
 <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><b>${esc(m.title)}</b><small>จาก ${esc(m.createdByName||'งานธุรการ')}${m.deadline?' · ดำเนินการภายใน '+th(m.deadline):''}</small></span>
 <em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'#F5A524'}">${m.ack?'รับแล้ว เมื่อ '+th(m.ackAt.slice(0,10)):overdue?'เลยกำหนดแล้ว':'รอดำเนินการ'}</em></div>
 <div style="display:flex;gap:8px;flex-wrap:wrap">${(m.files||[]).map(f=>`<a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>`).join('')}${!m.ack?`<button type="button" class="btn g" data-ackmm="${m.id}">รับทราบ / กดรับหนังสือ</button>`:''}</div></div>`}).join(''):E('ยังไม่มีหนังสือที่ได้รับมอบหมาย'))};
-let SC=[];
+let SC=[],scTab='collect',scCurrentId=null;
 function classLabel(k){const ty=k[0],lv=+k.slice(1);return CT[ty]?CT[ty][0]+' · '+LV[lv]:''}
+function defaultExamCols(){return[{id:uid(),name:'สอบเก็บคะแนน',max:0},{id:uid(),name:'สอบกลางภาค',max:0},{id:uid(),name:'สอบปลายภาค',max:0}]}
 function scoreForm(){return `<div class="grid g3">
 <label class="lb">ชั้นเรียน<select class="in" id="sc_cls"><option value="">-- เลือกชั้นเรียน --</option>${Object.keys(CT).map(t=>LV.slice(0,CT[t][1]).map((n,i)=>`<option value="${t}${i}">${CT[t][0]} · ${n}</option>`).join('')).join('')}</select></label>
 <label class="lb">รายวิชา<input class="in" id="sc_subject" placeholder="เช่น ภาษาไทย"></label>
@@ -358,28 +359,66 @@ async function createScoreSheet(){const cls=$('#sc_cls').value,subject=$('#sc_su
 if(!cls)return alert('เลือกชั้นเรียน');if(!subject)return alert('กรอกรายวิชา');
 const tp=PP.find(x=>x.id==tid),id=uid();
 $('#sc_msg').textContent='กำลังสร้าง...';
-try{await db.collection('scoresheets').doc(id).set({classKey:cls,subject,code,teacherSid:tid||null,teacherName:tp?dn(tp):'',ownerUid:me._id,ownerName:me.n,createdAt:new Date().toISOString(),scores:{}});go('score:'+id)}
+try{await db.collection('scoresheets').doc(id).set({classKey:cls,subject,code,teacherSid:tid||null,teacherName:tp?dn(tp):'',ownerUid:me._id,ownerName:me.n,createdAt:new Date().toISOString(),collectCols:[],examCols:defaultExamCols(),scores:{}});go('score:'+id)}
 catch(e){$('#sc_msg').textContent='สร้างไม่สำเร็จ: '+e.message}}
 function scoreList(){const mine=SC.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
 return mine.length?mine.map(s=>`<div class="rw"><span style="cursor:pointer" data-r="score:${s.id}"><b>${esc(s.subject)}</b>${s.code?' ('+esc(s.code)+')':''}<small>${esc(classLabel(s.classKey))}${s.teacherName?' · ครูผู้สอน '+esc(s.teacherName):''}</small></span><span><button type="button" class="btn o" data-r="score:${s.id}">เปิด</button> <button type="button" class="btn r" data-scd="${s.id}">ลบ</button></span></div>`).join(''):E('ยังไม่มีใบบันทึกคะแนน')}
-function sumScore(r){const a=+r.a||0,b=+r.b||0,c=+r.c||0;return(r.a!=null||r.b!=null||r.c!=null)?(a+b+c):'-'}
-function scoreSheetPage(id){const sheet=SC.find(x=>x.id==id);if(!sheet)return V.score();
-const ty=sheet.classKey[0],lv=+sheet.classKey.slice(1),roster=ST.filter(x=>x.ty==ty&&x.lv==lv),sc=sheet.scores||{};
-return `<div class="pt"><h2>${esc(sheet.subject)}${sheet.code?' ('+esc(sheet.code)+')':''}</h2><p><a class="bk" data-r="score">‹ บันทึกคะแนนนักเรียน</a> / ${esc(classLabel(sheet.classKey))}${sheet.teacherName?' · ครูผู้สอน '+esc(sheet.teacherName):''}</p></div>
-<div class="card"><div class="wrap"><table class="tb">
-<tr><th>#</th><th style="width:100%">ชื่อนักเรียน</th><th>คะแนนเก็บ</th><th>สอบเก็บคะแนน</th><th>สอบปลายภาค</th><th>รวม</th></tr>
-${roster.length?roster.map((st,i)=>{const r=sc[st.id]||{};return `<tr><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td><td><input class="in sc-in" style="margin:0;max-width:90px" type="number" data-sid="${st.id}" data-f="a" value="${r.a??''}"></td><td><input class="in sc-in" style="margin:0;max-width:90px" type="number" data-sid="${st.id}" data-f="b" value="${r.b??''}"></td><td><input class="in sc-in" style="margin:0;max-width:90px" type="number" data-sid="${st.id}" data-f="c" value="${r.c??''}"></td><td><b class="sc-total">${sumScore(r)}</b></td></tr>`}).join(''):`<tr><td colspan="6">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
+function tabBtn(t,label){return `<button type="button" class="btn ${scTab==t?'':'o'}" data-sctab="${t}" style="margin-right:8px">${label}</button>`}
+function collectTable(id,roster,cc){
+return `<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button type="button" class="btn g" onclick="addCol('${id}','collect')">+ เพิ่มช่องบันทึกคะแนน</button></div>
+<div class="wrap"><table class="tb"><tr><th>#</th><th style="min-width:160px">ชื่อนักเรียน</th>
+${cc.map((c,ci)=>`<th style="min-width:140px"><input class="in cc-name" style="margin:0 0 4px;font-weight:600" data-ci="${ci}" value="${esc(c.name)}" placeholder="ชื่อใบงาน"><div style="display:flex;gap:4px;align-items:center"><span style="font-size:.68rem;color:var(--mute);white-space:nowrap">เต็ม</span><input class="in cc-max" type="number" style="margin:0;max-width:64px" data-ci="${ci}" value="${c.max??0}"><button type="button" class="btn r" style="padding:2px 7px" data-delcol="collect:${ci}">✕</button></div></th>`).join('')}
+<th>รวม</th></tr>
+${roster.length?roster.map((st,i)=>{const sc=st._sc.collect||{};let sum=0;cc.forEach(c=>sum+=+sc[c.id]||0);
+return `<tr><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td>${cc.map(c=>`<td><input class="in sc-cell" style="margin:0;max-width:80px" type="number" data-sid="${st.id}" data-col="${c.id}" value="${sc[c.id]??''}"></td>`).join('')}<td><b class="row-total">${sum||'-'}</b></td></tr>`}).join(''):`<tr><td colspan="${cc.length+3}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
 </table></div>
-<div style="margin-top:12px"><button type="button" class="btn" onclick="saveScores('${id}')">บันทึกคะแนน</button></div>
-<div id="scv_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div></div>`}
-async function saveScores(id){const scores={};document.querySelectorAll('.sc-in').forEach(inp=>{const sid=inp.dataset.sid,f=inp.dataset.f,v=inp.value;if(!scores[sid])scores[sid]={};if(v!=='')scores[sid][f]=parseFloat(v)});
-$('#scv_msg').textContent='กำลังบันทึก...';
-try{await db.collection('scoresheets').doc(id).set({scores},{merge:true});$('#scv_msg').textContent='บันทึกคะแนนเรียบร้อย'}
-catch(e){$('#scv_msg').textContent='บันทึกไม่สำเร็จ: '+e.message}}
+<div style="margin-top:12px"><button type="button" class="btn" onclick="saveTab('${id}','collect')">บันทึกคะแนนเก็บ</button></div>
+<div id="sc_save_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`}
+function examTable(id,roster,ec){
+return `<div class="wrap"><table class="tb"><tr><th>#</th><th style="min-width:160px">ชื่อนักเรียน</th>
+${ec.map((c,ci)=>`<th style="min-width:140px">${esc(c.name)}<div style="display:flex;gap:4px;align-items:center;margin-top:4px"><span style="font-size:.68rem;color:var(--mute);white-space:nowrap">เต็ม</span><input class="in ec-max" type="number" style="margin:0;max-width:64px" data-ci="${ci}" value="${c.max??0}"></div></th>`).join('')}
+<th>รวม</th></tr>
+${roster.length?roster.map((st,i)=>{const sc=st._sc.exam||{};let sum=0;ec.forEach(c=>sum+=+sc[c.id]||0);
+return `<tr><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td>${ec.map(c=>`<td><input class="in sc-cell" style="margin:0;max-width:80px" type="number" data-sid="${st.id}" data-col="${c.id}" value="${sc[c.id]??''}"></td>`).join('')}<td><b class="row-total">${sum||'-'}</b></td></tr>`}).join(''):`<tr><td colspan="${ec.length+3}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
+</table></div>
+<div style="margin-top:12px"><button type="button" class="btn" onclick="saveTab('${id}','exam')">บันทึกคะแนนสอบ</button></div>
+<div id="sc_save_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`}
+function summaryTable(roster,cc,ec){
+const maxC=cc.reduce((s,c)=>s+(+c.max||0),0),maxE=ec.reduce((s,c)=>s+(+c.max||0),0),maxA=maxC+maxE;
+return `<div class="wrap"><table class="tb"><tr><th>#</th><th style="width:100%">ชื่อนักเรียน</th><th>คะแนนเก็บ${maxC?` (เต็ม ${maxC})`:''}</th><th>คะแนนสอบ${maxE?` (เต็ม ${maxE})`:''}</th><th>รวมทั้งหมด${maxA?` (เต็ม ${maxA})`:''}</th></tr>
+${roster.length?roster.map((st,i)=>{const col=st._sc.collect||{},exm=st._sc.exam||{};let cs=0;cc.forEach(c=>cs+=+col[c.id]||0);let es=0;ec.forEach(c=>es+=+exm[c.id]||0);
+return `<tr><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td><td>${cs||'-'}</td><td>${es||'-'}</td><td><b>${(cs+es)||'-'}</b></td></tr>`}).join(''):`<tr><td colspan="5">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้')}</td></tr>`}
+</table></div>`}
+function scoreSheetPage(id){const sheet=SC.find(x=>x.id==id);if(!sheet)return V.score();
+if(scCurrentId!==id){scCurrentId=id;scTab='collect'}
+const ty=sheet.classKey[0],lv=+sheet.classKey.slice(1),roster=ST.filter(x=>x.ty==ty&&x.lv==lv),scores=sheet.scores||{};
+roster.forEach(st=>st._sc=scores[st.id]||{});
+const cc=sheet.collectCols||[],ec=sheet.examCols||defaultExamCols();
+return `<div class="pt"><h2>${esc(sheet.subject)}${sheet.code?' ('+esc(sheet.code)+')':''}</h2><p><a class="bk" data-r="score">‹ บันทึกคะแนนนักเรียน</a> / ${esc(classLabel(sheet.classKey))}${sheet.teacherName?' · ครูผู้สอน '+esc(sheet.teacherName):''}</p></div>
+<div class="card"><div style="margin-bottom:14px">${tabBtn('collect','1. คะแนนเก็บ')}${tabBtn('exam','2. คะแนนสอบ')}${tabBtn('sum','3. รวมคะแนน')}</div>
+${scTab=='collect'?collectTable(id,roster,cc):scTab=='exam'?examTable(id,roster,ec):summaryTable(roster,cc,ec)}
+</div>`}
+function addCol(id,mode){const sheet=SC.find(x=>x.id==id);if(!sheet)return;const key=mode=='collect'?'collectCols':'examCols';
+sheet[key]=[...(sheet[key]||[]),{id:uid(),name:'',max:0}];render()}
+async function saveTab(id,mode){const sheet=SC.find(x=>x.id==id);if(!sheet)return;const key=mode=='collect'?'collectCols':'examCols';
+if(mode=='collect'){document.querySelectorAll('.cc-name').forEach(inp=>{if(sheet[key][+inp.dataset.ci])sheet[key][+inp.dataset.ci].name=inp.value.trim()});
+document.querySelectorAll('.cc-max').forEach(inp=>{if(sheet[key][+inp.dataset.ci])sheet[key][+inp.dataset.ci].max=parseFloat(inp.value)||0})}
+else{document.querySelectorAll('.ec-max').forEach(inp=>{if(sheet[key][+inp.dataset.ci])sheet[key][+inp.dataset.ci].max=parseFloat(inp.value)||0})}
+const scores={...(sheet.scores||{})};
+document.querySelectorAll('.sc-cell').forEach(inp=>{const sid=inp.dataset.sid,col=inp.dataset.col,v=inp.value;
+if(!scores[sid])scores[sid]={};if(!scores[sid][mode])scores[sid][mode]={};
+if(v!=='')scores[sid][mode][col]=parseFloat(v);else delete scores[sid][mode][col]});
+$('#sc_save_msg').textContent='กำลังบันทึก...';
+try{await db.collection('scoresheets').doc(id).set({[key]:sheet[key],scores},{merge:true});sheet.scores=scores;$('#sc_save_msg').textContent='บันทึกเรียบร้อย'}
+catch(e){$('#sc_save_msg').textContent='บันทึกไม่สำเร็จ: '+e.message}}
 V.score=s=>s?scoreSheetPage(s):PT('บันทึกคะแนนนักเรียน','สร้างและจัดการใบบันทึกคะแนนของคุณ (เห็นเฉพาะบัญชีที่สร้าง)')+P('สร้างใบบันทึกคะแนนนักเรียน',scoreForm())+P('ใบบันทึกคะแนนของฉัน',scoreList());
-document.addEventListener('input',e=>{if(!e.target.classList.contains('sc-in'))return;const row=e.target.closest('tr');if(!row)return;
-let sum=0,any=false;row.querySelectorAll('.sc-in').forEach(inp=>{const v=parseFloat(inp.value);if(!isNaN(v)){sum+=v;any=true}});
-const tot=row.querySelector('.sc-total');if(tot)tot.textContent=any?sum:'-'});
+document.addEventListener('input',e=>{if(!e.target.classList.contains('sc-cell'))return;const row=e.target.closest('tr');if(!row)return;
+let sum=0,any=false;row.querySelectorAll('.sc-cell').forEach(inp=>{const v=parseFloat(inp.value);if(!isNaN(v)){sum+=v;any=true}});
+const tot=row.querySelector('.row-total');if(tot)tot.textContent=any?sum:'-'});
+document.addEventListener('click',e=>{const a=e.target.closest('[data-sctab]');if(a){scTab=a.dataset.sctab;render();return}
+const dc=e.target.closest('[data-delcol]');if(dc){const[mode,idx]=dc.dataset.delcol.split(':'),sheet=SC.find(x=>x.id==scCurrentId);if(!sheet)return;
+if(!confirm('ลบคอลัมน์นี้? คะแนนในคอลัมน์นี้จะหายไปเมื่อกดบันทึก'))return;
+const key=mode=='collect'?'collectCols':'examCols';sheet[key]=sheet[key].filter((_,i)=>i!=idx);render()}});
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-scd]');if(!a)return;const s=SC.find(x=>x.id==a.dataset.scd);if(!s)return;
 if(!confirm('ลบใบบันทึกคะแนนนี้?'))return;try{await db.collection('scoresheets').doc(a.dataset.scd).delete()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
