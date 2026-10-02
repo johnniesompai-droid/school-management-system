@@ -90,6 +90,18 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .cd .ep{background:var(--soft);color:#1F3F99;border-radius:4px;padding:1px 4px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cd.sl .ep{background:#fff}
 @media(max-width:560px){.cd{min-height:56px;padding:2px}.cd .ep{font-size:.6rem}}
 .ph{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0}.pc .ph{width:40px;height:40px}.ph0{display:grid;place-items:center;background:var(--soft);color:var(--blue)}.ph0 svg{width:20px;height:20px}
+.dz{border:1.5px dashed var(--line);border-radius:12px;padding:22px 16px;text-align:center;cursor:pointer;background:#FAFBFD;transition:border-color .15s,background .15s}
+.dz:hover,.dz.dz-over{border-color:var(--blue);background:var(--soft)}
+.dz-icon{width:40px;height:40px;margin:0 auto 10px;color:var(--blue);display:flex;align-items:center;justify-content:center;background:var(--soft);border-radius:50%}
+.dz-icon svg{width:20px;height:20px}
+.dz-text{font-size:.86rem;color:var(--text);margin-bottom:4px}
+.dz-sub{font-size:.7rem;color:var(--mute)}
+.dzrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;background:#fff;flex-wrap:wrap}
+.dz-badge{flex-shrink:0;font-size:.64rem;font-weight:700;border-radius:6px;padding:4px 7px;letter-spacing:.02em}
+.dzrow-info{flex:1;min-width:120px;overflow:hidden}
+.dzrow-info b{display:block;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dzrow-info small{color:var(--mute);font-size:.72rem}
+.dzrow-actions{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -125,7 +137,7 @@ chat:'<path d="M4 5h16v11H9l-5 4z"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M
 user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
 gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
 db:'<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
-ud:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
+ud:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',upload:'<path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/><path d="M12 11v7M9 14l3-3 3 3"/>',code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
 coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/>',
 bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
@@ -175,50 +187,81 @@ const inp=e.target.closest('[data-bpcheck]');if(inp){const v=inp.value.trim(),is
 try{await db.collection('budgetprojects').doc(inp.dataset.bpcheck).set({checkDate:iso},{merge:true})}catch(err){alert('บันทึกไม่สำเร็จ: '+err.message)}}});
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-bpd]');if(!a||!canManageDiv('budget'))return;if(!confirm('ลบโครงการนี้?'))return;
 try{await db.collection('budgetprojects').doc(a.dataset.bpd).delete()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
+const ACCEPT='.pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.webp,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,image/png,image/jpeg,image/webp';
+const ALLOWED_EXT=['pdf','doc','docx','xls','xlsx','png','jpg','jpeg','webp'];
+const extOf=n=>(String(n).split('.').pop()||'').toLowerCase();
+const allowedFile=f=>ALLOWED_EXT.includes(extOf(f.name));
+const fmtSize=b=>b==null?'':b<1024?b+' B':b<1024*1024?(b/1024).toFixed(0)+' KB':(b/1024/1024).toFixed(1)+' MB';
+const fileKind=n=>{const e=extOf(n);return e=='pdf'?['PDF','#E5484D']:(e=='doc'||e=='docx')?['DOC','#2F6BFF']:(e=='xls'||e=='xlsx')?['XLS','#22B573']:['png','jpg','jpeg','webp'].includes(e)?['IMG','#8B5CF6']:['FILE','#7B879C']};
+function dzBox(fn,args){const callArgs=args.map(a=>`'${a}'`).concat(['this.files[0]']).join(',');
+return `<div class="dz" data-dzfn="${fn}" data-dzargs='${JSON.stringify(args)}'>
+<div class="dz-icon">${ic('upload')}</div>
+<div class="dz-text">ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</div>
+<div class="dz-sub">รองรับไฟล์ PDF, Word, Excel, รูปภาพ (ไม่เกิน 10MB/ไฟล์)</div>
+<input type="file" class="dz-input hid" accept="${ACCEPT}" onchange="${fn}(${callArgs})">
+</div>`}
+function fileRow(f,delAttr,delValue,canManage){const[kind,color]=fileKind(f.name);
+return `<div class="dzrow"><span class="dz-badge" style="background:${color}1a;color:${color}">${kind}</span>
+<span class="dzrow-info"><b>${esc(f.name)}</b><small>${fmtSize(f.size)}</small></span>
+<span class="dzrow-actions"><a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>${canManage?` <button type="button" class="btn r" ${delAttr}="${delValue}">✕</button>`:''}</span></div>`}
+document.addEventListener('click',e=>{if(!e.isTrusted)return;const z=e.target.closest('.dz');if(z){const inp=z.querySelector('.dz-input');if(inp)inp.click()}});
+document.addEventListener('dragover',e=>{const z=e.target.closest('.dz');if(z){e.preventDefault();z.classList.add('dz-over')}});
+document.addEventListener('dragleave',e=>{const z=e.target.closest('.dz');if(z)z.classList.remove('dz-over')});
+document.addEventListener('drop',e=>{const z=e.target.closest('.dz');if(!z)return;e.preventDefault();z.classList.remove('dz-over');
+const f=e.dataTransfer.files[0];if(!f)return;
+if(z.id=='mm_dz'){mmPick(f);return}
+const fn=z.dataset.dzfn,args=JSON.parse(z.dataset.dzargs||'[]');if(fn&&window[fn])window[fn](...args,f)});
 let DD={};
 const canManageDiv=k=>{if(!me)return false;if(me.role=='founder')return true;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&(mp.wk||[]).includes(k))};
 const divDocsBlock=k=>{const files=(DD[k]||{}).files||[],can=canManageDiv(k);
-return `<div id="dd_${k}">${files.length?files.map((f,i)=>`<div class="rw"><span>📄 ${esc(f.name)}</span><span><a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>${can?` <button class="btn r" data-dd="${k}:${i}">ลบ</button>`:''}</span></div>`).join(''):E('ยังไม่มีเอกสาร',60)}</div>
-${can?`<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><input class="in" id="dd_name_${k}" placeholder="ชื่อเอกสาร" style="max-width:220px;margin:0"><input type="file" id="dd_file_${k}" accept="application/pdf"><button type="button" class="btn g" onclick="uploadDivDoc('${k}')">แนบไฟล์</button></div><div id="dd_msg_${k}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
-async function uploadDivDoc(k){const f=$('#dd_file_'+k).files[0];if(!f)return alert('เลือกไฟล์ PDF ก่อน');if(f.type!='application/pdf')return alert('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
+return `<div id="dd_${k}">${files.length?files.map((f,i)=>fileRow(f,'data-dd',`${k}:${i}`,can)).join(''):E('ยังไม่มีเอกสาร',60)}</div>
+${can?`<input class="in" id="dd_name_${k}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="max-width:280px;margin:10px 0 8px">${dzBox('uploadDivDoc',[k])}<div id="dd_msg_${k}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
+async function uploadDivDoc(k,file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#dd_name_'+k).value.trim()||f.name;$('#dd_msg_'+k).textContent='กำลังอัปโหลด...';
 try{const path=`divisions/${k}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
-const files=[...((DD[k]||{}).files||[]),{name,url,path}];await db.collection('divdocs').doc(k).set({files},{merge:true});DD[k]={...(DD[k]||{}),files};render()}
+const files=[...((DD[k]||{}).files||[]),{name,url,path,size:f.size}];await db.collection('divdocs').doc(k).set({files},{merge:true});DD[k]={...(DD[k]||{}),files};render()}
 catch(e){$('#dd_msg_'+k).textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-dd]');if(!a||!me)return;const[k,idx]=a.dataset.dd.split(':');if(!canManageDiv(k))return;
 if(!confirm('ลบไฟล์นี้?'))return;const files=(DD[k]||{}).files||[],f=files[+idx];
 try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('divdocs').doc(k).set({files:nf},{merge:true});DD[k]={...(DD[k]||{}),files:nf};render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 
 const divFieldBlock=(k,field)=>{const can=canManageDiv(k),files=(DD[k]||{})[field]||[];
-return `<div id="ddf_${k}_${field}">${files.length?files.map((f,i)=>`<div class="rw"><span>📄 ${esc(f.name)}</span><span><a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>${can?` <button class="btn r" data-ddf="${k}:${field}:${i}">ลบ</button>`:''}</span></div>`).join(''):E('ยังไม่มีเอกสาร',60)}</div>
-${can?`<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><input class="in" id="ddfn_${k}_${field}" placeholder="ชื่อเอกสาร" style="max-width:220px;margin:0"><input type="file" id="ddff_${k}_${field}" accept="application/pdf"><button type="button" class="btn g" onclick="uploadDivField('${k}','${field}')">แนบไฟล์</button></div><div id="ddfm_${k}_${field}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
-async function uploadDivField(k,field){const f=$('#ddff_'+k+'_'+field).files[0];if(!f)return alert('เลือกไฟล์ PDF ก่อน');if(f.type!='application/pdf')return alert('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
+return `<div id="ddf_${k}_${field}">${files.length?files.map((f,i)=>fileRow(f,'data-ddf',`${k}:${field}:${i}`,can)).join(''):E('ยังไม่มีเอกสาร',60)}</div>
+${can?`<input class="in" id="ddfn_${k}_${field}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="max-width:280px;margin:10px 0 8px">${dzBox('uploadDivField',[k,field])}<div id="ddfm_${k}_${field}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
+async function uploadDivField(k,field,file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#ddfn_'+k+'_'+field).value.trim()||f.name;$('#ddfm_'+k+'_'+field).textContent='กำลังอัปโหลด...';
 try{const path=`divisions/${k}/${field}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
-const cur=(DD[k]||{})[field]||[],files=[...cur,{name,url,path}];
+const cur=(DD[k]||{})[field]||[],files=[...cur,{name,url,path,size:f.size}];
 await db.collection('divdocs').doc(k).set({[field]:files},{merge:true});DD[k]={...(DD[k]||{}),[field]:files};render()}
 catch(e){$('#ddfm_'+k+'_'+field).textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-ddf]');if(!a||!me)return;const[k,field,idx]=a.dataset.ddf.split(':');if(!canManageDiv(k))return;
 if(!confirm('ลบไฟล์นี้?'))return;const cur=(DD[k]||{})[field]||[],f=cur[+idx];
 try{await storage.ref(f.path).delete().catch(()=>{});const nf=cur.filter((_,i)=>i!=+idx);await db.collection('divdocs').doc(k).set({[field]:nf},{merge:true});DD[k]={...(DD[k]||{}),[field]:nf};render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
-let MM=[];
+let MM=[],mmFile=null;
+function mmPick(f){if(!f){mmFile=null;if($('#mm_filename'))$('#mm_filename').textContent='';return}
+if(!allowedFile(f)){alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');return}
+if(f.size>10*1024*1024){alert('ไฟล์ใหญ่เกิน 10MB');return}
+mmFile=f;if($('#mm_filename'))$('#mm_filename').textContent=`เลือกไฟล์: ${f.name} (${fmtSize(f.size)})`}
+
 function memoForm(){return `<div class="grid g3">
 <label class="lb">ชื่อเรื่อง<input class="in" id="mm_title" placeholder="ชื่อเรื่องหนังสือ"></label>
 <label class="lb">ดำเนินการภายในวันที่<input class="in" id="mm_deadline" type="date"></label>
 <label class="lb">มอบหมายให้<select class="in" id="mm_assignee"><option value="">-- เลือกครู --</option>${PP.map(p=>`<option value="${p.id}">${esc(dn(p))}${p.po?' · '+esc(p.po):''}</option>`).join('')}</select></label>
 </div>
-<label class="lb">แนบไฟล์ PDF (ไม่บังคับ)<input type="file" id="mm_file" accept="application/pdf"></label>
+<div class="lb">แนบไฟล์ (ไม่บังคับ)</div>
+<div id="mm_dz">${dzBox('mmPick',[])}</div>
+<div id="mm_filename" style="font-size:.78rem;color:var(--mute);margin-top:6px"></div>
 <div style="margin-top:10px"><button type="button" class="btn" onclick="createMemo()">บันทึกและมอบหมาย</button></div>
 <div id="mm_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>
 <div style="border-top:1px solid var(--line);margin:16px 0"></div>`}
 async function createMemo(){const title=$('#mm_title').value.trim(),deadline=$('#mm_deadline').value,sid=$('#mm_assignee').value;
 if(!title)return alert('กรอกชื่อเรื่อง');if(!sid)return alert('เลือกผู้รับมอบหมาย');
-const p=PP.find(x=>x.id==sid),id=uid();let files=[];const f=$('#mm_file').files[0];
+const p=PP.find(x=>x.id==sid),id=uid();let files=[];const f=mmFile;
 $('#mm_msg').textContent='กำลังบันทึก...';
-try{if(f){if(f.type!='application/pdf')throw new Error('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)throw new Error('ไฟล์ใหญ่เกิน 10MB');
-const path=`memos/${id}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();files=[{name:f.name,url,path}]}
+try{if(f){if(!allowedFile(f))throw new Error('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)throw new Error('ไฟล์ใหญ่เกิน 10MB');
+const path=`memos/${id}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();files=[{name:f.name,url,path,size:f.size}]}
 await db.collection('memos').doc(id).set({title,deadline:deadline||'',assigneeSid:sid,assigneeName:dn(p),files,createdBy:me._id,createdByName:me.n,createdAt:new Date().toISOString(),ack:false,ackAt:null});
-$('#mm_title').value='';$('#mm_deadline').value='';$('#mm_assignee').value='';$('#mm_file').value='';$('#mm_msg').textContent='บันทึกและมอบหมายเรียบร้อย'}
+$('#mm_title').value='';$('#mm_deadline').value='';$('#mm_assignee').value='';mmFile=null;if($('#mm_filename'))$('#mm_filename').textContent='';$('#mm_msg').textContent='บันทึกและมอบหมายเรียบร้อย'}
 catch(e){$('#mm_msg').textContent='บันทึกไม่สำเร็จ: '+e.message}}
 function memoList(){if(!MM.length)return E('ยังไม่มีหนังสือที่เกษียน',60);const t=T0();
 return MM.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')).map(m=>{const dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
@@ -233,12 +276,12 @@ const canManageAdmin=()=>{if(!me)return false;if(me.role=='founder')return true;
 const adminContactCard=()=>{const as=PP.filter(p=>/ธุรการ/.test(p.po||''));
 return as.length?as.map(p=>`<div class="pc" style="display:flex;gap:8px;align-items:center">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}${p.ph?' · '+esc(p.ph):''}</small></span></div>`).join(''):E('ยังไม่มีข้อมูลครูธุรการในหน้าบุคลากร',80)};
 const adminDocsBlock=key=>{const files=AD[key]||[],can=canManageAdmin();
-return `<div id="ad_${key}">${files.length?files.map((f,i)=>`<div class="rw"><span>📄 ${esc(f.name)}</span><span><a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>${can?` <button class="btn r" data-ad="${key}:${i}">ลบ</button>`:''}</span></div>`).join(''):E('ยังไม่มีเอกสาร',60)}</div>
-${can?`<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><input class="in" id="ad_name_${key}" placeholder="ชื่อเอกสาร" style="max-width:220px;margin:0"><input type="file" id="ad_file_${key}" accept="application/pdf"><button type="button" class="btn g" onclick="uploadAdminDoc('${key}')">แนบไฟล์</button></div><div id="ad_msg_${key}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
-async function uploadAdminDoc(key){const f=$('#ad_file_'+key).files[0];if(!f)return alert('เลือกไฟล์ PDF ก่อน');if(f.type!='application/pdf')return alert('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
+return `<div id="ad_${key}">${files.length?files.map((f,i)=>fileRow(f,'data-ad',`${key}:${i}`,can)).join(''):E('ยังไม่มีเอกสาร',60)}</div>
+${can?`<input class="in" id="ad_name_${key}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="max-width:280px;margin:10px 0 8px">${dzBox('uploadAdminDoc',[key])}<div id="ad_msg_${key}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
+async function uploadAdminDoc(key,file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#ad_name_'+key).value.trim()||f.name;$('#ad_msg_'+key).textContent='กำลังอัปโหลด...';
 try{const path=`admin/${key}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
-const files=[...(AD[key]||[]),{name,url,path}];await db.collection('admindocs').doc(key).set({files},{merge:true});AD[key]=files;render()}
+const files=[...(AD[key]||[]),{name,url,path,size:f.size}];await db.collection('admindocs').doc(key).set({files},{merge:true});AD[key]=files;render()}
 catch(e){$('#ad_msg_'+key).textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-ad]');if(!a||!me)return;const[key,idx]=a.dataset.ad.split(':');if(!canManageAdmin())return;
 if(!confirm('ลบไฟล์นี้?'))return;const files=AD[key]||[],f=files[+idx];
@@ -496,9 +539,11 @@ const STFL=[['tt','คำนำหน้า'],['fn','ชื่อ'],['ln','น�
 let sim='',stEd=null,stCls=null;
 function setSImg(v){sim=v;const p=$('#stprev');v?p.src=v:p.removeAttribute('src');p.classList.toggle('hid',!v);$('#stprm').classList.toggle('hid',!v)}
 function pickSImg(f){if(!f)return;const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=240;const sc=Math.min(im.width,im.height);c.getContext('2d').drawImage(im,(im.width-sc)/2,(im.height-sc)*.2,sc,sc,0,0,240,240);setSImg(c.toDataURL('image/jpeg',.8))};im.onerror=()=>alert('อ่านไฟล์รูปไม่สำเร็จ');im.src=e.target.result};r.readAsDataURL(f)}
-const docsBlock=s=>`<div class="lb" style="margin:14px 0 6px">เอกสารแนบ (PDF)</div>
-<div id="stdl">${(s.docs||[]).map((d,i)=>`<div class="rw"><span>📄 ${esc(d.name)}</span><span><a class="btn o" href="${d.url}" target="_blank" rel="noopener">เปิดดู</a> <button class="btn r" data-sd="${i}">ลบ</button></span></div>`).join('')||'<div class="empty" style="min-height:50px">ยังไม่มีไฟล์แนบ</div>'}</div>
-<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><input class="in" id="stdn" placeholder="ชื่อเอกสาร เช่น สำเนาบัตรประชาชน" style="max-width:240px;margin:0"><input type="file" id="stdf" accept="application/pdf"><button type="button" class="btn g" onclick="uploadStDoc()">แนบไฟล์</button></div><div id="stdmsg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`;
+const docsBlock=s=>`<div class="lb" style="margin:14px 0 6px">เอกสารแนบ</div>
+<div id="stdl">${(s.docs||[]).map((d,i)=>fileRow(d,'data-sd',i,true)).join('')||'<div class="empty" style="min-height:50px">ยังไม่มีไฟล์แนบ</div>'}</div>
+<input class="in" id="stdn" placeholder="ชื่อเอกสาร (ไม่บังคับ) เช่น สำเนาบัตรประชาชน" style="max-width:280px;margin:10px 0 8px">
+${dzBox('uploadStDoc',[])}
+<div id="stdmsg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`;
 function openStF(cls,id){stCls=cls;stEd=id||null;const s=id?ST.find(x=>x.id==id):{};
 STFL.forEach(f=>$('#st_'+f[0]).value=f[2]=='date'?(s[f[0]]?th(s[f[0]]):''):s[f[0]]||'');setSImg(s.im||'');
 $('#stft').textContent=id?'แก้ไขข้อมูลนักเรียน':'เพิ่มนักเรียน';
@@ -511,12 +556,12 @@ if(!r.fn)return alert('กรอกชื่อ');if(bad)return alert('รูป
 r.id=stEd||uid();const i=ST.findIndex(x=>x.id==r.id);i<0?ST.push(r):ST[i]={...ST[i],...r};
 try{await db.collection('students').doc(r.id).set(r,{merge:true})}catch(e){return alert('บันทึกไม่สำเร็จ: '+e.message)}
 stEd=r.id;render();openStF(stCls,r.id)}
-async function uploadStDoc(){const f=$('#stdf').files[0];if(!f)return alert('เลือกไฟล์ PDF ก่อน');if(f.type!='application/pdf')return alert('รับเฉพาะไฟล์ PDF');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
+async function uploadStDoc(file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#stdn').value.trim()||f.name;$('#stdmsg').textContent='กำลังอัปโหลด...';
 try{const path=`students/${stEd}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
-const s=ST.find(x=>x.id==stEd),docs=[...(s.docs||[]),{name,url,path}];
+const s=ST.find(x=>x.id==stEd),docs=[...(s.docs||[]),{name,url,path,size:f.size}];
 await db.collection('students').doc(stEd).set({docs},{merge:true});s.docs=docs;
-$('#stdn').value='';$('#stdf').value='';$('#stdmsg').textContent='';$('#stdocs').innerHTML=docsBlock(s)}
+$('#stdn').value='';$('#stdmsg').textContent='';$('#stdocs').innerHTML=docsBlock(s)}
 catch(e){$('#stdmsg').textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
 const lvPage=s=>{const t=s[0],i=+s.slice(1);if(!CT[t]||!(i>=0&&i<CT[t][1]))return V.stud();const l=ST.filter(x=>x.ty==t&&x.lv==i);
 return `<div class="pt"><h2>${LV[i]}</h2><p><a class="bk" data-r="stud">‹ นักเรียน</a> / ${CT[t][0]} · ${l.length} คน</p></div>`
