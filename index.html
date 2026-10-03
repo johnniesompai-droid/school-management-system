@@ -102,6 +102,20 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .dzrow-info b{display:block;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dzrow-info small{color:var(--mute);font-size:.72rem}
 .dzrow-actions{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
+.tb-wrap-sticky{max-height:560px;overflow:auto}
+.tb-wrap-sticky table{border-collapse:separate;border-spacing:0}
+.tb-wrap-sticky th{position:sticky;top:0;z-index:2;background:var(--soft)}
+.tb-wrap-sticky td:nth-child(1),.tb-wrap-sticky th:nth-child(1){position:sticky;left:0;z-index:3;background:#fff;min-width:44px}
+.tb-wrap-sticky td:nth-child(2),.tb-wrap-sticky th:nth-child(2){position:sticky;left:44px;z-index:3;background:#fff;min-width:60px}
+.tb-wrap-sticky td:nth-child(3),.tb-wrap-sticky th:nth-child(3){position:sticky;left:104px;z-index:3;background:#fff}
+.tb-wrap-sticky th:nth-child(1),.tb-wrap-sticky th:nth-child(2),.tb-wrap-sticky th:nth-child(3){z-index:4;background:var(--soft)}
+.sc-filled{background:#F3FAF3!important}
+.sc-over{border-color:var(--red)!important;background:#FEECEC!important}
+.card h3 a{cursor:pointer}
+@media print{
+  .tb-wrap-sticky{max-height:none!important;overflow:visible!important}
+  .tb-wrap-sticky th,.tb-wrap-sticky td{position:static!important}
+}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -422,9 +436,12 @@ return `<div class="rw" style="flex-direction:column;align-items:stretch;gap:8px
 <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><b>${esc(m.title)}</b><small>จาก ${esc(m.createdByName||'งานธุรการ')}${m.deadline?' · ดำเนินการภายใน '+th(m.deadline):''}</small></span>
 <em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'#F5A524'}">${m.ack?'รับแล้ว เมื่อ '+th(m.ackAt.slice(0,10)):overdue?'เลยกำหนดแล้ว':'รอดำเนินการ'}</em></div>
 <div style="display:flex;gap:8px;flex-wrap:wrap">${(m.files||[]).map(f=>`<a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>`).join('')}${!m.ack?`<button type="button" class="btn g" data-ackmm="${m.id}">รับทราบ / กดรับหนังสือ</button>`:''}</div></div>`}).join(''):E('ยังไม่มีหนังสือที่ได้รับมอบหมาย'))};
-let SC=[],scTab='collect',scCurrentId=null;
+let SC=[],scTab='collect',scCurrentId=null,scSaveTimer=null;
 function classLabel(k){const ty=k[0],lv=+k.slice(1);return CT[ty]?CT[ty][0]+' · '+LV[lv]:''}
 function defaultExamCols(){return[{id:uid(),name:'สอบเก็บคะแนน',max:0},{id:uid(),name:'สอบกลางภาค',max:0},{id:uid(),name:'สอบปลายภาค',max:0}]}
+function defaultGradeScale(){return[{min:80,label:'4'},{min:75,label:'3.5'},{min:70,label:'3'},{min:65,label:'2.5'},{min:60,label:'2'},{min:55,label:'1.5'},{min:50,label:'1'},{min:0,label:'0'}]}
+function calcGrade(scale,total,maxTotal){if(!maxTotal)return'-';const pct=total/maxTotal*100,sorted=scale.slice().sort((a,b)=>b.min-a.min);
+for(const g of sorted){if(pct>=(+g.min||0))return g.label}return sorted.length?sorted[sorted.length-1].label:'-'}
 function scoreForm(){return `<div class="grid g3">
 <label class="lb">ชั้นเรียน<select class="in" id="sc_cls"><option value="">-- เลือกชั้นเรียน --</option>${Object.keys(CT).map(t=>LV.slice(0,CT[t][1]).map((n,i)=>`<option value="${t}${i}">${CT[t][0]} · ${n}</option>`).join('')).join('')}</select></label>
 <label class="lb">รายวิชา<input class="in" id="sc_subject" placeholder="เช่น ภาษาไทย"></label>
@@ -438,47 +455,74 @@ async function createScoreSheet(){const cls=$('#sc_cls').value,subject=$('#sc_su
 if(!cls)return alert('เลือกชั้นเรียน');if(!subject)return alert('กรอกรายวิชา');
 const tp=PP.find(x=>x.id==tid),id=uid();
 $('#sc_msg').textContent='กำลังสร้าง...';
-try{await db.collection('scoresheets').doc(id).set({classKey:cls,subject,code,teacherSid:tid||null,teacherName:tp?dn(tp):'',ownerUid:me._id,ownerName:me.n,createdAt:new Date().toISOString(),collectCols:[],examCols:defaultExamCols(),scores:{}});go('score:'+id)}
+try{await db.collection('scoresheets').doc(id).set({classKey:cls,subject,code,teacherSid:tid||null,teacherName:tp?dn(tp):'',ownerUid:me._id,ownerName:me.n,createdAt:new Date().toISOString(),collectCols:[],examCols:defaultExamCols(),gradeScale:defaultGradeScale(),scores:{}});go('score:'+id)}
 catch(e){$('#sc_msg').textContent='สร้างไม่สำเร็จ: '+e.message}}
 function scoreList(){const mine=SC.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
 return mine.length?mine.map(s=>`<div class="rw"><span style="cursor:pointer" data-r="score:${s.id}"><b>${esc(s.subject)}</b>${s.code?' ('+esc(s.code)+')':''}<small>${esc(classLabel(s.classKey))}${s.teacherName?' · ครูผู้สอน '+esc(s.teacherName):''}</small></span><span><button type="button" class="btn o" data-r="score:${s.id}">เปิด</button> <button type="button" class="btn r" data-scd="${s.id}">ลบ</button></span></div>`).join(''):E('ยังไม่มีใบบันทึกคะแนน')}
 function tabBtn(t,label){return `<button type="button" class="btn ${scTab==t?'':'o'}" data-sctab="${t}" style="margin-right:8px">${label}</button>`}
+function colHead(mode,c,ci,total,editableName){return `<th style="min-width:150px">
+${editableName?`<input class="in ${mode}-name" style="margin:0 0 4px;font-weight:600" data-ci="${ci}" value="${esc(c.name)}" placeholder="ชื่อใบงาน">`:`<div style="font-weight:600;font-size:.82rem;margin-bottom:4px">${esc(c.name)}</div>`}
+<div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">
+<span style="font-size:.66rem;color:var(--mute);white-space:nowrap">เต็ม</span><input class="in ${mode}-max" type="number" style="margin:0;max-width:60px" data-ci="${ci}" value="${c.max??0}">
+<button type="button" class="btn o" style="padding:2px 6px" data-movecol="${mode}:${ci}:-1" ${ci==0?'disabled':''}>◀</button>
+<button type="button" class="btn o" style="padding:2px 6px" data-movecol="${mode}:${ci}:1" ${ci==total-1?'disabled':''}>▶</button>
+${editableName?`<button type="button" class="btn r" style="padding:2px 6px" data-delcol="${mode}:${ci}">✕</button>`:''}
+</div></th>`}
+function scoreRow(st,i,cols,mode){const sc=st._sc[mode]||{};let sum=0;cols.forEach(c=>sum+=+sc[c.id]||0);
+return `<tr><td>${i+1}</td><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td>${cols.map(c=>{const v=sc[c.id];const over=v!=null&&c.max&&+v>+c.max;
+return `<td><input class="in sc-cell${v!=null&&v!==''?' sc-filled':''}${over?' sc-over':''}" style="margin:0;max-width:76px" type="number" step="any" data-sid="${st.id}" data-col="${c.id}" value="${v??''}"></td>`}).join('')}<td><b class="row-total">${sum||'-'}</b></td></tr>`}
 function collectTable(id,roster,cc){
-return `<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button type="button" class="btn g" onclick="addCol('${id}','collect')">+ เพิ่มช่องบันทึกคะแนน</button></div>
-<div class="wrap"><table class="tb"><tr><th>#</th><th style="min-width:160px">ชื่อนักเรียน</th>
-${cc.map((c,ci)=>`<th style="min-width:140px"><input class="in cc-name" style="margin:0 0 4px;font-weight:600" data-ci="${ci}" value="${esc(c.name)}" placeholder="ชื่อใบงาน"><div style="display:flex;gap:4px;align-items:center"><span style="font-size:.68rem;color:var(--mute);white-space:nowrap">เต็ม</span><input class="in cc-max" type="number" style="margin:0;max-width:64px" data-ci="${ci}" value="${c.max??0}"><button type="button" class="btn r" style="padding:2px 7px" data-delcol="collect:${ci}">✕</button></div></th>`).join('')}
-<th>รวม</th></tr>
-${roster.length?roster.map((st,i)=>{const sc=st._sc.collect||{};let sum=0;cc.forEach(c=>sum+=+sc[c.id]||0);
-return `<tr><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td>${cc.map(c=>`<td><input class="in sc-cell" style="margin:0;max-width:80px" type="number" data-sid="${st.id}" data-col="${c.id}" value="${sc[c.id]??''}"></td>`).join('')}<td><b class="row-total">${sum||'-'}</b></td></tr>`}).join(''):`<tr><td colspan="${cc.length+3}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
+return `<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button type="button" class="btn g" onclick="addCol('${id}','collect')">+ เพิ่มช่องคะแนน</button></div>
+<div class="wrap tb-wrap-sticky"><table class="tb"><tr><th>ลำดับ</th><th>เลขที่</th><th style="min-width:160px">ชื่อ-นามสกุล</th>
+${cc.map((c,ci)=>colHead('cc',c,ci,cc.length,true)).join('')}
+<th>รวม${cc.length?` (เต็ม ${cc.reduce((s,c)=>s+(+c.max||0),0)})`:''}</th></tr>
+${roster.length?roster.map((st,i)=>scoreRow(st,i,cc,'collect')).join(''):`<tr><td colspan="${cc.length+4}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
 </table></div>
-<div style="margin-top:12px"><button type="button" class="btn" onclick="saveTab('${id}','collect')">บันทึกคะแนนเก็บ</button></div>
-<div id="sc_save_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`}
+<div style="margin-top:12px;display:flex;align-items:center;gap:10px"><button type="button" class="btn" onclick="saveTab('${id}','collect')">บันทึกคะแนนเก็บ</button><span id="sc_save_msg" style="font-size:.78rem;color:var(--mute)"></span></div>`}
 function examTable(id,roster,ec){
-return `<div class="wrap"><table class="tb"><tr><th>#</th><th style="min-width:160px">ชื่อนักเรียน</th>
-${ec.map((c,ci)=>`<th style="min-width:140px">${esc(c.name)}<div style="display:flex;gap:4px;align-items:center;margin-top:4px"><span style="font-size:.68rem;color:var(--mute);white-space:nowrap">เต็ม</span><input class="in ec-max" type="number" style="margin:0;max-width:64px" data-ci="${ci}" value="${c.max??0}"></div></th>`).join('')}
-<th>รวม</th></tr>
-${roster.length?roster.map((st,i)=>{const sc=st._sc.exam||{};let sum=0;ec.forEach(c=>sum+=+sc[c.id]||0);
-return `<tr><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td>${ec.map(c=>`<td><input class="in sc-cell" style="margin:0;max-width:80px" type="number" data-sid="${st.id}" data-col="${c.id}" value="${sc[c.id]??''}"></td>`).join('')}<td><b class="row-total">${sum||'-'}</b></td></tr>`}).join(''):`<tr><td colspan="${ec.length+3}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
+return `<div class="wrap tb-wrap-sticky"><table class="tb"><tr><th>ลำดับ</th><th>เลขที่</th><th style="min-width:160px">ชื่อ-นามสกุล</th>
+${ec.map((c,ci)=>colHead('ec',c,ci,ec.length,false)).join('')}
+<th>รวม${ec.length?` (เต็ม ${ec.reduce((s,c)=>s+(+c.max||0),0)})`:''}</th></tr>
+${roster.length?roster.map((st,i)=>scoreRow(st,i,ec,'exam')).join(''):`<tr><td colspan="${ec.length+4}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
 </table></div>
-<div style="margin-top:12px"><button type="button" class="btn" onclick="saveTab('${id}','exam')">บันทึกคะแนนสอบ</button></div>
-<div id="sc_save_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`}
-function summaryTable(roster,cc,ec){
+<div style="margin-top:12px;display:flex;align-items:center;gap:10px"><button type="button" class="btn" onclick="saveTab('${id}','exam')">บันทึกคะแนนสอบ</button><span id="sc_save_msg" style="font-size:.78rem;color:var(--mute)"></span></div>`}
+function gradeScaleEditor(id,scale){return `<div class="card" style="box-shadow:none;border:1px solid var(--line);margin-bottom:16px">
+<h3>เกณฑ์การตัดเกรด<a onclick="addGradeRow('${id}')">+ เพิ่มเกณฑ์</a></h3>
+<div id="gs_rows">${scale.map((g,i)=>`<div class="rw" style="gap:10px"><span style="display:flex;gap:8px;align-items:center;font-size:.85rem">ตั้งแต่ <input class="in gs-min" style="margin:0;max-width:80px" type="number" data-gi="${i}" value="${g.min}">% ขึ้นไป → <input class="in gs-label" style="margin:0;max-width:90px" data-gi="${i}" value="${esc(g.label)}"></span><button type="button" class="btn r" data-delgrade="${i}">✕</button></div>`).join('')}</div>
+<div style="margin-top:10px"><button type="button" class="btn o" onclick="saveGradeScale('${id}')">บันทึกเกณฑ์การตัดเกรด</button></div></div>`}
+function statsBlock(roster,cc,ec,scale,maxA){
+const totals=roster.map(st=>{const col=st._sc.collect||{},exm=st._sc.exam||{};let cs=0;cc.forEach(c=>cs+=+col[c.id]||0);let es=0;ec.forEach(c=>es+=+exm[c.id]||0);return cs+es});
+const n=totals.length,avg=n?(totals.reduce((a,b)=>a+b,0)/n):0,max=n?Math.max(...totals):0,min=n?Math.min(...totals):0;
+const passCut=maxA?maxA*0.5:50,pass=totals.filter(t=>t>=passCut).length,fail=n-pass;
+return `<div class="grid g4">
+${[['คะแนนเต็ม',maxA||'-'],['นักเรียนทั้งหมด',n+' คน'],['คะแนนเฉลี่ย',n?avg.toFixed(2):'-'],['สูงสุด / ต่ำสุด',n?max+' / '+min:'-'],['ผ่าน',pass+' คน'],['ไม่ผ่าน',fail+' คน']].map(x=>P(x[0],`<div style="font-size:1.1rem;font-weight:600;color:var(--blue);text-align:center">${x[1]}</div>`)).join('')}
+</div>`}
+function summaryTable(roster,cc,ec,scale){
 const maxC=cc.reduce((s,c)=>s+(+c.max||0),0),maxE=ec.reduce((s,c)=>s+(+c.max||0),0),maxA=maxC+maxE;
-return `<div class="wrap"><table class="tb"><tr><th>#</th><th style="width:100%">ชื่อนักเรียน</th><th>คะแนนเก็บ${maxC?` (เต็ม ${maxC})`:''}</th><th>คะแนนสอบ${maxE?` (เต็ม ${maxE})`:''}</th><th>รวมทั้งหมด${maxA?` (เต็ม ${maxA})`:''}</th></tr>
-${roster.length?roster.map((st,i)=>{const col=st._sc.collect||{},exm=st._sc.exam||{};let cs=0;cc.forEach(c=>cs+=+col[c.id]||0);let es=0;ec.forEach(c=>es+=+exm[c.id]||0);
-return `<tr><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td><td>${cs||'-'}</td><td>${es||'-'}</td><td><b>${(cs+es)||'-'}</b></td></tr>`}).join(''):`<tr><td colspan="5">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้')}</td></tr>`}
-</table></div>`}
+return (maxA&&maxA!=100?`<div style="font-size:.78rem;color:var(--red);margin-bottom:10px">⚠ คะแนนเต็มรวมทั้งวิชาปัจจุบัน ${maxA} คะแนน (ปกติควรรวมเป็น 100)</div>`:'')
++`<div class="wrap tb-wrap-sticky"><table class="tb"><tr><th>ลำดับ</th><th>เลขที่</th><th style="width:100%">ชื่อ-นามสกุล</th><th>คะแนนเก็บ${maxC?` (เต็ม ${maxC})`:''}</th><th>คะแนนสอบ${maxE?` (เต็ม ${maxE})`:''}</th><th>รวมทั้งหมด${maxA?` (เต็ม ${maxA})`:''}</th><th>ผลการเรียน</th></tr>
+${roster.length?roster.map((st,i)=>{const col=st._sc.collect||{},exm=st._sc.exam||{};let cs=0;cc.forEach(c=>cs+=+col[c.id]||0);let es=0;ec.forEach(c=>es+=+exm[c.id]||0);const tot=cs+es,grade=calcGrade(scale,tot,maxA);
+return `<tr><td>${i+1}</td><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td><td>${cs||'-'}</td><td>${es||'-'}</td><td><b>${tot||'-'}</b></td><td><b style="color:var(--blue)">${grade}</b></td></tr>`}).join(''):`<tr><td colspan="7">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้')}</td></tr>`}
+</table></div>
+<div style="margin-top:16px">${statsBlock(roster,cc,ec,scale,maxA)}</div>
+<div style="margin-top:16px"><button type="button" class="btn o" onclick="window.print()">พิมพ์สรุปผลการเรียน</button></div>`}
 function scoreSheetPage(id){const sheet=SC.find(x=>x.id==id);if(!sheet)return V.score();
 if(scCurrentId!==id){scCurrentId=id;scTab='collect'}
 const ty=sheet.classKey[0],lv=+sheet.classKey.slice(1),roster=ST.filter(x=>x.ty==ty&&x.lv==lv),scores=sheet.scores||{};
 roster.forEach(st=>st._sc=scores[st.id]||{});
-const cc=sheet.collectCols||[],ec=sheet.examCols||defaultExamCols();
+const cc=sheet.collectCols||[],ec=sheet.examCols||defaultExamCols(),gs=sheet.gradeScale||defaultGradeScale();
 return `<div class="pt"><h2>${esc(sheet.subject)}${sheet.code?' ('+esc(sheet.code)+')':''}</h2><p><a class="bk" data-r="score">‹ บันทึกคะแนนนักเรียน</a> / ${esc(classLabel(sheet.classKey))}${sheet.teacherName?' · ครูผู้สอน '+esc(sheet.teacherName):''}</p></div>
 <div class="card"><div style="margin-bottom:14px">${tabBtn('collect','1. คะแนนเก็บ')}${tabBtn('exam','2. คะแนนสอบ')}${tabBtn('sum','3. รวมคะแนน')}</div>
-${scTab=='collect'?collectTable(id,roster,cc):scTab=='exam'?examTable(id,roster,ec):summaryTable(roster,cc,ec)}
+${scTab=='collect'?collectTable(id,roster,cc):scTab=='exam'?examTable(id,roster,ec):gradeScaleEditor(id,gs)+summaryTable(roster,cc,ec,gs)}
 </div>`}
 function addCol(id,mode){const sheet=SC.find(x=>x.id==id);if(!sheet)return;const key=mode=='collect'?'collectCols':'examCols';
 sheet[key]=[...(sheet[key]||[]),{id:uid(),name:'',max:0}];render()}
+function addGradeRow(id){const sheet=SC.find(x=>x.id==id);if(!sheet)return;sheet.gradeScale=[...(sheet.gradeScale||defaultGradeScale()),{min:0,label:''}];render()}
+async function saveGradeScale(id){const sheet=SC.find(x=>x.id==id);if(!sheet)return;const scale=[];
+document.querySelectorAll('.gs-min').forEach(inp=>{const i=+inp.dataset.gi;scale[i]=scale[i]||{};scale[i].min=parseFloat(inp.value)||0});
+document.querySelectorAll('.gs-label').forEach(inp=>{const i=+inp.dataset.gi;scale[i]=scale[i]||{};scale[i].label=inp.value.trim()});
+sheet.gradeScale=scale;
+try{await db.collection('scoresheets').doc(id).set({gradeScale:scale},{merge:true})}catch(e){alert('บันทึกไม่สำเร็จ: '+e.message)}render()}
 async function saveTab(id,mode){const sheet=SC.find(x=>x.id==id);if(!sheet)return;const key=mode=='collect'?'collectCols':'examCols';
 if(mode=='collect'){document.querySelectorAll('.cc-name').forEach(inp=>{if(sheet[key][+inp.dataset.ci])sheet[key][+inp.dataset.ci].name=inp.value.trim()});
 document.querySelectorAll('.cc-max').forEach(inp=>{if(sheet[key][+inp.dataset.ci])sheet[key][+inp.dataset.ci].max=parseFloat(inp.value)||0})}
@@ -488,16 +532,35 @@ document.querySelectorAll('.sc-cell').forEach(inp=>{const sid=inp.dataset.sid,co
 if(!scores[sid])scores[sid]={};if(!scores[sid][mode])scores[sid][mode]={};
 if(v!=='')scores[sid][mode][col]=parseFloat(v);else delete scores[sid][mode][col]});
 $('#sc_save_msg').textContent='กำลังบันทึก...';
-try{await db.collection('scoresheets').doc(id).set({[key]:sheet[key],scores},{merge:true});sheet.scores=scores;$('#sc_save_msg').textContent='บันทึกเรียบร้อย'}
+try{await db.collection('scoresheets').doc(id).set({[key]:sheet[key],scores},{merge:true});sheet.scores=scores;$('#sc_save_msg').textContent='บันทึกแล้ว ✓'}
 catch(e){$('#sc_save_msg').textContent='บันทึกไม่สำเร็จ: '+e.message}}
+function scheduleAutosave(mode){const el=$('#sc_save_msg');if(el)el.textContent='กำลังบันทึก...';
+clearTimeout(scSaveTimer);scSaveTimer=setTimeout(()=>autosaveScores(scCurrentId,mode),1200)}
+async function autosaveScores(id,mode){const sheet=SC.find(x=>x.id==id);if(!sheet)return;
+const scores={...(sheet.scores||{})};
+document.querySelectorAll('.sc-cell').forEach(inp=>{const sid=inp.dataset.sid,col=inp.dataset.col,v=inp.value;
+if(!scores[sid])scores[sid]={};if(!scores[sid][mode])scores[sid][mode]={};
+if(v!=='')scores[sid][mode][col]=parseFloat(v);else delete scores[sid][mode][col]});
+try{await db.collection('scoresheets').doc(id).set({scores},{merge:true});sheet.scores=scores;const el=$('#sc_save_msg');if(el)el.textContent='บันทึกแล้ว ✓'}
+catch(e){const el=$('#sc_save_msg');if(el)el.textContent='บันทึกไม่สำเร็จ (ลองกดปุ่มบันทึกอีกครั้ง)'}}
 V.score=s=>s?scoreSheetPage(s):PT('บันทึกคะแนนนักเรียน','สร้างและจัดการใบบันทึกคะแนนของคุณ (เห็นเฉพาะบัญชีที่สร้าง)')+P('สร้างใบบันทึกคะแนนนักเรียน',scoreForm())+P('ใบบันทึกคะแนนของฉัน',scoreList());
 document.addEventListener('input',e=>{if(!e.target.classList.contains('sc-cell'))return;const row=e.target.closest('tr');if(!row)return;
+const sheet=SC.find(x=>x.id==scCurrentId),mode=scTab=='exam'?'exam':'collect';
+if(sheet){const cols=mode=='exam'?(sheet.examCols||[]):(sheet.collectCols||[]),col=cols.find(c=>c.id==e.target.dataset.col),v=parseFloat(e.target.value);
+e.target.classList.toggle('sc-over',!!(col&&col.max&&!isNaN(v)&&v>+col.max));
+e.target.classList.toggle('sc-filled',e.target.value!=='')}
 let sum=0,any=false;row.querySelectorAll('.sc-cell').forEach(inp=>{const v=parseFloat(inp.value);if(!isNaN(v)){sum+=v;any=true}});
-const tot=row.querySelector('.row-total');if(tot)tot.textContent=any?sum:'-'});
+const tot=row.querySelector('.row-total');if(tot)tot.textContent=any?sum:'-';
+if(scTab=='collect'||scTab=='exam')scheduleAutosave(scTab)});
 document.addEventListener('click',e=>{const a=e.target.closest('[data-sctab]');if(a){scTab=a.dataset.sctab;render();return}
 const dc=e.target.closest('[data-delcol]');if(dc){const[mode,idx]=dc.dataset.delcol.split(':'),sheet=SC.find(x=>x.id==scCurrentId);if(!sheet)return;
 if(!confirm('ลบคอลัมน์นี้? คะแนนในคอลัมน์นี้จะหายไปเมื่อกดบันทึก'))return;
-const key=mode=='collect'?'collectCols':'examCols';sheet[key]=sheet[key].filter((_,i)=>i!=idx);render()}});
+const key=mode=='collect'?'collectCols':'examCols';sheet[key]=sheet[key].filter((_,i)=>i!=idx);render();return}
+const mc=e.target.closest('[data-movecol]');if(mc){const[mode,idx,dir]=mc.dataset.movecol.split(':'),sheet=SC.find(x=>x.id==scCurrentId);if(!sheet)return;
+const key=mode=='collect'?'collectCols':'examCols',i=+idx,j=i+ +dir,arr=sheet[key];
+if(j<0||j>=arr.length)return;[arr[i],arr[j]]=[arr[j],arr[i]];render();return}
+const dg=e.target.closest('[data-delgrade]');if(dg){const sheet=SC.find(x=>x.id==scCurrentId);if(!sheet)return;
+sheet.gradeScale=(sheet.gradeScale||defaultGradeScale()).filter((_,i)=>i!=+dg.dataset.delgrade);render();return}});
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-scd]');if(!a)return;const s=SC.find(x=>x.id==a.dataset.scd);if(!s)return;
 if(!confirm('ลบใบบันทึกคะแนนนี้?'))return;try{await db.collection('scoresheets').doc(a.dataset.scd).delete()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
