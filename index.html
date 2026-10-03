@@ -151,7 +151,7 @@ chat:'<path d="M4 5h16v11H9l-5 4z"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M
 user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
 gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
 db:'<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
-ud:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',upload:'<path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/><path d="M12 11v7M9 14l3-3 3 3"/>',code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
+ud:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',upload:'<path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/><path d="M12 11v7M9 14l3-3 3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',down:'<path d="M12 4v12M6 12l6 6 6-6M4 20h16"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>',phone:'<path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
 coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/>',
 bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
@@ -168,6 +168,7 @@ let h=`<div style="text-align:center;font-weight:600;margin-bottom:8px">${M[m]} 
 for(let i=1;i<=n;i++){const c=[i==d.getDate()?'today':'',EV.some(e=>e.d==f2(y,m+1,i))?'ev':''].join(' ').trim();h+=`<span${c?` class="${c}"`:''}>${i}</span>`}return h+'</div>'};
 let BP=[];
 const PROJDEPT=[...DIV.map(d=>[d[0],d[1]]),['reserve','เงินสำรองจ่าย']];
+const PCAT=[['admin','ผู้บริหาร','#8B5CF6','user'],['civil','ข้าราชการครู','#2F6BFF','cap'],['govemp','พนักงานราชการ','#22B573','bld'],['contract','ครูอัตราจ้าง','#F5A524','user'],['perm','ลูกจ้างประจำ','#EC4899','users'],['service','พนักงานจ้างเหมาบริการ','#06B6D4','doc']];
 const STAT=[['none','ยังไม่ได้ดำเนินการ','var(--mute)'],['doing','กำลังดำเนินการ','#F5A524'],['done','ดำเนินการแล้ว','#22B573']];
 const canEditProjStatus=p=>{if(!me)return false;if(canManageDiv('budget'))return true;const mp=PP.find(x=>x.id==me.sid);return!!(mp&&p.responsibleSid==mp.id)};
 function projForm(){return `<div class="grid g3">
@@ -214,10 +215,16 @@ return `<div class="dz" data-dzfn="${fn}" data-dzargs='${JSON.stringify(args)}'>
 <div class="dz-sub">รองรับไฟล์ PDF, Word, Excel, รูปภาพ (ไม่เกิน 10MB/ไฟล์)</div>
 <input type="file" class="dz-input hid" accept="${ACCEPT}" onchange="${fn}(${callArgs})">
 </div>`}
-function fileRow(f,delAttr,delValue,canManage){const[kind,color]=fileKind(f.name);
-return `<div class="dzrow"><span class="dz-badge" style="background:${color}1a;color:${color}">${kind}</span>
-<span class="dzrow-info"><b>${esc(f.name)}</b><small>${fmtSize(f.size)}</small></span>
-<span class="dzrow-actions"><a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>${canManage?` <button type="button" class="btn r" ${delAttr}="${delValue}">✕</button>`:''}</span></div>`}
+const TH_MON=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+function fmtDT(iso){if(!iso)return'-';const d=new Date(iso);if(isNaN(d))return'-';return `${d.getDate()} ${TH_MON[d.getMonth()]} ${d.getFullYear()+543} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
+function fileRow(f,i,delAttr,delValue,canManage){const[kind,color]=fileKind(f.name);
+return `<tr><td>${i+1}</td><td>${esc(f.name)}</td><td><span class="dz-badge" style="background:${color}1a;color:${color}">${kind}</span></td><td>${fmtSize(f.size)}</td><td>${fmtDT(f.uploadedAt)}</td>
+<td><span class="dzrow-actions"><a class="btn o" href="${f.url}" target="_blank" rel="noopener" title="เปิดดู">${ic('eye')}</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}" title="ดาวน์โหลด">${ic('down')}</a>${canManage?` <button type="button" class="btn r" ${delAttr}="${delValue}" title="ลบ">${ic('trash')}</button>`:''}</span></td></tr>`}
+function fileListSection(files,delAttr,delPrefix,canManage){
+return `<div class="card" style="box-shadow:none;border:1px solid var(--line);padding:16px;margin-bottom:12px">
+<h3 style="display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:.9rem"><span style="width:32px;height:32px;border-radius:9px;background:var(--soft);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0">${ic('doc')}</span>รายการเอกสารแนบ (ถ้ามี)</h3>
+${files.length?`<div class="wrap"><table class="tb"><tr><th>ลำดับ</th><th style="width:100%">ชื่อไฟล์</th><th>ประเภทไฟล์</th><th>ขนาดไฟล์</th><th>วันที่อัปโหลด</th><th>จัดการ</th></tr>${files.map((f,i)=>fileRow(f,i,delAttr,delPrefix+i,canManage)).join('')}</table></div>`:E('ยังไม่มีไฟล์แนบ',60)}
+</div>`}
 document.addEventListener('click',e=>{if(!e.isTrusted)return;const z=e.target.closest('.dz');if(z){const inp=z.querySelector('.dz-input');if(inp)inp.click()}});
 document.addEventListener('dragover',e=>{const z=e.target.closest('.dz');if(z){e.preventDefault();z.classList.add('dz-over')}});
 document.addEventListener('dragleave',e=>{const z=e.target.closest('.dz');if(z)z.classList.remove('dz-over')});
@@ -228,24 +235,24 @@ const fn=z.dataset.dzfn,args=JSON.parse(z.dataset.dzargs||'[]');if(fn&&window[fn
 let DD={};
 const canManageDiv=k=>{if(!me)return false;if(me.role=='founder')return true;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&(mp.wk||[]).includes(k))};
 const divDocsBlock=k=>{const files=(DD[k]||{}).files||[],can=canManageDiv(k);
-return `<div id="dd_${k}">${files.length?files.map((f,i)=>fileRow(f,'data-dd',`${k}:${i}`,can)).join(''):E('ยังไม่มีเอกสาร',60)}</div>
+return `${fileListSection(files,'data-dd',k+':',can)}
 ${can?`<input class="in" id="dd_name_${k}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="max-width:280px;margin:10px 0 8px">${dzBox('uploadDivDoc',[k])}<div id="dd_msg_${k}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
 async function uploadDivDoc(k,file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#dd_name_'+k).value.trim()||f.name;$('#dd_msg_'+k).textContent='กำลังอัปโหลด...';
 try{const path=`divisions/${k}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
-const files=[...((DD[k]||{}).files||[]),{name,url,path,size:f.size}];await db.collection('divdocs').doc(k).set({files},{merge:true});DD[k]={...(DD[k]||{}),files};render()}
+const files=[...((DD[k]||{}).files||[]),{name,url,path,size:f.size,uploadedAt:new Date().toISOString()}];await db.collection('divdocs').doc(k).set({files},{merge:true});DD[k]={...(DD[k]||{}),files};render()}
 catch(e){$('#dd_msg_'+k).textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-dd]');if(!a||!me)return;const[k,idx]=a.dataset.dd.split(':');if(!canManageDiv(k))return;
 if(!confirm('ลบไฟล์นี้?'))return;const files=(DD[k]||{}).files||[],f=files[+idx];
 try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('divdocs').doc(k).set({files:nf},{merge:true});DD[k]={...(DD[k]||{}),files:nf};render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 
 const divFieldBlock=(k,field)=>{const can=canManageDiv(k),files=(DD[k]||{})[field]||[];
-return `<div id="ddf_${k}_${field}">${files.length?files.map((f,i)=>fileRow(f,'data-ddf',`${k}:${field}:${i}`,can)).join(''):E('ยังไม่มีเอกสาร',60)}</div>
+return `${fileListSection(files,'data-ddf',k+':'+field+':',can)}
 ${can?`<input class="in" id="ddfn_${k}_${field}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="max-width:280px;margin:10px 0 8px">${dzBox('uploadDivField',[k,field])}<div id="ddfm_${k}_${field}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
 async function uploadDivField(k,field,file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#ddfn_'+k+'_'+field).value.trim()||f.name;$('#ddfm_'+k+'_'+field).textContent='กำลังอัปโหลด...';
 try{const path=`divisions/${k}/${field}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
-const cur=(DD[k]||{})[field]||[],files=[...cur,{name,url,path,size:f.size}];
+const cur=(DD[k]||{})[field]||[],files=[...cur,{name,url,path,size:f.size,uploadedAt:new Date().toISOString()}];
 await db.collection('divdocs').doc(k).set({[field]:files},{merge:true});DD[k]={...(DD[k]||{}),[field]:files};render()}
 catch(e){$('#ddfm_'+k+'_'+field).textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-ddf]');if(!a||!me)return;const[k,field,idx]=a.dataset.ddf.split(':');if(!canManageDiv(k))return;
@@ -290,12 +297,12 @@ const canManageAdmin=()=>{if(!me)return false;if(me.role=='founder')return true;
 const adminContactCard=()=>{const as=PP.filter(p=>/ธุรการ/.test(p.po||''));
 return as.length?as.map(p=>`<div class="pc" style="display:flex;gap:8px;align-items:center">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}${p.ph?' · '+esc(p.ph):''}</small></span></div>`).join(''):E('ยังไม่มีข้อมูลครูธุรการในหน้าบุคลากร',80)};
 const adminDocsBlock=key=>{const files=AD[key]||[],can=canManageAdmin();
-return `<div id="ad_${key}">${files.length?files.map((f,i)=>fileRow(f,'data-ad',`${key}:${i}`,can)).join(''):E('ยังไม่มีเอกสาร',60)}</div>
+return `${fileListSection(files,'data-ad',key+':',can)}
 ${can?`<input class="in" id="ad_name_${key}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="max-width:280px;margin:10px 0 8px">${dzBox('uploadAdminDoc',[key])}<div id="ad_msg_${key}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
 async function uploadAdminDoc(key,file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#ad_name_'+key).value.trim()||f.name;$('#ad_msg_'+key).textContent='กำลังอัปโหลด...';
 try{const path=`admin/${key}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
-const files=[...(AD[key]||[]),{name,url,path,size:f.size}];await db.collection('admindocs').doc(key).set({files},{merge:true});AD[key]=files;render()}
+const files=[...(AD[key]||[]),{name,url,path,size:f.size,uploadedAt:new Date().toISOString()}];await db.collection('admindocs').doc(key).set({files},{merge:true});AD[key]=files;render()}
 catch(e){$('#ad_msg_'+key).textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-ad]');if(!a||!me)return;const[key,idx]=a.dataset.ad.split(':');if(!canManageAdmin())return;
 if(!confirm('ลบไฟล์นี้?'))return;const files=AD[key]||[],f=files[+idx];
@@ -419,8 +426,8 @@ const FL=[['tt','คำนำหน้าชื่อ'],['fn','ชื่อ'],['
 async function syncUserWk(pid,wk){const u=U.find(x=>x.sid==pid&&x.st=='approved');if(!u)return;try{await db.collection('users').doc(u._id).set({wk:wk||[]},{merge:true});u.wk=wk||[]}catch(e){}}
 function persist(changed){const batch=db.batch();changed.forEach(p=>{batch.set(db.collection('people').doc(p.id),p);batch.set(db.collection('staff').doc(p.id),{n:nm(p),p:p.po},{merge:true})});
 batch.commit().then(()=>changed.forEach(p=>syncUserWk(p.id,p.wk))).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message))}
-function openF(id){ed=id||null;const p=PP.find(x=>x.id==id)||{};FL.forEach(f=>$('#p_'+f[0]).value=f[2]=='date'?(p[f[0]]?th(p[f[0]]):''):p[f[0]]||'');document.querySelectorAll('.wk').forEach(c=>c.checked=(p.wk||[]).includes(c.value));setImg(p.im||'');$('#pft').textContent=id?'แก้ไขข้อมูลบุคลากร':'เพิ่มข้อมูลบุคลากร';$('#pfm').classList.remove('hid');$('#pfm').scrollIntoView({behavior:'smooth'})}
-function savP(){const r={id:ed||uid()};let bad='';FL.forEach(f=>{let v=$('#p_'+f[0]).value.trim();if(f[2]=='date'&&v){const s=toISO(v);if(!s||dt(s).getDate()!=+s.slice(8))bad=f[1];v=s}r[f[0]]=v});if(bad)return alert('รูปแบบวันที่ไม่ถูกต้อง: '+bad+' (ใช้ ว/ด/ป เช่น 15/3/2530)');r.wk=[...document.querySelectorAll('.wk:checked')].map(c=>c.value);r.im=pim;if(!r.fn)return alert('กรอกชื่อ');
+function openF(id){ed=id||null;const p=PP.find(x=>x.id==id)||{};FL.forEach(f=>$('#p_'+f[0]).value=f[2]=='date'?(p[f[0]]?th(p[f[0]]):''):p[f[0]]||'');document.querySelectorAll('.wk').forEach(c=>c.checked=(p.wk||[]).includes(c.value));$('#p_cat').value=p.cat||'';setImg(p.im||'');$('#pft').textContent=id?'แก้ไขข้อมูลบุคลากร':'เพิ่มข้อมูลบุคลากร';$('#pfm').classList.remove('hid');$('#pfm').scrollIntoView({behavior:'smooth'})}
+function savP(){const r={id:ed||uid()};let bad='';FL.forEach(f=>{let v=$('#p_'+f[0]).value.trim();if(f[2]=='date'&&v){const s=toISO(v);if(!s||dt(s).getDate()!=+s.slice(8))bad=f[1];v=s}r[f[0]]=v});if(bad)return alert('รูปแบบวันที่ไม่ถูกต้อง: '+bad+' (ใช้ ว/ด/ป เช่น 15/3/2530)');r.wk=[...document.querySelectorAll('.wk:checked')].map(c=>c.value);r.cat=$('#p_cat').value;r.im=pim;if(!r.fn)return alert('กรอกชื่อ');
 const i=PP.findIndex(x=>x.id==r.id);i<0?PP.push(r):PP[i]=r;ed=null;persist([r]);go('hr')}
 function imp(f){if(!f)return;if(typeof XLSX=='undefined')return alert('โหลดตัวอ่าน Excel ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ต');
 const r=new FileReader();r.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:'array',cellDates:true}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:'',raw:true});let a=0,u=0,changed=[];
@@ -567,7 +574,8 @@ V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
 const row=(p,i)=>{const lc=p.lc?dt(p.lc):null,ex=lc&&lc<t;return`<tr><td>${i+1}</td><td>${esc(dn(p))}</td><td>${esc(p.po)||'-'}</td><td>${esc(p.pn)||'-'}</td><td>${th(p.bd)}</td><td>${p.bd?ymd(dt(p.bd),t):'-'}</td><td>${th(p.ap)}</td><td>${p.ap?ymd(dt(p.ap),t):'-'}</td><td>${esc(p.ph)||'-'}</td><td>${esc(p.ba)||'-'}</td><td>${esc(p.mj)||'-'}</td><td>${esc(p.ma)||'-'}</td><td>${esc(p.mj2)||'-'}</td><td>${esc(p.ad)||'-'}</td><td>${th(p.lc)}</td><td class="${ex?'rd':''}">${lc?(ex?'หมดอายุแล้ว '+ymd(lc,t):ymd(t,lc)):'-'}</td><td>${(p.wk||[]).map(k=>DIV.find(d=>d[0]==k)[1]).join(', ')||'-'}</td>${F?`<td><button class="btn o" data-q="e:${p.id}">แก้ไข</button> <button class="btn r" data-q="d:${p.id}">ลบ</button></td>`:''}</tr>`};
 return PT('บุคลากร','ข้อมูลและโครงสร้างบุคลากรของโรงเรียน')+`<div class="grid g4"><div class="card dv" data-r="org"><div class="bx" style="background:#8B5CF6">${ic('users')}</div><h4>โครงสร้างบุคลากร</h4><span>เปิดดู ›</span></div></div>`
 +(F?`<div class="card"><h3>เพิ่มข้อมูล</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="openF()">＋ พิมพ์เพิ่มข้อมูล</button><button class="btn g" onclick="$('#xf').click()">อัปโหลดไฟล์ Excel</button><button class="btn o" onclick="tpl()">ดาวน์โหลดแบบฟอร์ม Excel</button><input id="xf" type="file" accept=".xlsx,.xls,.csv" hidden onchange="imp(this.files[0])"></div><p style="color:var(--mute);font-size:.75rem;margin:10px 0 0">ไฟล์ Excel ใช้หัวคอลัมน์ตามแบบฟอร์ม วันที่ใช้รูปแบบ ว/ด/ป (พ.ศ.) เช่น 15/3/2530 (ใส่ ค.ศ. ก็อ่านได้) ชื่อ-นามสกุลซ้ำจะอัปเดตข้อมูลเดิม</p>${m?`<div class="fm" style="color:#22B573;margin-top:8px">${m}</div>`:''}</div>
-<div class="card hid" id="pfm"><h3 id="pft">เพิ่มข้อมูลบุคลากร</h3><div class="grid g3">${FL.map(f=>`<label class="lb">${f[1]}<input class="in" id="p_${f[0]}" ${f[2]=='date'?'placeholder="ว/ด/ป (พ.ศ.) เช่น 15/3/2530" inputmode="numeric"':''} ${f[0]=='tt'?'list="ttl"':''}></label>`).join('')}</div><div class="lb" style="margin-top:12px">รูปภาพ (แสดงในหน้าโครงสร้างบุคลากร)<div style="display:flex;align-items:center;gap:12px;margin-top:6px"><img id="pprev" class="ph hid"><input type="file" accept="image/*" onchange="pickImg(this.files[0])"><button type="button" class="btn o hid" id="prm" onclick="setImg('')">ลบรูป</button></div></div><datalist id="ttl"><option value="นาย"><option value="นาง"><option value="นางสาว"><option value="ดร."><option value="ว่าที่ ร.ต."></datalist><div class="lb" style="margin:12px 0">งานที่รับผิดชอบ (เลือกได้มากกว่า 1)<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:6px">${DIV.map(d=>`<label style="font-size:.85rem;color:var(--text)"><input type="checkbox" class="wk" value="${d[0]}"> ${d[1]}</label>`).join('')}</div></div><p style="color:var(--mute);font-size:.75rem;margin:0 0 10px">ระบบคำนวณอายุ อายุราชการ และเวลาที่เหลือของใบประกอบวิชาชีพให้อัตโนมัติ</p><button class="btn" onclick="savP()">บันทึก</button> <button class="btn o" onclick="$('#pfm').classList.add('hid')">ยกเลิก</button></div>`:'')
+<div class="card hid" id="pfm"><h3 id="pft">เพิ่มข้อมูลบุคลากร</h3><div class="grid g3">${FL.map(f=>`<label class="lb">${f[1]}<input class="in" id="p_${f[0]}" ${f[2]=='date'?'placeholder="ว/ด/ป (พ.ศ.) เช่น 15/3/2530" inputmode="numeric"':''} ${f[0]=='tt'?'list="ttl"':''}></label>`).join('')}</div><div class="lb" style="margin-top:12px">รูปภาพ (แสดงในหน้าโครงสร้างบุคลากร)<div style="display:flex;align-items:center;gap:12px;margin-top:6px"><img id="pprev" class="ph hid"><input type="file" accept="image/*" onchange="pickImg(this.files[0])"><button type="button" class="btn o hid" id="prm" onclick="setImg('')">ลบรูป</button></div></div><datalist id="ttl"><option value="นาย"><option value="นาง"><option value="นางสาว"><option value="ดร."><option value="ว่าที่ ร.ต."></datalist><label class="lb" style="display:block;margin:12px 0 0;max-width:280px">ประเภทบุคลากร<select class="in" id="p_cat"><option value="">-- ไม่ระบุ --</option>${PCAT.map(c=>`<option value="${c[0]}">${c[1]}</option>`).join('')}</select></label>
+<div class="lb" style="margin:12px 0">งานที่รับผิดชอบ (เลือกได้มากกว่า 1)<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:6px">${DIV.map(d=>`<label style="font-size:.85rem;color:var(--text)"><input type="checkbox" class="wk" value="${d[0]}"> ${d[1]}</label>`).join('')}</div></div><p style="color:var(--mute);font-size:.75rem;margin:0 0 10px">ระบบคำนวณอายุ อายุราชการ และเวลาที่เหลือของใบประกอบวิชาชีพให้อัตโนมัติ</p><button class="btn" onclick="savP()">บันทึก</button> <button class="btn o" onclick="$('#pfm').classList.add('hid')">ยกเลิก</button></div>`:'')
 +P(`รายชื่อบุคลากร (${PP.length})`,PP.length?`<div class="wrap"><table class="tb"><tr><th>#</th><th>ชื่อ-นามสกุล</th><th>ตำแหน่ง</th><th>เลขที่ตำแหน่ง</th><th>วันเกิด</th><th>อายุ</th><th>วันที่บรรจุ</th><th>อายุราชการ</th><th>เบอร์โทร</th><th>ป.ตรี/เทียบเท่า</th><th>วิชาเอก/สาขา</th><th>ป.โท</th><th>วิชาเอก/สาขา</th><th>ที่อยู่</th><th>ใบประกอบฯ หมดอายุ</th><th>เหลืออีก</th><th>งานที่รับผิดชอบ</th>${F?'<th></th>':''}</tr>${PP.map(row).join('')}</table></div>`:E('ยังไม่มีข้อมูลบุคลากร'))};
 document.addEventListener('click',e=>{const a=e.target.closest('[data-q]');if(!a||me?.role!='founder')return;const[k,v]=a.dataset.q.split(':');if(k=='e')return openF(v);
 if(confirm('ลบข้อมูลนี้?')){PP=PP.filter(p=>p.id!=v);S=S.filter(s=>s.id!=v);db.collection('people').doc(v).delete().catch(()=>{});db.collection('staff').doc(v).delete().catch(()=>{});go('hr')}});
@@ -602,8 +610,7 @@ const STFL=[['tt','คำนำหน้า'],['fn','ชื่อ'],['ln','น�
 let sim='',stEd=null,stCls=null;
 function setSImg(v){sim=v;const p=$('#stprev');v?p.src=v:p.removeAttribute('src');p.classList.toggle('hid',!v);$('#stprm').classList.toggle('hid',!v)}
 function pickSImg(f){if(!f)return;const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=240;const sc=Math.min(im.width,im.height);c.getContext('2d').drawImage(im,(im.width-sc)/2,(im.height-sc)*.2,sc,sc,0,0,240,240);setSImg(c.toDataURL('image/jpeg',.8))};im.onerror=()=>alert('อ่านไฟล์รูปไม่สำเร็จ');im.src=e.target.result};r.readAsDataURL(f)}
-const docsBlock=s=>`<div class="lb" style="margin:14px 0 6px">เอกสารแนบ</div>
-<div id="stdl">${(s.docs||[]).map((d,i)=>fileRow(d,'data-sd',i,true)).join('')||'<div class="empty" style="min-height:50px">ยังไม่มีไฟล์แนบ</div>'}</div>
+const docsBlock=s=>`${fileListSection(s.docs||[],'data-sd','',true)}
 <input class="in" id="stdn" placeholder="ชื่อเอกสาร (ไม่บังคับ) เช่น สำเนาบัตรประชาชน" style="max-width:280px;margin:10px 0 8px">
 ${dzBox('uploadStDoc',[])}
 <div id="stdmsg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`;
@@ -622,7 +629,7 @@ stEd=r.id;render();openStF(stCls,r.id)}
 async function uploadStDoc(file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#stdn').value.trim()||f.name;$('#stdmsg').textContent='กำลังอัปโหลด...';
 try{const path=`students/${stEd}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
-const s=ST.find(x=>x.id==stEd),docs=[...(s.docs||[]),{name,url,path,size:f.size}];
+const s=ST.find(x=>x.id==stEd),docs=[...(s.docs||[]),{name,url,path,size:f.size,uploadedAt:new Date().toISOString()}];
 await db.collection('students').doc(stEd).set({docs},{merge:true});s.docs=docs;
 $('#stdn').value='';$('#stdmsg').textContent='';$('#stdocs').innerHTML=docsBlock(s)}
 catch(e){$('#stdmsg').textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
