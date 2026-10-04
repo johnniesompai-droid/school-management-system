@@ -29,7 +29,7 @@ aside{width:232px;background:#fff;border-right:1px solid var(--line);padding:16p
 .ico{color:#55607A;cursor:pointer;position:relative}.bell-badge{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-size:.6rem;line-height:1.5;border-radius:9px;padding:0 5px;font-style:normal}.user{display:flex;gap:10px;align-items:center;line-height:1.2}.user small{display:block;color:var(--mute);font-size:.7rem}
 .av{width:36px;height:36px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--blue)}
 #view{padding:20px;display:grid;gap:16px}
-.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:minmax(0,1fr) 300px}
+.grid{display:grid;gap:16px}.g6{grid-template-columns:repeat(6,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:minmax(0,1fr) 300px}
 .card{background:#fff;border-radius:14px;box-shadow:var(--sh);padding:16px}.card .card{box-shadow:none;border:1px solid var(--line)}
 .card h3{margin:0 0 12px;font-size:.92rem;font-weight:600;display:flex;justify-content:space-between;gap:8px}
 .card h3 a{font-size:.72rem;color:var(--blue);font-weight:400;cursor:pointer}
@@ -49,8 +49,8 @@ aside{width:232px;background:#fff;border-right:1px solid var(--line);padding:16p
 .brn>div{position:relative}.brn>div:before{content:"";position:absolute;top:-24px;left:50%;height:24px;border-left:2px solid #C9D4E8}
 footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding:14px 20px 22px;color:var(--mute);font-size:.72rem}
 @media(min-width:901px){.hide aside{display:none}}
-@media(max-width:900px){aside{position:fixed;left:0;top:0;height:100vh;height:100dvh;transform:translateX(-100%)}aside.show{transform:none;box-shadow:var(--sh)}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.split{grid-template-columns:1fr}}
-@media(max-width:560px){.g4,.g2{grid-template-columns:1fr}.user span,.chip{display:none}.hero{aspect-ratio:2/1;background-position:75% 20%}}
+@media(max-width:900px){aside{position:fixed;left:0;top:0;height:100vh;height:100dvh;transform:translateX(-100%)}aside.show{transform:none;box-shadow:var(--sh)}.g6,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.split{grid-template-columns:1fr}}
+@media(max-width:560px){.g6,.g4,.g2{grid-template-columns:1fr}.user span,.chip{display:none}.hero{aspect-ratio:2/1;background-position:75% 20%}}
 @media(prefers-reduced-motion:reduce){.hero{animation:none}}
 .a4{background:#fff;max-width:210mm;min-height:297mm;margin:0 auto;padding:18mm 16mm;box-shadow:var(--sh);border-radius:6px;box-sizing:border-box}
 .pf-head{display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--blue);padding-bottom:14px;margin-bottom:6px}
@@ -116,6 +116,22 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
   .tb-wrap-sticky{max-height:none!important;overflow:visible!important}
   .tb-wrap-sticky th,.tb-wrap-sticky td{position:static!important}
 }
+.pcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;transition:box-shadow .15s,transform .15s}
+.pcard:hover{box-shadow:var(--sh);transform:translateY(-2px)}
+.pcard .ph{width:48px;height:48px;margin-bottom:8px}
+.pcard b{display:block;font-size:.88rem;line-height:1.3}
+.pcard small{display:block;color:var(--mute);font-size:.78rem;margin-bottom:6px}
+.pcard-phone{display:flex;align-items:center;gap:5px;font-size:.76rem;color:var(--mute);margin-bottom:6px}
+.pcard-phone svg{width:13px;height:13px}
+.pcard-badge{display:inline-block;font-size:.66rem;font-weight:600;border-radius:20px;padding:3px 9px}
+.hr-dir{background:linear-gradient(120deg,#4A2E6B,#6C4A99);border-radius:16px;padding:20px 24px;color:#fff;display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:20px;cursor:pointer}
+.hr-dir img,.hr-dir .ph0{width:72px;height:72px;border-radius:50%;border:3px solid #fff;object-fit:cover;flex-shrink:0}
+.hr-dir .crown{font-size:.72rem;background:rgba(255,255,255,.2);border-radius:20px;padding:2px 10px;display:inline-block;margin-bottom:6px}
+.hr-dir h3{color:#fff;font-size:1.15rem;margin:2px 0}
+.hr-dir small{color:rgba(255,255,255,.8);font-size:.82rem}
+.hr-dir-contact{display:flex;gap:16px;margin-top:8px;font-size:.8rem;color:rgba(255,255,255,.92);flex-wrap:wrap}
+.hr-dir-contact span{display:flex;align-items:center;gap:5px}
+.hr-dir-contact svg{width:14px;height:14px}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -570,9 +586,21 @@ const dg=e.target.closest('[data-delgrade]');if(dg){const sheet=SC.find(x=>x.id=
 sheet.gradeScale=(sheet.gradeScale||defaultGradeScale()).filter((_,i)=>i!=+dg.dataset.delgrade);render();return}});
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-scd]');if(!a)return;const s=SC.find(x=>x.id==a.dataset.scd);if(!s)return;
 if(!confirm('ลบใบบันทึกคะแนนนี้?'))return;try{await db.collection('scoresheets').doc(a.dataset.scd).delete()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
+let hrCat='',hrPo='';
+function personCard(p){const c=PCAT.find(x=>x[0]==p.cat);
+return `<div class="pcard" data-r="profile:${p.id}">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<b>${esc(dn(p))}</b><small>${esc(p.po)||'-'}</small>${p.ph?`<div class="pcard-phone">${ic('phone')}${esc(p.ph)}</div>`:''}${c?`<span class="pcard-badge" style="background:${c[2]}1a;color:${c[2]}">${c[1]}</span>`:''}</div>`}
+function hrOverview(){const dirP=PP.find(p=>/ผู้อำนวยการ/.test(p.po||'')&&!/รอง/.test(p.po||''));
+const others=PP.filter(p=>p!==dirP).filter(p=>(!hrCat||p.cat==hrCat)&&(!hrPo||p.po==hrPo));
+const poList=[...new Set(PP.map(p=>p.po).filter(Boolean))];
+const stats=`<div class="grid g6" style="margin-bottom:20px">${PCAT.map(c=>{const n=PP.filter(p=>p.cat==c[0]).length;
+return `<div class="card stat"><div class="bx" style="background:${c[2]}">${ic(c[3])}</div><div><small>${c[1]}</small><b>${n}</b><small>คน</small></div></div>`}).join('')}</div>`;
+const filters=`<div class="grid g3" style="margin-bottom:20px"><label class="lb">กลุ่มงาน<select class="in" onchange="hrCat=this.value;render()"><option value="">ทั้งหมด</option>${PCAT.map(c=>`<option value="${c[0]}" ${hrCat==c[0]?'selected':''}>${c[1]}</option>`).join('')}</select></label><label class="lb">ตำแหน่ง<select class="in" onchange="hrPo=this.value;render()"><option value="">ทั้งหมด</option>${poList.map(po=>`<option value="${esc(po)}" ${hrPo==po?'selected':''}>${esc(po)}</option>`).join('')}</select></label></div>`;
+const dirCard=dirP?`<div class="hr-dir" data-r="profile:${dirP.id}">${dirP.im?`<img src="${dirP.im}">`:`<span class="ph0" style="width:72px;height:72px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">${ic('user')}</span>`}<div style="flex:1;min-width:200px"><span class="crown">👑 ผู้อำนวยการโรงเรียน</span><h3>${esc(dn(dirP))}</h3><small>${esc(dirP.po)||''}</small><div class="hr-dir-contact">${dirP.ph?`<span>${ic('phone')}${esc(dirP.ph)}</span>`:''}</div></div></div>`:'';
+return stats+filters+dirCard+`<div class="grid g4">${others.length?others.map(personCard).join(''):E('ไม่พบบุคลากรตามเงื่อนไขที่เลือก')}</div>`}
 V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
 const row=(p,i)=>{const lc=p.lc?dt(p.lc):null,ex=lc&&lc<t;return`<tr><td>${i+1}</td><td>${esc(dn(p))}</td><td>${esc(p.po)||'-'}</td><td>${esc(p.pn)||'-'}</td><td>${th(p.bd)}</td><td>${p.bd?ymd(dt(p.bd),t):'-'}</td><td>${th(p.ap)}</td><td>${p.ap?ymd(dt(p.ap),t):'-'}</td><td>${esc(p.ph)||'-'}</td><td>${esc(p.ba)||'-'}</td><td>${esc(p.mj)||'-'}</td><td>${esc(p.ma)||'-'}</td><td>${esc(p.mj2)||'-'}</td><td>${esc(p.ad)||'-'}</td><td>${th(p.lc)}</td><td class="${ex?'rd':''}">${lc?(ex?'หมดอายุแล้ว '+ymd(lc,t):ymd(t,lc)):'-'}</td><td>${(p.wk||[]).map(k=>DIV.find(d=>d[0]==k)[1]).join(', ')||'-'}</td>${F?`<td><button class="btn o" data-q="e:${p.id}">แก้ไข</button> <button class="btn r" data-q="d:${p.id}">ลบ</button></td>`:''}</tr>`};
-return PT('บุคลากร','ข้อมูลและโครงสร้างบุคลากรของโรงเรียน')+`<div class="grid g4"><div class="card dv" data-r="org"><div class="bx" style="background:#8B5CF6">${ic('users')}</div><h4>โครงสร้างบุคลากร</h4><span>เปิดดู ›</span></div></div>`
+return PT('บุคลากร','ข้อมูลและโครงสร้างบุคลากรของโรงเรียน')+hrOverview()
++`<div class="grid g4" style="margin-top:20px"><div class="card dv" data-r="org"><div class="bx" style="background:#8B5CF6">${ic('users')}</div><h4>โครงสร้างบุคลากร</h4><span>เปิดดู ›</span></div></div>`
 +(F?`<div class="card"><h3>เพิ่มข้อมูล</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="openF()">＋ พิมพ์เพิ่มข้อมูล</button><button class="btn g" onclick="$('#xf').click()">อัปโหลดไฟล์ Excel</button><button class="btn o" onclick="tpl()">ดาวน์โหลดแบบฟอร์ม Excel</button><input id="xf" type="file" accept=".xlsx,.xls,.csv" hidden onchange="imp(this.files[0])"></div><p style="color:var(--mute);font-size:.75rem;margin:10px 0 0">ไฟล์ Excel ใช้หัวคอลัมน์ตามแบบฟอร์ม วันที่ใช้รูปแบบ ว/ด/ป (พ.ศ.) เช่น 15/3/2530 (ใส่ ค.ศ. ก็อ่านได้) ชื่อ-นามสกุลซ้ำจะอัปเดตข้อมูลเดิม</p>${m?`<div class="fm" style="color:#22B573;margin-top:8px">${m}</div>`:''}</div>
 <div class="card hid" id="pfm"><h3 id="pft">เพิ่มข้อมูลบุคลากร</h3><div class="grid g3">${FL.map(f=>`<label class="lb">${f[1]}<input class="in" id="p_${f[0]}" ${f[2]=='date'?'placeholder="ว/ด/ป (พ.ศ.) เช่น 15/3/2530" inputmode="numeric"':''} ${f[0]=='tt'?'list="ttl"':''}></label>`).join('')}</div><div class="lb" style="margin-top:12px">รูปภาพ (แสดงในหน้าโครงสร้างบุคลากร)<div style="display:flex;align-items:center;gap:12px;margin-top:6px"><img id="pprev" class="ph hid"><input type="file" accept="image/*" onchange="pickImg(this.files[0])"><button type="button" class="btn o hid" id="prm" onclick="setImg('')">ลบรูป</button></div></div><datalist id="ttl"><option value="นาย"><option value="นาง"><option value="นางสาว"><option value="ดร."><option value="ว่าที่ ร.ต."></datalist><label class="lb" style="display:block;margin:12px 0 0;max-width:280px">ประเภทบุคลากร<select class="in" id="p_cat"><option value="">-- ไม่ระบุ --</option>${PCAT.map(c=>`<option value="${c[0]}">${c[1]}</option>`).join('')}</select></label>
 <div class="lb" style="margin:12px 0">งานที่รับผิดชอบ (เลือกได้มากกว่า 1)<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:6px">${DIV.map(d=>`<label style="font-size:.85rem;color:var(--text)"><input type="checkbox" class="wk" value="${d[0]}"> ${d[1]}</label>`).join('')}</div></div><p style="color:var(--mute);font-size:.75rem;margin:0 0 10px">ระบบคำนวณอายุ อายุราชการ และเวลาที่เหลือของใบประกอบวิชาชีพให้อัตโนมัติ</p><button class="btn" onclick="savP()">บันทึก</button> <button class="btn o" onclick="$('#pfm').classList.add('hid')">ยกเลิก</button></div>`:'')
