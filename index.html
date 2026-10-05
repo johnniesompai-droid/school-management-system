@@ -234,12 +234,13 @@ return `<div class="dz" data-dzfn="${fn}" data-dzargs='${JSON.stringify(args)}'>
 const TH_MON=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 function fmtDT(iso){if(!iso)return'-';const d=new Date(iso);if(isNaN(d))return'-';return `${d.getDate()} ${TH_MON[d.getMonth()]} ${d.getFullYear()+543} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
 function fileRow(f,i,delAttr,delValue,canManage){const[kind,color]=fileKind(f.name);
-return `<tr><td>${i+1}</td><td>${esc(f.name)}</td><td><span class="dz-badge" style="background:${color}1a;color:${color}">${kind}</span></td><td>${fmtSize(f.size)}</td><td>${fmtDT(f.uploadedAt)}</td>
+return `<tr><td>${i+1}</td><td>${esc(f.name)}</td><td><span class="dz-badge" style="background:${color}1a;color:${color}">${kind}</span></td>
 <td><span class="dzrow-actions"><a class="btn o" href="${f.url}" target="_blank" rel="noopener" title="เปิดดู">${ic('eye')}</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}" title="ดาวน์โหลด">${ic('down')}</a>${canManage?` <button type="button" class="btn r" ${delAttr}="${delValue}" title="ลบ">${ic('trash')}</button>`:''}</span></td></tr>`}
+function fileSectionTitle(label){return `<span style="display:flex;align-items:center;gap:14px"><span style="width:40px;height:40px;border-radius:11px;background:var(--soft);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0">${ic('doc')}</span><span style="width:1px;height:26px;background:var(--line)"></span><span style="font-size:1.05rem;color:var(--text);font-weight:700">${esc(label)}</span></span>`}
 function fileListSection(files,delAttr,delPrefix,canManage){
-return `<div class="card" style="box-shadow:none;border:1px solid var(--line);padding:16px;margin-bottom:12px">
-<h3 style="display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:.9rem"><span style="width:32px;height:32px;border-radius:9px;background:var(--soft);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0">${ic('doc')}</span>รายการเอกสารแนบ (ถ้ามี)</h3>
-${files.length?`<div class="wrap"><table class="tb"><tr><th>ลำดับ</th><th style="width:100%">ชื่อไฟล์</th><th>ประเภทไฟล์</th><th>ขนาดไฟล์</th><th>วันที่อัปโหลด</th><th>จัดการ</th></tr>${files.map((f,i)=>fileRow(f,i,delAttr,delPrefix+i,canManage)).join('')}</table></div>`:E('ยังไม่มีไฟล์แนบ',60)}
+return `<div style="border:1px solid var(--line);border-radius:12px;padding:18px;background:#fff">
+<div style="text-align:right;font-weight:700;color:var(--text);margin-bottom:14px">รายการเอกสารแนบ (ถ้ามี)</div>
+${files.length?`<div class="wrap"><table class="tb"><tr><th>ลำดับ</th><th style="width:100%">ชื่อไฟล์</th><th>ประเภทไฟล์</th><th>จัดการ</th></tr>${files.map((f,i)=>fileRow(f,i,delAttr,delPrefix+i,canManage)).join('')}</table></div>`:E('ยังไม่มีไฟล์แนบ',60)}
 </div>`}
 document.addEventListener('click',e=>{if(!e.isTrusted)return;const z=e.target.closest('.dz');if(z){const inp=z.querySelector('.dz-input');if(inp)inp.click()}});
 document.addEventListener('dragover',e=>{const z=e.target.closest('.dz');if(z){e.preventDefault();z.classList.add('dz-over')}});
@@ -325,7 +326,7 @@ if(!confirm('ลบไฟล์นี้?'))return;const files=AD[key]||[],f=fil
 try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('admindocs').doc(key).set({files:nf},{merge:true});AD[key]=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).includes(k));
 const staffCard=P('บุคลากรที่รับผิดชอบ',ps.length?ps.map(p=>`<div class="pc" style="display:flex;gap:8px;align-items:center">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}</small></span></div>`).join(''):E('ยังไม่มีบุคลากรที่เลือกงานนี้ในหน้าบุคลากร',80));
-return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid g2">${staffCard}${P('งานที่รับผิดชอบ',E('',80))}${P('เอกสารดาวน์โหลด',divDocsBlock(k))}${P('ช่องทางติดต่อ',E('',80))}${k=='budget'?P('งานพัสดุ',divFieldBlock(k,'supply')):''}</div></div>${k=='budget'?projectSection():''}`};
+return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid g2">${staffCard}${P('งานที่รับผิดชอบ',E('',80))}${P(fileSectionTitle('เอกสารดาวน์โหลด'),divDocsBlock(k))}${P('ช่องทางติดต่อ',E('',80))}${k=='budget'?P(fileSectionTitle('งานพัสดุ'),divFieldBlock(k,'supply')):''}</div></div>${k=='budget'?projectSection():''}`};
 const V={
 home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map(s=>`<div class="card stat"${s[5]?` data-r="${s[5]}"`:''}><div class="bx" style="background:${s[2]}">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g3">${P('สรุปผลการเรียน',E())}${P('สถิติการเข้าเรียน',E())}${P('ผลประเมินบุคลากร',E())}</div>
@@ -333,7 +334,7 @@ home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรี�
 <div class="grid g2">${['การเงิน & พัสดุ','งานเอกสาร & ธุรการ','งานซ่อม & อาคารสถานที่','สื่อสารโรงเรียน'].map(t=>P(t,E('',90),'ดูทั้งหมด')).join('')}</div></div>
 <div class="grid" style="align-content:start">${P('ข่าวประชาสัมพันธ์',upc(),'ดูทั้งหมด')}<div data-r="cal:${new Date().getFullYear()}-${new Date().getMonth()+1}" style="cursor:pointer">${P('ปฏิทินกิจกรรม',cal(),'ดูทั้งหมด')}</div>${P('AI ผู้ช่วยผู้บริหาร',E())}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
-admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P('แบบฟอร์ม / เอกสารดาวน์โหลด',adminDocsBlock('forms'))}${P('ขั้นตอนการติดต่อราชการ',E())}${P('หนังสือเข้า / หนังสือออก',adminDocsBlock('inout'))}${P('ช่องทางติดต่อ',adminContactCard())}</div>`+memoSection(),
+admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}${P('ขั้นตอนการติดต่อราชการ',E())}${P(fileSectionTitle('หนังสือเข้า / หนังสือออก'),adminDocsBlock('inout'))}${P('ช่องทางติดต่อ',adminContactCard())}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=()=>go('comm');
@@ -638,7 +639,7 @@ const STFL=[['tt','คำนำหน้า'],['fn','ชื่อ'],['ln','น�
 let sim='',stEd=null,stCls=null;
 function setSImg(v){sim=v;const p=$('#stprev');v?p.src=v:p.removeAttribute('src');p.classList.toggle('hid',!v);$('#stprm').classList.toggle('hid',!v)}
 function pickSImg(f){if(!f)return;const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=240;const sc=Math.min(im.width,im.height);c.getContext('2d').drawImage(im,(im.width-sc)/2,(im.height-sc)*.2,sc,sc,0,0,240,240);setSImg(c.toDataURL('image/jpeg',.8))};im.onerror=()=>alert('อ่านไฟล์รูปไม่สำเร็จ');im.src=e.target.result};r.readAsDataURL(f)}
-const docsBlock=s=>`${fileListSection(s.docs||[],'data-sd','',true)}
+const docsBlock=s=>`<div style="margin-bottom:10px">${fileSectionTitle('เอกสารแนบ')}</div>${fileListSection(s.docs||[],'data-sd','',true)}
 <input class="in" id="stdn" placeholder="ชื่อเอกสาร (ไม่บังคับ) เช่น สำเนาบัตรประชาชน" style="max-width:280px;margin:10px 0 8px">
 ${dzBox('uploadStDoc',[])}
 <div id="stdmsg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`;
