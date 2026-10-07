@@ -174,7 +174,7 @@ coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0
 bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
 const ic=(n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"${c?` class="${c}"`:''}>${I[n]}</svg>`;
-const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['att','การเข้าเรียน','cal'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
+const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['saving','ออมเงิน','coin'],['att','การเข้าเรียน','cal'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
 const SYS=[['staff','ทะเบียนบุคลากร','users'],['usr','ผู้ใช้งาน / สิทธิ์การใช้งาน','user'],['set','ตั้งค่าระบบ','gear'],['bak','สำรองข้อมูล','db'],['ie','Import / Export','ud'],['api','API & Integration','code']];
 const DIV=[['academic','กลุ่มบริหารงานวิชาการ','cap','#2F6BFF'],['budget','กลุ่มบริหารงานแผนงานและงบประมาณ','coin','#F5A524'],['personnel','กลุ่มบริหารงานบุคคล','users','#8B5CF6'],['general','กลุ่มบริหารงานทั่วไป','bld','#22B573']];
 const E=(t='ยังไม่มีข้อมูล',h)=>`<div class="empty"${h?` style="min-height:${h}px"`:''}>${t}</div>`;
@@ -338,7 +338,7 @@ home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรี�
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}${P('ขั้นตอนการติดต่อราชการ',E())}${P(fileSectionTitle('หนังสือเข้า / หนังสือออก'),adminDocsBlock('inout'))}${P('ช่องทางติดต่อ',adminContactCard())}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
-const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['saving','ออมเงิน'],['par','ผู้ปกครอง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
+const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=()=>go('comm');
 $('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 function updateBell(){if(!me||!$('#ib'))return;const n=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack).length;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge">${n}</i>`:'')}
@@ -347,8 +347,8 @@ function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
 $('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):V.gen(m?m[1]:'')}
 function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
-document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving')?k:r)));
-const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd'||k=='saving')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
+document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd')?k:r)));
+const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
 $('aside').classList.remove('show');scrollTo(0,0)}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-r]');if(a)go(a.dataset.r)});
 $('#burger').onclick=()=>{document.body.classList.toggle('hide');$('aside').classList.toggle('show')};
