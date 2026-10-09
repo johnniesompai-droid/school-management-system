@@ -347,10 +347,10 @@ $('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 function updateBell(){if(!me||!$('#ib'))return;const n=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack).length;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge">${n}</i>`:'')}
 let CUR='home';
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving():k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):V.gen(m?m[1]:'')}
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):V.gen(m?m[1]:'')}
 function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
-document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd')?k:r)));
+document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving')?k:r)));
 const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
 $('aside').classList.remove('show');scrollTo(0,0)}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-r]');if(a)go(a.dataset.r)});
@@ -603,22 +603,26 @@ return `<div class="card stat"><div class="bx" style="background:${c[2]}">${ic(c
 const filters=`<div class="grid g3" style="margin-bottom:20px"><label class="lb">กลุ่มงาน<select class="in" onchange="hrCat=this.value;render()"><option value="">ทั้งหมด</option>${PCAT.map(c=>`<option value="${c[0]}" ${hrCat==c[0]?'selected':''}>${c[1]}</option>`).join('')}</select></label><label class="lb">ตำแหน่ง<select class="in" onchange="hrPo=this.value;render()"><option value="">ทั้งหมด</option>${poList.map(po=>`<option value="${esc(po)}" ${hrPo==po?'selected':''}>${esc(po)}</option>`).join('')}</select></label></div>`;
 const dirCard=dirP?`<div class="hr-dir" data-r="profile:${dirP.id}">${dirP.im?`<img src="${dirP.im}">`:`<span class="ph0" style="width:72px;height:72px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">${ic('user')}</span>`}<div style="flex:1;min-width:200px"><span class="crown">👑 ผู้อำนวยการโรงเรียน</span><h3>${esc(dn(dirP))}</h3><small>${esc(dirP.po)||''}</small><div class="hr-dir-contact">${dirP.ph?`<span>${ic('phone')}${esc(dirP.ph)}</span>`:''}</div></div></div>`:'';
 return stats+filters+dirCard+`<div class="grid g4">${others.length?others.map(personCard).join(''):E('ไม่พบบุคลากรตามเงื่อนไขที่เลือก')}</div>`}
-let SVY=null,SVTX=[],svSel=null,svSearch='';
+let SVY=null,SVTX=[],svSel=null,svSearch='',svClassKey=null;
 const WD_REASONS=['ซื้ออุปกรณ์การเรียน','ค่าเดินทาง','ค่ารักษาพยาบาล','กิจกรรมของโรงเรียน','อื่น ๆ'];
 const TH_MON_FULL=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 function thaiFullDate(d){return `${d.getDate()} ${TH_MON_FULL[d.getMonth()]} ${d.getFullYear()+543}`}
 async function loadSavingTx(year){SVY=year;try{const qs=await db.collection('savingtx').where('year','==',year).get();SVTX=qs.docs.map(d=>({id:d.id,...d.data()}))}catch(e){SVTX=[];alert('โหลดข้อมูลไม่สำเร็จ: '+e.message)}render()}
 function changeSvYear2(y){svSel=null;loadSavingTx(+y)}
 function studentAgg(sid){let bal=0,dep=0,wd=0;SVTX.filter(t=>t.studentId==sid).forEach(t=>{if(t.type=='deposit'){bal+=+t.amount;dep++}else{bal-=+t.amount;wd++}});return{bal,dep,wd}}
-function savingStudentTable(){const q=svSearch.trim().toLowerCase();
-const rows=ST.filter(st=>{if(!q)return true;const name=((st.tt||'')+st.fn+' '+st.ln).toLowerCase();return name.includes(q)||(st.code||'').toLowerCase().includes(q)})
+function isDirector(){if(!me)return false;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&/ผู้อำนวยการ/.test(mp.po||'')&&!/รอง/.test(mp.po||''))}
+function isHomeroomOf(k){if(!me)return false;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&(HR[k]||[]).includes(mp.id))}
+function canViewSavingsClass(k){return!!me&&(me.role=='founder'||isDirector()||isHomeroomOf(k))}
+function canEditSavingsClass(k){return isHomeroomOf(k)}
+function savingStudentTable(roster){const q=svSearch.trim().toLowerCase();
+const rows=roster.filter(st=>{if(!q)return true;const name=((st.tt||'')+st.fn+' '+st.ln).toLowerCase();return name.includes(q)||(st.code||'').toLowerCase().includes(q)})
 .sort((a,b)=>(a.code||'').localeCompare(b.code||'')||a.fn.localeCompare(b.fn));
 return `<div style="max-height:560px;overflow:auto" class="wrap"><table class="tb">
 <tr><th>รหัสนักเรียน</th><th style="min-width:150px">ชื่อ-นามสกุล</th><th>ชั้น</th><th>ยอดเงินออม</th><th>รายการฝาก</th><th>รายการถอน</th></tr>
 ${rows.length?rows.map(st=>{const a=studentAgg(st.id),sel=svSel==st.id;
 return `<tr class="${sel?'sv-sel':''}" style="cursor:pointer" data-svpick="${st.id}"><td>${esc(st.code)||'-'}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td><td>${classLabel(st.ty+st.lv)}</td><td>${a.bal.toLocaleString()}</td><td>${a.dep}</td><td>${a.wd}</td></tr>`}).join(''):`<tr><td colspan="6">${E('ไม่พบนักเรียน')}</td></tr>`}
 </table></div>`}
-function svSearchInput(v){svSearch=v;const w=$('#sv_table_wrap');if(w)w.innerHTML=savingStudentTable()}
+function svSearchInput(v){svSearch=v;const w=$('#sv_table_wrap');if(w)w.innerHTML=savingStudentTable(ST.filter(x=>x.ty==svClassKey[0]&&x.lv==+svClassKey.slice(1)))}
 function savingSelectedPanel(){if(!svSel)return P('ข้อมูลนักเรียนที่เลือก',E('กรุณาเลือกนักเรียนก่อนทำรายการ',110));
 const st=ST.find(x=>x.id==svSel);if(!st){svSel=null;return savingSelectedPanel()}
 const a=studentAgg(st.id);
@@ -659,7 +663,11 @@ await db.collection('savingtx').doc(id).set(rec);SVTX.push({id,...rec});
 $('#sv_wd_amt').value='';$('#sv_wd_note').value='';$('#sv_wd_reason').value='';render();const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกการถอนเงินสำเร็จ'}
 catch(e){const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกไม่สำเร็จ: '+e.message}
 finally{const b=$('#sv_wd_btn');if(b){b.disabled=!svSel;b.textContent='บันทึกการถอนเงิน'}}}
-function savingPageMain(){return `<div class="pt"><h2>ฝาก / ถอน เงินออม นักเรียน</h2><p>กรอกข้อมูลเพื่อทำรายการออมเงินของนักเรียน</p></div>
+function savingClassPage(s){if(svClassKey!==s){svClassKey=s;svSel=null;svSearch=''}
+if(SVY===null){SVY=new Date().getFullYear()+543;loadSavingTx(SVY);return PT('ออมเงิน',classLabel(s))+P('','กำลังโหลดข้อมูล...')}
+if(!canViewSavingsClass(s))return `<div class="pt"><h2>ออมเงิน · ${esc(classLabel(s))}</h2><p><a class="bk" data-r="saving">‹ ออมเงิน</a></p></div>`+P('','ไม่มีสิทธิ์เข้าถึงข้อมูลออมเงินของชั้นนี้ — เฉพาะครูประจำชั้น ผู้ก่อตั้ง และผู้อำนวยการโรงเรียนเท่านั้น');
+const canEdit=canEditSavingsClass(s),roster=ST.filter(x=>x.ty==s[0]&&x.lv==+s.slice(1));
+return `<div class="pt"><h2>ออมเงิน · ${esc(classLabel(s))}</h2><p><a class="bk" data-r="saving">‹ ออมเงิน</a>${!canEdit?' · ดูได้อย่างเดียว (เฉพาะครูประจำชั้นบันทึกฝาก/ถอนได้)':''}</p></div>
 <div class="card" style="margin-bottom:16px"><div class="grid g3">
 <label class="lb">ปีการศึกษา (พ.ศ.)<select class="in" onchange="changeSvYear2(this.value)">${[SVY-1,SVY,SVY+1].map(y=>`<option value="${y}" ${y==SVY?'selected':''}>${y}</option>`).join('')}</select></label>
 <div class="lb" style="align-self:flex-end;padding-bottom:9px">วันที่ปัจจุบัน: <b>${thaiFullDate(new Date())}</b></div>
@@ -667,10 +675,10 @@ function savingPageMain(){return `<div class="pt"><h2>ฝาก / ถอน เ�
 <div class="gsv">
 <div class="card"><h3>ข้อมูลนักเรียน</h3>
 <input class="in" id="sv_search" placeholder="ค้นหาชื่อ-สกุล / รหัสนักเรียน" style="margin-bottom:12px" oninput="svSearchInput(this.value)">
-<div id="sv_table_wrap">${savingStudentTable()}</div></div>
-<div>${savingSelectedPanel()}<div style="margin-top:16px">${savingForms()}</div></div>
+<div id="sv_table_wrap">${savingStudentTable(roster)}</div></div>
+<div>${savingSelectedPanel()}${canEdit?`<div style="margin-top:16px">${savingForms()}</div>`:''}</div>
 </div>`}
-V.saving=()=>{if(SVY===null){SVY=new Date().getFullYear()+543;loadSavingTx(SVY);return PT('ฝาก / ถอน เงินออม นักเรียน','กรอกข้อมูลเพื่อทำรายการออมเงินของนักเรียน')+P('','กำลังโหลดข้อมูล...')}return savingPageMain()};
+V.saving=s=>s?savingClassPage(s):PT('ออมเงิน','เลือกชั้นเรียนเพื่อดูและบันทึกข้อมูลการออมเงิน')+Object.keys(CT).map(t=>P(CT[t][0],`<div class="grid g4">${LV.slice(0,CT[t][1]).map((n,i)=>`<div class="lv" data-r="saving:${t}${i}">${n}<b>${ST.filter(x=>x.ty==t&&x.lv==i).length} คน</b></div>`).join('')}</div>`)).join('');
 document.addEventListener('click',e=>{const a=e.target.closest('[data-svpick]');if(!a)return;svSel=a.dataset.svpick;render()});
 V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
 const row=(p,i)=>{const lc=p.lc?dt(p.lc):null,ex=lc&&lc<t,c=PCAT.find(x=>x[0]==p.cat);return`<tr><td>${i+1}</td><td style="white-space:nowrap">${esc(dn(p))}</td><td>${esc(p.po)||'-'}</td><td>${esc(p.pn)||'-'}</td><td>${c?`<span class="pcard-badge" style="background:${c[2]}1a;color:${c[2]}">${c[1]}</span>`:'-'}</td><td>${p.ap?ymd(dt(p.ap),t):'-'}</td><td>${esc(p.ph)||'-'}</td><td class="${ex?'rd':''}">${lc?(ex?'หมดอายุแล้ว':ymd(t,lc)+' เหลือ'):'-'}</td><td><button class="btn o" data-r="profile:${p.id}">ดู</button>${F?` <button class="btn o" data-q="e:${p.id}">แก้ไข</button> <button class="btn r" data-q="d:${p.id}">ลบ</button>`:''}</td></tr>`};
