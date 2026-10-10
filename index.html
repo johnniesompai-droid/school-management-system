@@ -29,7 +29,7 @@ aside{width:232px;background:#fff;border-right:1px solid var(--line);padding:16p
 .ico{color:#55607A;cursor:pointer;position:relative}.bell-badge{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-size:.6rem;line-height:1.5;border-radius:9px;padding:0 5px;font-style:normal}.user{display:flex;gap:10px;align-items:center;line-height:1.2}.user small{display:block;color:var(--mute);font-size:.7rem}
 .av{width:36px;height:36px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--blue)}
 #view{padding:20px;display:grid;gap:16px}
-.grid{display:grid;gap:16px}.g6{grid-template-columns:repeat(6,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:minmax(0,1fr) 300px}
+.grid{display:grid;gap:16px}.g6{grid-template-columns:repeat(6,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:repeat(3,minmax(0,1fr))}.split>:first-child{grid-column:span 2}
 .card{background:#fff;border-radius:14px;box-shadow:var(--sh);padding:16px}.card .card{box-shadow:none;border:1px solid var(--line)}
 .card h3{margin:0 0 12px;font-size:.92rem;font-weight:600;display:flex;justify-content:space-between;gap:8px}
 .card h3 a{font-size:.72rem;color:var(--blue);font-weight:400;cursor:pointer}
@@ -123,6 +123,12 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .cb-i span{min-width:0;flex:1}
 .cb-i button{border:0;background:none;color:#d33;cursor:pointer;font-size:1rem;padding:0 4px}
 .cb-n{color:#7a6bb3;font-size:.82rem;text-align:center;padding:14px 4px;border:1px dashed #cdc1ee;border-radius:10px}
+.cb-bot.one{grid-template-columns:1fr}
+.cb.hm{padding:10px}.cb.hm .cb-ttl{padding:3px 10px}.cb.hm .cb-ttl b{font-size:1.05rem}.cb.hm .cb-ttl span{font-size:.8rem}.cb.hm .cb-q{display:none}.cb.hm .cb-top{margin-bottom:8px}
+.cb.hm .cb-w{font-size:.7rem;padding:4px 1px}.cb.hm .cb-w small{display:none}
+.cb.hm .cb-d{min-height:46px;padding:2px 3px}.cb.hm .cb-d .n{font-size:.78rem}.cb.hm .cb-e{display:block;font-size:0;height:6px;padding:0;margin-top:2px;border-radius:3px;box-shadow:none}
+.cb.hm .cb-bot{grid-template-columns:1fr;margin-top:8px}.cb.hm .cb-l{grid-template-columns:1fr}.cb.hm .cb-p{padding:8px 10px;border-radius:14px}.cb.hm .cb-h{font-size:.82rem;margin-bottom:6px}.cb.hm .cb-i{font-size:.78rem;padding:3px 0}.cb.hm .cb-i em{min-width:64px;font-size:.7rem;padding:2px 6px}
+.cb.hm::before{height:80px}
 .cb-hint{margin-top:10px;font-size:.75rem;color:#6b5aa8;text-align:right}
 .cb.hm{cursor:pointer;transition:transform .15s,box-shadow .15s}.cb.hm:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(80,50,160,.2)}
 @media(max-width:700px){.cb-w small{display:none}.cb-w{font-size:.75rem}.cb-d{min-height:62px;padding:3px}.cb-e{font-size:.62rem;padding:2px 3px}.cb-ttl b{font-size:1.2rem}.cb-ttl span{font-size:.9rem}.cb-bot{grid-template-columns:1fr}.cb-l{grid-template-columns:1fr}.cb-q{display:none}}
@@ -588,9 +594,8 @@ return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div clas
 const V={
 home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${P('สถิติการเข้าเรียน',E())}${P('สถิตินักเรียน',E())}</div>
-${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}
 <div class="grid g2">${['การเงิน & พัสดุ','งานเอกสาร & ธุรการ','งานซ่อม & อาคารสถานที่','สื่อสารโรงเรียน'].map(t=>P(t,E('',90),'ดูทั้งหมด')).join('')}</div></div>
-<div class="grid" style="align-content:start">${P('ข่าวประชาสัมพันธ์',upc(),'ดูทั้งหมด')}</div></div>`,
+<div class="grid" style="align-content:start">${P('ข่าวประชาสัมพันธ์',upc(),'ดูทั้งหมด')}${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม / เอกสารดาวน์โหลด และเกษียนหนังสือราชการ')+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
@@ -1239,11 +1244,9 @@ const pv=m==0?`${y-1}-12`:`${y}-${m}`,nx=m==11?`${y+1}-1`:`${y}-${m+2}`;
 const top=`<div class="cb-top"><div class="cb-ttl"><b>${TM[m]} ${y+543}</b><span>${EMN[m]} ${y}</span></div>${pg?`<div class="cb-nav"><button class="btn o" data-r="cal:${pv}">‹</button><button class="btn o" data-r="cal:${nx}">›</button><button class="btn" data-r="cal:${t.getFullYear()}-${t.getMonth()+1}">วันนี้</button></div>`:''}<div class="cb-q">“ การศึกษา<br>คือรากฐานของการพัฒนาที่ยั่งยืน ”</div></div>`;
 const grid=`<div class="cb-g">${DWT.map((w,i)=>`<div class="cb-w">${i==0?w:w}<small>${DWE[i]}</small></div>`).join('')}${c}</div>`;
 const list=ms.length?`<div class="cb-l">${ms.map(e=>{const cc=col[e.id],d=+e.d.slice(8);return `<div class="cb-i"><em style="background:${cc[0]};color:${cc[1]}">${d} ${TMS[m]} ${(y+543)%100}</em><span>${esc(e.t)}</span>${pg?`<button data-ev="${e.id}" title="ลบ">×</button>`:''}</div>`}).join('')}</div>`:'<div class="cb-n">ยังไม่มีกิจกรรมในเดือนนี้</div>';
-let right;
-if(pg){if(sel&&sel.startsWith(pre)){const d=+sel.slice(8),es=EV.filter(e=>e.d==sel);right=`<div class="cb-p"><div class="cb-h"><i>${ic('cal')}</i>วันที่ ${d} ${TM[m]}</div>${es.map(e=>`<div class="cb-i"><span>${esc(e.t)}</span><button data-ev="${e.id}" title="ลบ">×</button></div>`).join('')||'<div class="cb-n">ยังไม่มีกิจกรรมในวันนี้</div>'}<div style="display:flex;gap:8px;margin-top:10px"><input class="in" id="et" placeholder="ชื่อกิจกรรม" style="margin:0" onkeydown="if(event.key==\'Enter\')addEv()"><button class="btn" onclick="addEv()">เพิ่ม</button></div></div>`}
-else right=`<div class="cb-p"><div class="cb-h"><i>${ic('pen')}</i>หมายเหตุ</div><div class="cb-n">คลิกที่วันในปฏิทินเพื่อดูหรือเพิ่มกิจกรรม</div></div>`}
-else right=`<div class="cb-p"><div class="cb-h"><i>${ic('pen')}</i>หมายเหตุ</div><div class="cb-n">ร่วมสร้างอนาคตที่ดีให้กับนักเรียนไปด้วยกัน</div><div class="cb-hint">กดเพื่อดูรายละเอียดทั้งเดือน ›</div></div>`;
-return `<div class="cb ${pg?'pg':'hm'}"${pg?'':` data-r="cal:${y}-${m+1}"`}>${top}${grid}<div class="cb-bot"><div class="cb-p"><div class="cb-h"><i>${ic('doc')}</i>กิจกรรมสำคัญประจำเดือน</div>${list}</div>${right}</div></div>`}
+let right='';
+if(pg&&sel&&sel.startsWith(pre)){const d=+sel.slice(8),es=EV.filter(e=>e.d==sel);right=`<div class="cb-p"><div class="cb-h"><i>${ic('cal')}</i>วันที่ ${d} ${TM[m]}</div>${es.map(e=>`<div class="cb-i"><span>${esc(e.t)}</span><button data-ev="${e.id}" title="ลบ">×</button></div>`).join('')||'<div class="cb-n">ยังไม่มีกิจกรรมในวันนี้</div>'}<div style="display:flex;gap:8px;margin-top:10px"><input class="in" id="et" placeholder="ชื่อกิจกรรม" style="margin:0" onkeydown="if(event.key==\'Enter\')addEv()"><button class="btn" onclick="addEv()">เพิ่ม</button></div></div>`}
+return `<div class="cb ${pg?'pg':'hm'}"${pg?'':` data-r="cal:${y}-${m+1}"`}>${top}${grid}<div class="cb-bot${right?'':' one'}"><div class="cb-p"><div class="cb-h"><i>${ic('doc')}</i>กิจกรรมสำคัญประจำเดือน</div>${list}</div>${right}</div></div>`}
 const upc=()=>{const t=T0(),l=EV.map(e=>({e,n:Math.round((dt(e.d)-t)/864e5)})).filter(x=>x.n>=0&&x.n<=7).sort((a,b)=>a.n-b.n||a.e.d.localeCompare(b.e.d));
 return `<div style="font-size:.72rem;color:var(--mute);margin-bottom:4px">กิจกรรมที่ใกล้ถึงวัน (ภายใน 7 วัน)</div>`+(l.length?l.map(x=>`<div class="rw" data-r="cal:${+x.e.d.slice(0,4)}-${+x.e.d.slice(5,7)}" style="cursor:pointer"><span><b>${esc(x.e.t)}</b><small>${th(x.e.d)}</small></span><em style="color:${x.n<=1?'var(--red)':'var(--blue)'};font-weight:500">${x.n==0?'วันนี้':x.n==1?'พรุ่งนี้':'อีก '+x.n+' วัน'}</em></div>`).join(''):E('ไม่มีกิจกรรมที่ใกล้ถึงวัน',80))};
 V.cal=s=>{if(s){const a=s.split('-');cy=+a[0];cm=+a[1]-1}
