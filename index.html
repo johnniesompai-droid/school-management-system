@@ -155,6 +155,8 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .sms-ic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}.sms-ic svg{width:20px;height:20px}.sms-ic.a{color:#5B45E0}.sms-ic.b{color:#3E8FB8}.sms-ic.c{color:#1E9E5F}
 .sma{display:flex;flex-direction:column;gap:10px}.sma-r{display:flex;gap:10px}.sma-b{white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:10px 14px;font:inherit;font-weight:500;cursor:pointer;flex:1;border:1px solid #C9D3F2;background:#fff;color:#1F2A5C}.sma-b svg{width:18px;height:18px}.sma-b.p{background:linear-gradient(135deg,#5B45E0,#7C5CF0);color:#fff;border:0}.sma-b.w{width:100%}.sma-b.s{font-size:.78rem;padding:7px 8px}
 @media(max-width:1000px){.sms{grid-template-columns:1fr 1fr}}
+.smw-n{font-size:.78rem;color:#475569;margin:-2px 2px 10px}.smw-n b{color:#1F2A5C}
+.wst.sm .sm-ro{font-size:.88rem;color:#1F2A5C;min-width:60px}.wst.sm .sm-ro.off{color:#B6BED6}.wst.sm th.smc{min-width:76px;max-width:120px}.wst.sm th.smc.off{opacity:.55}.smc-n{display:block;max-width:110px;margin:0 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sc-filled{background:#F3FAF3!important}
 .sc-over{border-color:var(--red)!important;background:#FEECEC!important}
 .card h3 a{cursor:pointer}
@@ -767,27 +769,34 @@ const fx=v=>(v==null||!isFinite(v))?'-':String(Math.round(v*100)/100);
 function scGrade(sheet){const g=sheet.gradeScale,d=defaultGradeScale();if(!g||g.length!=8)return d;return g.map((x,i)=>({...x,name:x.name||d[i].name})).sort((a,b)=>b.min-a.min)}
 function smEnsure(sheet){if(!sheet.summary)sheet.summary={};if(!sheet.summary.rows)sheet.summary.rows={};return sheet.summary}
 function smW(sheet){const w=(sheet.summary&&sheet.summary.weights)||{};if(w.m!=null||w.c==null||w.f==null)return{c:70,f:30};return{c:w.c,f:w.f}}
-function smCalc(sheet,sid,W,gs){const r=(sheet.summary&&sheet.summary.rows&&sheet.summary.rows[sid])||{},cols=scReal(sheet,'collect'),mx=cols.reduce((a,c)=>a+(+c.max||0),0),sc=((sheet.scores||{})[sid]||{}).collect||{};
-let sum=0,any=false;cols.forEach(c=>{if(sc[c.id]!=null&&sc[c.id]!==''){sum+=+sc[c.id]||0;any=true}});
-const col=(mx&&any)?(W.c>0?Math.floor(sum/(mx/W.c)+1e-9):0):null,f=(r.f===''||r.f==null||isNaN(+r.f))?null:+r.f,has=col!=null||f!=null,tot=has?(col||0)+(f||0):null;
+function smRoster(sheet){const ty=sheet.classKey[0],lv=+sheet.classKey.slice(1);return ST.filter(x=>x.ty==ty&&x.lv==lv)}
+function smPool(sheet){const roster=smRoster(sheet),cols=[];['collect','exam'].forEach(m=>scReal(sheet,m).forEach(c=>cols.push({m,id:c.id,name:c.name||(m=='exam'?'สอบ':'ใบงาน'),max:+c.max||0,scored:roster.some(st=>{const v=(((sheet.scores||{})[st.id]||{})[m]||{})[c.id];return v!=null&&v!==''})})));return cols}
+function smCalc(sheet,sid,W,gs,pool){const r=(sheet.summary&&sheet.summary.rows&&sheet.summary.rows[sid])||{},sc=(sheet.scores||{})[sid]||{};
+let num=0,den=0,any=false;const part={collect:[0,0],exam:[0,0]},vals=pool.map(c=>{const v=(sc[c.m]||{})[c.id],has=v!=null&&v!=='';if(c.scored){den+=c.max;part[c.m][1]+=c.max;if(has){num+=+v||0;part[c.m][0]+=+v||0;any=true}}return has?+v:null});
+const col=(den&&any)?(W.c>0?Math.floor(num/(den/W.c)+1e-9):0):null,f=(r.f===''||r.f==null||isNaN(+r.f))?null:+r.f,has=col!=null||f!=null,tot=has?(col||0)+(f||0):null;
 let gi=-1;if(tot!=null){const t=Math.round(tot*100)/100;gi=gs.findIndex(g=>t>=(+g.min||0))}
-return{sum,mx,col,f,tot,gi,grade:gi>=0?gs[gi].label:'-',r}}
+return{num,den,part,vals,col,f,tot,gi,grade:gi>=0?gs[gi].label:'-',r}}
 const gcls=i=>i<0?'':' gr'+Math.min(i,7);
-function smRowHtml(st,i,sheet,W,gs){const c=smCalc(sheet,st.id,W,gs),r=c.r;
+function smTip(c){const a=[];if(c.part.collect[1])a.push('ใบงาน '+fx(c.part.collect[0])+'/'+c.part.collect[1]);if(c.part.exam[1])a.push('สอบ '+fx(c.part.exam[0])+'/'+c.part.exam[1]);return c.den?a.join(' + ')+' = '+fx(c.num)+'/'+c.den:'ยังไม่มีคะแนนเก็บหรือคะแนนสอบ (กรอกที่แท็บ 1 และ 2)'}
+function smRowHtml(st,i,sheet,W,gs,pool){const c=smCalc(sheet,st.id,W,gs,pool),r=c.r;
 return `<tr data-sid="${st.id}"><td class="s1">${i+1}</td><td class="l s2">${esc((st.tt||'')+st.fn+' '+st.ln)}</td>
-<td title="${c.mx?'รวมคะแนนเก็บ '+fx(c.sum)+' / '+c.mx:'ยังไม่มีคะแนนเก็บ (กรอกที่แท็บ 1. คะแนนเก็บ)'}"><b class="sm-col">${fx(c.col)}</b></td>
+${pool.map((p,k)=>`<td class="sm-ro${p.scored?'':' off'}">${c.vals[k]==null?'-':fx(c.vals[k])}</td>`).join('')}
+<td title="${smTip(c)}"><b class="sm-col">${fx(c.col)}</b></td>
 <td><input class="sm-in${r.f!==''&&r.f!=null&&+r.f>W.f?' sc-over':''}" type="number" step="any" min="0" placeholder="-" data-k="f" data-mx="${W.f}" value="${r.f??''}" oninput="smIn(this)"></td>
 <td><span class="pill sm-tot${gcls(c.gi)}">${fx(c.tot)}</span></td><td><span class="pill sm-gr${gcls(c.gi)}">${c.grade}</span></td>
 <td><input class="sm-note" data-k="note" placeholder="-" value="${esc(r.note||'')}" oninput="smIn(this)"></td>
 <td><button type="button" class="sm-x" title="ล้างข้อมูลแถวนี้" onclick="smClearRow('${st.id}')">${ic('trash')}</button></td></tr>`}
-function summaryPage(sheet,roster){const W=smW(sheet),gs=scGrade(sheet),ty=sheet.classKey[0],lv=+sheet.classKey.slice(1);
-const rows=roster.map((st,i)=>smRowHtml(st,i,sheet,W,gs)).join('');
+function summaryPage(sheet,roster){const W=smW(sheet),gs=scGrade(sheet),ty=sheet.classKey[0],lv=+sheet.classKey.slice(1),pool=smPool(sheet),den=pool.reduce((a,c)=>a+(c.scored?c.max:0),0);
+const rows=roster.map((st,i)=>smRowHtml(st,i,sheet,W,gs,pool)).join('');
 const wi=(k,lab,v)=>`<label>${lab}<input class="sm-w" id="sm_w_${k}" type="number" min="0" max="100" step="any" value="${v}" onchange="smWChange('${k}')"></label>`;
+const n=pool.length;
 return `<div class="smh"><span class="smh-i">${ic('book')}</span><div class="smh-t"><b>${esc(sheet.subject)}${sheet.code?' ('+esc(sheet.code)+')':''}</b><span>${esc(LV[lv]||'')} (${esc(CT[ty]?CT[ty][0]:'')})</span></div>
 <div class="smw"><b>สัดส่วนคะแนน</b>${wi('c','ระหว่างเรียน',W.c)}<i>:</i>${wi('f','ปลายปี',W.f)}<i>=</i><label class="smw-t">รวม<b>100</b></label><span class="smw-p"><button type="button" onclick="smPreset(70)">70 : 30</button><button type="button" onclick="smPreset(80)">80 : 20</button></span></div></div>
-<div class="wsw" id="ws_w"><table class="wst sm"><thead><tr><th class="s1">เลขที่</th><th class="l s2">ชื่อ - นามสกุล</th><th>คะแนนระหว่างเรียน<small>(${fx(W.c)})</small></th><th>คะแนนปลายภาค<small>(${fx(W.f)})</small></th><th>รวมคะแนน<small>(100)</small></th><th>ผลการเรียน</th><th>หมายเหตุ</th><th></th></tr></thead><tbody>
-${rows||`<tr><td colspan="8">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}</tbody></table></div>
-<div class="sm-foot">คะแนนระหว่างเรียน = ปัดลง(คะแนนรวมใบงาน ÷ (คะแนนเต็มใบงานทั้งหมด ÷ ${fx(W.c)})) — ดึงจากแท็บ "1. คะแนนเก็บ" อัตโนมัติ &nbsp;|&nbsp; คะแนนปลายภาค กรอกเองในตาราง (เต็ม ${fx(W.f)}) &nbsp;|&nbsp; รวมคะแนน = ระหว่างเรียน + ปลายภาค</div>
+<div class="smw-n">คะแนนเต็มรวมของช่องระหว่างเรียนตอนนี้ = <b>${den}</b> ${den&&den!=W.c?`(จะถูกปรับให้เหลือ ${fx(W.c)} ตามสัดส่วน)`:den?'(ตรงกับสัดส่วนพอดี)':''}</div>
+<div class="wsw" id="ws_w"><table class="wst sm"><thead><tr><th class="s1" rowspan="2">เลขที่</th><th class="l s2" rowspan="2">ชื่อ - นามสกุล</th><th colspan="${n+1}">คะแนนระหว่างเรียน <small class="inl">(${fx(W.c)})</small></th><th rowspan="2">คะแนนปลายภาค<small>(${fx(W.f)})</small></th><th rowspan="2">รวมคะแนน<small>(100)</small></th><th rowspan="2">ผลการเรียน</th><th rowspan="2">หมายเหตุ</th><th rowspan="2"></th></tr>
+<tr>${pool.map(p=>`<th class="smc${p.scored?'':' off'}" title="${esc(p.name)}${p.scored?'':' — ยังไม่มีคะแนน ไม่นำมาคิด'}"><span class="smc-n">${esc(p.name)}</span><small>(${p.max})</small></th>`).join('')}<th>รวม</th></tr></thead><tbody>
+${rows||`<tr><td colspan="${n+8}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}</tbody></table></div>
+<div class="sm-foot">ระหว่างเรียน = ปัดลง( (คะแนนที่ได้ทุกใบงานและทุกการสอบ) ÷ (คะแนนเต็มของช่องเหล่านั้น ÷ ${fx(W.c)}) ) — ดึงจากแท็บ "1. คะแนนเก็บ" และ "2. คะแนนสอบ" อัตโนมัติ ช่องที่ยังไม่มีใครได้คะแนน (สีจาง) ไม่นำมาคิด &nbsp;|&nbsp; ปลายภาคกรอกเองในตาราง (เต็ม ${fx(W.f)}) &nbsp;|&nbsp; รวมคะแนน = ระหว่างเรียน + ปลายภาค</div>
 <div class="smb">${smGradePanel(gs)}${smStatPanel(sheet,roster)}${smActPanel()}</div>`}
 function smGradePanel(gs){const rowsN=Math.ceil(gs.length/2);
 return `<div class="smg"><h4>เกณฑ์การตัดเกรด</h4><div class="smg-g" style="grid-template-rows:repeat(${rowsN},auto)">${gs.map((g,i)=>{const mx=i==0?100:gs[i-1].min-1,last=i==gs.length-1;
@@ -795,13 +804,13 @@ return `<div class="smg-r"><span class="pill${gcls(i)}">${esc(g.label)}</span><s
 function smStatPanel(sheet,roster){const u=sheet.summary&&sheet.summary.updatedAt,d=u?new Date(u):null;
 const ts=d&&!isNaN(d)?`${d.getDate()} ${TH_MON[d.getMonth()]} ${d.getFullYear()+543} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} น.`:'ยังไม่เคยบันทึก';
 return `<div class="sms"><div class="sms-i"><span class="sms-ic a">${ic('info')}</span><div><small>คะแนนเต็ม</small><b>100</b></div></div><div class="sms-i"><span class="sms-ic b">${ic('users')}</span><div><small>นักเรียนทั้งหมด</small><b>${roster.length} คน</b></div></div><div class="sms-i ok"><span class="sms-ic c">${ic('check')}</span><div><small>บันทึกข้อมูลล่าสุด</small><em id="sm_last">${ts}</em></div></div></div>`}
-function smActPanel(){return `<div class="sma"><div class="sma-r"><button type="button" class="sma-b o" onclick="smReset()">${ic('refresh')} รีเซ็ตข้อมูล</button><button type="button" class="sma-b p" onclick="smSaveNow()">${ic('save')} บันทึกคะแนน</button></div><button type="button" class="sma-b o w" onclick="smExport()">${ic('down')} ส่งออก Excel (ปพ.5)</button><div class="sma-r"><button type="button" class="sma-b o s" onclick="smCopy('collect')">คัดลอกคะแนนเก็บ</button><button type="button" class="sma-b o s" onclick="smCopy('final')">คัดลอกคะแนนปลายปี</button></div><span id="sm_msg" class="sm-msg"></span></div>`}
+function smActPanel(){return `<div class="sma"><div class="sma-r"><button type="button" class="sma-b o" onclick="smReset()">${ic('refresh')} รีเซ็ตข้อมูล</button><button type="button" class="sma-b p" onclick="smSaveNow()">${ic('save')} บันทึกคะแนน</button></div><button type="button" class="sma-b o w" onclick="smExport()">${ic('down')} ส่งออก Excel (ปพ.5)</button><div class="sma-r"><button type="button" class="sma-b o s" onclick="smCopy('collect')">คัดลอกระหว่างเรียน</button><button type="button" class="sma-b o s" onclick="smCopy('final')">คัดลอกปลายปี</button></div><span id="sm_msg" class="sm-msg"></span></div>`}
 let smTimer=null;
 function smCur(){return SC.find(x=>x.id==scCurrentId)}
 function smIn(el){const sheet=smCur();if(!sheet)return;const tr=el.closest('tr'),sid=tr.dataset.sid,k=el.dataset.k,rows=smEnsure(sheet).rows;rows[sid]={...(rows[sid]||{})};
 if(k=='note')rows[sid].note=el.value;else{rows[sid][k]=el.value===''?'':parseFloat(el.value);el.classList.toggle('sc-over',el.value!==''&&+el.value>+el.dataset.mx)}
 smUpd(tr,sheet);clearTimeout(smTimer);const m=$('#sm_msg');if(m)m.textContent='กำลังบันทึก...';smTimer=setTimeout(()=>smSave(),1200)}
-function smUpd(tr,sheet){const W=smW(sheet),gs=scGrade(sheet),c=smCalc(sheet,tr.dataset.sid,W,gs),set=(q,t,cl)=>{const e=tr.querySelector(q);if(!e)return;e.textContent=t;if(cl!=null)e.className=e.className.replace(/\s*gr\d/g,'')+cl};
+function smUpd(tr,sheet){const W=smW(sheet),gs=scGrade(sheet),c=smCalc(sheet,tr.dataset.sid,W,gs,smPool(sheet)),set=(q,t,cl)=>{const e=tr.querySelector(q);if(!e)return;e.textContent=t;if(cl!=null)e.className=e.className.replace(/\s*gr\d/g,'')+cl};
 set('.sm-tot',fx(c.tot),gcls(c.gi));set('.sm-gr',c.grade,gcls(c.gi))}
 async function smSave(){const sheet=smCur();if(!sheet)return;const sm=smEnsure(sheet);sm.updatedAt=new Date().toISOString();if(!sm.weights||sm.weights.m!=null)sm.weights=smW(sheet);
 try{await db.collection('scoresheets').doc(sheet.id).update({summary:sm});const m=$('#sm_msg');if(m)m.textContent='บันทึกแล้ว ✓';const d=new Date(sm.updatedAt),l=$('#sm_last');if(l)l.textContent=`${d.getDate()} ${TH_MON[d.getMonth()]} ${d.getFullYear()+543} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} น.`}
@@ -815,13 +824,13 @@ if(isNaN(v)||v<=0||v>100||(i>0&&v>=gs[i-1].min)||v<=gs[i+1].min){alert('คะ�
 gs[i].min=v;sheet.gradeScale=gs;db.collection('scoresheets').doc(sheet.id).update({gradeScale:gs}).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message));scRender()}
 function smClearRow(sid){const sheet=smCur();if(!sheet||!confirm('ล้างคะแนนปลายภาคและหมายเหตุของแถวนี้?'))return;delete smEnsure(sheet).rows[sid];smSave();scRender()}
 function smReset(){const sheet=smCur();if(!sheet||!confirm('รีเซ็ตข้อมูลในตารางนี้? คะแนนปลายภาคและหมายเหตุทั้งหมดจะถูกล้าง (คะแนนเก็บในแท็บใบงานไม่ถูกลบ)'))return;smEnsure(sheet).rows={};smSave();scRender()}
-function smBlocks(sheet){const W=smW(sheet),gs=scGrade(sheet),ty=sheet.classKey[0],lv=+sheet.classKey.slice(1),roster=ST.filter(x=>x.ty==ty&&x.lv==lv),cols=scReal(sheet,'collect');
-const calc=roster.map(st=>smCalc(sheet,st.id,W,gs));
-const collect=[cols.map(c=>c.name),cols.map(c=>c.max)].concat(roster.map(st=>{const sc=((sheet.scores||{})[st.id]||{}).collect||{};return cols.map(c=>sc[c.id]!=null&&sc[c.id]!==''?+sc[c.id]:'')}));
+function smBlocks(sheet){const W=smW(sheet),gs=scGrade(sheet),ty=sheet.classKey[0],lv=+sheet.classKey.slice(1),roster=smRoster(sheet),pool=smPool(sheet);
+const calc=roster.map(st=>smCalc(sheet,st.id,W,gs,pool));
+const collect=[pool.map(c=>c.name),pool.map(c=>c.max)].concat(roster.map((st,i)=>calc[i].vals.map(v=>v==null?'':v)));
 const fin=calc.map(c=>c.f==null?'':c.f);
-return{W,gs,ty,lv,roster,cols,calc,collect,fin}}
+return{W,gs,ty,lv,roster,cols:pool,calc,collect,fin}}
 function smCopy(kind){const sheet=smCur();if(!sheet)return;const b=smBlocks(sheet),rows=kind=='collect'?b.collect.map(r=>r.join('\t')):b.fin.map(v=>String(v)),txt=rows.join('\n');
-const done=()=>{const m=$('#sm_msg');if(m)m.textContent=kind=='collect'?'คัดลอกคะแนนเก็บแล้ว — ไปที่ Excel คลิกเซลล์แรกของช่องคะแนนเก็บ (แถวชื่อใบงาน) แล้วกด Ctrl+V':'คัดลอกคะแนนปลายปีแล้ว — ไปที่ Excel คลิกเซลล์ช่องทดสอบปลายปีของนักเรียนคนแรก แล้วกด Ctrl+V'};
+const done=()=>{const m=$('#sm_msg');if(m)m.textContent=kind=='collect'?'คัดลอกคะแนนระหว่างเรียนแล้ว — ไปที่ Excel คลิกเซลล์ชื่อใบงานแรกของวิชา แล้วกด Ctrl+V':'คัดลอกคะแนนปลายปีแล้ว — ไปที่ Excel คลิกเซลล์ช่องทดสอบปลายปีของนักเรียนคนแรก แล้วกด Ctrl+V'};
 const fb=()=>{const t=document.createElement('textarea');t.value=txt;t.style.cssText='position:fixed;opacity:0';document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){alert('คัดลอกไม่สำเร็จ')}t.remove()};
 if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,fb);else fb()}
 function smExport(){if(typeof XLSX=='undefined')return alert('โหลดตัวสร้าง Excel ไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');const sheet=smCur();if(!sheet)return;const b=smBlocks(sheet),W=b.W,cls=(LV[b.lv]||'')+' ('+(CT[b.ty]?CT[b.ty][0]:'')+')';
@@ -830,9 +839,9 @@ const sum=[['โรงเรียนบ้านผาเยอ สพป.แ�
 ['เลขที่','ชื่อ-สกุล','ระหว่างเรียน ('+fx(W.c)+')','ปลายปี ('+fx(W.f)+')','รวม (100)','ระดับผลการเรียน','หมายเหตุ']];
 b.roster.forEach((st,i)=>{const c=b.calc[i];sum.push([i+1,(st.tt||'')+st.fn+' '+st.ln,c.col==null?'':c.col,c.f==null?'':c.f,c.tot==null?'':Math.round(c.tot*100)/100,c.gi<0?'':c.grade,c.r.note||''])});
 sum.push([],['เกณฑ์การตัดเกรด: '+b.gs.map((g,i)=>g.label+' ('+g.min+'–'+(i==0?100:b.gs[i-1].min-1)+')').join(' , ')]);
-sum.push([],['วิธีนำไปใส่ในไฟล์ Excel ปพ.5 (แผ่นงาน "วิชาที่ N")'],['1) ใส่อัตราส่วนในช่อง "อัตราส่วนคะแนน ระหว่างเรียน : ปลายปี" ให้ตรงกับด้านบน'],['2) แผ่นงาน "คะแนนเก็บ": คัดลอกทั้งหมด (แถว 1 = ชื่อใบงาน, แถว 2 = คะแนนเต็ม, แถวถัดไป = คะแนนนักเรียน) ไปวางที่เซลล์ชื่อใบงานแรกของวิชา (ตัวอย่าง AM5)'],['3) แผ่นงาน "ปลายปี": คัดลอกคอลัมน์ A ไปวางที่ช่อง "ทดสอบปลายปี" ของนักเรียนคนแรก (ตัวอย่าง AZ7)'],['* เรียงนักเรียนตามเลขที่เหมือนกับไฟล์ Excel']);
+sum.push([],['วิธีนำไปใส่ในไฟล์ Excel ปพ.5 (แผ่นงาน "วิชาที่ N")'],['1) ใส่อัตราส่วนในช่อง "อัตราส่วนคะแนน ระหว่างเรียน : ปลายปี" ให้ตรงกับด้านบน'],['2) แผ่นงาน "ระหว่างเรียน": คัดลอกทั้งหมด (รวมใบงานและการสอบเป็นแถวเดียวกัน แถว 1 = ชื่อช่อง, แถว 2 = คะแนนเต็ม, แถวถัดไป = คะแนนนักเรียน) ไปวางที่เซลล์ชื่อใบงานแรกของวิชา (ตัวอย่าง AM5)'],['3) แผ่นงาน "ปลายปี": คัดลอกคอลัมน์ A ไปวางที่ช่อง "ทดสอบปลายปี" ของนักเรียนคนแรก (ตัวอย่าง AZ7)'],['* เรียงนักเรียนตามเลขที่เหมือนกับไฟล์ Excel']);
 const s1=XLSX.utils.aoa_to_sheet(sum);s1['!cols']=[{wch:8},{wch:30},{wch:16},{wch:14},{wch:10},{wch:16},{wch:24}];XLSX.utils.book_append_sheet(wb,s1,'สรุป ปพ.5');
-XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(b.cols.length?b.collect:[['ยังไม่มีใบงาน']]),'คะแนนเก็บ');
+XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(b.cols.length?b.collect:[['ยังไม่มีคะแนนเก็บ']]),'ระหว่างเรียน');
 XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(b.fin.map(v=>[v])),'ปลายปี');
 XLSX.writeFile(wb,'ปพ5_'+sheet.subject+'_'+(LV[b.lv]||'')+'.xlsx')}
 function scoreSheetPage(id){const sheet=SC.find(x=>x.id==id);if(!sheet)return V.score();
