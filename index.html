@@ -127,6 +127,10 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .wst .sc-cell{width:92px;text-align:center;border:1px solid #DCE3F7;border-radius:10px;padding:8px 6px;font:inherit;background:#fff;color:#1F2A5C}.wst .sc-cell:focus{outline:2px solid #7C5CF0;border-color:#7C5CF0}
 .wshint{padding:14px;text-align:center;color:#6B7794;font-size:.85rem}.wsf{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap;font-size:.78rem;color:#6B7794}
 @media(max-width:800px){.wsI{grid-template-columns:1fr 1fr}}
+#view>*{min-width:0}.wsw{min-height:230px;max-width:100%}.wst{min-width:0;width:100%}.wst .s1,.wst .s2,.wst .s3{position:sticky;z-index:3;background:#fff}.wst th.s1,.wst th.s2,.wst th.s3{background:#EEF2FF;z-index:4}
+.wst .s1{left:0;width:70px;min-width:70px;max-width:70px}.wst .s2{left:70px;width:230px;min-width:230px;max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;box-shadow:6px 0 8px -6px #1f2a5c22}.wst .s3{right:0;width:110px;min-width:110px;box-shadow:-6px 0 8px -6px #1f2a5c22}
+.wst th.wc{min-width:130px}.wst th.wc.wph{min-width:70px}.wst .sc-ph{background:#FAFBFF;cursor:default;width:100%;max-width:92px;min-width:50px}
+@media(max-width:640px){.wst .s1{width:52px;min-width:52px;max-width:52px}.wst .s2{left:52px;width:150px;min-width:150px;max-width:150px}}
 .sc-filled{background:#F3FAF3!important}
 .sc-over{border-color:var(--red)!important;background:#FEECEC!important}
 .card h3 a{cursor:pointer}
@@ -693,15 +697,16 @@ function scoreRow(st,i,cols,mode){const sc=st._sc[mode]||{};let sum=0;cols.forEa
 return `<tr><td>${i+1}</td><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td>${cols.map(c=>{const v=sc[c.id];const over=v!=null&&c.max&&+v>+c.max;
 return `<td><input class="in sc-cell${v!=null&&v!==''?' sc-filled':''}${over?' sc-over':''}" style="margin:0;max-width:76px" type="number" step="any" data-sid="${st.id}" data-col="${c.id}" value="${v??''}"></td>`}).join('')}<td><b class="row-total">${sum||'-'}</b></td></tr>`}
 function scAcadYear(sh){const d=new Date(sh.createdAt);return isNaN(d)?'-':d.getFullYear()+543-(d.getMonth()<4?1:0)}
+const WS_PH=[1,2,3,4,5,6];
 function wsRow(st,i,cc){const sc=st._sc.collect||{},mx=cc.reduce((a,c)=>a+(+c.max||0),0);let sum=0,any=false;cc.forEach(c=>{if(sc[c.id]!=null&&sc[c.id]!==''){sum+=+sc[c.id]||0;any=true}});
-return `<tr><td>${i+1}</td><td>${i+1}</td><td class="l">${esc((st.tt||'')+st.fn+' '+st.ln)}</td>${cc.map(c=>{const v=sc[c.id],over=v!=null&&c.max&&+v>+c.max;
-return `<td><input class="sc-cell${v!=null&&v!==''?' sc-filled':''}${over?' sc-over':''}" type="number" step="any" placeholder="-" data-sid="${st.id}" data-col="${c.id}" value="${v??''}"></td>`}).join('')}<td><b class="row-total" data-max="${mx}">${any?sum+(mx?' / '+mx:''):'-'}</b></td></tr>`}
+return `<tr><td class="s1">${i+1}</td><td class="l s2">${esc((st.tt||'')+st.fn+' '+st.ln)}</td>${(cc.length?cc.map(c=>{const v=sc[c.id],over=v!=null&&c.max&&+v>+c.max;
+return `<td><input class="sc-cell${v!=null&&v!==''?' sc-filled':''}${over?' sc-over':''}" type="number" step="any" placeholder="-" data-sid="${st.id}" data-col="${c.id}" value="${v??''}"></td>`}).join(''):WS_PH.map(()=>`<td><input class="sc-cell sc-ph" disabled placeholder="-"></td>`).join(''))}<td class="s3"><b class="row-total" data-max="${mx}">${any?sum+(mx?' / '+mx:''):'-'}</b></td></tr>`}
 function collectTable(id,roster,cc){
 const nx=cc.length+1,tot=cc.reduce((a,c)=>a+(+c.max||0),0);
 return `<div class="wsh"><span class="wsh-i">${ic('doc')}</span><div><b>รายการใบงาน</b><small>กำหนดชื่อใบงานและคะแนนเต็ม แล้วกรอกคะแนนให้นักเรียน</small></div><span class="wsh-c">รวมใบงานทั้งหมด ${cc.length} รายการ</span></div>
 <div class="wsa"><span class="wsa-n">${nx}</span><label class="wsa-nm">ชื่อใบงาน<input class="in" id="ws_name" value="ใบงานที่ ${nx}"></label><label class="wsa-mx">คะแนนเต็ม<span><input class="in" id="ws_max" type="number" min="0" step="any" value="10"><em>คะแนน</em></span></label><button type="button" class="wsa-b" onclick="addWs('${id}')">＋ เพิ่มใบงาน</button></div>
-<div class="wsw"><table class="wst"><thead><tr><th>ลำดับ</th><th>เลขที่</th><th class="l">ชื่อ - นามสกุล</th>${cc.map((c,ci)=>`<th class="wc"><div class="wch"><div><b>${esc(c.name||'ใบงาน')}</b><small>(${c.max||0})</small></div><button type="button" class="wm" data-wsm="${ci}" title="ตัวเลือก">⋮</button></div><div class="wmenu hid"><a data-wsedit="${ci}">แก้ไขชื่อ / คะแนนเต็ม</a><a class="d" data-wsdel="${ci}">ลบใบงาน</a></div></th>`).join('')}<th>รวมคะแนน${tot?`<small>(${tot})</small>`:''}</th></tr></thead><tbody>
-${roster.length?roster.map((st,i)=>wsRow(st,i,cc)).join(''):`<tr><td colspan="${cc.length+4}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
+<div class="wsw"><table class="wst"><thead><tr><th class="s1">เลขที่</th><th class="l s2">ชื่อ - นามสกุล</th>${(!cc.length?WS_PH.map(n=>`<th class="wc wph"><div class="wch"><div><b>ใบงาน ${n}</b><small>(10)</small></div></div></th>`).join(''):'')}${cc.map((c,ci)=>`<th class="wc"><div class="wch"><div><b>${esc(c.name||'ใบงาน')}</b><small>(${c.max||0})</small></div><button type="button" class="wm" data-wsm="${ci}" title="ตัวเลือก">⋮</button></div><div class="wmenu hid"><a data-wsedit="${ci}">แก้ไขชื่อ / คะแนนเต็ม</a><a class="d" data-wsdel="${ci}">ลบใบงาน</a></div></th>`).join('')}<th class="s3">รวมคะแนน${tot?`<small>(${tot})</small>`:''}</th></tr></thead><tbody>
+${roster.length?roster.map((st,i)=>wsRow(st,i,cc)).join(''):`<tr><td colspan="${(cc.length||WS_PH.length)+3}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
 </tbody></table></div>
 ${!cc.length&&roster.length?`<div class="wshint">ยังไม่มีใบงาน — ตั้งชื่อและคะแนนเต็มด้านบน แล้วกด "＋ เพิ่มใบงาน"</div>`:''}
 <div class="wsf"><span id="sc_save_msg">${cc.length?'คะแนนบันทึกอัตโนมัติเมื่อกรอก':''}</span><button type="button" class="wsa-b" onclick="saveTab('${id}','collect')">บันทึกคะแนน</button></div>`}
