@@ -239,6 +239,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .stc-ci svg{width:20px;height:20px}.stc-c small{display:block;font-size:.72rem;color:var(--mute);line-height:1.1}.stc-c b{display:block;font-size:.95rem;color:#1F3F99;white-space:nowrap;line-height:1.3}
 .stc-t{padding-top:10px}.stc-t>small{display:block;font-size:.72rem;color:var(--mute);margin-bottom:6px}
 .stc-p{display:flex;align-items:center;gap:10px;margin-top:6px;font-size:.88rem;color:#1F2A5C}.stc-p img,.stc-av{width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#E6EBF3;color:#8793AD;display:flex;align-items:center;justify-content:center}.stc-av svg{width:20px;height:20px}
+.stsum{display:flex;flex-wrap:wrap;gap:10px;margin:-4px 0 14px}.stsum span{background:#fff;border:1px solid var(--line);border-radius:20px;padding:5px 16px;font-size:.85rem;color:#3D4A6B;box-shadow:var(--sh)}.stsum b{font-size:1rem}.stsum .m b{color:#2F6BFF}.stsum .f b{color:#F0529C}.stsum .t b{color:#1F3F99}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -956,7 +957,7 @@ return `<div class="stc" style="--c:${c}" data-r="stud:${k}"><h4>${esc(LV[i].rep
 <div class="stc-t"><small>ครูประจำชั้น</small>${ts.length?ts.map(p=>`<div class="stc-p">${p.im?`<img src="${p.im}">`:`<span class="stc-av">${ic('user')}</span>`}<span>${esc(dn(p))}</span></div>`).join(''):'<div class="stc-p" style="color:var(--mute)"><span class="stc-av">'+ic('user')+'</span><span>ยังไม่ได้เลือกครูประจำชั้น</span></div>'}</div></div>`};
 return `<div class="svh"><div class="svh-t"><span class="svh-i">${ic('users')}</span><div><h2>นักเรียน</h2><p>ข้อมูลนักเรียนแยกตามห้องเรียน</p></div></div>
 <div class="svh-s">${stat('#2F6BFF','users','นักเรียนทั้งหมด',ST.length)}${stat('#2BB5A0','user','นักเรียนชาย',M)}${stat('#F0529C','user','นักเรียนหญิง',F)}</div></div>`
-+Object.keys(CT).map(t=>`<div class="stsec"><h3>${ic(t=='m'?'home':'bld')} ${CT[t][0]}</h3><div class="stcg ${t=='b'?'b5':''}">${LV.slice(0,CT[t][1]).map((n,i)=>card(t,i)).join('')}</div></div>`).join('')}
++Object.keys(CT).map(t=>{const g=ST.filter(x=>x.ty==t),gm=g.filter(x=>gd(x.tt)=='m').length,gf=g.filter(x=>gd(x.tt)=='f').length;return `<div class="stsec"><h3>${ic(t=='m'?'home':'bld')} ${CT[t][0]}</h3><div class="stsum"><span class="m">ชาย <b>${gm}</b> คน</span><span class="f">หญิง <b>${gf}</b> คน</span><span class="t">รวมทั้งหมด <b>${g.length}</b> คน</span></div><div class="stcg ${t=='b'?'b5':''}">${LV.slice(0,CT[t][1]).map((n,i)=>card(t,i)).join('')}</div></div>`}).join('')}
 V.stud=s=>s?lvPage(s):studPicker();
 V.par=()=>V.gen('ผู้ปกครอง');
 document.addEventListener('click',e=>{const a=e.target.closest('[data-s]');if(!a||!me)return;const x=ST.find(t=>t.id==a.dataset.s);if(x&&confirm('ลบรายชื่อนี้?')){(x.docs||[]).forEach(d=>storage.ref(d.path).delete().catch(()=>{}));ST=ST.filter(t=>t!=x);db.collection('students').doc(x.id).delete().catch(()=>{});go('stud:'+x.ty+x.lv)}});
