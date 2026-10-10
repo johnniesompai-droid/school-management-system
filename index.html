@@ -133,8 +133,38 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .hr-dir-contact span{display:flex;align-items:center;gap:5px}
 .hr-dir-contact svg{width:14px;height:14px}
 .sv-sel td{background:#F1E9FB!important}
-.gsv{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.gsv{display:grid;grid-template-columns:fit-content(340px) minmax(0,1fr);gap:20px;align-items:start}
 @media(max-width:900px){.gsv{grid-template-columns:1fr}}
+.svp-top{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--sh)}
+.svp-empty{border:1.5px dashed var(--line);border-radius:10px;color:#A3ADC0;text-align:center;padding:36px 12px;font-size:.9rem}
+.svp-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.svp-av{width:64px;height:64px;border-radius:50%;object-fit:cover;flex-shrink:0;background:var(--soft)}
+.svp-av0{display:flex;align-items:center;justify-content:center;color:var(--blue)}.svp-av0 svg{width:30px;height:30px}
+.svp-who{flex:1;min-width:160px}.svp-who b{display:block;font-size:1.05rem;color:#1F2A5C}.svp-who small{display:block;color:var(--mute);font-size:.8rem;line-height:1.5}
+.svp-year{background:#EFE8FB;color:#5B3E96;border-radius:20px;padding:5px 14px;font-size:.78rem;font-weight:600}
+.svp-sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.svp-s{display:flex;align-items:center;gap:12px;border-radius:12px;padding:14px;border:1px solid}
+.svp-s small{display:block;font-size:.76rem;font-weight:600}.svp-s b{display:block;font-size:1.5rem;line-height:1.3}.svp-s em{font-style:normal;font-size:.8rem;font-weight:500}
+.svp-si{width:38px;height:38px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.svp-s.blue{background:#EAF1FF;border-color:#D3E2FF;color:#1F3F99}.svp-s.blue .svp-si{color:#2F6BFF}
+.svp-s.green{background:#EAF8EF;border-color:#CBEBD5;color:#1E8E4E}.svp-s.green .svp-si{color:#22B573}
+.svp-s.red{background:#FDECEC;border-color:#F6CFCF;color:#D64545}.svp-s.red .svp-si{color:#E5535A}
+.svp-forms{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:16px;align-items:start}
+.svp-f{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
+.svp-fh{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:700}
+.svp-fi{width:30px;height:30px;border-radius:8px;color:#fff;display:flex;align-items:center;justify-content:center}
+.svp-f.dep .svp-fh{background:#E6F5EA;color:#1E8E4E}.svp-f.dep .svp-fi{background:#3BAA63}
+.svp-f.wd .svp-fh{background:#FBE9E9;color:#D64545}.svp-f.wd .svp-fi{background:#E5535A}
+.svp-fb{padding:16px}.svp-fb label{display:block;font-size:.82rem;font-weight:600;margin:0 0 6px;color:var(--text)}
+.svp-fb label i{color:var(--red);font-style:normal}
+.svp-fb input,.svp-fb select,.svp-fb textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;font-size:.88rem;background:#fff;margin-bottom:14px}
+.svp-fb textarea{resize:vertical}
+.svp-amt{display:flex;margin-bottom:14px}.svp-amt input{margin:0;border-radius:8px 0 0 8px;border-right:0}
+.svp-amt span{display:flex;align-items:center;padding:0 14px;background:#F3F6FB;border:1px solid var(--line);border-radius:0 8px 8px 0;font-size:.84rem;color:var(--mute)}
+.svp-btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:8px;padding:10px 18px;font:inherit;font-weight:600;color:#fff;cursor:pointer}
+.svp-btn.dep{background:#3BAA63}.svp-btn.wd{background:#E5535A}.svp-btn:disabled{opacity:.45;cursor:not-allowed}
+.svp-fb input:disabled,.svp-fb select:disabled,.svp-fb textarea:disabled{background:#F6F8FB;cursor:not-allowed}
+.svp-msg{font-size:.78rem;color:var(--mute);margin-top:8px}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -172,7 +202,7 @@ chat:'<path d="M4 5h16v11H9l-5 4z"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M
 user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
 gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
 db:'<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
-ud:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',upload:'<path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/><path d="M12 11v7M9 14l3-3 3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',down:'<path d="M12 4v12M6 12l6 6 6-6M4 20h16"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>',phone:'<path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
+ud:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',upload:'<path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/><path d="M12 11v7M9 14l3-3 3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',down:'<path d="M12 4v12M6 12l6 6 6-6M4 20h16"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>',up:'<path d="M12 20V8M6 12l6-6 6 6M4 4h16"/>',save:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',phone:'<path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
 coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/>',
 bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
@@ -618,31 +648,42 @@ function savingStudentTable(roster){const q=svSearch.trim().toLowerCase();
 const rows=roster.filter(st=>{if(!q)return true;const name=((st.tt||'')+st.fn+' '+st.ln).toLowerCase();return name.includes(q)||(st.code||'').toLowerCase().includes(q)})
 .sort((a,b)=>(a.code||'').localeCompare(b.code||'')||a.fn.localeCompare(b.fn));
 return `<div style="max-height:560px;overflow:auto" class="wrap"><table class="tb">
-<tr><th>#</th><th style="width:100%">ชื่อ-นามสกุล</th></tr>
+<tr><th>#</th><th>ชื่อ-นามสกุล</th></tr>
 ${rows.length?rows.map((st,i)=>{const sel=svSel==st.id;
 return `<tr class="${sel?'sv-sel':''}" style="cursor:pointer" data-svpick="${st.id}"><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td></tr>`}).join(''):`<tr><td colspan="2">${E('ไม่พบนักเรียน')}</td></tr>`}
 </table></div>`}
 function svSearchInput(v){svSearch=v;const w=$('#sv_table_wrap');if(w)w.innerHTML=savingStudentTable(ST.filter(x=>x.ty==svClassKey[0]&&x.lv==+svClassKey.slice(1)))}
-function savingSelectedPanel(){if(!svSel)return P('ข้อมูลนักเรียนที่เลือก',E('กรุณาเลือกนักเรียนก่อนทำรายการ',110));
+function svAvatar(st){return st.im?`<img class="svp-av" src="${st.im}">`:`<span class="svp-av svp-av0">${ic('user')}</span>`}
+function savingSelectedPanel(){
+if(!svSel)return `<div class="svp-top"><div class="svp-empty">กรุณาเลือกนักเรียนก่อนทำรายการ</div></div>`;
 const st=ST.find(x=>x.id==svSel);if(!st){svSel=null;return savingSelectedPanel()}
 const a=studentAgg(st.id);
-return `<div class="card"><div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
-${st.im?`<img class="ph" style="width:56px;height:56px" src="${st.im}">`:`<span class="ph ph0" style="width:56px;height:56px">${ic('user')}</span>`}
-<div><b style="font-size:1.05rem">${esc((st.tt||'')+st.fn+' '+st.ln)}</b><br><small style="color:var(--mute)">รหัสนักเรียน: ${esc(st.code)||'-'} · ${classLabel(st.ty+st.lv)}</small></div></div>
-<div class="grid g3">${P('ยอดเงินคงเหลือปัจจุบัน',`<div style="font-size:1.3rem;font-weight:700;color:var(--blue);text-align:center">${a.bal.toLocaleString()} บาท</div>`)}${P('จำนวนรายการฝาก',`<div style="font-size:1.3rem;font-weight:700;color:#22B573;text-align:center">${a.dep} รายการ</div>`)}${P('จำนวนรายการถอน',`<div style="font-size:1.3rem;font-weight:700;color:var(--red);text-align:center">${a.wd} รายการ</div>`)}</div></div>`}
-function savingForms(){const dis=!svSel;
-return `<div class="grid g2">
-<div class="card" style="border-top:4px solid #22B573"><h3 style="color:#22B573">ฝากเงิน</h3>
-<label class="lb">จำนวนเงินฝาก (บาท) *<input class="in" id="sv_dep_amt" type="number" min="0" step="any" ${dis?'disabled':''}></label>
-<label class="lb">หมายเหตุ (ถ้ามี)<textarea class="in" id="sv_dep_note" rows="2" ${dis?'disabled':''} placeholder="เช่น ออมประจำวัน"></textarea></label>
-<button type="button" class="btn g" id="sv_dep_btn" ${dis?'disabled':''} onclick="doDeposit()">บันทึกการฝากเงิน</button>
-<div id="sv_dep_msg" style="font-size:.78rem;color:var(--mute);margin-top:6px"></div></div>
-<div class="card" style="border-top:4px solid var(--red)"><h3 style="color:var(--red)">ถอนเงิน</h3>
-<label class="lb">จำนวนเงินถอน (บาท) *<input class="in" id="sv_wd_amt" type="number" min="0" step="any" ${dis?'disabled':''}></label>
-<label class="lb">เหตุผลการถอน *<select class="in" id="sv_wd_reason" ${dis?'disabled':''}><option value="">-- เลือกเหตุผล --</option>${WD_REASONS.map(r=>`<option>${r}</option>`).join('')}</select></label>
-<label class="lb">หมายเหตุ (ถ้ามี)<textarea class="in" id="sv_wd_note" rows="2" ${dis?'disabled':''}></textarea></label>
-<button type="button" class="btn r" id="sv_wd_btn" ${dis?'disabled':''} onclick="doWithdraw()">บันทึกการถอนเงิน</button>
-<div id="sv_wd_msg" style="font-size:.78rem;color:var(--mute);margin-top:6px"></div></div></div>`}
+return `<div class="svp-top">
+<div class="svp-head">${svAvatar(st)}<div class="svp-who"><b>${esc((st.tt||'')+st.fn+' '+st.ln)}</b><small>รหัสนักเรียน : ${esc(st.code)||'-'}</small><small>ชั้น : ${esc(LV[st.lv])} (${esc(CT[st.ty][0])})</small></div><span class="svp-year">ปีการศึกษา ${SVY}</span></div>
+<div class="svp-sum">
+<div class="svp-s blue"><span class="svp-si">${ic('coin')}</span><div><small>ยอดเงินคงเหลือปัจจุบัน</small><b>${a.bal.toLocaleString()} <em>บาท</em></b></div></div>
+<div class="svp-s green"><span class="svp-si">${ic('down')}</span><div><small>จำนวนรายการฝาก</small><b>${a.dep} <em>รายการ</em></b></div></div>
+<div class="svp-s red"><span class="svp-si">${ic('up')}</span><div><small>จำนวนรายการถอน</small><b>${a.wd} <em>รายการ</em></b></div></div>
+</div></div>`}
+function savingForms(){const d=!svSel?'disabled':'';
+return `<div class="svp-forms">
+<div class="svp-f dep"><div class="svp-fh"><span class="svp-fi">${ic('down')}</span>ฝากเงิน</div><div class="svp-fb">
+<label>จำนวนเงินฝาก (บาท) <i>*</i></label>
+<div class="svp-amt"><input id="sv_dep_amt" type="number" min="0" step="any" placeholder="กรอกจำนวนเงิน" ${d}><span>บาท</span></div>
+<label>หมายเหตุ (ถ้ามี)</label>
+<textarea id="sv_dep_note" rows="4" placeholder="เช่น ออมเป็นรายวัน, ออมประจำสัปดาห์, เป็นต้น" ${d}></textarea>
+<button type="button" class="svp-btn dep" id="sv_dep_btn" ${d} onclick="doDeposit()">${ic('save')} บันทึกการฝากเงิน</button>
+<div id="sv_dep_msg" class="svp-msg"></div></div></div>
+<div class="svp-f wd"><div class="svp-fh"><span class="svp-fi">${ic('up')}</span>ถอนเงิน</div><div class="svp-fb">
+<label>จำนวนเงินถอน (บาท) <i>*</i></label>
+<div class="svp-amt"><input id="sv_wd_amt" type="number" min="0" step="any" placeholder="กรอกจำนวนเงิน" ${d}><span>บาท</span></div>
+<label>เหตุผลการถอน <i>*</i></label>
+<select id="sv_wd_reason" ${d}><option value="">เลือกเหตุผลการถอน</option>${WD_REASONS.map(r=>`<option>${r}</option>`).join('')}</select>
+<label>หมายเหตุ (ถ้ามี)</label>
+<textarea id="sv_wd_note" rows="3" placeholder="เช่น ซื้ออุปกรณ์การเรียน, ค่ารักษาพยาบาล" ${d}></textarea>
+<button type="button" class="svp-btn wd" id="sv_wd_btn" ${d} onclick="doWithdraw()">${ic('save')} บันทึกการถอนเงิน</button>
+<div id="sv_wd_msg" class="svp-msg"></div></div></div>
+</div>`}
 async function doDeposit(){if(!svSel)return;const amt=parseFloat($('#sv_dep_amt').value);
 if(!amt||amt<=0)return alert('กรอกจำนวนเงินให้ถูกต้อง (มากกว่า 0)');
 const btn=$('#sv_dep_btn');btn.disabled=true;btn.textContent='กำลังบันทึก...';
@@ -651,7 +692,7 @@ const rec={studentId:svSel,year:SVY,type:'deposit',amount:amt,balanceAfter:newBa
 await db.collection('savingtx').doc(id).set(rec);SVTX.push({id,...rec});
 $('#sv_dep_amt').value='';$('#sv_dep_note').value='';render();const m=$('#sv_dep_msg');if(m)m.textContent='บันทึกการฝากเงินสำเร็จ'}
 catch(e){const m=$('#sv_dep_msg');if(m)m.textContent='บันทึกไม่สำเร็จ: '+e.message}
-finally{const b=$('#sv_dep_btn');if(b){b.disabled=!svSel;b.textContent='บันทึกการฝากเงิน'}}}
+finally{const b=$('#sv_dep_btn');if(b){b.disabled=!svSel;b.innerHTML=ic('save')+' บันทึกการฝากเงิน'}}}
 async function doWithdraw(){if(!svSel)return;const amt=parseFloat($('#sv_wd_amt').value),reason=$('#sv_wd_reason').value;
 if(!amt||amt<=0)return alert('กรอกจำนวนเงินให้ถูกต้อง (มากกว่า 0)');
 if(!reason)return alert('เลือกเหตุผลการถอน');
@@ -662,7 +703,7 @@ const rec={studentId:svSel,year:SVY,type:'withdraw',amount:amt,balanceAfter:newB
 await db.collection('savingtx').doc(id).set(rec);SVTX.push({id,...rec});
 $('#sv_wd_amt').value='';$('#sv_wd_note').value='';$('#sv_wd_reason').value='';render();const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกการถอนเงินสำเร็จ'}
 catch(e){const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกไม่สำเร็จ: '+e.message}
-finally{const b=$('#sv_wd_btn');if(b){b.disabled=!svSel;b.textContent='บันทึกการถอนเงิน'}}}
+finally{const b=$('#sv_wd_btn');if(b){b.disabled=!svSel;b.innerHTML=ic('save')+' บันทึกการถอนเงิน'}}}
 function savingClassPage(s){if(svClassKey!==s){svClassKey=s;svSel=null;svSearch=''}
 if(SVY===null){SVY=new Date().getFullYear()+543;loadSavingTx(SVY);return PT('ออมเงิน',classLabel(s))+P('','กำลังโหลดข้อมูล...')}
 if(!canViewSavingsClass(s))return `<div class="pt"><h2>ออมเงิน · ${esc(classLabel(s))}</h2><p><a class="bk" data-r="saving">‹ ออมเงิน</a></p></div>`+P('','ไม่มีสิทธิ์เข้าถึงข้อมูลออมเงินของชั้นนี้ — เฉพาะครูประจำชั้น ผู้ก่อตั้ง และผู้อำนวยการโรงเรียนเท่านั้น');
@@ -674,7 +715,7 @@ return `<div class="pt"><h2>ออมเงิน · ${esc(classLabel(s))}</h2><
 </div></div>
 <div class="gsv">
 <div class="card"><h3>ข้อมูลนักเรียน</h3>
-<input class="in" id="sv_search" placeholder="ค้นหาชื่อ-สกุล / รหัสนักเรียน" style="margin-bottom:12px" oninput="svSearchInput(this.value)">
+<input class="in" id="sv_search" value="${esc(svSearch)}" placeholder="ค้นหาชื่อ-สกุล / รหัสนักเรียน" style="margin-bottom:12px" oninput="svSearchInput(this.value)">
 <div id="sv_table_wrap">${savingStudentTable(roster)}</div></div>
 <div>${savingSelectedPanel()}${canEdit?`<div style="margin-top:16px">${savingForms()}</div>`:''}</div>
 </div>`}
