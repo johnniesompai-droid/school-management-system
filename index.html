@@ -225,6 +225,20 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .svc-b{display:flex;align-items:center;gap:8px}.svc-i{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}.svc-i svg{width:17px;height:17px}
 .svc-n b,.svc-m b,.svc-n small,.svc-m small{white-space:nowrap}.svc-n b,.svc-m b{display:block;font-size:1rem;color:#1F2A5C;line-height:1.2}.svc-n small,.svc-m small{display:block;font-size:.7rem;color:var(--mute)}
 .svc-sp{width:1px;height:30px;background:var(--line);margin:0 4px}.svc-ar{position:absolute;right:12px;top:14px;color:#6B7794;font-size:1.2rem;line-height:1}
+
+.sts{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 10%,#fff),#fff);border:1px solid color-mix(in srgb,var(--c) 22%,#fff);border-radius:14px;padding:14px 16px;box-shadow:var(--sh);min-width:0}
+.sts-i{width:52px;height:52px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}.sts-i svg{width:26px;height:26px}
+.sts small{display:block;font-size:.84rem;color:#1F2A5C;font-weight:500}.sts b{display:block;font-size:1.6rem;line-height:1.2;color:var(--c)}.sts-ar{margin-left:auto;color:#6B7794;font-size:1.3rem}
+.stsec{margin-bottom:18px}.stsec h3{display:flex;align-items:center;gap:10px;font-size:1.25rem;color:#1F2A5C;margin:0 0 12px}.stsec h3 svg{width:26px;height:26px;color:#2F6BFF}
+.stcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:16px}
+.stc{background:#fff;border-radius:12px;border-top:4px solid var(--c);padding:14px 16px;box-shadow:var(--sh);cursor:pointer;transition:transform .15s,box-shadow .15s;min-width:0}
+.stc:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(31,42,68,.12)}
+.stc h4{margin:0 0 12px;font-size:1.05rem;color:#1F2A5C;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.stc-r{display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:12px;border-bottom:1px solid var(--line)}
+.stc-c{display:flex;align-items:center;gap:6px;padding:0 4px 0 8px;min-width:0;border-left:1px solid var(--line)}.stc-c:first-child{border-left:0;padding-left:0}
+.stc-ci svg{width:20px;height:20px}.stc-c small{display:block;font-size:.72rem;color:var(--mute);line-height:1.1}.stc-c b{display:block;font-size:.95rem;color:#1F3F99;white-space:nowrap;line-height:1.3}
+.stc-t{padding-top:10px}.stc-t>small{display:block;font-size:.72rem;color:var(--mute);margin-bottom:6px}
+.stc-p{display:flex;align-items:center;gap:10px;margin-top:6px;font-size:.88rem;color:#1F2A5C}.stc-p img,.stc-av{width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#E6EBF3;color:#8793AD;display:flex;align-items:center;justify-content:center}.stc-av svg{width:20px;height:20px}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -923,7 +937,19 @@ ${l.length?`<div class="wrap"><table class="tb"><tr><th>#</th><th style="width:1
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-sd]');if(!a||!me)return;const idx=+a.dataset.sd,s=ST.find(x=>x.id==stEd);if(!s||!confirm('ลบไฟล์นี้?'))return;
 const d=s.docs[idx];try{await storage.ref(d.path).delete().catch(()=>{});const docs=s.docs.filter((_,i)=>i!=idx);await db.collection('students').doc(stEd).set({docs},{merge:true});s.docs=docs;$('#stdocs').innerHTML=docsBlock(s)}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 V.stu=()=>PT('นักเรียน & ผู้ปกครอง','เลือกหัวข้อที่ต้องการ')+`<div class="grid g4"><div class="card dv" data-r="stud"><div class="bx" style="background:#2F6BFF">${ic('cap')}</div><h4>นักเรียน</h4><span>เปิดดู ›</span></div><div class="card dv" data-r="par"><div class="bx" style="background:#22B573">${ic('users')}</div><h4>ผู้ปกครอง</h4><span>เปิดดู ›</span></div></div>`;
-V.stud=s=>s?lvPage(s):PT('นักเรียน','เลือกห้องเรียนเพื่อดูและเพิ่มรายชื่อนักเรียน')+Object.keys(CT).map(t=>P(CT[t][0],sumT(t)+`<div class="grid g4">${LV.slice(0,CT[t][1]).map((n,i)=>`<div class="lv" data-r="stud:${t}${i}">${n}<b>${cnt(t,i)} คน</b></div>`).join('')}</div>`)).join('');
+const ST_COL=['#F472B6','#2BB5A0','#5B8DEF','#F5B52E','#5CB85C','#A06CF0','#4C9BF0','#F59A3A'];
+function studPicker(){const M=ST.filter(x=>gd(x.tt)=='m').length,F=ST.filter(x=>gd(x.tt)=='f').length;
+const stat=(c,ico,l,v)=>`<div class="sts" style="--c:${c}"><span class="sts-i">${ic(ico)}</span><div><small>${l}</small><b>${v} คน</b></div><span class="sts-ar">›</span></div>`;
+const card=(t,i)=>{const cs=ST.filter(x=>x.ty==t&&x.lv==i),m=cs.filter(x=>gd(x.tt)=='m').length,f=cs.filter(x=>gd(x.tt)=='f').length,k=t+i,c=ST_COL[i%8],
+ts=(HR[k]||[]).map(id=>PP.find(p=>p.id==id)).filter(Boolean),
+col=(ico,cl,l,v)=>`<div class="stc-c"><span class="stc-ci" style="color:${cl}">${ic(ico)}</span><div><small>${l}</small><b>${v} คน</b></div></div>`;
+return `<div class="stc" style="--c:${c}" data-r="stud:${k}"><h4>${esc(LV[i].replace(/^ชั้น/,'').trim())}</h4>
+<div class="stc-r">${col('user','#2F6BFF','ชาย',m)}${col('user','#F0529C','หญิง',f)}${col('users','#4B5A8C','รวม',cs.length)}</div>
+<div class="stc-t"><small>ครูประจำชั้น</small>${ts.length?ts.map(p=>`<div class="stc-p">${p.im?`<img src="${p.im}">`:`<span class="stc-av">${ic('user')}</span>`}<span>${esc(dn(p))}</span></div>`).join(''):'<div class="stc-p" style="color:var(--mute)"><span class="stc-av">'+ic('user')+'</span><span>ยังไม่ได้เลือกครูประจำชั้น</span></div>'}</div></div>`};
+return `<div class="svh"><div class="svh-t"><span class="svh-i">${ic('users')}</span><div><h2>นักเรียน</h2><p>ข้อมูลนักเรียนแยกตามห้องเรียน</p></div></div>
+<div class="svh-s">${stat('#2F6BFF','users','นักเรียนทั้งหมด',ST.length)}${stat('#2BB5A0','user','นักเรียนชาย',M)}${stat('#F0529C','user','นักเรียนหญิง',F)}</div></div>`
++Object.keys(CT).map(t=>`<div class="stsec"><h3>${ic(t=='m'?'home':'bld')} ${CT[t][0]}</h3><div class="stcg ${t=='b'?'b5':''}">${LV.slice(0,CT[t][1]).map((n,i)=>card(t,i)).join('')}</div></div>`).join('')}
+V.stud=s=>s?lvPage(s):studPicker();
 V.par=()=>V.gen('ผู้ปกครอง');
 document.addEventListener('click',e=>{const a=e.target.closest('[data-s]');if(!a||!me)return;const x=ST.find(t=>t.id==a.dataset.s);if(x&&confirm('ลบรายชื่อนี้?')){(x.docs||[]).forEach(d=>storage.ref(d.path).delete().catch(()=>{}));ST=ST.filter(t=>t!=x);db.collection('students').doc(x.id).delete().catch(()=>{});go('stud:'+x.ty+x.lv)}});
 const hrCard=s=>{const ids=HR[s]||[],ts=ids.map(id=>PP.find(p=>p.id==id)).filter(Boolean),av=PP.filter(p=>!ids.includes(p.id));
