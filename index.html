@@ -240,6 +240,22 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .stc-t{padding-top:10px}.stc-t>small{display:block;font-size:.72rem;color:var(--mute);margin-bottom:6px}
 .stc-p{display:flex;align-items:center;gap:10px;margin-top:6px;font-size:.88rem;color:#1F2A5C}.stc-p img,.stc-av{width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#E6EBF3;color:#8793AD;display:flex;align-items:center;justify-content:center}.stc-av svg{width:20px;height:20px}
 .stsum{display:flex;flex-wrap:wrap;gap:10px;margin:-4px 0 14px}.stsum span{background:#fff;border:1px solid var(--line);border-radius:20px;padding:5px 16px;font-size:.85rem;color:#3D4A6B;box-shadow:var(--sh)}.stsum b{font-size:1rem}.stsum .m b{color:#2F6BFF}.stsum .f b{color:#F0529C}.stsum .t b{color:#1F3F99}
+
+.scu{display:inline-flex;align-items:center;gap:12px;background:#fff;border-radius:40px;padding:6px 8px 6px 22px;box-shadow:var(--sh);color:#6B7794;font-weight:500}
+.scu img,.scu-av{width:48px;height:48px;border-radius:50%;object-fit:cover;background:#D8EEF5;color:#3E8FB8;display:flex;align-items:center;justify-content:center}.scu-av svg{width:26px;height:26px}
+.scbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:6px 0 20px}.scbar h2{margin:0;font-size:1.9rem;color:#1F2A5C}.scbar h2 small{font-size:1rem;color:#475569}
+.scbar-r{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.scbar-r .in{margin:0;width:260px;border-radius:14px;padding:12px 16px;background:#fff}
+.scnew{border:0;background:#2E1FE0;color:#fff;font:inherit;font-weight:600;border-radius:14px;padding:13px 22px;cursor:pointer;box-shadow:0 4px 12px rgba(46,31,224,.3)}.scnew:hover{background:#2517c4}
+.scg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+.scd{position:relative;overflow:hidden;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 7%,#fff),#fff);border:1px solid color-mix(in srgb,var(--c) 14%,#fff);border-radius:26px;padding:22px 22px 20px;box-shadow:0 8px 22px rgba(31,42,68,.08)}
+.scd::after{content:"";position:absolute;right:-30px;bottom:30px;width:150px;height:150px;border-radius:50%;background:color-mix(in srgb,var(--c) 10%,transparent);pointer-events:none}
+.scd-h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.scd-h h4{margin:0;font-size:1.45rem;line-height:1.25;color:color-mix(in srgb,var(--c) 40%,#111)}
+.scd-m{width:44px;height:44px;border-radius:12px;border:0;background:#fff;color:#8793AD;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}.scd-m:hover{color:#EF4444}.scd-m svg{width:18px;height:18px}
+.scd-pill{display:inline-block;background:#fff;border-radius:20px;padding:4px 14px;font-size:.78rem;font-weight:600;color:var(--c);margin:8px 0 14px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.scd-i{display:flex;gap:22px;flex-wrap:wrap;color:var(--c);font-weight:500;margin-bottom:22px;align-items:center}.scd-i span{display:inline-flex;align-items:center;gap:8px}.scd-i svg{width:22px;height:22px}
+.scd-b{position:relative;z-index:1;width:100%;border:0;border-radius:40px;background:var(--c);color:#fff;font:inherit;font-weight:600;padding:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-size:1.05rem}.scd-b:hover{filter:brightness(1.08)}.scd-b svg{width:22px;height:22px}
+.mdl{position:fixed;inset:0;background:rgba(20,25,50,.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}.mdl.hid{display:none}
+.mdl-b{background:#fff;border-radius:18px;padding:22px;width:min(560px,100%);max-height:90vh;overflow:auto}.mdl-b h3{display:flex;justify-content:space-between;margin:0 0 14px}.mdl-b h3 a{cursor:pointer;color:var(--mute)}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -590,20 +606,21 @@ function defaultExamCols(){return[{id:uid(),name:'สอบเก็บคะแ
 function defaultGradeScale(){return[{min:80,label:'4'},{min:75,label:'3.5'},{min:70,label:'3'},{min:65,label:'2.5'},{min:60,label:'2'},{min:55,label:'1.5'},{min:50,label:'1'},{min:0,label:'0'}]}
 function calcGrade(scale,total,maxTotal){if(!maxTotal)return'-';const pct=total/maxTotal*100,sorted=scale.slice().sort((a,b)=>b.min-a.min);
 for(const g of sorted){if(pct>=(+g.min||0))return g.label}return sorted.length?sorted[sorted.length-1].label:'-'}
+function scMyName(){const mp=PP.find(p=>p.id==me?.sid);return mp?dn(mp):(me?.n||'')}
 function scoreForm(){return `<div class="grid g3">
 <label class="lb">ชั้นเรียน<select class="in" id="sc_cls"><option value="">-- เลือกชั้นเรียน --</option>${Object.keys(CT).map(t=>LV.slice(0,CT[t][1]).map((n,i)=>`<option value="${t}${i}">${CT[t][0]} · ${n}</option>`).join('')).join('')}</select></label>
 <label class="lb">รายวิชา<input class="in" id="sc_subject" placeholder="เช่น ภาษาไทย"></label>
 <label class="lb">รหัสวิชา<input class="in" id="sc_code" placeholder="เช่น ท11101"></label>
 </div>
-<label class="lb">ครูผู้สอน<select class="in" id="sc_teacher"><option value="">-- เลือกครูผู้สอน --</option>${PP.map(p=>`<option value="${p.id}">${esc(dn(p))}${p.po?' · '+esc(p.po):''}</option>`).join('')}</select></label>
-<div style="margin-top:10px"><button type="button" class="btn" onclick="createScoreSheet()">สร้างใบบันทึกคะแนน</button></div>
-<div id="sc_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>
-<div style="border-top:1px solid var(--line);margin:16px 0"></div>`}
-async function createScoreSheet(){const cls=$('#sc_cls').value,subject=$('#sc_subject').value.trim(),code=$('#sc_code').value.trim(),tid=$('#sc_teacher').value;
+<label class="lb">ครูผู้สอน<input class="in" id="sc_teacher_name" value="${esc(scMyName())}" readonly style="background:#F3F6FB"></label>
+<p style="font-size:.74rem;color:var(--mute);margin:6px 0 0">ห้องเรียนนี้ผูกกับบัญชีของคุณ เห็นและแก้ไขได้เฉพาะคุณเท่านั้น (ผู้ก่อตั้งและผู้อำนวยการก็ดูไม่ได้) สร้างได้ไม่จำกัดตามวิชาที่สอนจริง</p>
+<div style="margin-top:14px;display:flex;gap:8px"><button type="button" class="btn" onclick="createScoreSheet()">สร้างห้องเรียน</button><button type="button" class="btn o" onclick="scClose()">ยกเลิก</button></div>
+<div id="sc_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`}
+async function createScoreSheet(){const cls=$('#sc_cls').value,subject=$('#sc_subject').value.trim(),code=$('#sc_code').value.trim(),tid=me.sid||'';
 if(!cls)return alert('เลือกชั้นเรียน');if(!subject)return alert('กรอกรายวิชา');
 const tp=PP.find(x=>x.id==tid),id=uid();
 $('#sc_msg').textContent='กำลังสร้าง...';
-try{await db.collection('scoresheets').doc(id).set({classKey:cls,subject,code,teacherSid:tid||null,teacherName:tp?dn(tp):'',ownerUid:me._id,ownerName:me.n,createdAt:new Date().toISOString(),collectCols:[],examCols:defaultExamCols(),gradeScale:defaultGradeScale(),scores:{}});go('score:'+id)}
+try{await db.collection('scoresheets').doc(id).set({classKey:cls,subject,code,teacherSid:tid||null,teacherName:scMyName(),ownerUid:me._id,ownerName:me.n,createdAt:new Date().toISOString(),collectCols:[],examCols:defaultExamCols(),gradeScale:defaultGradeScale(),scores:{}});scClose();go('score')}
 catch(e){$('#sc_msg').textContent='สร้างไม่สำเร็จ: '+e.message}}
 function scoreList(){const mine=SC.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
 return mine.length?mine.map(s=>`<div class="rw"><span style="cursor:pointer" data-r="score:${s.id}"><b>${esc(s.subject)}</b>${s.code?' ('+esc(s.code)+')':''}<small>${esc(classLabel(s.classKey))}${s.teacherName?' · ครูผู้สอน '+esc(s.teacherName):''}</small></span><span><button type="button" class="btn o" data-r="score:${s.id}">เปิด</button> <button type="button" class="btn r" data-scd="${s.id}">ลบ</button></span></div>`).join(''):E('ยังไม่มีใบบันทึกคะแนน')}
@@ -659,7 +676,9 @@ if(scCurrentId!==id){scCurrentId=id;scTab='collect'}
 const ty=sheet.classKey[0],lv=+sheet.classKey.slice(1),roster=ST.filter(x=>x.ty==ty&&x.lv==lv),scores=sheet.scores||{};
 roster.forEach(st=>st._sc=scores[st.id]||{});
 const cc=sheet.collectCols||[],ec=sheet.examCols||defaultExamCols(),gs=sheet.gradeScale||defaultGradeScale();
-return `<div class="pt"><h2>${esc(sheet.subject)}${sheet.code?' ('+esc(sheet.code)+')':''}</h2><p><a class="bk" data-r="score">‹ บันทึกคะแนนนักเรียน</a> / ${esc(classLabel(sheet.classKey))}${sheet.teacherName?' · ครูผู้สอน '+esc(sheet.teacherName):''}</p></div>
+return `<div style="display:flex;justify-content:flex-end;margin-bottom:6px">${scUserChip()}</div>
+<div class="scbar" style="align-items:flex-start"><div><a class="bk" data-r="score">‹ ห้องเรียนทั้งหมด</a><h2 style="margin:6px 0 8px">${esc(sheet.subject)}${sheet.code?' <small>('+esc(sheet.code)+')</small>':''}</h2>
+<div class="scd-i" style="margin:0;--c:${scColor(sheet.id)}"><span class="scd-pill" style="margin:0">${esc(LV[lv]||'')} (${esc(CT[ty]?CT[ty][0]:'')})</span><span>${ic('users')} ${roster.length} คน</span><span>${ic('cal')} ${fmtThD(sheet.createdAt)}</span>${sheet.teacherName?`<span>${ic('user')} ครูผู้สอน ${esc(sheet.teacherName)}</span>`:''}</div></div></div>
 <div class="card"><div style="margin-bottom:14px">${tabBtn('collect','1. คะแนนเก็บ')}${tabBtn('exam','2. คะแนนสอบ')}${tabBtn('sum','3. รวมคะแนน')}</div>
 ${scTab=='collect'?collectTable(id,roster,cc):scTab=='exam'?examTable(id,roster,ec):gradeScaleEditor(id,gs)+summaryTable(roster,cc,ec,gs)}
 </div>`}
@@ -691,7 +710,24 @@ if(!scores[sid])scores[sid]={};if(!scores[sid][mode])scores[sid][mode]={};
 if(v!=='')scores[sid][mode][col]=parseFloat(v);else delete scores[sid][mode][col]});
 try{await db.collection('scoresheets').doc(id).set({scores},{merge:true});sheet.scores=scores;const el=$('#sc_save_msg');if(el)el.textContent='บันทึกแล้ว ✓'}
 catch(e){const el=$('#sc_save_msg');if(el)el.textContent='บันทึกไม่สำเร็จ (ลองกดปุ่มบันทึกอีกครั้ง)'}}
-V.score=s=>s?scoreSheetPage(s):PT('บันทึกคะแนนนักเรียน','สร้างและจัดการใบบันทึกคะแนนของคุณ (เห็นเฉพาะบัญชีที่สร้าง)')+P('สร้างใบบันทึกคะแนนนักเรียน',scoreForm())+P('ใบบันทึกคะแนนของฉัน',scoreList());
+let scQ='';const SC_COL=['#3E9B6B','#4B3AE8','#475569','#3E8FB8','#8B2BE2','#E8590C'];
+const scColor=id=>SC_COL[[...String(id)].reduce((a,c)=>a+c.charCodeAt(0),0)%SC_COL.length];
+const fmtThD=iso=>{const d=new Date(iso);return isNaN(d)?'-':`${d.getDate()} ${TH_MON[d.getMonth()]} ${d.getFullYear()+543}`};
+function scUserChip(){const mp=PP.find(p=>p.id==me?.sid),nm=mp?(mp.fn+' '+mp.ln).trim():(me?.n||'');
+return `<div class="scu"><span>${esc(nm)}</span>${mp&&mp.im?`<img src="${mp.im}">`:`<span class="scu-av">${ic('user')}</span>`}</div>`}
+function scGrid(){const q=scQ.trim().toLowerCase(),list=SC.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')).filter(s=>!q||(s.subject+' '+(s.code||'')+' '+classLabel(s.classKey)).toLowerCase().includes(q));
+return list.length?list.map(s=>{const ty=s.classKey[0],lv=+s.classKey.slice(1),n=ST.filter(x=>x.ty==ty&&x.lv==lv).length,c=scColor(s.id);
+return `<div class="scd" style="--c:${c}"><div class="scd-h"><h4>${esc(s.subject)}</h4><button type="button" class="scd-m" data-scd="${s.id}" title="ลบห้องเรียน">${ic('trash')}</button></div>
+<span class="scd-pill">${esc(LV[lv]||'')} (${esc(CT[ty]?CT[ty][0]:'')})${s.code?' · '+esc(s.code):''}</span>
+<div class="scd-i"><span>${ic('users')} ${n} คน</span><span>${ic('cal')} ${fmtThD(s.createdAt)}</span></div>
+<button type="button" class="scd-b" data-r="score:${s.id}">${ic('eye')} ดูห้องเรียน</button></div>`}).join(''):`<div style="grid-column:1/-1">${E(SC.length?'ไม่พบห้องเรียนที่ค้นหา':'ยังไม่มีห้องเรียน กด "+ สร้างห้องเรียน" เพื่อเริ่มต้น',120)}</div>`}
+function scSearch(v){scQ=v;const g=$('#sc_grid');if(g)g.innerHTML=scGrid()}
+function scOpen(){const m=$('#sc_modal');if(m)m.classList.remove('hid')}
+function scClose(){const m=$('#sc_modal');if(m)m.classList.add('hid')}
+V.score=s=>s?scoreSheetPage(s):`<div style="display:flex;justify-content:flex-end;margin-bottom:6px">${scUserChip()}</div>
+<div class="scbar"><h2>ห้องเรียนทั้งหมด <small>(${SC.length})</small></h2><div class="scbar-r"><input class="in" id="sc_q" placeholder="ค้นหาห้องเรียน" value="${esc(scQ)}" oninput="scSearch(this.value)"><button type="button" class="scnew" onclick="scOpen()">＋ สร้างห้องเรียน</button></div></div>
+<div class="scg" id="sc_grid">${scGrid()}</div>
+<div class="mdl hid" id="sc_modal" onclick="if(event.target===this)scClose()"><div class="mdl-b"><h3>สร้างห้องเรียน<a onclick="scClose()">✕</a></h3>${scoreForm()}</div></div>`;
 document.addEventListener('input',e=>{if(!e.target.classList.contains('sc-cell'))return;const row=e.target.closest('tr');if(!row)return;
 const sheet=SC.find(x=>x.id==scCurrentId),mode=scTab=='exam'?'exam':'collect';
 if(sheet){const cols=mode=='exam'?(sheet.examCols||[]):(sheet.collectCols||[]),col=cols.find(c=>c.id==e.target.dataset.col),v=parseFloat(e.target.value);
