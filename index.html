@@ -454,10 +454,15 @@ function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;i
 const rec={id:uid(),n,p:$('#sp').value.trim(),g:$('#sg').value,claimed:false};S.push(rec);db.collection('staff').doc(rec.id).set({n:rec.n,p:rec.p,g:rec.g,claimed:false}).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message));go('staff')}
 V.staff=()=>PT('ทะเบียนบุคลากร','ผู้ก่อตั้งเพิ่มรายชื่อบุคลากร ใช้ตรวจสอบเมื่อสมาชิกใหม่สมัครเข้าระบบ')+`<div class="card"><h3>เพิ่มบุคลากร</h3><div class="grid g3"><input class="in" id="sn" placeholder="ชื่อ-นามสกุล"><input class="in" id="sp" placeholder="ตำแหน่ง"><select class="in" id="sg"><option value="">-- กลุ่มงาน --</option>${DIV.map(d=>`<option>${d[1]}</option>`).join('')}</select></div><button class="btn" onclick="addS()">เพิ่มรายชื่อ</button></div>`+P(`รายชื่อบุคลากร (${S.length})`,S.length?S.map(s=>`<div class="rw"><span><b>${esc(s.n)}</b> · ${esc(s.p)||'-'}<small>${esc(s.g)}${U.some(u=>u.sid==s.id&&u.st=='approved')?' · มีบัญชีแล้ว':''}</small></span><button class="btn r" data-a="ds:${s.id}">ลบ</button></div>`).join(''):E());
 V.usr=()=>{const pe=U.filter(u=>u.st=='pending'),row=u=>{const s=S.find(t=>t.id==u.sid);return `<div class="rw"><span><b>${esc(u.n)}</b> (${esc(u.u)})<small>${s?esc(s.p)+' · '+esc(s.g):'—'}</small></span><span>${u.st=='pending'?`<button class="btn g" data-a="ok:${u._id}">อนุมัติ</button> <button class="btn r" data-a="no:${u._id}">ไม่อนุมัติ</button>`:u.role=='founder'?'<em>ผู้ก่อตั้ง</em>':`<em>${u.st=='approved'?'อนุมัติแล้ว':'ไม่อนุมัติ'}</em> <button class="btn o" data-a="rm:${u._id}">ลบ</button>`}</span></div>`};
-return PT('ผู้ใช้งาน / สิทธิ์การใช้งาน','อนุมัติสมาชิกใหม่ โดยอ้างอิงจากทะเบียนบุคลากร')+P(`รออนุมัติ (${pe.length})`,pe.length?pe.map(row).join(''):E('ไม่มีคำขอที่รออนุมัติ',70))+P('สมาชิกทั้งหมด',U.filter(u=>u.st!='pending').map(row).join('')||E())};
+return PT('ผู้ใช้งาน / สิทธิ์การใช้งาน','อนุมัติสมาชิกใหม่ โดยอ้างอิงจากทะเบียนบุคลากร')+P(`รออนุมัติ (${pe.length})`,pe.length?pe.map(row).join(''):E('ไม่มีคำขอที่รออนุมัติ',70))+P('สมาชิกทั้งหมด',U.filter(u=>u.st!='pending').map(row).join('')||E())+svPermPanel()};
+function svPermPanel(){const us=U.filter(u=>u.st=='approved'&&u.role!='founder');
+const rows=us.map(u=>{const cls=Object.keys(HR||{}).filter(k=>(HR[k]||[]).includes(u.sid)).map(k=>classLabel(k)).join(', ');
+return `<div class="rw"><span><b>${esc(u.n)}</b><small>${cls?'ครูประจำชั้น: '+esc(cls):'ยังไม่ได้เป็นครูประจำชั้น'}</small></span><span>${u.sv?'<em style="color:#1E8E4E">ได้รับสิทธิ์</em> <button class="btn o" data-a="sv:'+u._id+'">ยกเลิกสิทธิ์</button>':'<button class="btn g" data-a="sv:'+u._id+'">อนุญาตให้บันทึกออมเงิน</button>'}</span></div>`}).join('');
+return P('สิทธิ์เมนูออมเงิน (ผู้ก่อตั้งกำหนดได้คนเดียว)',`<p style="margin:0 0 10px;color:var(--mute);font-size:.84rem">ครูที่ได้รับสิทธิ์และเป็นครูประจำชั้นนั้น จึงจะบันทึกฝาก/ถอนของชั้นตัวเองได้ ส่วนผู้ก่อตั้งบันทึกได้ทุกชั้น</p>`+(rows||E('ยังไม่มีสมาชิกที่อนุมัติ',70)))}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-a]');if(!a||me?.role!='founder')return;const[k,v]=a.dataset.a.split(':');
 if(k=='ds'){S=S.filter(s=>s.id!=v);db.collection('staff').doc(v).delete().catch(()=>{});return go('staff')}
 const u=U.find(t=>t._id==v);if(!u||u.role=='founder')return;
+if(k=='sv'){const nv=!u.sv;db.collection('users').doc(v).set({sv:nv},{merge:true}).then(()=>{u.sv=nv;go('usr')}).catch(e=>alert('บันทึกสิทธิ์ไม่สำเร็จ: '+e.message));return}
 if(k=='rm'){U=U.filter(t=>t!=u);db.collection('users').doc(v).delete().catch(e=>alert('ลบไม่สำเร็จ: '+e.message));if(u.sid)db.collection('staff').doc(u.sid).set({claimed:false},{merge:true}).catch(()=>{})}
 else{u.st=k=='ok'?'approved':'rejected';db.collection('users').doc(v).set({st:u.st},{merge:true}).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message));if(k=='no'&&u.sid)db.collection('staff').doc(u.sid).set({claimed:false},{merge:true}).catch(()=>{})}
 mkNav();go('usr')});
@@ -643,7 +648,7 @@ function studentAgg(sid){let bal=0,dep=0,wd=0;SVTX.filter(t=>t.studentId==sid).f
 function isDirector(){if(!me)return false;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&/ผู้อำนวยการ/.test(mp.po||'')&&!/รอง/.test(mp.po||''))}
 function isHomeroomOf(k){if(!me)return false;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&(HR[k]||[]).includes(mp.id))}
 function canViewSavingsClass(k){return!!me&&(me.role=='founder'||isDirector()||isHomeroomOf(k))}
-function canEditSavingsClass(k){return isHomeroomOf(k)}
+function canEditSavingsClass(k){return!!me&&(me.role=='founder'||(me.sv===true&&isHomeroomOf(k)))}
 function savingStudentTable(roster){const q=svSearch.trim().toLowerCase();
 const rows=roster.filter(st=>{if(!q)return true;const name=((st.tt||'')+st.fn+' '+st.ln).toLowerCase();return name.includes(q)||(st.code||'').toLowerCase().includes(q)})
 .sort((a,b)=>(a.code||'').localeCompare(b.code||'')||a.fn.localeCompare(b.fn));
