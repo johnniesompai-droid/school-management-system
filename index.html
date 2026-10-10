@@ -165,6 +165,37 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .svp-btn.dep{background:#3BAA63}.svp-btn.wd{background:#E5535A}.svp-btn:disabled{opacity:.45;cursor:not-allowed}
 .svp-fb input:disabled,.svp-fb select:disabled,.svp-fb textarea:disabled{background:#F6F8FB;cursor:not-allowed}
 .svp-msg{font-size:.78rem;color:var(--mute);margin-top:8px}
+
+.bk-stage{width:100%;overflow:hidden;border-radius:14px}.bk-scale{width:760px;height:500px;transform-origin:top left}
+.bk-nav{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:12px}.bk-nav span{font-weight:600;color:#4B3E96;min-width:90px;text-align:center}
+.bk-nav .btn:disabled{opacity:.4;cursor:not-allowed}.svp-btn.dl{background:#6A4FC4}
+.bkp{position:relative;width:760px;height:500px;overflow:hidden;background:#fff;border-radius:14px;box-shadow:0 4px 18px rgba(60,60,130,.18);font-family:'Kanit',sans-serif;color:#1F2A5C}
+.bk-fn{animation:bkn .45s ease both}.bk-fp{animation:bkp .45s ease both}
+@keyframes bkn{from{opacity:.2;transform:perspective(1200px) rotateY(-35deg) translateX(40px);transform-origin:left}to{opacity:1;transform:none}}
+@keyframes bkp{from{opacity:.2;transform:perspective(1200px) rotateY(35deg) translateX(-40px);transform-origin:right}to{opacity:1;transform:none}}
+.bk-cover .bk-sky{position:absolute;inset:0;background:linear-gradient(180deg,#CFE3FA 0%,#E3ECFB 45%,#B9B6EE 100%)}
+.bk-hill{position:absolute;inset:0;width:100%;height:100%}
+.bk-ct{position:absolute;left:30px;top:26px;display:flex;gap:16px;align-items:center}.bk-ct img{width:84px;height:84px;border-radius:50%;background:#fff}
+.bk-ct h4{margin:0;font-size:24px;font-weight:600;color:#1F2A5C}.bk-ct h2{margin:0;font-size:40px;font-weight:700;color:#1F2A5C;line-height:1.15}.bk-ct p{margin:2px 0 0;font-size:21px;color:#2F3F7C}
+.bk-photo{position:absolute;right:50px;top:42px;width:170px;height:190px;border-radius:18px;background:#fff;border:6px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.18);overflow:hidden;display:flex;align-items:center;justify-content:center;color:#6A4FC4}
+.bk-photo img{width:100%;height:100%;object-fit:cover}.bk-photo svg{width:70px;height:70px}
+.bk-info{position:absolute;right:30px;bottom:56px;width:420px;background:rgba(255,255,255,.95);border-radius:16px;padding:8px 18px;box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.bk-info div{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid #E6EBF3}.bk-info div:last-child{border:0}.bk-info span{width:100px;flex-shrink:0;color:#6B7794;font-size:15px}.bk-info b{font-size:17px;font-weight:600;white-space:nowrap}
+.bk-slg{position:absolute;left:34px;bottom:50px;color:#fff;font-size:30px;font-weight:600;line-height:1.2;transform:rotate(-7deg);font-style:italic}
+.bk-tag{position:absolute;right:22px;bottom:16px;background:#4B3E96;color:#fff;border-radius:20px;padding:6px 18px;font-size:15px;font-weight:600;z-index:2}
+.bk-bal,.bk-tb{background:linear-gradient(180deg,#fff,#F4F7FE)}
+.bk-h{display:flex;align-items:center;gap:12px;padding:18px 26px;border-bottom:1px solid #E6EBF3;background:#fff}.bk-h b{font-size:22px;font-weight:600;white-space:nowrap}.bk-h small{margin-left:auto;color:#4B6FD0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-pig{width:42px;height:42px;border-radius:50%;background:#7B5CD6;color:#fff;display:flex;align-items:center;justify-content:center}.bk-pig svg{width:22px;height:22px}
+.bk-bb{display:flex;gap:22px;padding:28px 30px 0}.bk-big{flex:1.2;display:flex;align-items:center;gap:20px;background:#E8EFFC;border-radius:14px;padding:26px}
+.bk-coin{width:70px;height:70px;border-radius:50%;background:#fff;border:2px solid #C9D8F5;display:flex;align-items:center;justify-content:center;color:#2F6BFF;flex-shrink:0}.bk-coin svg{width:34px;height:34px}
+.bk-big small{display:block;font-size:20px;font-weight:500}.bk-big b{font-size:48px;line-height:1.2;font-weight:600}.bk-big em{font-style:normal;font-size:24px}
+.bk-last{flex:1;background:#EDF1FB;border-radius:14px;padding:12px 20px}.bk-last>div{display:flex;align-items:center;gap:14px;padding:16px 0}.bk-last>div:first-child{border-bottom:1px solid #D9E1F2}
+.bk-li{width:44px;height:44px;border-radius:50%;background:#fff;color:#4B6FD0;display:flex;align-items:center;justify-content:center;flex-shrink:0}.bk-li svg{width:22px;height:22px}
+.bk-last small{display:block;font-size:17px}.bk-last b{font-size:18px;font-weight:600}
+.bk-q{position:absolute;left:36px;top:330px;font-size:18px;font-weight:500;margin:0}.bk-wave{position:absolute;left:0;bottom:0;width:100%;height:120px}
+.bk-tb table{width:calc(100% - 52px);margin:18px 26px 0;border-collapse:collapse;font-size:14px;background:#fff}
+.bk-tb th{background:#E3EDFB;color:#2A3D80;font-weight:500;padding:8px 6px;border:1px solid #D6E0F3}.bk-tb td{padding:2px 10px;line-height:1.2;border:1px solid #E3EAF6;height:28px;color:#2A3D80}.bk-tb tr:nth-child(even) td{background:#F3F7FE}.bk-tb td.r{text-align:right}
+.bk-q2{position:absolute;left:30px;bottom:18px;margin:0;font-size:14px}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -187,6 +218,8 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 const firebaseConfig={apiKey:"AIzaSyCetA8GzKLX805V9nEpPXjdoh8eGtVMqXY",authDomain:"phayoe-school.firebaseapp.com",projectId:"phayoe-school",storageBucket:"phayoe-school.firebasestorage.app",messagingSenderId:"1042321037121",appId:"1:1042321037121:web:a031c14b8f58d0262573c0"};
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 window.addEventListener('pageshow',()=>{window.scrollTo(0,0)});
@@ -202,7 +235,7 @@ chat:'<path d="M4 5h16v11H9l-5 4z"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M
 user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
 gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
 db:'<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
-ud:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',upload:'<path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/><path d="M12 11v7M9 14l3-3 3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',down:'<path d="M12 4v12M6 12l6 6 6-6M4 20h16"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>',up:'<path d="M12 20V8M6 12l6-6 6 6M4 4h16"/>',save:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',phone:'<path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
+ud:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',upload:'<path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/><path d="M12 11v7M9 14l3-3 3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',down:'<path d="M12 4v12M6 12l6 6 6-6M4 20h16"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>',up:'<path d="M12 20V8M6 12l6-6 6 6M4 4h16"/>',save:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',phone:'<path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
 coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/>',
 bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
@@ -659,17 +692,54 @@ return `<tr class="${sel?'sv-sel':''}" style="cursor:pointer" data-svpick="${st.
 </table></div>`}
 function svSearchInput(v){svSearch=v;const w=$('#sv_table_wrap');if(w)w.innerHTML=savingStudentTable(ST.filter(x=>x.ty==svClassKey[0]&&x.lv==+svClassKey.slice(1)))}
 function svAvatar(st){return st.im?`<img class="svp-av" src="${st.im}">`:`<span class="svp-av svp-av0">${ic('user')}</span>`}
+let svPg=0;const SV_ROWS=10,BKW=760,BKH=500;
+const svFm=n=>(+n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const svDt=iso=>{const d=new Date(iso);return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+(d.getFullYear()+543)};
+const svDtL=iso=>{const d=new Date(iso);return String(d.getDate()).padStart(2,'0')+' '+TH_MON_FULL[d.getMonth()]+' '+(d.getFullYear()+543)};
+function svTxOf(sid){return SVTX.filter(t=>t.studentId==sid).sort((a,b)=>(a.createdAt||'').localeCompare(b.createdAt||''))}
+function svPageCount(sid){return 2+Math.max(1,Math.ceil(svTxOf(sid).length/SV_ROWS))}
+const svWave=`<svg class="bk-wave" viewBox="0 0 760 120" preserveAspectRatio="none"><path d="M0 60C120 20 240 20 360 55S620 100 760 40V120H0Z" fill="#DCE6FB" opacity=".75"/><path d="M0 85C160 45 300 70 440 85S660 100 760 70V120H0Z" fill="#C9D4F7" opacity=".8"/></svg>`;
+function svPageHtml(st,i,dir){const total=svPageCount(st.id),nm=esc((st.tt||'')+st.fn+' '+st.ln),code=esc(st.code)||'-',cls=esc(LV[st.lv]),logo=$('.brand img').src;
+const tag=i==0?'หน้าปก':`หน้าที่ ${i}/${total-1}`,an=dir?(dir>0?' bk-fn':' bk-fp'):'';
+const photo=st.im?`<img src="${st.im}">`:`<span>${ic('user')}</span>`;
+if(i==0)return `<div class="bkp bk-cover${an}"><div class="bk-sky"></div><svg class="bk-hill" viewBox="0 0 760 500" preserveAspectRatio="none"><path d="M0 250L70 170L130 230L200 150L280 240L360 190L440 260L0 330Z" fill="#7FB6A0" opacity=".55"/><path d="M0 300C140 240 250 330 380 330S620 250 760 330V500H0Z" fill="#7B8CE0" opacity=".85"/><path d="M0 380C160 330 300 400 460 390S650 340 760 390V500H0Z" fill="#6A4FC4" opacity=".9"/></svg>
+<div class="bk-ct"><img src="${logo}"><div><h4>โรงเรียนบ้านผาเยอ</h4><h2>สมุดออมทรัพย์</h2><p>ออมวันนี้ เพื่ออนาคตที่ดีกว่า</p></div></div>
+<div class="bk-photo">${photo}</div>
+<div class="bk-info"><div><span>ชื่อ-นามสกุล</span><b>${nm}</b></div><div><span>รหัสนักเรียน</span><b>${code}</b></div><div><span>ชั้นเรียน</span><b>${cls}</b></div></div>
+<div class="bk-slg">“เก็บออม<br>สร้างอนาคต”</div><span class="bk-tag">${tag}</span></div>`;
+const head=`<div class="bk-h"><span class="bk-pig">${ic('coin')}</span><b>สมุดออมเงินออนไลน์</b><small>${nm} &nbsp;|&nbsp; รหัสนักเรียน ${code} &nbsp;|&nbsp; ${cls}</small></div>`;
+const tx=svTxOf(st.id);
+if(i==1){const bal=tx.reduce((s,t)=>s+(t.type=='deposit'?+t.amount:-t.amount),0),ld=[...tx].reverse().find(t=>t.type=='deposit'),lw=[...tx].reverse().find(t=>t.type!='deposit');
+return `<div class="bkp bk-bal${an}">${head}<div class="bk-bb"><div class="bk-big"><span class="bk-coin">${ic('coin')}</span><div><small>ยอดเงินคงเหลือ</small><b>${svFm(bal)} <em>บาท</em></b></div></div>
+<div class="bk-last"><div><span class="bk-li">${ic('cal')}</span><div><small>วันที่ออมล่าสุด</small><b>${ld?svDtL(ld.createdAt):'-'}</b></div></div><div><span class="bk-li">${ic('up')}</span><div><small>วันที่ถอนล่าสุด</small><b>${lw?svDtL(lw.createdAt):'-'}</b></div></div></div></div>
+<p class="bk-q">ออมเล็กๆ วันนี้... สร้างสิ่งใหญ่ในอนาคต</p>${svWave}<span class="bk-tag">${tag}</span></div>`}
+let run=0;const rows=tx.map(t=>{run+=t.type=='deposit'?+t.amount:-t.amount;return{t,run}}).slice((i-2)*SV_ROWS,(i-1)*SV_ROWS);
+const body=Array.from({length:SV_ROWS},(_,k)=>{const r=rows[k];if(!r)return '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>';const d=r.t.type=='deposit';
+return `<tr><td>${svDt(r.t.createdAt)}</td><td>${d?'ฝากเงิน':'ถอนเงิน'}</td><td class="r">${d?svFm(r.t.amount):'-'}</td><td class="r">${d?'-':svFm(r.t.amount)}</td><td class="r">${svFm(r.run)}</td></tr>`}).join('');
+return `<div class="bkp bk-tb${an}">${head}<table><tr><th>วันที่</th><th>รายการ</th><th>ฝาก (บาท)</th><th>ถอน (บาท)</th><th>ยอดเงินคงเหลือ (บาท)</th></tr>${body}</table><p class="bk-q2">“ออมเงิน...คือการลงทุนในตัวเรา”</p><span class="bk-tag">${tag}</span></div>`}
+function svBook(st,dir){const total=svPageCount(st.id);svPg=Math.max(0,Math.min(svPg,total-1));
+return `<div class="bk-stage" id="bk_stage"><div class="bk-scale" id="bk_scale">${svPageHtml(st,svPg,dir)}</div></div>
+<div class="bk-nav"><button type="button" class="btn o" ${svPg==0?'disabled':''} onclick="svGo(-1)">‹ หน้าก่อนหน้า</button><span>${svPg==0?'หน้าปก':'หน้า '+svPg+' / '+(total-1)}</span><button type="button" class="btn o" ${svPg>=total-1?'disabled':''} onclick="svGo(1)">${svPg==0?'เปิดสมุด':'หน้าถัดไป'} ›</button>
+<button type="button" class="svp-btn dl" id="sv_dl" onclick="svDownload()">${ic('down')} ดาวน์โหลดสมุดออมทรัพย์ (PDF)</button></div>`}
+function svFit(){const s=$('#bk_stage'),c=$('#bk_scale');if(!s||!c||!s.clientWidth)return;const k=Math.min(1,s.clientWidth/BKW);c.style.transform=`scale(${k})`;s.style.height=Math.round(BKH*k)+'px'}
+function svGo(d){svPg+=d;const w=$('#sv_book'),st=ST.find(x=>x.id==svSel);if(!w||!st)return;w.innerHTML=svBook(st,d);svFit()}
+window.addEventListener('resize',svFit);
+async function svDownload(){const st=ST.find(x=>x.id==svSel);if(!st)return;const b=$('#sv_dl');if(b){b.disabled=true;b.textContent='กำลังสร้างไฟล์ PDF...'}let host;
+try{if(!window.html2canvas||!window.jspdf)throw new Error('โหลดตัวสร้าง PDF ไม่สำเร็จ (ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่)');
+if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+host=document.createElement('div');host.style.cssText=`position:fixed;left:-20000px;top:0;width:${BKW}px;height:${BKH}px`;document.body.appendChild(host);
+const pdf=new window.jspdf.jsPDF({orientation:'landscape',unit:'px',format:[BKW,BKH],hotfixes:['px_scaling']}),total=svPageCount(st.id);
+for(let i=0;i<total;i++){host.innerHTML=svPageHtml(st,i);await new Promise(r=>setTimeout(r,80));
+const c=await html2canvas(host.firstElementChild,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false});
+if(i)pdf.addPage([BKW,BKH],'landscape');pdf.addImage(c.toDataURL('image/jpeg',0.93),'JPEG',0,0,BKW,BKH)}
+pdf.save(`สมุดออมทรัพย์_${st.fn}_${st.ln}_${SVY}.pdf`)}
+catch(e){alert('ดาวน์โหลดไม่สำเร็จ: '+e.message)}
+finally{if(host)host.remove();const b2=$('#sv_dl');if(b2){b2.disabled=false;b2.innerHTML=ic('down')+' ดาวน์โหลดสมุดออมทรัพย์ (PDF)'}}}
 function savingSelectedPanel(){
 if(!svSel)return `<div class="svp-top"><div class="svp-empty">กรุณาเลือกนักเรียนก่อนทำรายการ</div></div>`;
 const st=ST.find(x=>x.id==svSel);if(!st){svSel=null;return savingSelectedPanel()}
-const a=studentAgg(st.id);
-return `<div class="svp-top">
-<div class="svp-head">${svAvatar(st)}<div class="svp-who"><b>${esc((st.tt||'')+st.fn+' '+st.ln)}</b><small>รหัสนักเรียน : ${esc(st.code)||'-'}</small><small>ชั้น : ${esc(LV[st.lv])} (${esc(CT[st.ty][0])})</small></div><span class="svp-year">ปีการศึกษา ${SVY}</span></div>
-<div class="svp-sum">
-<div class="svp-s blue"><span class="svp-si">${ic('coin')}</span><div><small>ยอดเงินคงเหลือปัจจุบัน</small><b>${a.bal.toLocaleString()} <em>บาท</em></b></div></div>
-<div class="svp-s green"><span class="svp-si">${ic('down')}</span><div><small>จำนวนรายการฝาก</small><b>${a.dep} <em>รายการ</em></b></div></div>
-<div class="svp-s red"><span class="svp-si">${ic('up')}</span><div><small>จำนวนรายการถอน</small><b>${a.wd} <em>รายการ</em></b></div></div>
-</div></div>`}
+setTimeout(svFit,0);
+return `<div class="svp-top" id="sv_book">${svBook(st)}</div>`}
 function savingForms(){const d=!svSel?'disabled':'';
 return `<div class="svp-forms">
 <div class="svp-f dep"><div class="svp-fh"><span class="svp-fi">${ic('down')}</span>ฝากเงิน</div><div class="svp-fb">
@@ -695,7 +765,7 @@ const btn=$('#sv_dep_btn');btn.disabled=true;btn.textContent='กำลังบ
 try{const a=studentAgg(svSel),newBal=a.bal+amt,id=uid(),note=$('#sv_dep_note').value.trim();
 const rec={studentId:svSel,year:SVY,type:'deposit',amount:amt,balanceAfter:newBal,note,reason:'',createdBy:me._id,createdByName:me.n,createdAt:new Date().toISOString()};
 await db.collection('savingtx').doc(id).set(rec);SVTX.push({id,...rec});
-$('#sv_dep_amt').value='';$('#sv_dep_note').value='';render();const m=$('#sv_dep_msg');if(m)m.textContent='บันทึกการฝากเงินสำเร็จ'}
+$('#sv_dep_amt').value='';$('#sv_dep_note').value='';svPg=1e9;render();const m=$('#sv_dep_msg');if(m)m.textContent='บันทึกการฝากเงินสำเร็จ'}
 catch(e){const m=$('#sv_dep_msg');if(m)m.textContent='บันทึกไม่สำเร็จ: '+e.message}
 finally{const b=$('#sv_dep_btn');if(b){b.disabled=!svSel;b.innerHTML=ic('save')+' บันทึกการฝากเงิน'}}}
 async function doWithdraw(){if(!svSel)return;const amt=parseFloat($('#sv_wd_amt').value),reason=$('#sv_wd_reason').value;
@@ -706,7 +776,7 @@ const btn=$('#sv_wd_btn');btn.disabled=true;btn.textContent='กำลังบ�
 try{const newBal=a.bal-amt,id=uid(),note=$('#sv_wd_note').value.trim();
 const rec={studentId:svSel,year:SVY,type:'withdraw',amount:amt,balanceAfter:newBal,note,reason,createdBy:me._id,createdByName:me.n,createdAt:new Date().toISOString()};
 await db.collection('savingtx').doc(id).set(rec);SVTX.push({id,...rec});
-$('#sv_wd_amt').value='';$('#sv_wd_note').value='';$('#sv_wd_reason').value='';render();const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกการถอนเงินสำเร็จ'}
+$('#sv_wd_amt').value='';$('#sv_wd_note').value='';$('#sv_wd_reason').value='';svPg=1e9;render();const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกการถอนเงินสำเร็จ'}
 catch(e){const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกไม่สำเร็จ: '+e.message}
 finally{const b=$('#sv_wd_btn');if(b){b.disabled=!svSel;b.innerHTML=ic('save')+' บันทึกการถอนเงิน'}}}
 function savingClassPage(s){if(svClassKey!==s){svClassKey=s;svSel=null;svSearch=''}
@@ -725,7 +795,7 @@ return `<div class="pt"><h2>ออมเงิน · ${esc(classLabel(s))}</h2><
 <div>${savingSelectedPanel()}${canEdit?`<div style="margin-top:16px">${savingForms()}</div>`:''}</div>
 </div>`}
 V.saving=s=>s?savingClassPage(s):PT('ออมเงิน','เลือกชั้นเรียนเพื่อดูและบันทึกข้อมูลการออมเงิน')+Object.keys(CT).map(t=>P(CT[t][0],`<div class="grid g4">${LV.slice(0,CT[t][1]).map((n,i)=>`<div class="lv" data-r="saving:${t}${i}">${n}<b>${ST.filter(x=>x.ty==t&&x.lv==i).length} คน</b></div>`).join('')}</div>`)).join('');
-document.addEventListener('click',e=>{const a=e.target.closest('[data-svpick]');if(!a)return;svSel=a.dataset.svpick;render()});
+document.addEventListener('click',e=>{const a=e.target.closest('[data-svpick]');if(!a)return;svSel=a.dataset.svpick;svPg=0;render()});
 V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
 const row=(p,i)=>{const lc=p.lc?dt(p.lc):null,ex=lc&&lc<t,c=PCAT.find(x=>x[0]==p.cat);return`<tr><td>${i+1}</td><td style="white-space:nowrap">${esc(dn(p))}</td><td>${esc(p.po)||'-'}</td><td>${esc(p.pn)||'-'}</td><td>${c?`<span class="pcard-badge" style="background:${c[2]}1a;color:${c[2]}">${c[1]}</span>`:'-'}</td><td>${p.ap?ymd(dt(p.ap),t):'-'}</td><td>${esc(p.ph)||'-'}</td><td class="${ex?'rd':''}">${lc?(ex?'หมดอายุแล้ว':ymd(t,lc)+' เหลือ'):'-'}</td><td><button class="btn o" data-r="profile:${p.id}">ดู</button>${F?` <button class="btn o" data-q="e:${p.id}">แก้ไข</button> <button class="btn r" data-q="d:${p.id}">ลบ</button>`:''}</td></tr>`};
 return PT('บุคลากร','ข้อมูลและโครงสร้างบุคลากรของโรงเรียน')+hrOverview()
