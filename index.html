@@ -156,6 +156,8 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .ttn{margin-top:14px;font-size:.88rem;color:#111}.ttn textarea{width:100%;border:1px dashed #b9c2d8;border-radius:8px;padding:8px;font:inherit;resize:vertical;min-height:44px;background:#fafbff}
 .ttsg{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:34px;text-align:center;font-size:.88rem;color:#111}.ttsg i{display:block;border-top:1px dotted #555;margin:0 6px 10px;height:26px}
 .ttp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}@media(max-width:700px){.ttp{grid-template-columns:1fr}}
+.ttg{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}.ttcard{background:#fff;border-radius:16px;padding:14px;box-shadow:var(--sh);cursor:pointer;transition:transform .15s,box-shadow .15s;min-width:0}.ttcard:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(31,42,68,.14)}.ttcard h4{margin:0 0 10px;font-size:1rem;color:#1F2A5C}.ttcard small{display:block;margin-top:8px;color:var(--mute);font-size:.75rem}
+.ttmini{pointer-events:none;overflow:hidden}.ttmini .ttt{min-width:0;font-size:5.5px;line-height:1.2}.ttmini .ttt th,.ttmini .ttt td{padding:1px;border-width:1px}.ttmini .ttt td.tc{height:24px}.ttmini .ttt td.tc b{font-weight:500}.ttmini .ttt td.tc small{font-size:5px;margin:0;color:#333}.ttmini .ttt .tdy{width:30px}.ttmini .ttt td.vt span{letter-spacing:0}.ttmini .ttt thead tr:nth-child(3) th{font-size:4.5px;white-space:normal}
 .ttok{background:#E6F7EE;color:#14663F;border:1px solid #BFE8D2;border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:.92rem}.ttw2{color:#B3132F;font-size:.85rem;margin-top:10px;line-height:1.5}.ttw2:empty{display:none}.ttt td.tc.cf{background:#ffe9ec}
 .ttbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.ttbar small{color:var(--mute)}
 @media(max-width:700px){.ttsg{grid-template-columns:1fr}}
@@ -467,7 +469,7 @@ bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
 I.pen='<path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/>';
 const ic=(n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"${c?` class="${c}"`:''}>${I[n]}</svg>`;
-const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['saving','ออมเงิน','coin'],['att','การเข้าเรียน','cal'],['tt','ตารางสอน & ตารางเรียน','cal'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
+const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['saving','ออมเงิน','coin'],['att','การเข้าเรียน','cal'],['tt','ตารางสอน & ตารางเรียน','cal','tt'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
 const SYS=[['staff','ทะเบียนบุคลากร','users'],['usr','ผู้ใช้งาน / สิทธิ์การใช้งาน','user'],['set','ตั้งค่าระบบ','gear'],['bak','สำรองข้อมูล','db'],['ie','Import / Export','ud'],['api','API & Integration','code']];
 const DIV=[['academic','กลุ่มบริหารงานวิชาการ','cap','#2F6BFF'],['budget','กลุ่มบริหารงานแผนงานและงบประมาณ','coin','#F5A524'],['personnel','กลุ่มบริหารงานบุคคล','users','#8B5CF6'],['general','กลุ่มบริหารงานทั่วไป','bld','#22B573']];
 const E=(t='ยังไม่มีข้อมูล',h)=>`<div class="empty"${h?` style="min-height:${h}px"`:''}>${t}</div>`;
@@ -626,16 +628,16 @@ home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรี�
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม / เอกสารดาวน์โหลด และเกษียนหนังสือราชการ')+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
-const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
+const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:m[3]=='tt'?[['tt:teach','ตารางสอน'],['tt:class','ตารางเรียน'],['tt:entry','บันทึกตารางสอน']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=()=>go('comm');
 $('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 function updateBell(){if(!me||!$('#ib'))return;const n=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack).length;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge">${n}</i>`:'')}
 let CUR='home';
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt():V.gen(m?m[1]:'')}
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt(s):V.gen(m?m[1]:'')}
 function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
-document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving')?k:r)));
+document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving')?k:(k=='tt'?'tt:'+(((r.split(':')[1]||'teach')=='entry')?'entry':((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
 const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
 $('aside').classList.remove('show');scrollTo(0,0)}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-r]');if(a)go(a.dataset.r)});
@@ -1298,9 +1300,9 @@ const TTSUB=[['กลุ่มสาระการเรียนรู้ (ห
 ['รายวิชาย่อย / เพิ่มเติม',['วิทยาศาสตร์','วิทยาการคำนวณ','ประวัติศาสตร์','หน้าที่พลเมือง','พระพุทธศาสนา','สุขศึกษา','พลศึกษา','ดนตรี','ทัศนศิลป์','นาฏศิลป์','ภาษาอังกฤษเพิ่มเติม','การป้องกันการทุจริต']],
 ['กิจกรรมพัฒนาผู้เรียน',['แนะแนว','ลูกเสือ-เนตรนารี','ชุมนุม','กิจกรรมเพื่อสังคมและสาธารณประโยชน์','กิจกรรมลดเวลาเรียน','อบรมคุณธรรม-จริยธรรม']]];
 const ttYDef=()=>{const d=new Date();return d.getFullYear()+543-(d.getMonth()<4?1:0)};
-const ttClasses=()=>Object.keys(CT).flatMap(t=>LV.slice(0,CT[t][1]).map((n,i)=>t+i));
+const ttClasses=()=>[2,3,4,5,6,7].map(i=>'m'+i),ttLv=c=>c?String(c).slice(1):'',ttCL=c=>LV[+ttLv(c)]||'';
 const ttTeachers=()=>PP.slice().sort((a,b)=>nm(a).localeCompare(nm(b),'th'));
-const ttShort=k=>{const lv=LV[+k.slice(1)]||'';return lv.replace('ชั้นประถมศึกษาปีที่ ','ป.').replace('ชั้นอนุบาล ','อ.')+(k[0]=='b'?' (สาขา)':'')};
+const ttShort=k=>(LV[+k.slice(1)]||'').replace('ชั้นประถมศึกษาปีที่ ','ป.').replace('ชั้นอนุบาล ','อ.');
 const ttSubs=()=>[...TTSUB,...(((TT._subjects||{}).list||[]).length?[['วิชาที่ครูเพิ่มเอง',TT._subjects.list]]:[])];
 
 const ttFounder=()=>!!me&&me.role=='founder';
@@ -1309,17 +1311,17 @@ function ttInit(){if(!ttYear)ttYear=ttYDef();if(!ttDraft)ttReset()}
 function ttReset(){ttDraft={tid:ttFounder()?'':((ttOwn()||{}).id||''),cells:{},note:''}}
 const ttNameOf=sid=>{const p=PP.find(x=>x.id==sid);return p?p.fn:''};
 const ttTDocs=y=>Object.keys(TT).filter(k=>k[0]=='t'&&TT[k]&&TT[k].kind=='t'&&TT[k].year==y).map(k=>TT[k]);
-function ttClash(cell,cls,tid,y){if(!cls)return[];const o=[];ttTDocs(y).forEach(d=>{if(d.ref==tid)return;const c=(d.cells||{})[cell];if(c&&c.c==cls)o.push({p:PP.find(x=>x.id==d.ref),s:c.s})});return o}
+function ttClash(cell,cls,tid,y){if(!cls)return[];const o=[];ttTDocs(y).forEach(d=>{if(d.ref==tid)return;const c=(d.cells||{})[cell];if(c&&ttLv(c.c)==ttLv(cls))o.push({p:PP.find(x=>x.id==d.ref),s:c.s})});return o}
 const ttClashTxt=l=>l.map(x=>`${x.p?dn(x.p):'(ไม่ทราบชื่อครู)'} สอนวิชา${x.s}`).join(', ');
 const ttCellLabel=c=>{const m=c.match(/d(\d)p(\d)/);return `วัน${TTD[+m[1]-1]} คาบที่ ${m[2]}`};
 function ttItems(q){q=q.trim().toLowerCase();const o=[];
 ttTeachers().forEach(p=>{const t=(dn(p)+' '+(p.po||'')).toLowerCase();if(!q||t.includes(q))o.push({k:'t_'+p.id,l:dn(p),y:'ครู',has:!!TT['t_'+p.id+'_'+ttYear]})});
-ttClasses().forEach(c=>{const l=classLabel(c);if(!q||(l+' '+ttShort(c)+' ตารางเรียน').toLowerCase().includes(q))o.push({k:'c_'+c,l,y:'ชั้น'})});
+ttClasses().forEach(c=>{const l=ttCL(c);if(!q||(l+' '+ttShort(c)+' ตารางเรียน').toLowerCase().includes(q))o.push({k:'c_'+c,l,y:'ชั้น'})});
 return o}
 function ttResHtml(q){if(!q.trim())return '';const l=ttItems(q).slice(0,40);
 return l.length?`<div class="ttr">${l.map(x=>`<span class="ttc" data-ttp="${x.k}"><i class="${x.y=='ครู'?'t':''}">${x.y}</i>${esc(x.l)}</span>`).join('')}</div>`:'<div class="ttr" style="color:var(--mute)">ไม่พบรายการที่ค้นหา</div>'}
 function ttSearch(v){ttQ=v;const r=$('#tt_res');if(r)r.innerHTML=ttResHtml(v)}
-function ttSet(k,v){if(k=='tab')ttTab=v;else if(k=='year')ttYear=+v;else if(k=='dt'){ttDraft.tid=v}else if(k=='vt'){ttVMode='t';ttVT=v;ttVC=''}else if(k=='vc'){ttVMode='c';ttVC=v;ttVT=''}ttMsg='';render()}
+function ttSet(k,v){if(k=='year')ttYear=+v;else if(k=='dt')ttDraft.tid=v;ttMsg='';render()}
 function ttCellHtml(c,doc,can,mode){const d=(doc||{})[c];let inner='',cf='';
 if(mode=='c'){const l=d||[];inner=l.map(x=>`<b>${esc(x.s)}</b><small>${esc(ttNameOf(x.t))}</small>`).join('');if(l.length>1)cf=' cf'}
 else if(d)inner=`<b>${esc(d.s)}</b>`+(d.c?`<small>${esc(ttShort(d.c))}</small>`:'');
@@ -1346,28 +1348,30 @@ return `${ttMsg?`<div class="ttok tt-np">${ttMsg}</div>`:''}<div class="ttpaper"
 <div class="ttn"><b>* หมายเหตุ</b> <textarea id="tt_note" placeholder="เช่น บูรณาการเรียนรู้ Active Learning กับแหล่งเรียนรู้ท้องถิ่น ทุกกลุ่มสาระ" onchange="ttDraft.note=this.value">${esc(d.note)}</textarea></div>
 ${ttSigs(`${ttNameLine(PP.find(p=>p.id==d.tid))}<br>ครูผู้สอน`)}</div>
 <div class="ttbar tt-np"><button class="btn" onclick="ttSaveAll()">บันทึกตารางสอน</button><button class="btn o" onclick="ttClear()">ล้างตาราง</button><small>กดช่องคาบเพื่อเลือกวิชา/ชั้น แล้วกด "บันทึกตารางสอน" เมื่อกรอกเสร็จ ระบบจะเคลียร์ตารางเพื่อกรอกคนต่อไป</small></div>`}
-function ttClassCells(ck){const o={};ttTDocs(ttYear).forEach(d=>Object.keys(d.cells||{}).forEach(c=>{const x=d.cells[c];if(x&&x.c==ck)(o[c]=o[c]||[]).push({s:x.s,t:d.ref})}));return o}
-function ttView(){const fo=ttFounder(),tc=ttTeachers(),cl=ttClasses();
-const pick=`<div class="ttp tt-np"><label class="lb">เลือกครู (ดูตารางสอน)<select class="in" onchange="ttSet('vt',this.value)"><option value="">-- เลือกชื่อครู --</option>${tc.map(p=>`<option value="${p.id}"${ttVMode=='t'&&ttVT==p.id?' selected':''}>${esc(dn(p))}${TT['t_'+p.id+'_'+ttYear]?' ✓':''}</option>`).join('')}</select></label>
-<label class="lb">เลือกชั้นเรียน (ดูตารางเรียน)<select class="in" onchange="ttSet('vc',this.value)"><option value="">-- เลือกชั้นเรียน --</option>${cl.map(c=>`<option value="${c}"${ttVMode=='c'&&ttVC==c?' selected':''}>${esc(classLabel(c))}</option>`).join('')}</select></label></div>
-<div class="ttbar tt-np" style="margin:6px 0 0"><label class="lb" style="display:flex;gap:8px;align-items:center">ปีการศึกษา <select class="in" style="width:auto;margin:0" onchange="ttSet('year',this.value)">${ttYears().map(y=>`<option value="${y}"${y==ttYear?' selected':''}>${y}</option>`).join('')}</select></label><small>✓ = ครูท่านนั้นกรอกตารางสอนแล้ว</small></div>`;
-const isT=ttVMode=='t',id=isT?ttVT:ttVC;
-if(!id)return `<div class="card tt-np">${pick}</div>`+P('ตารางสอน / ตารางเรียน',E('ค้นหา หรือเลือกครู / ชั้นเรียนด้านบน เพื่อดูตาราง',140));
-let body;
-if(isT){const doc=TT['t_'+id+'_'+ttYear],p=PP.find(x=>x.id==id),n=doc?Object.keys(doc.cells||{}).length:0;
-body=doc?`<div class="ttpaper"><div class="tth"><div>ตารางสอนโรงเรียนบ้านผาเยอ &nbsp;ปีการศึกษา ${ttYear}</div><div>${esc(p?dn(p):'')}</div><div>จำนวน ${n} คาบ / สัปดาห์</div></div><div class="ttw">${ttTable(doc.cells||{},false,'t')}</div>${doc.note?`<div class="ttn"><b>* หมายเหตุ</b> ${esc(doc.note)}</div>`:''}${ttSigs(`${ttNameLine(p)}<br>ครูผู้สอน`)}</div>
-<div class="ttbar tt-np"><button class="btn o" onclick="ttPrint()">พิมพ์ / บันทึกเป็น PDF</button>${(fo||(me&&me.sid==id))?`<button class="btn" onclick="ttEditLoad('${id}')">แก้ไขตารางนี้</button>`:''}<small>แก้ไขล่าสุด ${fmtDT(doc.updatedAt)}</small></div>`
-:P('ตารางสอน',E('ครูท่านนี้ยังไม่ได้กรอกตารางสอนในปีการศึกษา '+ttYear,140))}
-else{const cells=ttClassCells(id),n=Object.keys(cells).length,hrs=(HR[id]||[]).map(i=>PP.find(p=>p.id==i)).filter(Boolean);
-body=`<div class="ttpaper"><div class="tth"><div>ตารางเรียนโรงเรียนบ้านผาเยอ &nbsp;ปีการศึกษา ${ttYear}</div><div>${esc(classLabel(id))}</div><div>จำนวน ${n} คาบ / สัปดาห์</div></div><div class="ttw">${ttTable(cells,false,'c')}</div>${ttSigs(`${hrs.length?hrs.map(ttNameLine).join('<br>'):'(............................................)'}<br>ครูประจำชั้น`)}</div>
-<div class="ttbar tt-np"><button class="btn o" onclick="ttPrint()">พิมพ์ / บันทึกเป็น PDF</button><small>ตารางเรียนสร้างอัตโนมัติจากตารางสอนที่ครูแต่ละท่านกรอก</small></div>`}
-return `<div class="card tt-np">${pick}</div><div style="margin-top:16px">${body}</div>`}
-V.tt=()=>{ttInit();
-return PT('ตารางสอน & ตารางเรียน','กรอกตารางสอนของครู และดูตารางสอน / ตารางเรียนของทุกชั้น')+`<div class="card tt-np"><div class="tts"><input class="in" id="tt_q" placeholder="ค้นหาตารางสอนของครู หรือตารางเรียนของนักเรียน (พิมพ์ชื่อครู หรือ ป.1, ป.2 ...)" value="${esc(ttQ)}" oninput="ttSearch(this.value)" autocomplete="off"><div id="tt_res">${ttResHtml(ttQ)}</div></div>
-<div class="ttm"><button class="${ttTab=='e'?'on':''}" onclick="ttSet('tab','e')">กรอกตารางสอน</button><button class="${ttTab=='v'?'on':''}" onclick="ttSet('tab','v')">ดูตารางสอน / ตารางเรียน</button></div></div>
-<div style="margin-top:16px">${ttTab=='e'?ttEntry():ttView()}</div>`};
+function ttClassCells(ck){const o={};ttTDocs(ttYear).forEach(d=>Object.keys(d.cells||{}).forEach(c=>{const x=d.cells[c];if(x&&ttLv(x.c)==ttLv(ck))(o[c]=o[c]||[]).push({s:x.s,t:d.ref})}));return o}
+const ttBar=()=>`<div class="ttbar tt-np" style="margin:0 0 14px"><label class="lb" style="display:flex;gap:8px;align-items:center">ปีการศึกษา <select class="in" style="width:auto;margin:0" onchange="ttSet('year',this.value)">${ttYears().map(y=>`<option value="${y}"${y==ttYear?' selected':''}>${y}</option>`).join('')}</select></label></div>`;
+function ttPaperT(id,doc,full){const p=PP.find(x=>x.id==id),n=Object.keys(doc.cells||{}).length;
+return `<div class="ttpaper"><div class="tth"><div>ตารางสอนโรงเรียนบ้านผาเยอ &nbsp;ปีการศึกษา ${ttYear}</div><div>${esc(p?dn(p):'')}</div><div>จำนวน ${n} คาบ / สัปดาห์</div></div><div class="ttw">${ttTable(doc.cells||{},false,'t')}</div>${full&&doc.note?`<div class="ttn"><b>* หมายเหตุ</b> ${esc(doc.note)}</div>`:''}${full?ttSigs(`${ttNameLine(p)}<br>ครูผู้สอน`):''}</div>`}
+function ttPaperC(ck,full){const cells=ttClassCells(ck),n=Object.keys(cells).length,hrs=[...(HR['m'+ttLv(ck)]||[]),...(HR['b'+ttLv(ck)]||[])].map(i=>PP.find(p=>p.id==i)).filter(Boolean);
+return `<div class="ttpaper"><div class="tth"><div>ตารางเรียนโรงเรียนบ้านผาเยอ &nbsp;ปีการศึกษา ${ttYear}</div><div>${esc(ttCL(ck))}</div><div>จำนวน ${n} คาบ / สัปดาห์</div></div><div class="ttw">${ttTable(cells,false,'c')}</div>${full?ttSigs(`${hrs.length?hrs.map(ttNameLine).join('<br>'):'(............................................)'}<br>ครูประจำชั้น`):''}</div>`}
+function ttList(kind){const bar=ttBar();
+if(kind=='t'){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length).sort((a,b)=>ttNameOf(a.ref).localeCompare(ttNameOf(b.ref),'th'));
+if(!ds.length)return bar+P('ตารางสอนของครู',E('ยังไม่มีครูท่านใดกรอกตารางสอนในปีการศึกษา '+ttYear+' — ไปที่เมนู "บันทึกตารางสอน" เพื่อกรอก',160));
+return bar+`<div class="ttg">${ds.map(d=>{const p=PP.find(x=>x.id==d.ref);return `<div class="ttcard" data-r="tt:t-${d.ref}"><h4>ตารางสอน · ${esc(p?dn(p):'(ไม่พบครู)')}</h4><div class="ttmini">${ttTable(d.cells,false,'t')}</div><small>${Object.keys(d.cells).length} คาบ/สัปดาห์ · กดเพื่อดูเต็มหน้าจอ</small></div>`}).join('')}</div>`}
+return bar+`<div class="ttg">${ttClasses().map(c=>{const cells=ttClassCells(c);return `<div class="ttcard" data-r="tt:c-${c}"><h4>${esc(ttCL(c))}</h4><div class="ttmini">${ttTable(cells,false,'c')}</div><small>${Object.keys(cells).length} คาบ/สัปดาห์ · กดเพื่อดูเต็มหน้าจอ</small></div>`}).join('')}</div>`}
+function ttFull(id){const isT=id[0]=='t',key=id.slice(2);
+const back=`<div class="ttbar tt-np" style="margin:0 0 14px"><button class="btn o" data-r="tt:${isT?'teach':'class'}">‹ กลับ</button>${ttBar().replace('<div class="ttbar tt-np" style="margin:0 0 14px">','').replace(/<\/div>$/,'')}</div>`;
+if(isT){const doc=TT['t_'+key+'_'+ttYear];if(!doc)return back+P('ตารางสอน',E('ครูท่านนี้ยังไม่ได้กรอกตารางสอนในปีการศึกษา '+ttYear,140));
+const can=ttFounder()||(me&&me.sid==key);
+return back+ttPaperT(key,doc,true)+`<div class="ttbar tt-np"><button class="btn o" onclick="ttPrint()">พิมพ์ / บันทึกเป็น PDF</button>${can?`<button class="btn" onclick="ttEditLoad('${key}')">แก้ไขตารางนี้</button>`:''}<small>แก้ไขล่าสุด ${fmtDT(doc.updatedAt)}</small></div>`}
+return back+ttPaperC(key,true)+`<div class="ttbar tt-np"><button class="btn o" onclick="ttPrint()">พิมพ์ / บันทึกเป็น PDF</button><small>ตารางเรียนสร้างอัตโนมัติจากตารางสอนที่ครูแต่ละท่านกรอก (โรงเรียนหลักและสาขาใช้ตารางเดียวกัน)</small></div>`}
+V.tt=s=>{ttInit();s=s||'teach';
+const ttl=s=='entry'?['บันทึกตารางสอน','กรอกตารางสอนของครู แล้วกดบันทึก']:s=='class'||s[0]=='c'?['ตารางเรียน','ตารางเรียนของนักเรียนชั้น ป.1 - ป.6 (โรงเรียนหลักและสาขาใช้ตารางเดียวกัน)']:['ตารางสอน','ตารางสอนของครูทุกคนที่กรอกแล้ว'];
+const body=s=='entry'?ttEntry():s=='class'?ttList('c'):s=='teach'?ttList('t'):s.startsWith('t-')?ttFull('t_'+s.slice(2)):s.startsWith('c-')?ttFull('c_'+s.slice(2)):ttList('t');
+return PT(ttl[0],ttl[1])+`<div class="card tt-np"><div class="tts"><input class="in" id="tt_q" placeholder="ค้นหาตารางสอนของครู หรือตารางเรียนของนักเรียน (พิมพ์ชื่อครู หรือ ป.1, ป.2 ...)" value="${esc(ttQ)}" oninput="ttSearch(this.value)" autocomplete="off"><div id="tt_res">${ttResHtml(ttQ)}</div></div></div>
+<div style="margin-top:16px">${body}</div>`};
 function ttPrint(){const st=document.createElement('style');st.textContent='@page{size:A4 landscape;margin:12mm}';document.head.appendChild(st);window.print();setTimeout(()=>st.remove(),500)}
-function ttEditLoad(id){const d=TT['t_'+id+'_'+ttYear];if(!d)return;ttDraft={tid:id,cells:JSON.parse(JSON.stringify(d.cells||{})),note:d.note||''};ttTab='e';ttMsg='';render();window.scrollTo(0,0)}
+function ttEditLoad(id){const d=TT['t_'+id+'_'+ttYear];if(!d)return;ttDraft={tid:id,cells:JSON.parse(JSON.stringify(d.cells||{})),note:d.note||''};ttMsg='';go('tt:entry')}
 function ttClear(){if(Object.keys(ttDraft.cells).length&&!confirm('ล้างตารางที่กรอกไว้ทั้งหมด?'))return;ttReset();ttMsg='';render()}
 function ttSaveAll(){const d=ttDraft;if(!d.tid)return alert('กรุณาเลือกชื่อครูผู้สอนก่อน');
 const cs=Object.keys(d.cells);if(!cs.length)return alert('ยังไม่ได้กรอกคาบสอน กดที่ช่องคาบเพื่อเลือกวิชา');
@@ -1387,7 +1391,7 @@ const el=document.createElement('div');el.id='tt_modal';el.className='mdl';el.on
 el.innerHTML=`<div class="mdl-b"><h3>${ttCellLabel(c)} (${TTP[+c.match(/p(\d)/)[1]-1][0]} น.)<a onclick="ttClose()">✕</a></h3>
 <label class="lb">วิชา<select class="in" id="ttm_s"><option value="">-- เลือกวิชา --</option>${opts}</select></label>
 <label class="lb">ไม่มีในรายการ? พิมพ์เพิ่มวิชา<input class="in" id="ttm_n" placeholder="ชื่อวิชาใหม่ (จะเพิ่มเข้ารายการให้ทุกคนเลือกได้)"></label>
-<label class="lb">สอนชั้น<select class="in" id="ttm_c" onchange="ttConfPrev()"><option value="">-- เลือกชั้นเรียน --</option>${ttClasses().map(x=>`<option value="${x}"${d.c==x?' selected':''}>${esc(classLabel(x))}</option>`).join('')}</select></label>
+<label class="lb">สอนชั้น<select class="in" id="ttm_c" onchange="ttConfPrev()"><option value="">-- เลือกชั้นเรียน --</option>${ttClasses().map(x=>`<option value="${x}"${d.c==x?' selected':''}>${esc(ttCL(x))}</option>`).join('')}</select></label>
 <div id="ttm_w" class="ttw2"></div>
 <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end;flex-wrap:wrap">${d.s?`<button class="btn r" onclick="ttDelCell()">ลบคาบนี้</button>`:''}<button class="btn o" onclick="ttClose()">ยกเลิก</button><button class="btn" onclick="ttSaveCell()">ตกลง</button></div></div>`;
 document.body.appendChild(el);ttConfPrev()}
@@ -1400,8 +1404,8 @@ if(ttConfPrev().length)return;
 if(nw){const all=ttSubs().flatMap(g=>g[1]);if(!all.includes(nw)){const l=[...((TT._subjects||{}).list||[]),nw];TT._subjects={list:l};db.collection('timetables').doc('_subjects').set({list:l},{merge:true}).catch(()=>{})}}
 ttDraft.cells[ttCellK]={s:sv,c:$('#ttm_c').value||''};ttClose();render()}
 function ttDelCell(){delete ttDraft.cells[ttCellK];ttClose();render()}
-document.addEventListener('click',e=>{if(!me)return;const c=e.target.closest('[data-ttp]');if(c){const v=c.dataset.ttp;ttTab='v';ttVMode=v[0];if(v[0]=='t'){ttVT=v.slice(2);ttVC=''}else{ttVC=v.slice(2);ttVT=''}ttQ='';ttMsg='';render();return}
-const x=e.target.closest('[data-ttc]');if(x&&ttTab=='e')ttOpen(x.dataset.ttc)});
+document.addEventListener('click',e=>{if(!me)return;const c=e.target.closest('[data-ttp]');if(c){const v=c.dataset.ttp;ttQ='';go(v[0]=='t'?'tt:t-'+v.slice(2):'tt:c-'+v.slice(2));return}
+const x=e.target.closest('[data-ttc]');if(x&&CUR=='tt:entry')ttOpen(x.dataset.ttc)});
 
 V.cal=s=>{if(s){const a=s.split('-');cy=+a[0];cm=+a[1]-1}
 return PT('ปฏิทินกิจกรรม','คลิกที่วันเพื่อดูหรือเพิ่มกิจกรรม')+calBoard(cy,cm,'page')};
