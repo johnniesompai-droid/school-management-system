@@ -618,9 +618,9 @@ function savingStudentTable(roster){const q=svSearch.trim().toLowerCase();
 const rows=roster.filter(st=>{if(!q)return true;const name=((st.tt||'')+st.fn+' '+st.ln).toLowerCase();return name.includes(q)||(st.code||'').toLowerCase().includes(q)})
 .sort((a,b)=>(a.code||'').localeCompare(b.code||'')||a.fn.localeCompare(b.fn));
 return `<div style="max-height:560px;overflow:auto" class="wrap"><table class="tb">
-<tr><th>รหัสนักเรียน</th><th style="min-width:150px">ชื่อ-นามสกุล</th><th>ชั้น</th><th>ยอดเงินออม</th><th>รายการฝาก</th><th>รายการถอน</th></tr>
-${rows.length?rows.map(st=>{const a=studentAgg(st.id),sel=svSel==st.id;
-return `<tr class="${sel?'sv-sel':''}" style="cursor:pointer" data-svpick="${st.id}"><td>${esc(st.code)||'-'}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td><td>${classLabel(st.ty+st.lv)}</td><td>${a.bal.toLocaleString()}</td><td>${a.dep}</td><td>${a.wd}</td></tr>`}).join(''):`<tr><td colspan="6">${E('ไม่พบนักเรียน')}</td></tr>`}
+<tr><th>#</th><th style="width:100%">ชื่อ-นามสกุล</th></tr>
+${rows.length?rows.map((st,i)=>{const sel=svSel==st.id;
+return `<tr class="${sel?'sv-sel':''}" style="cursor:pointer" data-svpick="${st.id}"><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td></tr>`}).join(''):`<tr><td colspan="2">${E('ไม่พบนักเรียน')}</td></tr>`}
 </table></div>`}
 function svSearchInput(v){svSearch=v;const w=$('#sv_table_wrap');if(w)w.innerHTML=savingStudentTable(ST.filter(x=>x.ty==svClassKey[0]&&x.lv==+svClassKey.slice(1)))}
 function savingSelectedPanel(){if(!svSel)return P('ข้อมูลนักเรียนที่เลือก',E('กรุณาเลือกนักเรียนก่อนทำรายการ',110));
