@@ -109,6 +109,24 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .tb-wrap-sticky td:nth-child(2),.tb-wrap-sticky th:nth-child(2){position:sticky;left:44px;z-index:3;background:#fff;min-width:60px}
 .tb-wrap-sticky td:nth-child(3),.tb-wrap-sticky th:nth-child(3){position:sticky;left:104px;z-index:3;background:#fff}
 .tb-wrap-sticky th:nth-child(1),.tb-wrap-sticky th:nth-child(2),.tb-wrap-sticky th:nth-child(3){z-index:4;background:var(--soft)}
+.wsT{display:flex;align-items:center;gap:14px;margin:4px 0 18px;flex-wrap:wrap}.wsT-i{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#5B45E0,#7C5CF0);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px #5b45e044}.wsT-i svg{width:26px;height:26px}
+.wsT h2{margin:0;font-size:1.45rem;color:#1F2A5C}.wsT small{color:#6B7794}.wsT-b{margin-left:auto;cursor:pointer;color:var(--blue);font-weight:500}
+.wsI{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;background:#fff;border:1px solid #E3E8F7;border-radius:16px;padding:18px 20px;margin-bottom:18px;box-shadow:var(--sh)}
+.wsI label{font-size:.78rem;color:#6B7794;display:block}.wsI span{display:block;margin-top:6px;background:#F5F7FF;border:1px solid #DCE3F7;border-radius:10px;padding:10px 14px;color:#1F2A5C;font-size:.95rem;font-weight:500}
+.wsh{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}.wsh-i{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#5B45E0,#7C5CF0);color:#fff;display:flex;align-items:center;justify-content:center}.wsh-i svg{width:22px;height:22px}
+.wsh b{font-size:1.1rem;color:#1F2A5C;display:block}.wsh small{color:#6B7794}.wsh-c{margin-left:auto;font-size:.82rem;color:#6B7794}
+.wsa{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;border:1px solid #DCE3F7;background:#FAFBFF;border-radius:14px;padding:16px 18px;margin-bottom:16px}
+.wsa-n{width:28px;height:28px;border-radius:50%;background:#4B6BE8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;margin-bottom:10px}
+.wsa label{font-size:.78rem;color:#6B7794;display:block}.wsa .in{margin:4px 0 0;background:#fff;border-radius:10px}.wsa-nm{flex:1;min-width:200px}.wsa-mx span{display:flex;align-items:center;gap:8px}.wsa-mx .in{width:120px}.wsa-mx em{font-style:normal;color:#6B7794}
+.wsa-b{background:linear-gradient(135deg,#5B45E0,#7C5CF0);color:#fff;border:0;border-radius:10px;padding:11px 22px;font:inherit;font-weight:500;cursor:pointer;white-space:nowrap}.wsa-b:hover{filter:brightness(1.08)}.wsa>.wsa-b{margin-bottom:0}
+.wsw{overflow-x:auto;border:1px solid #DCE3F7;border-radius:14px}.wst{border-collapse:collapse;width:100%;min-width:640px}
+.wst th{background:#EEF2FF;color:#1F2A5C;font-weight:600;font-size:.84rem;padding:12px 10px;text-align:center;border-bottom:1px solid #DCE3F7;border-right:1px solid #E3E8F7;position:relative;white-space:nowrap}.wst th small{display:block;color:#6B7794;font-weight:400}
+.wst td{padding:8px 10px;text-align:center;border-bottom:1px solid #E9EDF8;border-right:1px solid #F0F3FB;font-size:.88rem;color:#1F2A5C}.wst tr:last-child td{border-bottom:0}.wst th:last-child,.wst td:last-child{border-right:0}.wst .l{text-align:left;min-width:170px}
+.wst th.wc{min-width:130px}.wch{display:flex;align-items:center;justify-content:center;gap:6px}.wm{border:0;background:transparent;font-size:1.1rem;line-height:1;cursor:pointer;color:#475569;padding:2px 6px;border-radius:6px}.wm:hover{background:#DCE3F7}
+.wmenu{position:absolute;top:100%;right:6px;z-index:20;background:#fff;border:1px solid #DCE3F7;border-radius:10px;box-shadow:0 8px 24px #1f2a5c22;padding:4px;text-align:left;min-width:170px;font-weight:400}.wmenu a{display:block;padding:8px 12px;border-radius:7px;cursor:pointer;font-size:.84rem;color:#1F2A5C}.wmenu a:hover{background:#EEF2FF}.wmenu a.d{color:var(--red)}
+.wst .sc-cell{width:92px;text-align:center;border:1px solid #DCE3F7;border-radius:10px;padding:8px 6px;font:inherit;background:#fff;color:#1F2A5C}.wst .sc-cell:focus{outline:2px solid #7C5CF0;border-color:#7C5CF0}
+.wshint{padding:14px;text-align:center;color:#6B7794;font-size:.85rem}.wsf{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap;font-size:.78rem;color:#6B7794}
+@media(max-width:800px){.wsI{grid-template-columns:1fr 1fr}}
 .sc-filled{background:#F3FAF3!important}
 .sc-over{border-color:var(--red)!important;background:#FEECEC!important}
 .card h3 a{cursor:pointer}
@@ -674,14 +692,37 @@ ${editableName?`<button type="button" class="btn r" style="padding:2px 6px" data
 function scoreRow(st,i,cols,mode){const sc=st._sc[mode]||{};let sum=0;cols.forEach(c=>sum+=+sc[c.id]||0);
 return `<tr><td>${i+1}</td><td>${i+1}</td><td>${esc((st.tt||'')+st.fn+' '+st.ln)}</td>${cols.map(c=>{const v=sc[c.id];const over=v!=null&&c.max&&+v>+c.max;
 return `<td><input class="in sc-cell${v!=null&&v!==''?' sc-filled':''}${over?' sc-over':''}" style="margin:0;max-width:76px" type="number" step="any" data-sid="${st.id}" data-col="${c.id}" value="${v??''}"></td>`}).join('')}<td><b class="row-total">${sum||'-'}</b></td></tr>`}
+function scAcadYear(sh){const d=new Date(sh.createdAt);return isNaN(d)?'-':d.getFullYear()+543-(d.getMonth()<4?1:0)}
+function wsRow(st,i,cc){const sc=st._sc.collect||{},mx=cc.reduce((a,c)=>a+(+c.max||0),0);let sum=0,any=false;cc.forEach(c=>{if(sc[c.id]!=null&&sc[c.id]!==''){sum+=+sc[c.id]||0;any=true}});
+return `<tr><td>${i+1}</td><td>${i+1}</td><td class="l">${esc((st.tt||'')+st.fn+' '+st.ln)}</td>${cc.map(c=>{const v=sc[c.id],over=v!=null&&c.max&&+v>+c.max;
+return `<td><input class="sc-cell${v!=null&&v!==''?' sc-filled':''}${over?' sc-over':''}" type="number" step="any" placeholder="-" data-sid="${st.id}" data-col="${c.id}" value="${v??''}"></td>`}).join('')}<td><b class="row-total" data-max="${mx}">${any?sum+(mx?' / '+mx:''):'-'}</b></td></tr>`}
 function collectTable(id,roster,cc){
-return `<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button type="button" class="btn g" onclick="addCol('${id}','collect')">+ เพิ่มช่องคะแนน</button></div>
-<div class="wrap tb-wrap-sticky"><table class="tb"><tr><th>ลำดับ</th><th>เลขที่</th><th style="min-width:160px">ชื่อ-นามสกุล</th>
-${cc.map((c,ci)=>colHead('cc',c,ci,cc.length,true)).join('')}
-<th>รวม${cc.length?` (เต็ม ${cc.reduce((s,c)=>s+(+c.max||0),0)})`:''}</th></tr>
-${roster.length?roster.map((st,i)=>scoreRow(st,i,cc,'collect')).join(''):`<tr><td colspan="${cc.length+4}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
-</table></div>
-<div style="margin-top:12px;display:flex;align-items:center;gap:10px"><button type="button" class="btn" onclick="saveTab('${id}','collect')">บันทึกคะแนนเก็บ</button><span id="sc_save_msg" style="font-size:.78rem;color:var(--mute)"></span></div>`}
+const nx=cc.length+1,tot=cc.reduce((a,c)=>a+(+c.max||0),0);
+return `<div class="wsh"><span class="wsh-i">${ic('doc')}</span><div><b>รายการใบงาน</b><small>กำหนดชื่อใบงานและคะแนนเต็ม แล้วกรอกคะแนนให้นักเรียน</small></div><span class="wsh-c">รวมใบงานทั้งหมด ${cc.length} รายการ</span></div>
+<div class="wsa"><span class="wsa-n">${nx}</span><label class="wsa-nm">ชื่อใบงาน<input class="in" id="ws_name" value="ใบงานที่ ${nx}"></label><label class="wsa-mx">คะแนนเต็ม<span><input class="in" id="ws_max" type="number" min="0" step="any" value="10"><em>คะแนน</em></span></label><button type="button" class="wsa-b" onclick="addWs('${id}')">＋ เพิ่มใบงาน</button></div>
+<div class="wsw"><table class="wst"><thead><tr><th>ลำดับ</th><th>เลขที่</th><th class="l">ชื่อ - นามสกุล</th>${cc.map((c,ci)=>`<th class="wc"><div class="wch"><div><b>${esc(c.name||'ใบงาน')}</b><small>(${c.max||0})</small></div><button type="button" class="wm" data-wsm="${ci}" title="ตัวเลือก">⋮</button></div><div class="wmenu hid"><a data-wsedit="${ci}">แก้ไขชื่อ / คะแนนเต็ม</a><a class="d" data-wsdel="${ci}">ลบใบงาน</a></div></th>`).join('')}<th>รวมคะแนน${tot?`<small>(${tot})</small>`:''}</th></tr></thead><tbody>
+${roster.length?roster.map((st,i)=>wsRow(st,i,cc)).join(''):`<tr><td colspan="${cc.length+4}">${E('ยังไม่มีรายชื่อนักเรียนในชั้นนี้ กรุณาเพิ่มในเมนูนักเรียนก่อน')}</td></tr>`}
+</tbody></table></div>
+${!cc.length&&roster.length?`<div class="wshint">ยังไม่มีใบงาน — ตั้งชื่อและคะแนนเต็มด้านบน แล้วกด "＋ เพิ่มใบงาน"</div>`:''}
+<div class="wsf"><span id="sc_save_msg">${cc.length?'คะแนนบันทึกอัตโนมัติเมื่อกรอก':''}</span><button type="button" class="wsa-b" onclick="saveTab('${id}','collect')">บันทึกคะแนน</button></div>`}
+function scGather(sheet,mode){const scores={...(sheet.scores||{})};
+document.querySelectorAll('.sc-cell').forEach(inp=>{const sid=inp.dataset.sid,col=inp.dataset.col,v=inp.value;
+scores[sid]={...(scores[sid]||{})};scores[sid][mode]={...(scores[sid][mode]||{})};
+if(v!=='')scores[sid][mode][col]=parseFloat(v);else delete scores[sid][mode][col]});return scores}
+async function addWs(id){const sheet=SC.find(x=>x.id==id);if(!sheet)return;const name=$('#ws_name').value.trim(),max=parseFloat($('#ws_max').value);
+if(!name)return alert('กรอกชื่อใบงาน');if(isNaN(max)||max<=0)return alert('กรอกคะแนนเต็มให้ถูกต้อง');
+const scores=scGather(sheet,'collect'),cols=[...(sheet.collectCols||[]),{id:uid(),name,max}];sheet.scores=scores;sheet.collectCols=cols;render();
+try{await db.collection('scoresheets').doc(id).update({collectCols:cols,scores})}catch(e){alert('บันทึกไม่สำเร็จ: '+e.message)}}
+async function editWs(ci){const sheet=SC.find(x=>x.id==scCurrentId);if(!sheet)return;const c=(sheet.collectCols||[])[ci];if(!c)return;
+const nm=prompt('ชื่อใบงาน',c.name);if(nm===null)return;const mx=prompt('คะแนนเต็ม',c.max);if(mx===null)return;const m=parseFloat(mx);
+if(!nm.trim()||isNaN(m)||m<=0)return alert('ข้อมูลไม่ถูกต้อง');
+const scores=scGather(sheet,'collect');c.name=nm.trim();c.max=m;sheet.scores=scores;render();
+try{await db.collection('scoresheets').doc(sheet.id).update({collectCols:sheet.collectCols,scores})}catch(e){alert('บันทึกไม่สำเร็จ: '+e.message)}}
+async function delWs(ci){const sheet=SC.find(x=>x.id==scCurrentId);if(!sheet)return;const c=(sheet.collectCols||[])[ci];if(!c)return;
+if(!confirm('ลบ "'+c.name+'" ? คะแนนของใบงานนี้จะถูกลบด้วย'))return;
+const scores=scGather(sheet,'collect');Object.keys(scores).forEach(k=>{if(scores[k].collect)delete scores[k].collect[c.id]});
+sheet.collectCols=sheet.collectCols.filter((_,i)=>i!=ci);sheet.scores=scores;render();
+try{await db.collection('scoresheets').doc(sheet.id).update({collectCols:sheet.collectCols,scores})}catch(e){alert('ลบไม่สำเร็จ: '+e.message)}}
 function examTable(id,roster,ec){
 return `<div class="wrap tb-wrap-sticky"><table class="tb"><tr><th>ลำดับ</th><th>เลขที่</th><th style="min-width:160px">ชื่อ-นามสกุล</th>
 ${ec.map((c,ci)=>colHead('ec',c,ci,ec.length,false)).join('')}
@@ -715,8 +756,8 @@ const ty=sheet.classKey[0],lv=+sheet.classKey.slice(1),roster=ST.filter(x=>x.ty=
 roster.forEach(st=>st._sc=scores[st.id]||{});
 const cc=sheet.collectCols||[],ec=sheet.examCols||defaultExamCols(),gs=sheet.gradeScale||defaultGradeScale();
 return `<div style="display:flex;justify-content:flex-end;margin-bottom:6px">${scUserChip()}</div>
-<div class="scbar" style="align-items:flex-start"><div><a class="bk" data-r="score">‹ ห้องเรียนทั้งหมด</a><h2 style="margin:6px 0 8px">${esc(sheet.subject)}${sheet.code?' <small>('+esc(sheet.code)+')</small>':''}</h2>
-<div class="scd-i" style="margin:0;--c:${scColor(sheet.id)}"><span class="scd-pill" style="margin:0">${esc(LV[lv]||'')} (${esc(CT[ty]?CT[ty][0]:'')})</span><span>${ic('users')} ${roster.length} คน</span><span>${ic('cal')} ${fmtThD(sheet.createdAt)}</span>${sheet.teacherName?`<span>${ic('user')} ครูผู้สอน ${esc(sheet.teacherName)}</span>`:''}</div></div></div>
+<div class="wsT"><span class="wsT-i">${ic('doc')}</span><div><h2>บันทึกคะแนนใบงาน</h2><small>บันทึกคะแนนใบงานของนักเรียน สามารถเพิ่มใบงานได้ไม่จำกัด</small></div><a class="bk wsT-b" data-r="score">‹ ห้องเรียนทั้งหมด</a></div>
+<div class="wsI"><label>ปีการศึกษา<span>${scAcadYear(sheet)}</span></label><label>ระดับชั้น<span>${esc(LV[lv]||'')} (${esc(CT[ty]?CT[ty][0]:'')})</span></label><label>รายวิชา<span>${esc(sheet.subject)}${sheet.code?' ('+esc(sheet.code)+')':''}</span></label><label>ครูผู้สอน<span>${esc(sheet.teacherName||scMyName())}</span></label></div>
 <div class="card"><div style="margin-bottom:14px">${tabBtn('collect','1. คะแนนเก็บ')}${tabBtn('exam','2. คะแนนสอบ')}${tabBtn('sum','3. รวมคะแนน')}</div>
 ${scTab=='collect'?collectTable(id,roster,cc):scTab=='exam'?examTable(id,roster,ec):gradeScaleEditor(id,gs)+summaryTable(roster,cc,ec,gs)}
 </div>`}
@@ -737,7 +778,7 @@ document.querySelectorAll('.sc-cell').forEach(inp=>{const sid=inp.dataset.sid,co
 if(!scores[sid])scores[sid]={};if(!scores[sid][mode])scores[sid][mode]={};
 if(v!=='')scores[sid][mode][col]=parseFloat(v);else delete scores[sid][mode][col]});
 $('#sc_save_msg').textContent='กำลังบันทึก...';
-try{await db.collection('scoresheets').doc(id).set({[key]:sheet[key],scores},{merge:true});sheet.scores=scores;$('#sc_save_msg').textContent='บันทึกแล้ว ✓'}
+try{await db.collection('scoresheets').doc(id).update({[key]:sheet[key],scores});sheet.scores=scores;$('#sc_save_msg').textContent='บันทึกแล้ว ✓'}
 catch(e){$('#sc_save_msg').textContent='บันทึกไม่สำเร็จ: '+e.message}}
 function scheduleAutosave(mode){const el=$('#sc_save_msg');if(el)el.textContent='กำลังบันทึก...';
 clearTimeout(scSaveTimer);scSaveTimer=setTimeout(()=>autosaveScores(scCurrentId,mode),1200)}
@@ -746,7 +787,7 @@ const scores={...(sheet.scores||{})};
 document.querySelectorAll('.sc-cell').forEach(inp=>{const sid=inp.dataset.sid,col=inp.dataset.col,v=inp.value;
 if(!scores[sid])scores[sid]={};if(!scores[sid][mode])scores[sid][mode]={};
 if(v!=='')scores[sid][mode][col]=parseFloat(v);else delete scores[sid][mode][col]});
-try{await db.collection('scoresheets').doc(id).set({scores},{merge:true});sheet.scores=scores;const el=$('#sc_save_msg');if(el)el.textContent='บันทึกแล้ว ✓'}
+try{await db.collection('scoresheets').doc(id).update({scores});sheet.scores=scores;const el=$('#sc_save_msg');if(el)el.textContent='บันทึกแล้ว ✓'}
 catch(e){const el=$('#sc_save_msg');if(el)el.textContent='บันทึกไม่สำเร็จ (ลองกดปุ่มบันทึกอีกครั้ง)'}}
 let scQ='';const SC_COL=['#3E9B6B','#4B3AE8','#475569','#3E8FB8','#8B2BE2','#E8590C'];
 const scColor=id=>SC_COL[[...String(id)].reduce((a,c)=>a+c.charCodeAt(0),0)%SC_COL.length];
@@ -772,9 +813,13 @@ if(sheet){const cols=mode=='exam'?(sheet.examCols||[]):(sheet.collectCols||[]),c
 e.target.classList.toggle('sc-over',!!(col&&col.max&&!isNaN(v)&&v>+col.max));
 e.target.classList.toggle('sc-filled',e.target.value!=='')}
 let sum=0,any=false;row.querySelectorAll('.sc-cell').forEach(inp=>{const v=parseFloat(inp.value);if(!isNaN(v)){sum+=v;any=true}});
-const tot=row.querySelector('.row-total');if(tot)tot.textContent=any?sum:'-';
+const tot=row.querySelector('.row-total');if(tot){const mx=+tot.dataset.max||0;tot.textContent=any?sum+(mx?' / '+mx:''):'-'}
 if(scTab=='collect'||scTab=='exam')scheduleAutosave(scTab)});
-document.addEventListener('click',e=>{const a=e.target.closest('[data-sctab]');if(a){scTab=a.dataset.sctab;render();return}
+document.addEventListener('click',e=>{const wm=e.target.closest('[data-wsm]');const open=document.querySelectorAll('.wmenu:not(.hid)');open.forEach(m=>{if(!wm||m!==wm.closest('th').querySelector('.wmenu'))m.classList.add('hid')});
+if(wm){wm.closest('th').querySelector('.wmenu').classList.toggle('hid');return}
+const we=e.target.closest('[data-wsedit]');if(we){editWs(+we.dataset.wsedit);return}
+const wd=e.target.closest('[data-wsdel]');if(wd){delWs(+wd.dataset.wsdel);return}
+const a=e.target.closest('[data-sctab]');if(a){scTab=a.dataset.sctab;render();return}
 const dc=e.target.closest('[data-delcol]');if(dc){const[mode,idx]=dc.dataset.delcol.split(':'),sheet=SC.find(x=>x.id==scCurrentId);if(!sheet)return;
 if(!confirm('ลบคอลัมน์นี้? คะแนนในคอลัมน์นี้จะหายไปเมื่อกดบันทึก'))return;
 const key=mode=='collect'?'collectCols':'examCols';sheet[key]=sheet[key].filter((_,i)=>i!=idx);render();return}
