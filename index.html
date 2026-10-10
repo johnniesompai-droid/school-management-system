@@ -207,6 +207,24 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .bk-ar svg{width:18px;height:18px}.bk-ar:hover{background:#4B3E96}.bk-ar:disabled{opacity:.35;cursor:not-allowed}
 .bk-ar.l{left:8px;top:50%;margin-top:-17px}.bk-ar.r{right:8px;top:50%;margin-top:-17px}.bk-ar.dl{right:8px;top:8px;background:rgba(106,79,196,.92)}.bk-ar.busy{opacity:.5}
 .bk-pg{text-align:center;margin-top:8px;font-weight:600;color:#4B3E96;font-size:.85rem}
+
+.svh{display:flex;gap:16px;align-items:stretch;flex-wrap:wrap;margin-bottom:18px}.svh-t{display:flex;align-items:center;gap:14px;min-width:260px}
+.svh-i{width:54px;height:54px;border-radius:14px;background:#EAF1FF;color:#2F6BFF;display:flex;align-items:center;justify-content:center}.svh-i svg{width:30px;height:30px}
+.svh-t h2{margin:0;font-size:1.7rem;color:#1F2A5C}.svh-t p{margin:2px 0 0;color:var(--mute);font-size:.85rem}
+.svh-s{flex:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;min-width:0}
+.svs{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--sh);min-width:0}
+.svs-i{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}.svs-i svg{width:26px;height:26px}
+.svs small{display:block;font-size:.76rem;color:#3D4A6B;font-weight:500}.svs b{display:block;font-size:1.45rem;line-height:1.25;color:#1F2A5C}.svs em{display:block;font-style:normal;font-size:.7rem;color:var(--mute)}
+.svs:last-child b{color:#1E8E4E}
+.svsec{margin-bottom:16px}.svsec-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.svsec-h h3{margin:0;display:flex;align-items:center;gap:8px;font-size:1.2rem}.svsec-h h3 svg{width:24px;height:24px;color:#2F6BFF}
+.svpill{margin-left:auto;background:#EEF3FD;border-radius:20px;padding:6px 16px;font-size:.8rem;color:#3D4A6B}.svpill b{color:#2F6BFF}.svpill b.bl{color:#1F3F99}.svpill i{font-style:normal;margin:0 6px;color:#B8C2D8}
+.svcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:14px}
+.svc{position:relative;background:#fff;border:1px solid var(--line);border-top:3px solid var(--c);border-radius:12px;padding:12px 14px;cursor:pointer;box-shadow:var(--sh);transition:transform .15s,box-shadow .15s;min-width:0}
+.svc:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(31,42,68,.12)}
+.svc h4{margin:0 0 10px;padding-left:8px;border-left:4px solid var(--c);font-size:1rem;color:#1F2A5C;line-height:1.2}
+.svc-b{display:flex;align-items:center;gap:8px}.svc-i{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}.svc-i svg{width:17px;height:17px}
+.svc-n b,.svc-m b,.svc-n small,.svc-m small{white-space:nowrap}.svc-n b,.svc-m b{display:block;font-size:1rem;color:#1F2A5C;line-height:1.2}.svc-n small,.svc-m small{display:block;font-size:.7rem;color:var(--mute)}
+.svc-sp{width:1px;height:30px;background:var(--line);margin:0 4px}.svc-ar{position:absolute;right:12px;top:14px;color:#6B7794;font-size:1.2rem;line-height:1}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -808,7 +826,22 @@ return `<div class="pt"><h2>ออมเงิน · ${esc(classLabel(s))}</h2><
 <div id="sv_table_wrap">${savingStudentTable(roster)}</div></div>
 <div class="svp-wrap${canEdit?' two':''}">${savingSelectedPanel()}${canEdit?`<div>${savingForms()}</div>`:''}</div>
 </div>`}
-V.saving=s=>s?savingClassPage(s):PT('ออมเงิน','เลือกชั้นเรียนเพื่อดูและบันทึกข้อมูลการออมเงิน')+Object.keys(CT).map(t=>P(CT[t][0],`<div class="grid g4">${LV.slice(0,CT[t][1]).map((n,i)=>`<div class="lv" data-r="saving:${t}${i}">${n}<b>${ST.filter(x=>x.ty==t&&x.lv==i).length} คน</b></div>`).join('')}</div>`)).join('');
+const SV_COL=['#F472B6','#F5B52E','#5B8DEF','#34C38F','#A06CF0','#EF5B5B','#F59A3A','#4F6BE8'];
+function svPicker(){if(SVY===null){SVY=new Date().getFullYear()+543;loadSavingTx(SVY);return PT('ออมเงิน','เลือกชั้นเรียนเพื่อดูและบันทึกข้อมูลการออมเงิน')+P('','กำลังโหลดข้อมูล...')}
+const bal={};SVTX.forEach(t=>{bal[t.studentId]=(bal[t.studentId]||0)+(t.type=='deposit'?+t.amount:-t.amount)});
+const sum=ss=>ss.reduce((a,x)=>a+(bal[x.id]||0),0),tot=sum(ST),M=ST.filter(x=>gd(x.tt)=='m').length,F=ST.filter(x=>gd(x.tt)=='f').length;
+const nCls=t=>CT[t][1],all=Object.keys(CT).reduce((a,t)=>a+nCls(t),0);
+const stat=(ic2,c,l,v,sub)=>`<div class="svs"><span class="svs-i" style="background:${c}1f;color:${c}">${ic(ic2)}</span><div><small>${l}</small><b>${v}</b><em>${sub}</em></div></div>`;
+return `<div class="svh"><div class="svh-t"><span class="svh-i">${ic('coin')}</span><div><h2>ออมเงิน</h2><p>เลือกชั้นเรียนเพื่อดูและบันทึกข้อมูลการออมเงิน</p></div></div>
+<div class="svh-s">${stat('cap','#2F6BFF','จำนวนห้องเรียนทั้งหมด',all+' ห้อง',Object.keys(CT).map(t=>CT[t][0]+' '+nCls(t)+' ห้อง').join(' | '))}
+${stat('users','#2F6BFF','จำนวนนักเรียนทั้งหมด',ST.length+' คน','นักเรียนชาย '+M+' คน | นักเรียนหญิง '+F+' คน')}
+${stat('coin','#22B573','ยอดออมเงินรวมทั้งหมด','฿ '+svFm(tot),'ข้อมูล ณ วันที่ '+thaiFullDate(new Date()))}</div></div>
+<div style="margin:-6px 0 14px;text-align:right"><label class="lb" style="display:inline-flex;align-items:center;gap:8px">ปีการศึกษา (พ.ศ.)<select class="in" style="width:auto" onchange="changeSvYear2(this.value)">${[SVY-1,SVY,SVY+1].map(y=>`<option value="${y}" ${y==SVY?'selected':''}>${y}</option>`).join('')}</select></label></div>`
++Object.keys(CT).map(t=>{const ss=ST.filter(x=>x.ty==t);
+return `<div class="card svsec"><div class="svsec-h"><h3>${ic('cap')} ${CT[t][0]}</h3><span class="svpill"><b>${nCls(t)}</b> ห้องเรียน <i>|</i> นักเรียน <b>${ss.length}</b> คน <i>|</i> ยอดออมรวม <b class="bl">฿ ${svFm(sum(ss))}</b></span></div>
+<div class="svcg">${LV.slice(0,nCls(t)).map((n,i)=>{const cs=ss.filter(x=>x.lv==i),c=SV_COL[i%8];
+return `<div class="svc" style="--c:${c}" data-r="saving:${t}${i}"><h4>${n}</h4><div class="svc-b"><span class="svc-i" style="background:#EAF1FF;color:#2F6BFF">${ic('users')}</span><div class="svc-n"><b>${cs.length} คน</b><small>นักเรียน</small></div><span class="svc-sp"></span><span class="svc-i" style="background:#E3F6EC;color:#22B573">${ic('coin')}</span><div class="svc-m"><small>ยอดออมรวม</small><b>฿ ${svFm(sum(cs))}</b></div></div><span class="svc-ar">›</span></div>`}).join('')}</div></div>`}).join('')}
+V.saving=s=>s?savingClassPage(s):svPicker();
 document.addEventListener('click',e=>{const a=e.target.closest('[data-svpick]');if(!a)return;svSel=a.dataset.svpick;svPg=0;render()});
 V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
 const row=(p,i)=>{const lc=p.lc?dt(p.lc):null,ex=lc&&lc<t,c=PCAT.find(x=>x[0]==p.cat);return`<tr><td>${i+1}</td><td style="white-space:nowrap">${esc(dn(p))}</td><td>${esc(p.po)||'-'}</td><td>${esc(p.pn)||'-'}</td><td>${c?`<span class="pcard-badge" style="background:${c[2]}1a;color:${c[2]}">${c[1]}</span>`:'-'}</td><td>${p.ap?ymd(dt(p.ap),t):'-'}</td><td>${esc(p.ph)||'-'}</td><td class="${ex?'rd':''}">${lc?(ex?'หมดอายุแล้ว':ymd(t,lc)+' เหลือ'):'-'}</td><td><button class="btn o" data-r="profile:${p.id}">ดู</button>${F?` <button class="btn o" data-q="e:${p.id}">แก้ไข</button> <button class="btn r" data-q="d:${p.id}">ลบ</button>`:''}</td></tr>`};
