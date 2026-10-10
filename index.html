@@ -278,6 +278,17 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .hrd-s{background:#F1EEFC;border:1px solid #E1DAF7;border-radius:14px;padding:16px 18px}.hrd-s h4{margin:0 0 10px;color:#2B2F7A;font-size:1rem}
 .hrd-s>div{display:flex;align-items:flex-start;gap:10px;padding:5px 0;font-size:.88rem;color:#2B2F7A}.hrd-si{color:#5B46C9;flex-shrink:0}.hrd-si svg{width:20px;height:20px}
 @media(max-width:1000px){.hrd{grid-template-columns:1fr}.hrd-q{display:none}.hrb-bg::after{background:linear-gradient(90deg,rgba(247,245,255,.95),rgba(247,245,255,.6))}}
+
+.dsp{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}.dsp-l,.dsp-r{min-width:0}
+@media(max-width:1000px){.dsp{grid-template-columns:1fr}}
+.upc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--sh)}
+.upc-h{display:flex;align-items:center;gap:12px;margin-bottom:14px}.upc-h b{font-size:1rem;color:#2B2F7A}
+.upc-i{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#6C55D8,#4B3AE8);color:#fff;display:flex;align-items:center;justify-content:center}.upc-i svg{width:22px;height:22px}
+.upc .dz{border:1.8px dashed #A99BE8;background:#F8F6FF;border-radius:12px;padding:26px 14px}
+.upc .dz:hover,.upc .dz.dz-over{border-color:#5B46C9;background:#EFEAFF}
+.upc .dz-icon{width:52px;height:52px;background:transparent;color:#5B46C9;margin-bottom:6px}.upc .dz-icon svg{width:44px;height:44px;stroke-width:1.7}
+.upc .dz-text{font-size:.9rem;color:#2B2F7A}.upc .dz-text b{color:#4B3AE8;font-weight:500}
+.upc-m{font-size:.76rem;color:var(--mute);margin-top:8px;word-break:break-all}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -317,7 +328,7 @@ chat:'<path d="M4 5h16v11H9l-5 4z"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M
 user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
 gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
 db:'<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
-ud:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',upload:'<path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/><path d="M12 11v7M9 14l3-3 3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',down:'<path d="M12 4v12M6 12l6 6 6-6M4 20h16"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>',up:'<path d="M12 20V8M6 12l6-6 6 6M4 4h16"/>',save:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',phone:'<path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
+ud:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',upload:'<path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/><path d="M12 11v7M9 14l3-3 3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',down:'<path d="M12 4v12M6 12l6 6 6-6M4 20h16"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>',cloudup:'<path d="M7 18a4 4 0 010-8 5.5 5.5 0 0110.6-1.2A4.5 4.5 0 0117 18"/><path d="M12 12v8M9 15l3-3 3 3"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>',up:'<path d="M12 20V8M6 12l6-6 6 6M4 4h16"/>',save:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',phone:'<path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
 coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/>',
 bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
@@ -374,11 +385,13 @@ const extOf=n=>(String(n).split('.').pop()||'').toLowerCase();
 const allowedFile=f=>ALLOWED_EXT.includes(extOf(f.name));
 const fmtSize=b=>b==null?'':b<1024?b+' B':b<1024*1024?(b/1024).toFixed(0)+' KB':(b/1024/1024).toFixed(1)+' MB';
 const fileKind=n=>{const e=extOf(n);return e=='pdf'?['PDF','#E5484D']:(e=='doc'||e=='docx')?['DOC','#2F6BFF']:(e=='xls'||e=='xlsx')?['XLS','#22B573']:['png','jpg','jpeg','webp'].includes(e)?['IMG','#8B5CF6']:['FILE','#7B879C']};
+function upCard(title,inner){return `<div class="upc"><div class="upc-h"><span class="upc-i">${ic('cloudup')}</span><b>${title}</b></div>${inner}</div>`}
+function docsSplit(left,right){return right?`<div class="dsp"><div class="dsp-l">${left}</div><div class="dsp-r">${right}</div></div>`:left}
 function dzBox(fn,args){const callArgs=args.map(a=>`'${a}'`).concat(['this.files[0]']).join(',');
 return `<div class="dz" data-dzfn="${fn}" data-dzargs='${JSON.stringify(args)}'>
-<div class="dz-icon">${ic('upload')}</div>
-<div class="dz-text">ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</div>
-<div class="dz-sub">รองรับไฟล์ PDF, Word, Excel, รูปภาพ (ไม่เกิน 10MB/ไฟล์)</div>
+<div class="dz-icon">${ic('cloudup')}</div>
+<div class="dz-text">ลากไฟล์มาวางที่นี่ <b>หรือคลิกเพื่อเลือกไฟล์</b></div>
+<div class="dz-sub">รองรับไฟล์ PDF, Word, Excel, รูปภาพ (ไม่เกิน 10 MB/ไฟล์)</div>
 <input type="file" class="dz-input hid" accept="${ACCEPT}" onchange="${fn}(${callArgs})">
 </div>`}
 const TH_MON=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
@@ -402,8 +415,7 @@ const fn=z.dataset.dzfn,args=JSON.parse(z.dataset.dzargs||'[]');if(fn&&window[fn
 let DD={};
 const canManageDiv=k=>{if(!me)return false;if(me.role=='founder')return true;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&(mp.wk||[]).includes(k))};
 const divDocsBlock=k=>{const files=(DD[k]||{}).files||[],can=canManageDiv(k);
-return `${fileListSection(files,'data-dd',k+':',can)}
-${can?`<input class="in" id="dd_name_${k}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="max-width:280px;margin:10px 0 8px">${dzBox('uploadDivDoc',[k])}<div id="dd_msg_${k}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
+return docsSplit(fileListSection(files,'data-dd',k+':',can),can?upCard('แนบไฟล์เอกสาร',`<input class="in" id="dd_name_${k}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="margin:0 0 10px">${dzBox('uploadDivDoc',[k])}<div id="dd_msg_${k}" class="upc-m"></div>`):'')};
 async function uploadDivDoc(k,file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#dd_name_'+k).value.trim()||f.name;$('#dd_msg_'+k).textContent='กำลังอัปโหลด...';
 try{const path=`divisions/${k}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
@@ -414,8 +426,7 @@ if(!confirm('ลบไฟล์นี้?'))return;const files=(DD[k]||{}).files
 try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('divdocs').doc(k).set({files:nf},{merge:true});DD[k]={...(DD[k]||{}),files:nf};render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 
 const divFieldBlock=(k,field)=>{const can=canManageDiv(k),files=(DD[k]||{})[field]||[];
-return `${fileListSection(files,'data-ddf',k+':'+field+':',can)}
-${can?`<input class="in" id="ddfn_${k}_${field}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="max-width:280px;margin:10px 0 8px">${dzBox('uploadDivField',[k,field])}<div id="ddfm_${k}_${field}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
+return docsSplit(fileListSection(files,'data-ddf',k+':'+field+':',can),can?upCard('แนบไฟล์เอกสาร',`<input class="in" id="ddfn_${k}_${field}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="margin:0 0 10px">${dzBox('uploadDivField',[k,field])}<div id="ddfm_${k}_${field}" class="upc-m"></div>`):'')};
 async function uploadDivField(k,field,file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#ddfn_'+k+'_'+field).value.trim()||f.name;$('#ddfm_'+k+'_'+field).textContent='กำลังอัปโหลด...';
 try{const path=`divisions/${k}/${field}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
@@ -431,17 +442,15 @@ if(!allowedFile(f)){alert('ไฟล์ชนิดนี้ไม่รอง�
 if(f.size>10*1024*1024){alert('ไฟล์ใหญ่เกิน 10MB');return}
 mmFile=f;if($('#mm_filename'))$('#mm_filename').textContent=`เลือกไฟล์: ${f.name} (${fmtSize(f.size)})`}
 
-function memoForm(){return `<div class="grid g3">
+function memoForm(){const left=`<div class="grid g3">
 <label class="lb">ชื่อเรื่อง<input class="in" id="mm_title" placeholder="ชื่อเรื่องหนังสือ"></label>
 <label class="lb">ดำเนินการภายในวันที่<input class="in" id="mm_deadline" type="date"></label>
 <label class="lb">มอบหมายให้<select class="in" id="mm_assignee"><option value="">-- เลือกครู --</option>${PP.map(p=>`<option value="${p.id}">${esc(dn(p))}${p.po?' · '+esc(p.po):''}</option>`).join('')}</select></label>
 </div>
-<div class="lb">แนบไฟล์ (ไม่บังคับ)</div>
-<div id="mm_dz">${dzBox('mmPick',[])}</div>
-<div id="mm_filename" style="font-size:.78rem;color:var(--mute);margin-top:6px"></div>
-<div style="margin-top:10px"><button type="button" class="btn" onclick="createMemo()">บันทึกและมอบหมาย</button></div>
-<div id="mm_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>
-<div style="border-top:1px solid var(--line);margin:16px 0"></div>`}
+<div style="margin-top:14px"><button type="button" class="btn" onclick="createMemo()">บันทึกและมอบหมาย</button></div>
+<div id="mm_msg" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`;
+const right=upCard('แนบไฟล์เอกสาร (ไม่บังคับ)',`<div id="mm_dz">${dzBox('mmPick',[])}</div><div id="mm_filename" class="upc-m"></div>`);
+return docsSplit(left,right)+`<div style="border-top:1px solid var(--line);margin:16px 0"></div>`}
 async function createMemo(){const title=$('#mm_title').value.trim(),deadline=$('#mm_deadline').value,sid=$('#mm_assignee').value;
 if(!title)return alert('กรอกชื่อเรื่อง');if(!sid)return alert('เลือกผู้รับมอบหมาย');
 const p=PP.find(x=>x.id==sid),id=uid();let files=[];const f=mmFile;
@@ -464,8 +473,7 @@ const canManageAdmin=()=>{if(!me)return false;if(me.role=='founder')return true;
 const adminContactCard=()=>{const as=PP.filter(p=>/ธุรการ/.test(p.po||''));
 return as.length?as.map(p=>`<div class="pc" style="display:flex;gap:8px;align-items:center">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}${p.ph?' · '+esc(p.ph):''}</small></span></div>`).join(''):E('ยังไม่มีข้อมูลครูธุรการในหน้าบุคลากร',80)};
 const adminDocsBlock=key=>{const files=AD[key]||[],can=canManageAdmin();
-return `${fileListSection(files,'data-ad',key+':',can)}
-${can?`<input class="in" id="ad_name_${key}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="max-width:280px;margin:10px 0 8px">${dzBox('uploadAdminDoc',[key])}<div id="ad_msg_${key}" style="font-size:.75rem;color:var(--mute);margin-top:6px"></div>`:''}`};
+return docsSplit(fileListSection(files,'data-ad',key+':',can),can?upCard('แนบไฟล์เอกสาร',`<input class="in" id="ad_name_${key}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="margin:0 0 10px">${dzBox('uploadAdminDoc',[key])}<div id="ad_msg_${key}" class="upc-m"></div>`):'')};
 async function uploadAdminDoc(key,file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
 const name=$('#ad_name_'+key).value.trim()||f.name;$('#ad_msg_'+key).textContent='กำลังอัปโหลด...';
 try{const path=`admin/${key}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
@@ -483,7 +491,7 @@ home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรี�
 <div class="grid g2">${['การเงิน & พัสดุ','งานเอกสาร & ธุรการ','งานซ่อม & อาคารสถานที่','สื่อสารโรงเรียน'].map(t=>P(t,E('',90),'ดูทั้งหมด')).join('')}</div></div>
 <div class="grid" style="align-content:start">${P('ข่าวประชาสัมพันธ์',upc(),'ดูทั้งหมด')}<div data-r="cal:${new Date().getFullYear()}-${new Date().getMonth()+1}" style="cursor:pointer">${P('ปฏิทินกิจกรรม',cal(),'ดูทั้งหมด')}</div>${P('AI ผู้ช่วยผู้บริหาร',E())}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
-admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid g2">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}${P('ขั้นตอนการติดต่อราชการ',E())}${P(fileSectionTitle('หนังสือเข้า / หนังสือออก'),adminDocsBlock('inout'))}${P('ช่องทางติดต่อ',adminContactCard())}</div>`+memoSection(),
+admin:()=>PT('งานธุรการ','แบบฟอร์ม ขั้นตอนติดต่อราชการ และช่องทางติดต่อ')+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}${P(fileSectionTitle('หนังสือเข้า / หนังสือออก'),adminDocsBlock('inout'))}</div><div class="grid g2" style="margin-top:16px">${P('ขั้นตอนการติดต่อราชการ',E())}${P('ช่องทางติดต่อ',adminContactCard())}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=()=>go('comm');
