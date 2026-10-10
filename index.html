@@ -184,7 +184,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .bk-slg{position:absolute;left:34px;bottom:50px;color:#fff;font-size:30px;font-weight:600;line-height:1.2;transform:rotate(-7deg);font-style:italic}
 .bk-tag{position:absolute;right:22px;bottom:16px;background:#4B3E96;color:#fff;border-radius:20px;padding:6px 18px;font-size:15px;font-weight:600;z-index:2}
 .bk-bal,.bk-tb{background:linear-gradient(180deg,#fff,#F4F7FE)}
-.bk-h{display:flex;align-items:center;gap:12px;padding:18px 26px;border-bottom:1px solid #E6EBF3;background:#fff}.bk-h b{font-size:22px;font-weight:600;white-space:nowrap}.bk-h small{margin-left:auto;color:#4B6FD0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-h{display:flex;align-items:center;gap:12px;padding:18px 58px 18px 26px;border-bottom:1px solid #E6EBF3;background:#fff}.bk-h b{font-size:22px;font-weight:600;white-space:nowrap}.bk-h small{margin-left:auto;color:#4B6FD0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bk-pig{width:42px;height:42px;border-radius:50%;background:#7B5CD6;color:#fff;display:flex;align-items:center;justify-content:center}.bk-pig svg{width:22px;height:22px}
 .bk-bb{display:flex;gap:22px;padding:28px 30px 0}.bk-big{flex:1.2;display:flex;align-items:center;gap:20px;background:#E8EFFC;border-radius:14px;padding:26px}
 .bk-coin{width:70px;height:70px;border-radius:50%;background:#fff;border:2px solid #C9D8F5;display:flex;align-items:center;justify-content:center;color:#2F6BFF;flex-shrink:0}.bk-coin svg{width:34px;height:34px}
@@ -196,6 +196,17 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .bk-tb table{width:calc(100% - 52px);margin:18px 26px 0;border-collapse:collapse;font-size:14px;background:#fff}
 .bk-tb th{background:#E3EDFB;color:#2A3D80;font-weight:500;padding:8px 6px;border:1px solid #D6E0F3}.bk-tb td{padding:2px 10px;line-height:1.2;border:1px solid #E3EAF6;height:28px;color:#2A3D80}.bk-tb tr:nth-child(even) td{background:#F3F7FE}.bk-tb td.r{text-align:right}
 .bk-q2{position:absolute;left:30px;bottom:18px;margin:0;font-size:14px}
+
+.svp-wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start;min-width:0}
+.svp-wrap.two{grid-template-columns:minmax(0,1fr) minmax(250px,300px)}
+.svp-wrap .svp-forms{grid-template-columns:1fr;margin-top:0}
+.svp-wrap .svp-top{min-width:0;padding:12px}
+@media(max-width:1100px){.svp-wrap.two{grid-template-columns:minmax(0,1fr)}.svp-wrap.two .svp-forms{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}}
+.bk-stage{position:relative}
+.bk-ar{position:absolute;z-index:5;width:34px;height:34px;border-radius:50%;border:0;background:rgba(75,62,150,.88);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25);padding:0}
+.bk-ar svg{width:18px;height:18px}.bk-ar:hover{background:#4B3E96}.bk-ar:disabled{opacity:.35;cursor:not-allowed}
+.bk-ar.l{left:8px;top:50%;margin-top:-17px}.bk-ar.r{right:8px;top:50%;margin-top:-17px}.bk-ar.dl{right:8px;top:8px;background:rgba(106,79,196,.92)}.bk-ar.busy{opacity:.5}
+.bk-pg{text-align:center;margin-top:8px;font-weight:600;color:#4B3E96;font-size:.85rem}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -718,13 +729,16 @@ const body=Array.from({length:SV_ROWS},(_,k)=>{const r=rows[k];if(!r)return '<tr
 return `<tr><td>${svDt(r.t.createdAt)}</td><td>${d?'ฝากเงิน':'ถอนเงิน'}</td><td class="r">${d?svFm(r.t.amount):'-'}</td><td class="r">${d?'-':svFm(r.t.amount)}</td><td class="r">${svFm(r.run)}</td></tr>`}).join('');
 return `<div class="bkp bk-tb${an}">${head}<table><tr><th>วันที่</th><th>รายการ</th><th>ฝาก (บาท)</th><th>ถอน (บาท)</th><th>ยอดเงินคงเหลือ (บาท)</th></tr>${body}</table><p class="bk-q2">“ออมเงิน...คือการลงทุนในตัวเรา”</p><span class="bk-tag">${tag}</span></div>`}
 function svBook(st,dir){const total=svPageCount(st.id);svPg=Math.max(0,Math.min(svPg,total-1));
-return `<div class="bk-stage" id="bk_stage"><div class="bk-scale" id="bk_scale">${svPageHtml(st,svPg,dir)}</div></div>
-<div class="bk-nav"><button type="button" class="btn o" ${svPg==0?'disabled':''} onclick="svGo(-1)">‹ หน้าก่อนหน้า</button><span>${svPg==0?'หน้าปก':'หน้า '+svPg+' / '+(total-1)}</span><button type="button" class="btn o" ${svPg>=total-1?'disabled':''} onclick="svGo(1)">${svPg==0?'เปิดสมุด':'หน้าถัดไป'} ›</button>
-<button type="button" class="svp-btn dl" id="sv_dl" onclick="svDownload()">${ic('down')} ดาวน์โหลดสมุดออมทรัพย์ (PDF)</button></div>`}
+const ar=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
+return `<div class="bk-stage" id="bk_stage"><div class="bk-scale" id="bk_scale">${svPageHtml(st,svPg,dir)}</div>
+<button type="button" class="bk-ar l" title="หน้าก่อนหน้า" ${svPg==0?'disabled':''} onclick="svGo(-1)">${ar('M15 5l-7 7 7 7')}</button>
+<button type="button" class="bk-ar r" title="หน้าถัดไป" ${svPg>=total-1?'disabled':''} onclick="svGo(1)">${ar('M9 5l7 7-7 7')}</button>
+<button type="button" class="bk-ar dl" id="sv_dl" title="ดาวน์โหลดสมุดออมทรัพย์ (PDF)" onclick="svDownload()">${ar('M12 4v12M6 11l6 6 6-6M5 20h14')}</button></div>
+<div class="bk-pg">${svPg==0?'หน้าปก':'หน้า '+svPg+' / '+(total-1)}</div>`}
 function svFit(){const s=$('#bk_stage'),c=$('#bk_scale');if(!s||!c||!s.clientWidth)return;const k=Math.min(1,s.clientWidth/BKW);c.style.transform=`scale(${k})`;s.style.height=Math.round(BKH*k)+'px'}
 function svGo(d){svPg+=d;const w=$('#sv_book'),st=ST.find(x=>x.id==svSel);if(!w||!st)return;w.innerHTML=svBook(st,d);svFit()}
 window.addEventListener('resize',svFit);
-async function svDownload(){const st=ST.find(x=>x.id==svSel);if(!st)return;const b=$('#sv_dl');if(b){b.disabled=true;b.textContent='กำลังสร้างไฟล์ PDF...'}let host;
+async function svDownload(){const st=ST.find(x=>x.id==svSel);if(!st)return;const b=$('#sv_dl');if(b){b.disabled=true;b.classList.add('busy')}let host;
 try{if(!window.html2canvas||!window.jspdf)throw new Error('โหลดตัวสร้าง PDF ไม่สำเร็จ (ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่)');
 if(document.fonts&&document.fonts.ready)await document.fonts.ready;
 host=document.createElement('div');host.style.cssText=`position:fixed;left:-20000px;top:0;width:${BKW}px;height:${BKH}px`;document.body.appendChild(host);
@@ -734,7 +748,7 @@ const c=await html2canvas(host.firstElementChild,{scale:2,backgroundColor:'#ffff
 if(i)pdf.addPage([BKW,BKH],'landscape');pdf.addImage(c.toDataURL('image/jpeg',0.93),'JPEG',0,0,BKW,BKH)}
 pdf.save(`สมุดออมทรัพย์_${st.fn}_${st.ln}_${SVY}.pdf`)}
 catch(e){alert('ดาวน์โหลดไม่สำเร็จ: '+e.message)}
-finally{if(host)host.remove();const b2=$('#sv_dl');if(b2){b2.disabled=false;b2.innerHTML=ic('down')+' ดาวน์โหลดสมุดออมทรัพย์ (PDF)'}}}
+finally{if(host)host.remove();const b2=$('#sv_dl');if(b2){b2.disabled=false;b2.classList.remove('busy')}}}
 function savingSelectedPanel(){
 if(!svSel)return `<div class="svp-top"><div class="svp-empty">กรุณาเลือกนักเรียนก่อนทำรายการ</div></div>`;
 const st=ST.find(x=>x.id==svSel);if(!st){svSel=null;return savingSelectedPanel()}
@@ -752,8 +766,6 @@ return `<div class="svp-forms">
 <div class="svp-f wd"><div class="svp-fh"><span class="svp-fi">${ic('up')}</span>ถอนเงิน</div><div class="svp-fb">
 <label>จำนวนเงินถอน (บาท) <i>*</i></label>
 <div class="svp-amt"><input id="sv_wd_amt" type="number" min="0" step="any" placeholder="กรอกจำนวนเงิน" ${d}><span>บาท</span></div>
-<label>เหตุผลการถอน <i>*</i></label>
-<select id="sv_wd_reason" ${d}><option value="">เลือกเหตุผลการถอน</option>${WD_REASONS.map(r=>`<option>${r}</option>`).join('')}</select>
 <label>หมายเหตุ (ถ้ามี)</label>
 <textarea id="sv_wd_note" rows="3" placeholder="เช่น ซื้ออุปกรณ์การเรียน, ค่ารักษาพยาบาล" ${d}></textarea>
 <button type="button" class="svp-btn wd" id="sv_wd_btn" ${d} onclick="doWithdraw()">${ic('save')} บันทึกการถอนเงิน</button>
@@ -768,15 +780,14 @@ await db.collection('savingtx').doc(id).set(rec);SVTX.push({id,...rec});
 $('#sv_dep_amt').value='';$('#sv_dep_note').value='';svPg=1e9;render();const m=$('#sv_dep_msg');if(m)m.textContent='บันทึกการฝากเงินสำเร็จ'}
 catch(e){const m=$('#sv_dep_msg');if(m)m.textContent='บันทึกไม่สำเร็จ: '+e.message}
 finally{const b=$('#sv_dep_btn');if(b){b.disabled=!svSel;b.innerHTML=ic('save')+' บันทึกการฝากเงิน'}}}
-async function doWithdraw(){if(!svSel)return;const amt=parseFloat($('#sv_wd_amt').value),reason=$('#sv_wd_reason').value;
+async function doWithdraw(){if(!svSel)return;const amt=parseFloat($('#sv_wd_amt').value),reason='';
 if(!amt||amt<=0)return alert('กรอกจำนวนเงินให้ถูกต้อง (มากกว่า 0)');
-if(!reason)return alert('เลือกเหตุผลการถอน');
 const a=studentAgg(svSel);if(amt>a.bal)return alert('ยอดเงินคงเหลือไม่เพียงพอ');
 const btn=$('#sv_wd_btn');btn.disabled=true;btn.textContent='กำลังบันทึก...';
 try{const newBal=a.bal-amt,id=uid(),note=$('#sv_wd_note').value.trim();
 const rec={studentId:svSel,year:SVY,type:'withdraw',amount:amt,balanceAfter:newBal,note,reason,createdBy:me._id,createdByName:me.n,createdAt:new Date().toISOString()};
 await db.collection('savingtx').doc(id).set(rec);SVTX.push({id,...rec});
-$('#sv_wd_amt').value='';$('#sv_wd_note').value='';$('#sv_wd_reason').value='';svPg=1e9;render();const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกการถอนเงินสำเร็จ'}
+$('#sv_wd_amt').value='';$('#sv_wd_note').value='';svPg=1e9;render();const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกการถอนเงินสำเร็จ'}
 catch(e){const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกไม่สำเร็จ: '+e.message}
 finally{const b=$('#sv_wd_btn');if(b){b.disabled=!svSel;b.innerHTML=ic('save')+' บันทึกการถอนเงิน'}}}
 function savingClassPage(s){if(svClassKey!==s){svClassKey=s;svSel=null;svSearch=''}
@@ -792,7 +803,7 @@ return `<div class="pt"><h2>ออมเงิน · ${esc(classLabel(s))}</h2><
 <div class="card"><h3>ข้อมูลนักเรียน</h3>
 <input class="in" id="sv_search" value="${esc(svSearch)}" placeholder="ค้นหาชื่อ-สกุล / รหัสนักเรียน" style="margin-bottom:12px" oninput="svSearchInput(this.value)">
 <div id="sv_table_wrap">${savingStudentTable(roster)}</div></div>
-<div>${savingSelectedPanel()}${canEdit?`<div style="margin-top:16px">${savingForms()}</div>`:''}</div>
+<div class="svp-wrap${canEdit?' two':''}">${savingSelectedPanel()}${canEdit?`<div>${savingForms()}</div>`:''}</div>
 </div>`}
 V.saving=s=>s?savingClassPage(s):PT('ออมเงิน','เลือกชั้นเรียนเพื่อดูและบันทึกข้อมูลการออมเงิน')+Object.keys(CT).map(t=>P(CT[t][0],`<div class="grid g4">${LV.slice(0,CT[t][1]).map((n,i)=>`<div class="lv" data-r="saving:${t}${i}">${n}<b>${ST.filter(x=>x.ty==t&&x.lv==i).length} คน</b></div>`).join('')}</div>`)).join('');
 document.addEventListener('click',e=>{const a=e.target.closest('[data-svpick]');if(!a)return;svSel=a.dataset.svpick;svPg=0;render()});
