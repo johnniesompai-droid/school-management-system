@@ -501,7 +501,15 @@ let BD={ids:[]};
 const bdCnt=i=>ST.filter(s=>s.lv==i&&(BD.ids||[]).includes(s.id)).length;
 const gsum=l=>{const m=l.filter(x=>gd(x.tt)=='m').length,f=l.filter(x=>gd(x.tt)=='f').length,u=l.length-m-f;
 return `นักเรียนชาย <b style="color:var(--text)">${m}</b> คน · นักเรียนหญิง <b style="color:var(--text)">${f}</b> คน${u?` · ไม่ระบุเพศ <b style="color:var(--text)">${u}</b> คน`:''} · รวม <b style="color:var(--blue)">${l.length}</b> คน`};
-V.bd=s=>{if(s===undefined||s==='')return PT('นักเรียนพักนอน','เลือกชั้นเพื่อดูและเพิ่มรายชื่อนักเรียนพักนอน')+P('นักเรียนพักนอนทั้งหมด',`<div style="font-size:.8rem;color:var(--mute);margin-bottom:14px">${gsum(ST.filter(x=>(BD.ids||[]).includes(x.id)))}</div><div class="grid g4">${LV.map((n,i)=>`<div class="lv" data-r="bd:${i}">${n}<b>${bdCnt(i)} คน</b></div>`).join('')}</div>`);
+function bdPicker(){const ids=BD.ids||[],B=ST.filter(x=>ids.includes(x.id)),M=B.filter(x=>gd(x.tt)=='m').length,F=B.filter(x=>gd(x.tt)=='f').length;
+const stat=(c,ico,l,v)=>`<div class="sts" style="--c:${c}"><span class="sts-i">${ic(ico)}</span><div><small>${l}</small><b>${v} คน</b></div><span class="sts-ar">›</span></div>`;
+const col=(ico,cl,l,v)=>`<div class="stc-c"><span class="stc-ci" style="color:${cl}">${ic(ico)}</span><div><small>${l}</small><b>${v} คน</b></div></div>`;
+const card=i=>{const cs=B.filter(x=>x.lv==i),m=cs.filter(x=>gd(x.tt)=='m').length,f=cs.filter(x=>gd(x.tt)=='f').length;
+return `<div class="stc" style="--c:${ST_COL[i%8]}" data-r="bd:${i}"><h4>${esc(LV[i].replace(/^ชั้น/,'').trim())}</h4><div class="stc-r" style="border-bottom:0;padding-bottom:0">${col('user','#2F6BFF','ชาย',m)}${col('user','#F0529C','หญิง',f)}${col('users','#4B5A8C','รวม',cs.length)}</div></div>`};
+return `<div class="svh"><div class="svh-t"><span class="svh-i">${ic('users')}</span><div><h2>นักเรียนพักนอน</h2><p>เลือกชั้นเพื่อดูและเพิ่มรายชื่อนักเรียนพักนอน</p></div></div>
+<div class="svh-s">${stat('#2F6BFF','users','นักเรียนพักนอนทั้งหมด',B.length)}${stat('#2BB5A0','user','นักเรียนชาย',M)}${stat('#F0529C','user','นักเรียนหญิง',F)}</div></div>
+<div class="stsec"><h3>${ic('home')} ทุกชั้นเรียน</h3><div class="stcg">${LV.map((n,i)=>card(i)).join('')}</div></div>`}
+V.bd=s=>{if(s===undefined||s==='')return bdPicker();
 const i=+s;if(!(i>=0&&i<LV.length))return V.bd();
 const ids=BD.ids||[],ls=ST.filter(x=>x.lv==i&&ids.includes(x.id)),av=ST.filter(x=>x.lv==i&&!ids.includes(x.id));
 return `<div class="pt"><h2>${LV[i]} · นักเรียนพักนอน</h2><p><a class="bk" data-r="bd">‹ นักเรียนพักนอน</a></p></div>`
