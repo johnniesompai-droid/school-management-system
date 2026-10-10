@@ -158,6 +158,29 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .ttp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}@media(max-width:700px){.ttp{grid-template-columns:1fr}}
 .ttg{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}.ttcard{background:#fff;border-radius:16px;padding:14px;box-shadow:var(--sh);cursor:pointer;transition:transform .15s,box-shadow .15s;min-width:0}.ttcard:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(31,42,68,.14)}.ttcard h4{margin:0 0 10px;font-size:1rem;color:#1F2A5C}.ttcard small{display:block;margin-top:8px;color:var(--mute);font-size:.75rem}
 .ttmini{pointer-events:none;overflow:hidden}.ttmini .ttt{min-width:0;font-size:5.5px;line-height:1.2}.ttmini .ttt th,.ttmini .ttt td{padding:1px;border-width:1px}.ttmini .ttt td.tc{height:24px}.ttmini .ttt td.tc b{font-weight:500}.ttmini .ttt td.tc small{font-size:5px;margin:0;color:#333}.ttmini .ttt .tdy{width:30px}.ttmini .ttt td.vt span{letter-spacing:0}.ttmini .ttt thead tr:nth-child(3) th{font-size:4.5px;white-space:normal}
+.hb{position:relative;overflow:hidden;border-radius:20px;padding:22px 26px;color:#fff;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;align-items:center;min-height:170px;background:radial-gradient(circle at 85% 20%,rgba(255,255,255,.14) 0 60px,transparent 61px),radial-gradient(circle at 10% 110%,rgba(255,255,255,.1) 0 90px,transparent 91px),radial-gradient(circle at 60% 100%,rgba(255,255,255,.07) 0 50px,transparent 51px),linear-gradient(120deg,#4F5FF0,#3B4FD8 55%,#3446C4);box-shadow:0 12px 24px -10px rgba(52,70,196,.6)}
+.hb-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.2);border-radius:999px;padding:6px 14px;font-size:.8rem;margin-bottom:22px;backdrop-filter:blur(2px)}.hb-pill svg{width:16px;height:16px}
+.hb-msg h2{margin:0;font-size:1.7rem;line-height:1.3;font-weight:700}.hb-msg p{margin:6px 0 0;font-size:.95rem;opacity:.92}
+.hb-st{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:16px;padding:14px 18px;display:flex;flex-direction:column;gap:3px;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}.hb-st i{font-style:normal;font-size:.74rem;opacity:.9;letter-spacing:.3px}.hb-st b{font-size:1.2rem;line-height:1.35}.hb-st span{font-size:.84rem;opacity:.95}
+.hb-st.st-now{background:rgba(52,211,153,.32);border-color:rgba(167,243,208,.6)}.hb-st.st-free{background:rgba(251,191,36,.25);border-color:rgba(253,230,138,.55)}
+.hb-lk{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.hb-lk .in{margin:0;flex:1;min-width:150px;color:#111}
+.hb .btn{background:#fff;color:#3446C4}
+.hb-msg,.hb-st{transition:none}
+.fo-up{animation:foUp .38s ease forwards}.fi-up{animation:fiUp .55s ease}
+.fo-fade{animation:foFade .38s ease forwards}.fi-fade{animation:fiFade .6s ease}
+.fo-blur{animation:foBlur .38s ease forwards}.fi-blur{animation:fiBlur .55s ease}
+.fo-zoom{animation:foZoom .38s ease forwards}.fi-zoom{animation:fiZoom .55s cubic-bezier(.2,1.3,.4,1)}
+.fo-side{animation:foSide .38s ease forwards}.fi-side{animation:fiSide .55s ease}
+.fo-drop{animation:foDrop .38s ease forwards}.fi-drop{animation:fiDrop .55s ease}
+@keyframes foUp{to{opacity:0;transform:translateY(-16px)}}@keyframes fiUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes foFade{to{opacity:0}}@keyframes fiFade{from{opacity:0}to{opacity:1}}
+@keyframes foBlur{to{opacity:0;filter:blur(8px)}}@keyframes fiBlur{from{opacity:0;filter:blur(8px)}to{opacity:1;filter:none}}
+@keyframes foZoom{to{opacity:0;transform:scale(.92)}}@keyframes fiZoom{from{opacity:0;transform:scale(1.08)}to{opacity:1;transform:none}}
+@keyframes foSide{to{opacity:0;transform:translateX(-24px)}}@keyframes fiSide{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@keyframes foDrop{to{opacity:0;transform:translateY(16px)}}@keyframes fiDrop{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){[class*=fo-],[class*=fi-]{animation:none!important}}
+@media(max-width:700px){.hb{grid-template-columns:1fr;padding:18px}.hb-msg h2{font-size:1.35rem}.hb-pill{margin-bottom:14px}}
+#hb_list{margin-top:12px}
 .tdy-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}.tdy-h b{font-size:1rem;color:#1F2A5C}.tdy-h span{font-size:.78rem;color:var(--mute)}
 .tdy-n{padding:18px 8px;text-align:center;color:var(--mute);font-size:.88rem;border:1px dashed var(--line);border-radius:12px}
 .tdy-b{border-radius:14px;padding:12px 16px;color:#fff;display:flex;flex-direction:column;gap:2px;margin-bottom:10px;box-shadow:0 6px 14px -6px rgba(0,0,0,.3)}.tdy-b i{font-style:normal;font-size:.72rem;opacity:.9;letter-spacing:.3px}.tdy-b b{font-size:1.15rem}.tdy-b span{font-size:.82rem;opacity:.95}
@@ -632,7 +655,7 @@ return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div clas
 const V={
 home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${P('สถิติการเข้าเรียน',E())}${P('สถิตินักเรียน',E())}</div>
-<div class="card"><h3>คาบสอนวันนี้<a data-r="tt:${me&&me.sid?'t-'+me.sid:'teach'}">ดูตารางเต็ม</a></h3><div id="tt_today">${ttTodayHtml()}</div></div></div>
+<div id="tt_today">${ttTodayHtml()}</div></div>
 <div class="grid" style="align-content:start">${P('ข่าวประชาสัมพันธ์',upc(),'ดูทั้งหมด')}${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม / เอกสารดาวน์โหลด และเกษียนหนังสือราชการ')+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
@@ -1418,30 +1441,64 @@ document.addEventListener('click',e=>{if(!me)return;const c=e.target.closest('[d
 const x=e.target.closest('[data-ttc]');if(x&&CUR=='tt:entry')ttOpen(x.dataset.ttc)});
 
 
-function ttNowTH(){const f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Bangkok',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()),g=t=>f.find(x=>x.type==t).value;
-return{wd:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].indexOf(g('weekday')),min:(+g('hour')%24)*60+(+g('minute'))}}
+function ttNowTH(){const f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Bangkok',weekday:'short',day:'numeric',month:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()),g=t=>f.find(x=>x.type==t).value;
+return{wd:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].indexOf(g('weekday')),min:(+g('hour')%24)*60+(+g('minute')),d:+g('day'),mo:+g('month'),y:+g('year')}}
 const ttPMin=i=>TTP[i][0].split(' - ').map(x=>{const a=x.split('.');return +a[0]*60+(+a[1])});
 const ttHM=m=>String(Math.floor(m/60)).padStart(2,'0')+'.'+String(m%60).padStart(2,'0');
 const ttDur=m=>m>=60?`${Math.floor(m/60)} ชม. ${m%60?m%60+' นาที':''}`:`${m} นาที`;
-function ttTodayHtml(){if(!me)return '';const now=ttNowTH(),clock=`${ttHM(now.min)} น. (เวลาประเทศไทย)`,own=ttOwn();
-const head=t=>`<div class="tdy-h"><b>${now.wd<5?'วัน'+TTD[now.wd]:now.wd==5?'วันเสาร์':'วันอาทิตย์'}</b><span>${clock}</span></div>${t}`;
-if(!me.sid||!own){if(ttFounder()){const g=PP.find(p=>nm(p)==(me.n||'').trim()||dn(p).trim()==(me.n||'').trim());return head(`<div class="tdy-n" style="text-align:left">บัญชีของคุณยังไม่ได้เชื่อมกับรายชื่อบุคลากร เลือกชื่อของคุณจากรายการเพื่อเชื่อมบัญชี (ทำครั้งเดียว)<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><select class="in" id="lk_sel" style="margin:0;flex:1;min-width:200px"><option value="">-- เลือกชื่อของคุณ --</option>${ttTeachers().map(p=>`<option value="${p.id}"${g&&g.id==p.id?' selected':''}>${esc(dn(p))}</option>`).join('')}</select><button class="btn" onclick="linkMe()">เชื่อมบัญชี</button></div></div>`)}
-return head('<div class="tdy-n">บัญชีของคุณยังไม่ได้เชื่อมกับรายชื่อบุคลากร กรุณาติดต่อผู้ก่อตั้งระบบให้เชื่อมชื่อของคุณ (เมนู ผู้ใช้งาน / สิทธิ์การใช้งาน)</div>')}
+const HB_DAYEN=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const ttGreetName=()=>{const o=ttOwn();if(o){return (/ผู้อำนวยการ/.test(o.po||'')?'ผอ.':'ครู')+o.fn}return (me&&me.n||'').split(' ')[0]||'ครู'};
+function ttSlot(h){return h>=5&&h<12?'m':h>=12&&h<17?'a':h>=17&&h<21?'e':'n'}
+function ttGreetPick(){const now=ttNowTH(),sl=ttSlot(Math.floor(now.min/60)),n=ttGreetName(),day=HB_DAYEN[now.wd];
+const T={m:[`Good Morning, ${n}!`,`Rise and Shine, ${n}!`,`Hello, ${n}! Great to See You`,`สวัสดีตอนเช้า ${n}!`,`Morning, ${n}! Let's Make Today Great`],
+a:[`Good Afternoon, ${n}!`,`Hi, ${n}!`,`Hello, ${n}! Keep Going`,`สวัสดีตอนบ่าย ${n}!`,`Hey ${n}, You're Doing Great!`],
+e:[`Good Evening, ${n}!`,`Well Done Today, ${n}!`,`Hi, ${n}! Thank You for Today`,`สวัสดีตอนเย็น ${n}!`],
+n:[`Good Night, ${n}!`,`Rest Well, ${n}!`,`Still Up, ${n}? Take Care!`,`ราตรีสวัสดิ์ ${n}!`]}[sl];
+const sub={m:['Have a lovely morning and a wonderful '+day+'!','ขอให้เช้านี้เต็มไปด้วยพลังและรอยยิ้ม','A new day, a new chance to inspire someone.'],
+a:['Have a great rest of your '+day+'!','พักดื่มน้ำสักแก้ว แล้วไปต่อกันนะ','Half the day is done — you are doing amazing.'],
+e:['Hope you had a wonderful '+day+'!','ขอบคุณที่ตั้งใจสอนลูกศิษย์ตลอดวัน','Time to rest — you gave your best today.'],
+n:['Sleep well and recharge for tomorrow.','พักผ่อนให้เพียงพอ พรุ่งนี้เป็นวันที่ดีอีกวัน','Thank you for everything you do.']}[sl];
+const gen=['ทุกการสอนของครู คือการสร้างอนาคตให้เด็กๆ','Great teachers inspire. You are one of them.','ยิ้มให้เด็กๆ วันนี้ ยิ้มของครูมีพลังกว่าที่คิด','Small steps every day lead to big changes.','ครูคือแรงบันดาลใจที่เด็กๆ จะจำไปตลอดชีวิต','You make a difference in every student\'s life.','วันนี้ครูทำได้ดีแน่นอน','Believe in yourself — your students do.','ขอให้วันนี้เป็นวันที่ดีของครูนะ','Every child you teach carries a piece of you forward.'];
+if(now.wd==4)gen.push('Happy Friday! ใกล้ถึงสุดสัปดาห์แล้ว');if(now.wd==0)gen.push('Have a nice Monday! เริ่มต้นสัปดาห์ใหม่ด้วยพลังใจ');if(now.wd>=5)gen.push('Enjoy your weekend — you deserve it!');
+const rnd=a=>a[Math.floor(Math.random()*a.length)],pool=[...sub,...gen];
+let t=rnd(T),u=rnd(pool),tries=0;while(window.__hb&&window.__hb.t==t&&tries++<5)t=rnd(T);tries=0;while(window.__hb&&window.__hb.u==u&&tries++<5)u=rnd(pool);
+window.__hb={t,u};return window.__hb}
+const ttThDate=()=>{const n=ttNowTH();return `${n.d} ${TMS[n.mo-1]} ${n.y+543} ${ttHM(n.min)} น.`};
+function ttStatus(){const now=ttNowTH(),own=ttOwn();
+if(!me)return{k:'x',h:''};
+if(!me.sid||!own){if(ttFounder()){const g=PP.find(p=>nm(p)==(me.n||'').trim()||dn(p).trim()==(me.n||'').trim());return{k:'link',h:`<i>เชื่อมบัญชี</i><b>เลือกชื่อของคุณจากรายชื่อบุคลากร</b><span>ทำครั้งเดียว แล้วระบบจะแสดงคาบสอนของคุณที่นี่</span><div class="hb-lk"><select class="in" id="lk_sel"><option value="">-- เลือกชื่อ --</option>${ttTeachers().map(p=>`<option value="${p.id}"${g&&g.id==p.id?' selected':''}>${esc(dn(p))}</option>`).join('')}</select><button class="btn" onclick="linkMe()">เชื่อมบัญชี</button></div>`}}
+return{k:'x',h:`<i>ยังไม่ได้เชื่อมบัญชี</i><b>บัญชีนี้ยังไม่ผูกกับรายชื่อบุคลากร</b><span>ติดต่อผู้ก่อตั้งให้เชื่อมชื่อ (เมนู ผู้ใช้งาน / สิทธิ์การใช้งาน)</span>`}}
 const doc=TT['t_'+own.id+'_'+ttYDef()];
-if(!doc||!Object.keys(doc.cells||{}).length)return head(`<div class="tdy-n">ยังไม่ได้กรอกตารางสอนปีการศึกษา ${ttYDef()} — <a data-r="tt:entry" style="cursor:pointer;color:var(--blue)">ไปบันทึกตารางสอน</a></div>`);
-if(now.wd>4)return head('<div class="tdy-n">วันนี้เป็นวันหยุดสุดสัปดาห์ ไม่มีคาบสอน</div>');
+if(!doc||!Object.keys(doc.cells||{}).length)return{k:'x',h:`<i>ตารางสอน</i><b>ยังไม่ได้กรอกตารางสอนปี ${ttYDef()}</b><span><a data-r="tt:entry" style="color:#fff;text-decoration:underline;cursor:pointer">ไปบันทึกตารางสอน ›</a></span>`};
+if(now.wd>4)return{k:'x',h:`<i>วันหยุดสุดสัปดาห์</i><b>วันนี้ไม่มีคาบสอน</b><span>พักผ่อนให้เต็มที่นะ</span>`};
 const rows=[];for(let p=2;p<=8;p++){const c=doc.cells[`d${now.wd+1}p${p}`];if(c){const[st,en]=ttPMin(p-1);rows.push({p,st,en,c})}}
-if(!rows.length)return head('<div class="tdy-n">วันนี้ไม่มีคาบสอน</div>');
-const cur=rows.find(r=>now.min>=r.st&&now.min<r.en),nxt=rows.find(r=>r.st>now.min);
-let banner;
-if(cur)banner=`<div class="tdy-b now"><i>กำลังสอน</i><b>${esc(cur.c.s)}${cur.c.c?' '+esc(ttShort(cur.c.c)):''}</b><span>คาบ ${cur.p} · ${ttHM(cur.st)}-${ttHM(cur.en)} น. · เหลืออีก ${ttDur(cur.en-now.min)}</span></div>`;
-else if(nxt)banner=`<div class="tdy-b nx"><i>คาบถัดไป</i><b>${esc(nxt.c.s)}${nxt.c.c?' '+esc(ttShort(nxt.c.c)):''}</b><span>คาบ ${nxt.p} · เริ่ม ${ttHM(nxt.st)} น. · อีก ${ttDur(nxt.st-now.min)}</span></div>`;
-else banner=`<div class="tdy-b end"><i>เสร็จสิ้น</i><b>สอนครบทุกคาบของวันนี้แล้ว</b><span>เลิกเรียนเวลา 16.00 น.</span></div>`;
-const list=rows.map(r=>{const k=cur&&r===cur?'now':now.min>=r.en?'past':'fut';return `<div class="tdy-r ${k}"><em>คาบ ${r.p}</em><span>${ttHM(r.st)}-${ttHM(r.en)}</span><b>${esc(r.c.s)}</b><small>${r.c.c?esc(ttShort(r.c.c)):''}</small><u>${k=='now'?'กำลังสอน':k=='past'?'ผ่านไปแล้ว':'ยังไม่ถึง'}</u></div>`}).join('');
-return head(banner+`<div class="tdy-l">${list}</div>`)}
+if(!rows.length)return{k:'x',h:`<i>วันนี้</i><b>ไม่มีคาบสอน</b><span>ตามตารางสอนของคุณ</span>`,rows};
+const cur=rows.find(r=>now.min>=r.st&&now.min<r.en),nxt=rows.find(r=>r.st>now.min),nm2=r=>esc(r.c.s)+(r.c.c?' '+esc(ttShort(r.c.c)):'');
+if(cur)return{k:'now',rows,cur,h:`<i>กำลังสอน · คาบ ${cur.p}</i><b>${nm2(cur)}</b><span>${ttHM(cur.st)}-${ttHM(cur.en)} น. · เหลืออีก ${ttDur(cur.en-now.min)}${nxt?` · ถัดไป: ${esc(nxt.c.s)} (คาบ ${nxt.p})`:''}</span>`};
+if(now.min<ttPMin(0)[0])return{k:'nx',rows,cur,h:`<i>ยังไม่ถึงเวลาเรียน</i><b>คาบแรก: ${nm2(rows[0])}</b><span>คาบ ${rows[0].p} · เริ่ม ${ttHM(rows[0].st)} น. · อีก ${ttDur(rows[0].st-now.min)}</span>`};
+if(now.min>=ttPMin(8)[1])return{k:'end',rows,h:`<i>เสร็จสิ้น</i><b>เลิกเรียนแล้ว</b><span>สอนครบทุกคาบของวันนี้ ขอบคุณที่ตั้งใจสอนนะ</span>`};
+const lunch=now.min>=ttPMin(4)[0]&&now.min<ttPMin(4)[1];
+if(nxt)return{k:'free',rows,h:`<i>${lunch?'พักกลางวัน':'คาบว่าง'}</i><b>${lunch?'ตอนนี้เป็นเวลาพักกลางวัน':'ตอนนี้ไม่มีคาบสอน'}</b><span>คาบถัดไป: ${nm2(nxt)} · คาบ ${nxt.p} เริ่ม ${ttHM(nxt.st)} น. · อีก ${ttDur(nxt.st-now.min)}</span>`};
+return{k:'end',rows,h:`<i>เสร็จสิ้น</i><b>สอนครบทุกคาบของวันนี้แล้ว</b><span>ช่วงที่เหลือเป็นคาบว่าง ขอบคุณที่ตั้งใจสอนนะ</span>`}}
+function ttListHtml(st){const now=ttNowTH(),rows=(st&&st.rows)||[];if(!rows.length)return '';
+return `<div class="tdy-l">${rows.map(r=>{const k=st.cur&&r===st.cur?'now':now.min>=r.en?'past':'fut';return `<div class="tdy-r ${k}"><em>คาบ ${r.p}</em><span>${ttHM(r.st)}-${ttHM(r.en)}</span><b>${esc(r.c.s)}</b><small>${r.c.c?esc(ttShort(r.c.c)):''}</small><u>${k=='now'?'กำลังสอน':k=='past'?'ผ่านไปแล้ว':'ยังไม่ถึง'}</u></div>`}).join('')}</div>`}
+function ttTodayHtml(){if(!me)return '';if(!window.__hb)ttGreetPick();const st=ttStatus();
+return `<div class="hb"><div class="hb-l"><div class="hb-pill">${ic('cal')}<span id="hb_time">${ttThDate()}</span></div><div class="hb-msg" id="hb_msg"><h2>${esc(window.__hb.t)}</h2><p>${esc(window.__hb.u)}</p></div></div>
+<div class="hb-st st-${st.k}" id="hb_st">${st.h}</div></div><div id="hb_list">${ttListHtml(st)}</div>`}
+const HB_FX=['up','fade','blur','zoom','side','drop'];
+function hbSwap(el,html){if(!el||el.__busy)return;const fx=HB_FX[Math.floor(Math.random()*HB_FX.length)];el.__busy=1;el.classList.add('fo-'+fx);
+setTimeout(()=>{el.innerHTML=html;el.classList.remove('fo-'+fx);el.classList.add('fi-'+fx);setTimeout(()=>{el.classList.remove('fi-'+fx);el.__busy=0},600)},380)}
+let __hbLast='';
+function ttTodayTick(full){const el=document.getElementById('tt_today');if(!el||!me||!el.querySelector('#hb_st'))return;
+const t=document.getElementById('hb_time');if(t)t.textContent=ttThDate();
+if(el.querySelector('#lk_sel'))return;
+const st=ttStatus(),stEl=document.getElementById('hb_st');
+if(stEl&&stEl.__html!==st.h){if(stEl.__html===undefined){stEl.__html=st.h;stEl.innerHTML=st.h;stEl.className='hb-st st-'+st.k}else{stEl.__html=st.h;stEl.className='hb-st st-'+st.k;hbSwap(stEl,st.h)}}
+const l=document.getElementById('hb_list');if(l)l.innerHTML=ttListHtml(st)}
+function ttGreetTick(){const m=document.getElementById('hb_msg');if(!m||!me)return;const g=ttGreetPick();hbSwap(m,`<h2>${esc(g.t)}</h2><p>${esc(g.u)}</p>`)}
 function linkMe(){const v=$('#lk_sel').value;if(!v)return alert('กรุณาเลือกชื่อของคุณ');
 db.collection('users').doc(me._id).set({sid:v},{merge:true}).then(()=>{me.sid=v;updateUserBadge();render()}).catch(e=>alert('เชื่อมบัญชีไม่สำเร็จ: '+e.message))}
-setInterval(()=>{const el=document.getElementById('tt_today');if(el&&me&&!el.querySelector('#lk_sel'))el.innerHTML=ttTodayHtml()},30000);
+setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
 const cf=Object.keys(mp).filter(k=>new Set(mp[k].map(x=>x.ref)).size>1);
