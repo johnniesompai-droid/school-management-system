@@ -256,6 +256,28 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .scd-b{position:relative;z-index:1;width:100%;border:0;border-radius:40px;background:var(--c);color:#fff;font:inherit;font-weight:600;padding:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-size:1.05rem}.scd-b:hover{filter:brightness(1.08)}.scd-b svg{width:22px;height:22px}
 .mdl{position:fixed;inset:0;background:rgba(20,25,50,.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}.mdl.hid{display:none}
 .mdl-b{background:#fff;border-radius:18px;padding:22px;width:min(560px,100%);max-height:90vh;overflow:auto}.mdl-b h3{display:flex;justify-content:space-between;margin:0 0 14px}.mdl-b h3 a{cursor:pointer;color:var(--mute)}
+
+.hrb{position:relative;border-radius:16px;overflow:hidden;background:#EDEBFA;margin-bottom:-40px;padding:14px 22px 60px;min-height:205px}
+.hrb-bg{position:absolute;inset:0}.hrb-art{position:absolute;right:0;top:0;height:100%;width:72%}
+.hrb-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#EEF0FC 0%,#EEF0FC 34%,rgba(238,240,252,0) 70%)}
+.hrb-c{position:relative;z-index:1}.hrb-bc{font-size:.84rem;color:#4B5A9C;display:flex;align-items:center;gap:6px;margin-bottom:14px}.hrb-bc a{cursor:pointer;display:inline-flex;align-items:center;gap:5px}.hrb-bc svg{width:17px;height:17px}.hrb-bc b{color:#2B2F7A}
+.hrb-t{display:flex;align-items:center;gap:14px}.hrb-i{width:62px;height:62px;border-radius:16px;background:linear-gradient(135deg,#6C55D8,#4B3AE8);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(75,58,232,.3)}.hrb-i svg{width:32px;height:32px}
+.hrb-t h2{margin:0;font-size:1.7rem;color:#2B2F7A}.hrb-t p{margin:2px 0 0;color:#4B5A9C;font-size:.9rem}
+.hrb-q{position:absolute;right:30%;bottom:78px;z-index:1;color:#2B2F7A;font-weight:500;font-size:.95rem;text-shadow:0 0 8px #fff}
+.hrst{position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;background:#fff;border-radius:16px;padding:14px;box-shadow:var(--sh);margin-bottom:18px}
+.hrst-c{display:flex;align-items:center;gap:14px;border:1px solid #E6EBF8;border-radius:14px;padding:14px;background:linear-gradient(135deg,#fff,#F6F8FE)}
+.hrst-i{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}.hrst-i svg{width:26px;height:26px}
+.hrst-c small{display:block;font-size:.8rem;color:#2B2F7A;font-weight:600;line-height:1.25}.hrst-c b{display:block;font-size:1.6rem;color:#2B2F7A;line-height:1.2}.hrst-c em{font-style:normal;font-size:.8rem;font-weight:500}
+.hrd{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;margin-bottom:20px}
+.hrd-m{position:relative;overflow:hidden;display:flex;align-items:center;gap:22px;background:linear-gradient(100deg,#4B3AB0,#6A55D2 60%,#8A7BE0);color:#fff;border-radius:14px;padding:20px 24px;cursor:pointer;box-shadow:0 6px 16px rgba(75,58,176,.25)}
+.hrd-p{width:132px;height:132px;border-radius:50%;border:5px solid #fff;overflow:hidden;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#7B6AD8}.hrd-p img{width:100%;height:100%;object-fit:cover}.hrd-p svg{width:56px;height:56px}
+.hrd-n{position:relative;z-index:1;min-width:0}.hrd-cr{font-size:.9rem;font-weight:500;color:#FFE08A}.hrd-n h3{margin:4px 0;font-size:1.7rem;color:#fff}.hrd-po{font-size:1rem;opacity:.95}
+.hrd-ct{margin-top:10px;font-size:.95rem}.hrd-ct span{display:inline-flex;align-items:center;gap:8px}.hrd-ct svg{width:18px;height:18px}
+.hrd-q{position:absolute;right:0;top:0;bottom:0;width:44%;display:flex;align-items:center;justify-content:center;background:linear-gradient(100deg,transparent,rgba(255,255,255,.88) 28%,rgba(240,238,255,.95));clip-path:polygon(22% 0,100% 0,100% 100%,0 100%)}
+.hrd-q svg{position:absolute;inset:0;width:100%;height:100%;opacity:1}.hrd-q span{position:relative;color:#5B46C9;font-weight:600;font-size:1.05rem;text-align:center;padding:0 22px 0 40px}
+.hrd-s{background:#F1EEFC;border:1px solid #E1DAF7;border-radius:14px;padding:16px 18px}.hrd-s h4{margin:0 0 10px;color:#2B2F7A;font-size:1rem}
+.hrd-s>div{display:flex;align-items:flex-start;gap:10px;padding:5px 0;font-size:.88rem;color:#2B2F7A}.hrd-si{color:#5B46C9;flex-shrink:0}.hrd-si svg{width:20px;height:20px}
+@media(max-width:1000px){.hrd{grid-template-columns:1fr}.hrd-q{display:none}.hrb-q{display:none}.hrb-art{width:100%}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -750,13 +772,31 @@ if(!confirm('ลบใบบันทึกคะแนนนี้?'))return;tr
 let hrCat='',hrPo='';
 function personCard(p){const c=PCAT.find(x=>x[0]==p.cat);
 return `<div class="pcard" data-r="profile:${p.id}">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<b>${esc(dn(p))}</b><small>${esc(p.po)||'-'}</small>${p.ph?`<div class="pcard-phone">${ic('phone')}${esc(p.ph)}</div>`:''}${c?`<span class="pcard-badge" style="background:${c[2]}1a;color:${c[2]}">${c[1]}</span>`:''}</div>`}
+const HR_SCENE=`<svg class="hrb-art" viewBox="0 0 760 200" preserveAspectRatio="xMaxYMax slice" aria-hidden="true"><defs><linearGradient id="hsk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFD6F3"/><stop offset="1" stop-color="#F3F1FB"/></linearGradient></defs>
+<rect width="760" height="200" fill="url(#hsk)"/>
+<path d="M120 200L250 70L310 105L400 30L520 120L600 80L760 150V200Z" fill="#A9B2E0" opacity=".75"/>
+<path d="M200 200L330 95L420 140L520 60L640 130L760 100V200Z" fill="#8F9AD6" opacity=".8"/>
+<ellipse cx="420" cy="150" rx="260" ry="22" fill="#fff" opacity=".55"/><ellipse cx="620" cy="168" rx="200" ry="18" fill="#fff" opacity=".6"/>
+<path d="M0 200V175C140 160 300 185 460 170S700 165 760 175V200Z" fill="#7C86C8" opacity=".55"/>
+<g fill="#5E8F7A"><path d="M520 190l14-50 14 50z"/><path d="M548 190l12-42 12 42z"/><path d="M590 190l15-56 15 56z"/><path d="M730 190l14-46 14 46z"/><path d="M700 190l11-36 11 36z"/></g>
+<g><rect x="610" y="120" width="140" height="62" fill="#B9806A"/><path d="M600 122L680 92L760 122Z" fill="#8E5545"/><rect x="620" y="138" width="14" height="16" fill="#E8EEFB"/><rect x="646" y="138" width="14" height="16" fill="#E8EEFB"/><rect x="672" y="138" width="14" height="16" fill="#E8EEFB"/><rect x="698" y="138" width="14" height="16" fill="#E8EEFB"/><rect x="724" y="138" width="14" height="16" fill="#E8EEFB"/><rect x="610" y="166" width="140" height="16" fill="#D8C6B8"/></g>
+<rect x="588" y="40" width="3" height="146" fill="#7A6F8A"/><g><rect x="591" y="42" width="44" height="7" fill="#E04B4B"/><rect x="591" y="49" width="44" height="5" fill="#fff"/><rect x="591" y="54" width="44" height="9" fill="#2B4DA8"/><rect x="591" y="63" width="44" height="5" fill="#fff"/><rect x="591" y="68" width="44" height="7" fill="#E04B4B"/></g>
+</svg>`;
+function hrBanner(){return `<div class="hrb"><div class="hrb-bg">${HR_SCENE}</div>
+<div class="hrb-c"><div class="hrb-bc"><a data-r="home">${ic('home')} หน้าหลัก</a> › <a data-r="hr">บุคลากร</a> › <b>ข้อมูลบุคลากร</b></div>
+<div class="hrb-t"><span class="hrb-i">${ic('user')}</span><div><h2>ข้อมูลบุคลากร</h2><p>แสดงรายชื่อบุคลากรของโรงเรียน พร้อมข้อมูลตำแหน่งและหน้าที่</p></div></div></div>
+<div class="hrb-q">“บุคลากรคุณภาพ &nbsp;สร้างอนาคตที่ดีให้นักเรียน”</div></div>`}
 function hrOverview(){const dirP=PP.find(p=>/ผู้อำนวยการ/.test(p.po||'')&&!/รอง/.test(p.po||''));
 const others=PP.filter(p=>p!==dirP).filter(p=>(!hrCat||p.cat==hrCat)&&(!hrPo||p.po==hrPo));
 const poList=[...new Set(PP.map(p=>p.po).filter(Boolean))];
-const stats=`<div class="grid g6" style="margin-bottom:20px">${PCAT.map(c=>{const n=PP.filter(p=>p.cat==c[0]).length;
-return `<div class="card stat"><div class="bx" style="background:${c[2]}">${ic(c[3])}</div><div><small>${c[1]}</small><b>${n}</b><small>คน</small></div></div>`}).join('')}</div>`;
+const stats=`<div class="hrst">${PCAT.map(c=>{const n=PP.filter(p=>p.cat==c[0]).length;
+return `<div class="hrst-c"><span class="hrst-i" style="background:${c[2]}22;color:${c[2]}">${ic(c[3])}</span><div><small>${c[1]}</small><b>${n} <em>คน</em></b></div></div>`}).join('')}</div>`;
 const filters=`<div class="grid g3" style="margin-bottom:20px"><label class="lb">กลุ่มงาน<select class="in" onchange="hrCat=this.value;render()"><option value="">ทั้งหมด</option>${PCAT.map(c=>`<option value="${c[0]}" ${hrCat==c[0]?'selected':''}>${c[1]}</option>`).join('')}</select></label><label class="lb">ตำแหน่ง<select class="in" onchange="hrPo=this.value;render()"><option value="">ทั้งหมด</option>${poList.map(po=>`<option value="${esc(po)}" ${hrPo==po?'selected':''}>${esc(po)}</option>`).join('')}</select></label></div>`;
-const dirCard=dirP?`<div class="hr-dir" data-r="profile:${dirP.id}">${dirP.im?`<img src="${dirP.im}">`:`<span class="ph0" style="width:72px;height:72px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">${ic('user')}</span>`}<div style="flex:1;min-width:200px"><span class="crown">👑 ผู้อำนวยการโรงเรียน</span><h3>${esc(dn(dirP))}</h3><small>${esc(dirP.po)||''}</small><div class="hr-dir-contact">${dirP.ph?`<span>${ic('phone')}${esc(dirP.ph)}</span>`:''}</div></div></div>`:'';
+const info=dirP?[['user','ตำแหน่ง',dirP.po],['cap','วุฒิ',[dirP.ba,dirP.mj].filter(Boolean).join(' · ')],['cal','เริ่มปฏิบัติงาน',dirP.ap?fmtThD(dirP.ap):''],['doc','เลขที่ตำแหน่ง',dirP.pn]].filter(x=>x[2]):[];
+const dirCard=dirP?`<div class="hrd"><div class="hrd-m" data-r="profile:${dirP.id}"><div class="hrd-p">${dirP.im?`<img src="${dirP.im}">`:`<span>${ic('user')}</span>`}</div>
+<div class="hrd-n"><span class="hrd-cr">👑 ผู้อำนวยการโรงเรียน</span><h3>${esc(dn(dirP))}</h3><div class="hrd-po">${esc(dirP.po)||''} โรงเรียนบ้านผาเยอ</div>${dirP.ph?`<div class="hrd-ct"><span>${ic('phone')} ${esc(dirP.ph)}</span></div>`:''}</div>
+<div class="hrd-q"><svg viewBox="0 0 400 160" preserveAspectRatio="xMidYMax slice"><path d="M0 160L90 70L150 105L230 40L320 110L400 80V160Z" fill="#C9C2F2" opacity=".6"/><path d="M0 160L120 100L210 130L300 75L400 125V160Z" fill="#B4ABEA" opacity=".7"/></svg><span>“มุ่งพัฒนาผู้เรียน สู่อนาคตที่ยั่งยืน”</span></div></div>
+<div class="hrd-s"><h4>ข้อมูลเพิ่มเติม</h4>${info.map(x=>`<div><span class="hrd-si">${ic(x[0])}</span><span><b>${x[1]} :</b> ${esc(x[2])}</span></div>`).join('')}</div></div>`:'';
 return stats+filters+dirCard+`<div class="grid g4">${others.length?others.map(personCard).join(''):E('ไม่พบบุคลากรตามเงื่อนไขที่เลือก')}</div>`}
 let SVY=null,SVTX=[],svSel=null,svSearch='',svClassKey=null;
 const WD_REASONS=['ซื้ออุปกรณ์การเรียน','ค่าเดินทาง','ค่ารักษาพยาบาล','กิจกรรมของโรงเรียน','อื่น ๆ'];
@@ -903,7 +943,7 @@ V.saving=s=>s?savingClassPage(s):svPicker();
 document.addEventListener('click',e=>{const a=e.target.closest('[data-svpick]');if(!a)return;svSel=a.dataset.svpick;svPg=0;render()});
 V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
 const row=(p,i)=>{const lc=p.lc?dt(p.lc):null,ex=lc&&lc<t,c=PCAT.find(x=>x[0]==p.cat);return`<tr><td>${i+1}</td><td style="white-space:nowrap">${esc(dn(p))}</td><td>${esc(p.po)||'-'}</td><td>${esc(p.pn)||'-'}</td><td>${c?`<span class="pcard-badge" style="background:${c[2]}1a;color:${c[2]}">${c[1]}</span>`:'-'}</td><td>${p.ap?ymd(dt(p.ap),t):'-'}</td><td>${esc(p.ph)||'-'}</td><td class="${ex?'rd':''}">${lc?(ex?'หมดอายุแล้ว':ymd(t,lc)+' เหลือ'):'-'}</td><td><button class="btn o" data-r="profile:${p.id}">ดู</button>${F?` <button class="btn o" data-q="e:${p.id}">แก้ไข</button> <button class="btn r" data-q="d:${p.id}">ลบ</button>`:''}</td></tr>`};
-return PT('บุคลากร','ข้อมูลและโครงสร้างบุคลากรของโรงเรียน')+hrOverview()
+return hrBanner()+hrOverview()
 +`<div class="grid g4" style="margin-top:20px"><div class="card dv" data-r="org"><div class="bx" style="background:#8B5CF6">${ic('users')}</div><h4>โครงสร้างบุคลากร</h4><span>เปิดดู ›</span></div></div>`
 +(F?`<div class="card"><h3>เพิ่มข้อมูล</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="openF()">＋ พิมพ์เพิ่มข้อมูล</button><button class="btn g" onclick="$('#xf').click()">อัปโหลดไฟล์ Excel</button><button class="btn o" onclick="tpl()">ดาวน์โหลดแบบฟอร์ม Excel</button><input id="xf" type="file" accept=".xlsx,.xls,.csv" hidden onchange="imp(this.files[0])"></div><p style="color:var(--mute);font-size:.75rem;margin:10px 0 0">ไฟล์ Excel ใช้หัวคอลัมน์ตามแบบฟอร์ม วันที่ใช้รูปแบบ ว/ด/ป (พ.ศ.) เช่น 15/3/2530 (ใส่ ค.ศ. ก็อ่านได้) ชื่อ-นามสกุลซ้ำจะอัปเดตข้อมูลเดิม</p>${m?`<div class="fm" style="color:#22B573;margin-top:8px">${m}</div>`:''}</div>
 <div class="card hid" id="pfm"><h3 id="pft">เพิ่มข้อมูลบุคลากร</h3><div class="grid g3">${FL.map(f=>`<label class="lb">${f[1]}<input class="in" id="p_${f[0]}" ${f[2]=='date'?'placeholder="ว/ด/ป (พ.ศ.) เช่น 15/3/2530" inputmode="numeric"':''} ${f[0]=='tt'?'list="ttl"':''}></label>`).join('')}</div><div class="lb" style="margin-top:12px">รูปภาพ (แสดงในหน้าโครงสร้างบุคลากร)<div style="display:flex;align-items:center;gap:12px;margin-top:6px"><img id="pprev" class="ph hid"><input type="file" accept="image/*" onchange="pickImg(this.files[0])"><button type="button" class="btn o hid" id="prm" onclick="setImg('')">ลบรูป</button></div></div><datalist id="ttl"><option value="นาย"><option value="นาง"><option value="นางสาว"><option value="ดร."><option value="ว่าที่ ร.ต."></datalist><label class="lb" style="display:block;margin:12px 0 0;max-width:280px">ประเภทบุคลากร<select class="in" id="p_cat"><option value="">-- ไม่ระบุ --</option>${PCAT.map(c=>`<option value="${c[0]}">${c[1]}</option>`).join('')}</select></label>
