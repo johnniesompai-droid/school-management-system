@@ -133,6 +133,15 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .cb-hint{margin-top:10px;font-size:.75rem;color:#6b5aa8;text-align:right}
 .cb.hm{cursor:pointer;transition:transform .15s,box-shadow .15s}.cb.hm:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(80,50,160,.2)}
 @media(max-width:700px){.cb-w small{display:none}.cb-w{font-size:.75rem}.cb-d{min-height:62px;padding:3px}.cb-e{font-size:.62rem;padding:2px 3px}.cb-ttl b{font-size:1.2rem}.cb-ttl span{font-size:.9rem}.cb-bot{grid-template-columns:1fr}.cb-l{grid-template-columns:1fr}.cb-q{display:none}}
+
+.tts{position:relative}.tts .in{margin:0}
+.ttr{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ttc{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:.85rem}.ttc:hover{border-color:var(--blue);background:var(--soft)}
+.ttc i{font-style:normal;font-size:.7rem;border-radius:999px;padding:1px 8px;background:#EEF2FF;color:#4B5BD6}.ttc i.t{background:#E8F7EF;color:#14804A}
+.ttc.has::after{content:"";width:7px;height:7px;border-radius:50%;background:#22B573}
+.ttp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:700px){.ttp{grid-template-columns:1fr}}
+.ttv{margin-top:14px;display:grid;gap:14px}.ttv img{max-width:100%;border:1px solid var(--line);border-radius:12px}.ttv iframe{width:100%;height:620px;border:1px solid var(--line);border-radius:12px}
 .stat[data-r]{cursor:pointer;transition:transform .15s}.stat[data-r]:hover{transform:translateY(-2px)}
 .sx{display:flex;justify-content:space-between;gap:16px;font-size:.8rem;color:var(--mute);line-height:1.6}.stat .sx b{display:inline;font-size:.9rem;color:var(--text);line-height:1.6}.sx.t{border-top:1px solid var(--line);margin-top:2px;padding-top:2px;color:var(--text)}.stat .sx.t b{font-size:1.2rem;color:var(--blue)}.stat>div:last-child{flex:1;min-width:0}
 .cal span{position:relative}.cal .ev:after{content:"";position:absolute;bottom:0;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:#F5A524}.cal .today.ev:after{background:#fff}
@@ -440,7 +449,7 @@ bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
 I.pen='<path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/>';
 const ic=(n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"${c?` class="${c}"`:''}>${I[n]}</svg>`;
-const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['saving','ออมเงิน','coin'],['att','การเข้าเรียน','cal'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
+const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['saving','ออมเงิน','coin'],['att','การเข้าเรียน','cal'],['tt','ตารางสอน & ตารางเรียน','cal'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
 const SYS=[['staff','ทะเบียนบุคลากร','users'],['usr','ผู้ใช้งาน / สิทธิ์การใช้งาน','user'],['set','ตั้งค่าระบบ','gear'],['bak','สำรองข้อมูล','db'],['ie','Import / Export','ud'],['api','API & Integration','code']];
 const DIV=[['academic','กลุ่มบริหารงานวิชาการ','cap','#2F6BFF'],['budget','กลุ่มบริหารงานแผนงานและงบประมาณ','coin','#F5A524'],['personnel','กลุ่มบริหารงานบุคคล','users','#8B5CF6'],['general','กลุ่มบริหารงานทั่วไป','bld','#22B573']];
 const E=(t='ยังไม่มีข้อมูล',h)=>`<div class="empty"${h?` style="min-height:${h}px"`:''}>${t}</div>`;
@@ -605,7 +614,7 @@ $('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 function updateBell(){if(!me||!$('#ib'))return;const n=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack).length;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge">${n}</i>`:'')}
 let CUR='home';
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):V.gen(m?m[1]:'')}
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt():V.gen(m?m[1]:'')}
 function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving')?k:r)));
@@ -679,11 +688,12 @@ unsub.push(db.collection('events').onSnapshot(qs=>{EV=qs.docs.map(d=>({id:d.id,.
 unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.data():{ids:[]};render()},e=>{}));
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data()||{});render()},e=>{}));
 unsub.push(db.collection('budgetprojects').onSnapshot(qs=>{BP=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
+unsub.push(db.collection('timetables').onSnapshot(qs=>{TT={};qs.docs.forEach(d=>TT[d.id]=d.data().files||[]);render()},e=>{}));
 unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
 unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,...d.data()}));updateBell();render()},e=>{}));
 unsub.push(db.collection('scoresheets').where('ownerUid','==',me._id).onSnapshot(qs=>{SC=qs.docs.map(d=>({id:d.id,...d.data()}));if(!(CUR.startsWith('score:')&&qs.metadata.hasPendingWrites))render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};MM=[];SC=[];BP=[]}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[]}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -1263,6 +1273,42 @@ return `<div class="cb ${pg?'pg':'hm'}"${pg?'':` data-r="cal:${y}-${m+1}"`}>${to
 
 const upc=()=>{const t=T0(),l=EV.map(e=>({e,n:Math.round((dt(e.d)-t)/864e5)})).filter(x=>x.n>=0&&x.n<=7).sort((a,b)=>a.n-b.n||a.e.d.localeCompare(b.e.d));
 return `<div style="font-size:.72rem;color:var(--mute);margin-bottom:4px">กิจกรรมที่ใกล้ถึงวัน (ภายใน 7 วัน)</div>`+(l.length?l.map(x=>`<div class="rw" data-r="cal:${+x.e.d.slice(0,4)}-${+x.e.d.slice(5,7)}" style="cursor:pointer"><span><b>${esc(x.e.t)}</b><small>${th(x.e.d)}</small></span><em style="color:${x.n<=1?'var(--red)':'var(--blue)'};font-weight:500">${x.n==0?'วันนี้':x.n==1?'พรุ่งนี้':'อีก '+x.n+' วัน'}</em></div>`).join(''):E('ไม่มีกิจกรรมที่ใกล้ถึงวัน',80))};
+
+let TT={},ttSel='',ttQ='';
+const ttClasses=()=>Object.keys(CT).flatMap(t=>LV.slice(0,CT[t][1]).map((n,i)=>t+i));
+const ttTeachers=()=>PP.slice().sort((a,b)=>nm(a).localeCompare(nm(b),'th'));
+const ttLabel=k=>{if(!k)return '';if(k[0]=='t'){const p=PP.find(x=>x.id==k.slice(2));return p?dn(p):'(ไม่พบครู)'}return classLabel(k.slice(2))};
+const ttKind=k=>k&&k[0]=='t'?'ตารางสอน':'ตารางเรียน';
+const ttCan=()=>canManageAdmin();
+function ttItems(q){q=q.trim().toLowerCase();const o=[];
+ttTeachers().forEach(p=>{const t=(dn(p)+' '+(p.po||'')).toLowerCase();if(!q||t.includes(q))o.push({k:'t_'+p.id,l:dn(p),y:'ครู'})});
+ttClasses().forEach(c=>{const l=classLabel(c),sh=LV[+c.slice(1)].replace('ชั้นประถมศึกษาปีที่ ','ป.').replace('ชั้นอนุบาล ','อ.');if(!q||(l+' '+sh+' '+('ตารางเรียน')).toLowerCase().includes(q))o.push({k:'c_'+c,l,y:'ชั้น'})});
+return o}
+function ttResHtml(q){if(!q.trim())return '';const l=ttItems(q).slice(0,40);
+return l.length?`<div class="ttr">${l.map(x=>`<span class="ttc${(TT[x.k]||[]).length?' has':''}" data-ttp="${x.k}"><i class="${x.y=='ครู'?'t':''}">${x.y}</i>${esc(x.l)}</span>`).join('')}</div>`:'<div class="ttr" style="color:var(--mute)">ไม่พบรายการที่ค้นหา</div>'}
+function ttSearch(v){ttQ=v;const r=$('#tt_res');if(r)r.innerHTML=ttResHtml(v)}
+function ttPickSel(v){ttSel=v;ttQ='';render()}
+function ttView(){if(!ttSel)return P('ตารางสอน / ตารางเรียน',E('ค้นหาหรือเลือกครู / ชั้นเรียนด้านบน เพื่อดูตาราง',120));
+const files=TT[ttSel]||[],can=ttCan();
+const prev=files.map(f=>{const e=extOf(f.name);return ['png','jpg','jpeg','webp'].includes(e)?`<img src="${f.url}" alt="${esc(f.name)}">`:e=='pdf'?`<iframe src="${f.url}" title="${esc(f.name)}"></iframe>`:''}).join('');
+return P(fileSectionTitle(ttKind(ttSel)+' · '+ttLabel(ttSel)),fileListSection(files,'data-ttd',ttSel+':',can)+(prev?`<div class="ttv">${prev}</div>`:''))}
+V.tt=()=>{const tc=ttTeachers(),cl=ttClasses();
+const pick=`<div class="card"><div class="tts"><input class="in" id="tt_q" placeholder="ค้นหาตารางสอนของครู หรือตารางเรียนของนักเรียน (พิมพ์ชื่อครู หรือ ป.1, ป.2 ...)" value="${esc(ttQ)}" oninput="ttSearch(this.value)" autocomplete="off"><div id="tt_res">${ttResHtml(ttQ)}</div></div>
+<div class="ttp" style="margin-top:14px"><label class="lb">เลือกครู (ดูตารางสอน)<select class="in" onchange="ttPickSel(this.value)"><option value="">-- เลือกชื่อครู --</option>${tc.map(p=>`<option value="t_${p.id}"${ttSel=='t_'+p.id?' selected':''}>${esc(dn(p))}</option>`).join('')}</select></label>
+<label class="lb">เลือกชั้นเรียน (ดูตารางเรียน)<select class="in" onchange="ttPickSel(this.value)"><option value="">-- เลือกชั้นเรียน --</option>${cl.map(c=>`<option value="c_${c}"${ttSel=='c_'+c?' selected':''}>${esc(classLabel(c))}</option>`).join('')}</select></label></div></div>`;
+const up=ttCan()?P(fileSectionTitle('อัพโหลดตารางสอน&ตารางเรียน'),upCard('แนบไฟล์ตาราง',`<label class="lb" style="margin-bottom:10px">อัพโหลดให้<select class="in" id="tt_target"><option value="">-- เลือกตารางสอนของครู หรือตารางเรียนของนักเรียน --</option><optgroup label="ตารางสอนของครู">${tc.map(p=>`<option value="t_${p.id}"${ttSel=='t_'+p.id?' selected':''}>${esc(dn(p))}</option>`).join('')}</optgroup><optgroup label="ตารางเรียนของนักเรียน">${cl.map(c=>`<option value="c_${c}"${ttSel=='c_'+c?' selected':''}>${esc(classLabel(c))}</option>`).join('')}</optgroup></select></label><input class="in" id="tt_name" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="margin:0 0 10px">${dzBox('uploadTT',[])}<div id="tt_msg" class="upc-m"></div>`)):'';
+return PT('ตารางสอน & ตารางเรียน','ค้นหา หรือเลือกครู / ชั้นเรียน เพื่อดูตารางสอนและตารางเรียน')+`<div class="grid" style="grid-template-columns:1fr">${pick}${ttView()}${up}</div>`};
+async function uploadTT(file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
+const key=$('#tt_target').value;if(!key)return alert('กรุณาเลือกว่าเป็นตารางสอนของครูคนไหน หรือตารางเรียนของชั้นไหนก่อน');
+const name=$('#tt_name').value.trim()||f.name;$('#tt_msg').textContent='กำลังอัปโหลด...';
+try{const path=`timetables/${key}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();
+const files=[...(TT[key]||[]),{name,url,path,size:f.size,uploadedAt:new Date().toISOString()}];await db.collection('timetables').doc(key).set({files},{merge:true});TT[key]=files;ttSel=key;render()}
+catch(e){$('#tt_msg').textContent='อัปโหลดไม่สำเร็จ: '+e.message}}
+document.addEventListener('click',async e=>{if(!me)return;const c=e.target.closest('[data-ttp]');if(c){ttSel=c.dataset.ttp;ttQ='';render();return}
+const a=e.target.closest('[data-ttd]');if(!a||!ttCan())return;const[key,idx]=a.dataset.ttd.split(':');
+if(!confirm('ลบไฟล์นี้?'))return;const files=TT[key]||[],f=files[+idx];if(!f)return;
+try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('timetables').doc(key).set({files:nf},{merge:true});TT[key]=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
+
 V.cal=s=>{if(s){const a=s.split('-');cy=+a[0];cm=+a[1]-1}
 return PT('ปฏิทินกิจกรรม','คลิกที่วันเพื่อดูหรือเพิ่มกิจกรรม')+calBoard(cy,cm,'page')};
 function addEv(){const t=$('#et').value.trim();if(!t||!sel)return;const rec={id:uid(),d:sel,t};EV.push(rec);db.collection('events').doc(rec.id).set(rec).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message));$('#view').innerHTML=V.cal();$('#et').focus()}
