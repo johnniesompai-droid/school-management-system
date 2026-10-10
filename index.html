@@ -127,12 +127,15 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .wst .sc-cell{width:100%;max-width:92px;min-width:56px;text-align:center;border:1px solid #DCE3F7;border-radius:10px;padding:8px 6px;font:inherit;background:#fff;color:#1F2A5C}.wst .sc-cell:focus{outline:2px solid #7C5CF0;border-color:#7C5CF0}
 .wshint{padding:14px;text-align:center;color:#6B7794;font-size:.85rem}.wsf{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap;font-size:.78rem;color:#6B7794}
 @media(max-width:800px){.wsI{grid-template-columns:1fr 1fr}}
-#view>*{min-width:0}.wsw{min-height:230px;max-width:100%;max-height:clamp(320px,calc(100vh - 290px),760px);overflow:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#B9C4EA #EEF2FF}
-.wsw::-webkit-scrollbar{width:11px;height:11px}.wsw::-webkit-scrollbar-track{background:#EEF2FF}.wsw::-webkit-scrollbar-thumb{background:#B9C4EA;border-radius:8px;border:2px solid #EEF2FF}.wsw::-webkit-scrollbar-thumb:hover{background:#8F9FD8}.wsw::-webkit-scrollbar-corner{background:#EEF2FF}
+#view>*{min-width:0}.wsw{min-height:230px;max-width:100%;max-height:clamp(320px,calc(100vh - 290px),760px);overflow:auto;-webkit-overflow-scrolling:touch}
 .wst thead th{position:sticky;top:0;z-index:5}.wst thead th.s1,.wst thead th.s2,.wst thead th.s3{z-index:8}.wst{min-width:0;width:100%}.wst .s1,.wst .s2,.wst .s3{position:sticky;z-index:3;background:#fff}.wst th.s1,.wst th.s2,.wst th.s3{background:#EEF2FF;z-index:4}
 .wst .s1{left:0;width:60px;min-width:60px;max-width:60px}.wst .s2{left:60px;width:200px;min-width:200px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;box-shadow:6px 0 8px -6px #1f2a5c22}.wst .s3{right:0;width:100px;min-width:100px;box-shadow:-6px 0 8px -6px #1f2a5c22}
 .wst th.wc{min-width:100px}.wst .sc-ph{background:#FAFBFF;cursor:default;width:100%;max-width:92px;min-width:50px}
 @media(max-width:640px){.wst .s1{width:52px;min-width:52px;max-width:52px}.wst .s2{left:52px;width:150px;min-width:150px;max-width:150px}}
+/* auto-fading scrollbars (whole app): visible while scrolling, fade out over 3s when idle */
+*{scrollbar-width:thin;scrollbar-color:rgba(143,159,216,0) transparent;transition:scrollbar-color 3s ease}
+.sb-on{scrollbar-color:rgba(143,159,216,.9) transparent;transition-duration:.25s}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent}::-webkit-scrollbar-thumb{background:rgba(143,159,216,0);border-radius:8px;border:2px solid transparent;background-clip:padding-box;transition:background-color 3s ease}.sb-on::-webkit-scrollbar-thumb{background-color:rgba(143,159,216,.9);transition-duration:.25s}
 .sc-filled{background:#F3FAF3!important}
 .sc-over{border-color:var(--red)!important;background:#FEECEC!important}
 .card h3 a{cursor:pointer}
@@ -846,6 +849,12 @@ const dg=e.target.closest('[data-delgrade]');if(dg){const sheet=SC.find(x=>x.id=
 sheet.gradeScale=(sheet.gradeScale||defaultGradeScale()).filter((_,i)=>i!=+dg.dataset.delgrade);render();return}});
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-scd]');if(!a)return;const s=SC.find(x=>x.id==a.dataset.scd);if(!s)return;
 if(!confirm('ลบใบบันทึกคะแนนนี้?'))return;try{await db.collection('scoresheets').doc(a.dataset.scd).delete()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
+(function(){const T=new WeakMap();
+function on(el){if(!el)return;if(el===document||el===document.body)el=document.documentElement;el.classList.add('sb-on');clearTimeout(T.get(el));T.set(el,setTimeout(()=>el.classList.remove('sb-on'),250))}
+document.addEventListener('scroll',e=>on(e.target),true);
+function sc(el){for(let i=0;el&&el.nodeType==1&&i<14;i++,el=el.parentElement){const c=getComputedStyle(el);if(/(auto|scroll)/.test(c.overflowY+c.overflowX)&&(el.scrollHeight>el.clientHeight+1||el.scrollWidth>el.clientWidth+1))return el}return null}
+let lt=0;document.addEventListener('mousemove',e=>{const n=Date.now();if(n-lt<200)return;lt=n;on(sc(e.target))},true);
+document.addEventListener('touchstart',e=>on(sc(e.target)),{capture:true,passive:true})})();
 let hrCat='',hrPo='';
 function personCard(p){const c=PCAT.find(x=>x[0]==p.cat);
 return `<div class="pcard" data-r="profile:${p.id}">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<b>${esc(dn(p))}</b><small>${esc(p.po)||'-'}</small>${p.ph?`<div class="pcard-phone">${ic('phone')}${esc(p.ph)}</div>`:''}${c?`<span class="pcard-badge" style="background:${c[2]}1a;color:${c[2]}">${c[1]}</span>`:''}</div>`}
