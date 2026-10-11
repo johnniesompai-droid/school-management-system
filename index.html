@@ -320,6 +320,29 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .atm-l{display:grid;gap:2px;font-size:.74rem;color:#fff;min-width:0;flex:1}.atm-l>div{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .atm-l i{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.7)}.atm-l em{font-style:normal;margin-left:auto;font-weight:700}.atm-l small{color:rgba(255,255,255,.85);font-size:.7rem}
 @media(prefers-reduced-motion:reduce){.atb,.atdn,.atcd{animation:none!important}}
+/* ปฏิทินการมาเรียน */
+#att_cal,#att_pcal{width:100%;min-width:0}.cb.acal{width:100%;box-sizing:border-box;margin-bottom:14px}
+
+.cb.acal .cb-d{min-height:96px;cursor:pointer}.cb.acal .cb-top{align-items:center}
+.ac-c{display:flex;justify-content:space-between;align-items:center;gap:4px;border-radius:7px;padding:1px 6px;margin-top:3px;font-size:.72rem;line-height:1.35}.ac-c b{font-weight:700}.ac-c .t2{display:none}
+.ac-c.p{background:#DDF5E8;color:#14804A}.ac-c.a{background:#FFE1E5;color:#C0263F}.ac-c.l{background:#FFF1CF;color:#9A6A00}
+.ac-sum{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:12px;font-size:.84rem;color:#312E81}.ac-sum b{margin-right:4px}.ac-sum .atp{margin-left:auto}
+.ac-hint{margin-top:12px;text-align:center;color:var(--mute);font-size:.84rem;padding:10px;border:1px dashed #cdc1ee;border-radius:12px}
+.ac-pl{display:grid;gap:6px;margin-top:8px}.ac-pr{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px;border-radius:12px;background:#F6F8FF;border:1px solid #E3E9FB;cursor:pointer;transition:transform .18s,box-shadow .18s}.ac-pr:hover{transform:translateY(-2px);box-shadow:0 8px 16px -10px rgba(60,70,150,.5)}.ac-pr em{margin-left:auto;font-style:normal;color:var(--blue);font-size:.8rem}
+.ac-tw,.ac-xw{overflow:auto;max-width:100%;margin-top:8px}
+.ac-t{width:100%;border-collapse:collapse;font-size:.86rem}.ac-t th{background:#EEF1FF;color:#312E81;padding:7px 8px;text-align:center;font-weight:600}.ac-t th:first-child,.ac-t td:first-child{text-align:left}.ac-t td{padding:7px 8px;text-align:center;border-bottom:1px solid #E9EDF8}.ac-t tr[data-r]:hover td{background:#F6F8FF}
+.ac-t .p,.ac-x .p{color:#14804A}.ac-t .a,.ac-x .a{color:#C0263F}.ac-t .l,.ac-x .l{color:#9A6A00}
+.ac-low{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.82rem}.ac-low>b{width:100%;color:#312E81}
+.ac-xw{max-height:70vh;border:1px solid #DDE3F5;border-radius:12px}
+.ac-x{border-collapse:separate;border-spacing:0;font-size:.8rem;min-width:100%}.ac-x th,.ac-x td{border-right:1px solid #E6EAF6;border-bottom:1px solid #E6EAF6;padding:4px 3px;text-align:center;min-width:28px;background:#fff}
+.ac-x thead th{position:sticky;top:0;z-index:3;background:#EEF1FF;color:#312E81}.ac-x th i{display:block;font-style:normal;font-weight:700}.ac-x th small{display:block;font-weight:400;font-size:.62rem;opacity:.75}
+.ac-x .wk{background:#F1F2F7!important}.ac-x thead .wk{background:#E4E6F2!important}.ac-x .ho{background:#FFEFF2!important;color:#C0263F}
+.ac-x .no{position:sticky;left:0;z-index:2;min-width:34px;background:#fff;color:var(--mute)}.ac-x .nm{position:sticky;left:34px;z-index:2;text-align:left;white-space:nowrap;padding:4px 10px;min-width:170px;background:#fff;box-shadow:2px 0 0 #E6EAF6}
+.ac-x thead .no,.ac-x thead .nm{z-index:4;background:#EEF1FF}
+.ac-x .sm{min-width:40px;font-weight:600;background:#FAFBFF}.ac-x td b{font-size:.9rem}
+.ac-x tbody tr:hover td{background:#F4F7FF}
+.ac-x tfoot td{background:#FAFBFF;font-weight:600;position:sticky;bottom:0}.ac-x tfoot .no,.ac-x tfoot .nm{z-index:3}
+@media(max-width:700px){.cb.acal .cb-d{min-height:60px}.ac-c{font-size:.62rem;padding:0 3px;margin-top:2px}.ac-c .t1{display:none}.ac-c .t2{display:inline}.cb.acal .cb-top{gap:6px}}
 /* สภาพอากาศ */
 .wxh{position:absolute!important;right:22px;bottom:14px;z-index:2;pointer-events:none}
 .wxh-i{display:flex;align-items:center;gap:2px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.45))}
@@ -1031,7 +1054,7 @@ unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,..
 unsub.push(db.collection('notifreads').doc(me._id).onSnapshot(d=>{NR=new Set((d.exists&&d.data().ids)||[]);updateBell()},e=>{}));
 unsub.push(db.collection('scoresheets').where('ownerUid','==',me._id).onSnapshot(qs=>{SC=qs.docs.map(d=>({id:d.id,...d.data()}));if(!(CUR.startsWith('score:')&&qs.metadata.hasPendingWrites))render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];if(attUn){attUn();attUn=null}ATT={};attLoaded={};attSubDate='';annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];if(attUn){attUn();attUn=null}ATT={};attLoaded={};attMLoaded={};attSubDate='';annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -1890,7 +1913,7 @@ attUn=db.collection('attendance').where('date','==',d).onSnapshot(qs=>{qs.docs.f
 function attLoad(d){if(attLoaded[d])return;attLoaded[d]=1;db.collection('attendance').where('date','==',d).get().then(qs=>{qs.docs.forEach(x=>{ATT[x.id]={id:x.id,...x.data()}});attRefresh()}).catch(()=>{})}
 function attRefresh(){const[k,s]=CUR.split(':');if(k=='home'||(k=='att'&&!s))render();else if(k=='att')attClassUpd();updateBell&&0}
 setInterval(()=>{if(me)attSub()},300000);
-function attSetDate(v){if(!v)return;attDate=v;attLoad(v);render()}
+function attSetDate(v){if(!v)return;attDate=v;attTblK='';const q=v.split('-');attMon={y:+q[0],m:+q[1]-1};attLoad(v);render()}
 function attChips(o){return `<span class="atc p">มา ${o.p}</span><span class="atc a">ขาด ${o.a}</span><span class="atc l">ลา ${o.l}</span>`}
 function attHomeCard(){if(!me)return P('สถิติการมาเรียน',E());const d=attToday(),m=attSum(attCls('m'),d),b=attSum(attCls('b'),d),t=attSum(attAll(),d),pc=attPctOf(t);
 const bar=o=>`<div class="ath-bar"><i class="p" style="width:${o.n?o.p/o.n*100:0}%"></i><i class="a" style="width:${o.n?o.a/o.n*100:0}%"></i><i class="l" style="width:${o.n?o.l/o.n*100:0}%"></i></div>`;
@@ -1899,6 +1922,74 @@ return `<div class="card ath" data-r="att" style="cursor:pointer"><h3>สถิ�
 <div class="ath-top"><div class="ath-pc"><b>${pc===null?'–':pc+'%'}</b><small>${pc===null?'ยังไม่มีการเช็คชื่อวันนี้':'มาเรียนวันนี้'}</small></div><div class="ath-ch">${attChips(t)}</div></div>
 ${row('ห้องเรียนหลัก',m)}${row('ห้องเรียนสาขา',b)}
 <div class="ath-f">เช็คชื่อแล้ว ${t.done} / ${t.rooms} ห้อง · ${thaiFullDate(new Date())}</div></div>`}
+
+/* ----- สถิติรายเดือน / ปฏิทินการมาเรียน ----- */
+let attMon=null,attMLoaded={},attTblK='',attPSel='';
+const attM=()=>{if(!attMon){const d=(attDate||attToday()).split('-');attMon={y:+d[0],m:+d[1]-1}}return attMon};
+const attND=(y,m)=>new Date(y,m+1,0).getDate();
+function attLoadM(y,m){const key=y+'-'+m;if(attMLoaded[key])return;attMLoaded[key]=1;const a=f2(y,m+1,1),b=f2(y,m+1,attND(y,m));
+db.collection('attendance').where('date','>=',a).where('date','<=',b).get().then(qs=>{qs.docs.forEach(x=>{ATT[x.id]={id:x.id,...x.data()}});attRefresh()}).catch(()=>{delete attMLoaded[key]})}
+function attMonGo(dl){const o=attM();let m=o.m+dl,y=o.y;if(m<0){m=11;y--}if(m>11){m=0;y++}attMon={y,m};attLoadM(y,m);attMonUpd()}
+function attMonNow(){const t=attToday().split('-');attMon={y:+t[0],m:+t[1]-1};attLoadM(attMon.y,attMon.m);attMonUpd()}
+function attMonUpd(){const k=CUR.split(':')[1];if(k)attClassUpd();else render()}
+function attPickDay(d){attDate=d;attTblK='';const q=d.split('-');attMon={y:+q[0],m:+q[1]-1};attPSel=d;attLoad(d);const k=CUR.split(':')[1];if(k)attClassUpd();else render()}
+function attTblToggle(k,on){attTblK=on?k:'';attClassUpd()}
+const attDone=(k,d)=>{const c=attCount(k,d);return c.p+c.a+c.l>0};
+function attMonSum(keys,y,m){const o={n:0,p:0,a:0,l:0,days:0};for(let d=1;d<=attND(y,m);d++){const ds=f2(y,m+1,d);let any=0;keys.forEach(k=>{const c=attCount(k,ds);if(c.p+c.a+c.l>0){o.n+=c.n;o.p+=c.p;o.a+=c.a;o.l+=c.l;any=1}});o.days+=any}o.pc=o.n?Math.round(o.p/o.n*100):null;return o}
+function attStuMonth(k,y,m){const r=attRoster(k),days=[];for(let d=1;d<=attND(y,m);d++){const ds=f2(y,m+1,d);if(attDone(k,ds))days.push(ds)}
+const rows=r.map(x=>{let p=0,a=0,l=0;days.forEach(ds=>{const v=attMarks(ds,k)[x.id];if(v=='p')p++;else if(v=='a')a++;else if(v=='l')l++});return{x,p,a,l,pc:days.length?Math.round(p/days.length*100):null}});return{days,rows}}
+function attCalHtml(o){/* o:{keys,cnt,btn,scope} */const{y,m}=attM(),f=new Date(y,m,1).getDay(),n=attND(y,m),tk=attToday(),sel=attDate;
+const chip=(c,a,b,v)=>`<div class="ac-c ${c}"><span class="t1">${a}</span><span class="t2">${b}</span><b>${v}</b></div>`;
+let c='<div class="cb-d e"></div>'.repeat(f);
+for(let i=1;i<=n;i++){const ds=f2(y,m+1,i),dw=(f+i-1)%7,ho=holOf(y,m+1,i),isH=ho.some(x=>x.h),q=o.cnt(ds),dn=q&&q.p+q.a+q.l>0;
+c+=`<div class="cb-d${dw==0||isH?' su':dw==6?' sa':''}${isH?' hd':''}${ds==tk?' td':''}${ds==sel?' sl':''}" onclick="attPickDay('${ds}')" title="${ho.map(x=>x.n).join(', ')}"><span class="n">${i}</span>${dn?chip('p','มา','✓',q.p)+chip('a','ขาด','ข',q.a)+chip('l','ลา','ล',q.l):''}</div>`}
+c+='<div class="cb-d e"></div>'.repeat((7-(f+n)%7)%7);
+const ms=o.sum,pcs=ms.pc===null?'':`<span class="atp">มาเรียนเฉลี่ย ${ms.pc}%</span>`;
+return `<div class="cb pg acal"><i class="cb-bg cb-co c1"></i><i class="cb-bg cb-co c2"></i><i class="cb-bg cb-bb b1"></i><i class="cb-bg cb-bb b2"></i><span class="cb-bg cb-sk k1">✦</span><span class="cb-bg cb-sk k2">✦</span>
+<div class="cb-top"><div class="cb-ttl"><b>${TM[m]} ${y+543}</b><span>${EMN[m]} ${y}</span></div><div class="cb-nav"><button class="btn o" onclick="attMonGo(-1)">‹</button><button class="btn o" onclick="attMonGo(1)">›</button><button class="btn" onclick="attMonNow()">เดือนนี้</button></div>${o.scope||''}${o.btn||''}</div>
+<div class="cb-g">${DWT.map((w,i)=>`<div class="cb-w">${w}<small>${DWE[i]}</small></div>`).join('')}${c}</div>
+<div class="ac-sum"><b>สรุปเดือน${TM[m]}</b><span class="atc u">เช็คชื่อ ${ms.days} วัน</span><span class="atc p">มา ${ms.p}</span><span class="atc a">ขาด ${ms.a}</span><span class="atc l">ลา ${ms.l}</span>${pcs}</div></div>`}
+function attScopeKeys(){return attScope=='m'?attCls('m'):attScope=='b'?attCls('b'):attAll()}
+let attScope='';
+function attSetScope(v){attScope=v;render()}
+function attPickerCal(){const{y,m}=attM();attLoadM(y,m);const keys=attScopeKeys(),sm=attMonSum(keys,y,m);
+const scope=`<select class="in" style="width:auto;margin:0 0 0 auto" onchange="attSetScope(this.value)"><option value=""${attScope==''?' selected':''}>ทั้งโรงเรียน</option><option value="m"${attScope=='m'?' selected':''}>ห้องเรียนหลัก</option><option value="b"${attScope=='b'?' selected':''}>ห้องเรียนสาขา</option></select>`;
+const cal=attCalHtml({sum:sm,scope,cnt:ds=>{const t=attSum(keys,ds);return t.n?t:null}});
+const sd=attPSel&&attPSel.startsWith(f2(y,m+1,1).slice(0,8))?attPSel:'';
+let pan='';
+if(sd){pan=`<div class="card" style="margin-top:12px"><h3>${thaiFullDate(new Date(sd+'T00:00:00'))}</h3><div class="ac-pl">${keys.map(k=>{const c=attCount(k,sd);if(!c.n)return '';const i=+k.slice(1);return `<div class="ac-pr" data-r="att:${k}" onclick="attDate='${sd}'"><b>${esc(LV[i])}</b><span class="atc u">${CT[k[0]][0]}</span>${attChips(c)}${c.u&&(c.p+c.a+c.l)?`<span class="atc u">ยังไม่เช็ค ${c.u}</span>`:(c.p+c.a+c.l?'':'<span class="atc u">ยังไม่เช็คชื่อ</span>')}<em>เปิดรายชื่อ ›</em></div>`}).join('')}</div></div>`}
+else pan=`<div class="ac-hint">กดที่วันในปฏิทินเพื่อดูสรุปแต่ละห้องของวันนั้น</div>`;
+/* สรุปรายห้อง + นักเรียนที่มาเรียนน้อย */
+const rows=keys.map(k=>{const q=attMonSum([k],y,m);return{k,q}}).filter(r=>r.q.days);
+const low=[];keys.forEach(k=>{const r=attStuMonth(k,y,m);if(r.days.length>=3)r.rows.forEach(z=>{if(z.pc!==null&&z.pc<80)low.push({k,...z})})});low.sort((a,b)=>a.pc-b.pc);
+const tb=rows.length?`<div class="ac-tw"><table class="ac-t"><tr><th>ห้องเรียน</th><th>เช็คชื่อ (วัน)</th><th>มา</th><th>ขาด</th><th>ลา</th><th>% มาเรียน</th></tr>${rows.map(r=>`<tr data-r="att:${r.k}" style="cursor:pointer"><td>${esc(LV[+r.k.slice(1)])} <small>${r.k[0]=='m'?'หลัก':'สาขา'}</small></td><td>${r.q.days}</td><td class="p">${r.q.p}</td><td class="a">${r.q.a}</td><td class="l">${r.q.l}</td><td><b>${r.q.pc===null?'–':r.q.pc+'%'}</b></td></tr>`).join('')}</table></div>`:'<div class="ac-hint">เดือนนี้ยังไม่มีข้อมูลการเช็คชื่อ</div>';
+const lw=low.length?`<div class="ac-low"><b>นักเรียนที่มาเรียนต่ำกว่า 80% (เดือนนี้)</b>${low.slice(0,12).map(z=>`<span class="atc a" data-r="att:${z.k}" style="cursor:pointer">${esc((z.x.tt||'')+z.x.fn+' '+z.x.ln)} · ${esc(ttShort(z.k))} · ${z.pc}%</span>`).join('')}</div>`:'';
+return `<div class="stsec" id="att_pcal"><h3>${ic('cal')} ปฏิทินและสถิติการมาเรียนรายเดือน</h3>${cal}${pan}<div class="card" style="margin-top:12px"><h3>สรุปรายห้องเรียน เดือน${TM[m]} ${y+543}</h3>${tb}${lw}</div></div>`}
+function attClassCal(k){const{y,m}=attM();attLoadM(y,m);const sm=attMonSum([k],y,m);
+const btn=`<button class="btn" style="margin-left:auto" onclick="attTblToggle('${k}',${attTblK==k?'false':'true'})">${attTblK==k?'‹ กลับไปปฏิทิน':'ดูทั้งหมด (ตารางเดือน)'}</button>`;
+return attCalHtml({sum:sm,btn,cnt:ds=>{const c=attCount(k,ds);return c.n&&c.p+c.a+c.l>0?c:null}})}
+const DWS=['อา','จ','อ','พ','พฤ','ศ','ส'];
+function attTblHtml(k){const{y,m}=attM(),n=attND(y,m),R=attStuMonth(k,y,m),done=new Set(R.days),hd=[];
+let th='',foot={p:'',a:'',l:''};
+for(let d=1;d<=n;d++){const ds=f2(y,m+1,d),dw=new Date(y,m,d).getDay(),isH=holOf(y,m+1,d).some(x=>x.h),cl=(dw==0||dw==6||isH?' wk':'')+(isH?' ho':'');hd.push(cl);th+=`<th class="${cl.trim()}"><i>${d}</i><small>${DWS[dw]}</small></th>`;
+const c=attCount(k,ds),on=done.has(ds);foot.p+=`<td class="${cl.trim()}">${on?c.p:''}</td>`;foot.a+=`<td class="${cl.trim()}">${on?c.a:''}</td>`;foot.l+=`<td class="${cl.trim()}">${on?c.l:''}</td>`}
+const body=R.rows.map((z,j)=>{let td='';for(let d=1;d<=n;d++){const ds=f2(y,m+1,d);let v='';if(done.has(ds)){const t=attMarks(ds,k)[z.x.id];v=t=='p'?'<b class="p">✓</b>':t=='a'?'<b class="a">ข</b>':t=='l'?'<b class="l">ล</b>':''}td+=`<td class="${hd[d-1].trim()}">${v}</td>`}
+return `<tr><td class="no">${j+1}</td><td class="nm">${esc((z.x.tt||'')+z.x.fn+' '+z.x.ln)}</td>${td}<td class="sm p">${z.p}</td><td class="sm a">${z.a}</td><td class="sm l">${z.l}</td><td class="sm"><b>${z.pc===null?'–':z.pc+'%'}</b></td></tr>`}).join('');
+const tot=R.rows.reduce((o,z)=>({p:o.p+z.p,a:o.a+z.a,l:o.l+z.l}),{p:0,a:0,l:0});
+return `<div class="att-tb"><b style="font-size:1.05rem;color:#312E81">ตารางการมาเรียน · ${esc(LV[+k.slice(1)])} · ${TM[m]} ${y+543}</b><span class="att-act"><button class="btn o" onclick="attXls('${k}')">ดาวน์โหลด Excel</button><button class="btn o" onclick="attPrint('${k}')">พิมพ์</button></span></div>
+<div class="att-hr">เช็คชื่อแล้ว ${R.days.length} วัน · ✓ มาเรียน · ข ขาด · ล ลา · ช่องว่าง = ยังไม่ได้เช็คชื่อ (หรือวันหยุด)</div>
+${R.rows.length?`<div class="ac-xw"><table class="ac-x"><thead><tr><th class="no">ที่</th><th class="nm">ชื่อ-สกุล</th>${th}<th class="sm">มา</th><th class="sm">ขาด</th><th class="sm">ลา</th><th class="sm">%</th></tr></thead><tbody>${body}</tbody>
+<tfoot><tr class="ft"><td class="no"></td><td class="nm">รวมมา (คน)</td>${foot.p}<td class="sm p">${tot.p}</td><td></td><td></td><td></td></tr><tr class="ft"><td class="no"></td><td class="nm">รวมขาด (คน)</td>${foot.a}<td></td><td class="sm a">${tot.a}</td><td></td><td></td></tr><tr class="ft"><td class="no"></td><td class="nm">รวมลา (คน)</td>${foot.l}<td></td><td></td><td class="sm l">${tot.l}</td><td></td></tr></tfoot></table></div>`:E('ยังไม่มีนักเรียนในชั้นนี้',100)}`}
+function attAoa(k){const{y,m}=attM(),n=attND(y,m),R=attStuMonth(k,y,m),done=new Set(R.days),sym={p:'✓',a:'ข',l:'ล'};
+const head=['ที่','ชื่อ-สกุล'];for(let d=1;d<=n;d++)head.push(d);head.push('มา','ขาด','ลา','% มาเรียน');
+const rows=R.rows.map((z,j)=>{const r=[j+1,(z.x.tt||'')+z.x.fn+' '+z.x.ln];for(let d=1;d<=n;d++){const ds=f2(y,m+1,d);r.push(done.has(ds)?(sym[attMarks(ds,k)[z.x.id]]||''):'')}r.push(z.p,z.a,z.l,z.pc===null?'':z.pc+'%');return r});
+const ft=['p','a','l'].map((c,i)=>{const r=['','รวม'+['มา','ขาด','ลา'][i]];for(let d=1;d<=n;d++){const ds=f2(y,m+1,d);r.push(done.has(ds)?attCount(k,ds)[c]:'')}return r});
+return[['การมาเรียน '+LV[+k.slice(1)]+' เดือน'+TM[m]+' '+(y+543)],[],head,...rows,[],...ft]}
+function attXls(k){if(typeof XLSX=='undefined')return alert('โหลดตัวสร้าง Excel ไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');const{y,m}=attM(),ws=XLSX.utils.aoa_to_sheet(attAoa(k)),n=attND(y,m);
+ws['!cols']=[{wch:5},{wch:28},...Array(n).fill({wch:3.5}),{wch:6},{wch:6},{wch:6},{wch:10}];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'การมาเรียน');XLSX.writeFile(wb,`การมาเรียน_${LV[+k.slice(1)].replace(/\s+/g,'')}_${TM[m]}${y+543}.xlsx`)}
+function attPrint(k){const w=window.open('','_blank');if(!w)return alert('เบราว์เซอร์บล็อกหน้าต่างพิมพ์ กรุณาอนุญาตป๊อปอัป');const a=attAoa(k);
+const t=a.slice(2).map((r,i)=>`<tr>${r.map((c,j)=>`<${i==0?'th':'td'}${j==1?' class="nm"':''}>${esc(String(c))}</${i==0?'th':'td'}>`).join('')}</tr>`).join('');
+w.document.write(`<html><head><meta charset="utf-8"><title>${esc(a[0][0])}</title><style>@page{size:A4 landscape;margin:10mm}body{font-family:Kanit,Tahoma,sans-serif;font-size:11px}h3{margin:0 0 8px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #888;padding:2px 3px;text-align:center}td.nm{text-align:left;white-space:nowrap}th{background:#e8ecfa}</style></head><body><h3>${esc(a[0][0])}</h3><table>${t}</table><script>onload=()=>print()<\/script></body></html>`);w.document.close()}
 function attPicker(){const d=attDate||attToday();attLoad(d);const M=ST.filter(x=>gd(x.tt)=='m').length,F=ST.filter(x=>gd(x.tt)=='f').length,all=attSum(attAll(),d),pc=attPctOf(all);
 const stat=(c,ico,l,v)=>`<div class="sts" style="--c:${c}"><span class="sts-i">${ic(ico)}</span><div><small>${l}</small><b>${v} คน</b></div><span class="sts-ar">›</span></div>`;
 const card=(t,i)=>{const cs=ST.filter(x=>x.ty==t&&x.lv==i),m=cs.filter(x=>gd(x.tt)=='m').length,f=cs.filter(x=>gd(x.tt)=='f').length,k=t+i,c=ST_COL[i%8],o=attCount(k,d),
@@ -1910,14 +2001,14 @@ return `<div class="stc" style="--c:${c}" data-r="att:${k}"><h4>${esc(LV[i].repl
 <div class="stc-t"><small>ครูประจำชั้น</small>${ts.length?ts.map(p=>`<div class="stc-p">${p.im?`<img src="${p.im}">`:`<span class="stc-av">${ic('user')}</span>`}<span>${esc(dn(p))}</span></div>`).join(''):'<div class="stc-p" style="color:var(--mute)"><span class="stc-av">'+ic('user')+'</span><span>ยังไม่ได้เลือกครูประจำชั้น</span></div>'}</div></div>`};
 return `<div class="svh"><div class="svh-t"><span class="svh-i">${ic('users')}</span><div><h2>การมาเรียน</h2><p>การมาเรียนของนักเรียนแยกตามห้องเรียน</p></div></div>
 <div class="svh-s">${stat('#2F6BFF','users','นักเรียนทั้งหมด',ST.length)}${stat('#2BB5A0','user','นักเรียนชาย',M)}${stat('#F0529C','user','นักเรียนหญิง',F)}</div></div>
-<div class="att-bar"><label class="lb" style="display:inline-flex;align-items:center;gap:8px">วันที่<input class="in" type="date" style="width:auto;margin:0" value="${d}" onchange="attSetDate(this.value)"></label><span class="att-sum"><b>${pc===null?'ยังไม่มีการเช็คชื่อ':'มาเรียน '+pc+'%'}</b>${attChips(all)}<span class="atc u">ยังไม่เช็ค ${all.u}</span></span></div>`
+<div class="att-bar"><label class="lb" style="display:inline-flex;align-items:center;gap:8px">วันที่<input class="in" type="date" style="width:auto;margin:0" value="${d}" onchange="attSetDate(this.value)"></label><span class="att-sum"><b>${pc===null?'ยังไม่มีการเช็คชื่อ':'มาเรียน '+pc+'%'}</b>${attChips(all)}<span class="atc u">ยังไม่เช็ค ${all.u}</span></span></div>`+(attTblK='',attPickerCal())
 +Object.keys(CT).map(t=>{const g=ST.filter(x=>x.ty==t),gm=g.filter(x=>gd(x.tt)=='m').length,gf=g.filter(x=>gd(x.tt)=='f').length,o=attSum(attCls(t),d);return `<div class="stsec"><h3>${ic(t=='m'?'home':'bld')} ${CT[t][0]}</h3><div class="stsum"><span class="m">ชาย <b>${gm}</b> คน</span><span class="f">หญิง <b>${gf}</b> คน</span><span class="t">รวมทั้งหมด <b>${g.length}</b> คน</span></div>
 <div class="att-ssum"><b>สรุปการมาเรียน${CT[t][0]}</b>${attChips(o)}<span class="atc u">ยังไม่เช็ค ${o.u}</span>${attPctOf(o)!==null?`<span class="atp">มาเรียน ${attPctOf(o)}%</span>`:''}</div>
 <div class="stcg ${t=='b'?'b5':''}">${LV.slice(0,CT[t][1]).map((n,i)=>card(t,i)).join('')}</div></div>`}).join('')}
 V.att=s=>s?attClass(s):attPicker();
 function attClass(k){const t=k[0],i=+k.slice(1);if(!CT[t]||!(i>=0&&i<CT[t][1]))return attPicker();const d=attDate||attToday();attLoad(d);
-return `<div class="pt"><h2>การมาเรียน · ${esc(LV[i])}</h2><p><a class="bk" data-r="att">‹ การมาเรียน</a> / ${CT[t][0]}${attCan(k)?'':' · ดูได้อย่างเดียว (เฉพาะครูประจำชั้นและผู้ก่อตั้งเช็คชื่อได้)'}</p></div><div class="card attc" id="att_wrap">${attClassInner(k)}</div>`}
-function attClassInner(k){const d=attDate||attToday(),r=attRoster(k),can=attCan(k),mk=attMarks(d,k),o=attCount(k,d);
+return `<div class="pt"><h2>การมาเรียน · ${esc(LV[i])}</h2><p><a class="bk" data-r="att">‹ การมาเรียน</a> / ${CT[t][0]}${attCan(k)?'':' · ดูได้อย่างเดียว (เฉพาะครูประจำชั้นและผู้ก่อตั้งเช็คชื่อได้)'}</p></div><div id="att_cal">${attClassCal(k)}</div><div class="card attc" id="att_wrap">${attClassInner(k)}</div>`}
+function attClassInner(k){if(attTblK==k)return attTblHtml(k);const d=attDate||attToday(),r=attRoster(k),can=attCan(k),mk=attMarks(d,k),o=attCount(k,d);
 const ts=(HR[k]||[]).map(id=>PP.find(p=>p.id==id)).filter(Boolean).map(dn).join(', ');
 return `<div class="att-tb"><label class="lb" style="display:inline-flex;align-items:center;gap:8px">วันที่<input class="in" type="date" style="width:auto;margin:0" value="${d}" onchange="attSetDate(this.value)"></label>
 <span class="att-sum">${attChips(o)}<span class="atc u">ยังไม่เช็ค ${o.u}</span></span>
@@ -1926,7 +2017,7 @@ ${can?`<span class="att-act"><button class="btn o" onclick="attAllSet('${k}','p'
 ${r.length?`<div class="att-l">${r.map((x,j)=>{const v=mk[x.id]||'',b=(c,tx,ti)=>`<button type="button" class="att-btn ${c}${v==c?' on':''}" ${can?`onclick="attMark('${k}','${x.id}','${c}')"`:'disabled'} title="${ti}">${tx}</button>`;
 return `<div class="att-r${v?' s-'+v:''}"><span class="att-n">${j+1}</span><span class="att-nm">${esc((x.tt||'')+x.fn+' '+x.ln)}</span><span class="att-b">${b('p','✓','มาเรียน')}${b('a','✕','ขาดเรียน')}${b('l','ลา','ลา')}</span></div>`}).join('')}</div>`:E('ยังไม่มีนักเรียนในชั้นนี้',100)}
 <div class="att-ft"><small id="att_msg">${can?'กดปุ่มเพื่อเช็คชื่อ ระบบบันทึกให้อัตโนมัติ (กดซ้ำเพื่อยกเลิก)':''}</small></div>`}
-function attClassUpd(){const w=document.getElementById('att_wrap'),k=CUR.split(':')[1];if(w&&k)w.innerHTML=attClassInner(k)}
+function attClassUpd(){const w=document.getElementById('att_wrap'),c=document.getElementById('att_cal'),k=CUR.split(':')[1];if(w&&k)w.innerHTML=attClassInner(k);if(c&&k)c.innerHTML=attClassCal(k)}
 function attSave(k,marks){const d=attDate||attToday(),id=attKey(d,k),m=document.getElementById('att_msg');if(m)m.textContent='กำลังบันทึก...';
 return db.collection('attendance').doc(id).set({date:d,classKey:k,marks,updatedBy:me._id,updatedByName:me.n,updatedAt:new Date().toISOString()},{merge:true}).then(()=>{const e=document.getElementById('att_msg');if(e)e.textContent='บันทึกแล้ว ✓'}).catch(e=>{alert('บันทึกไม่สำเร็จ: '+e.message);const c=document.getElementById('att_msg');if(c)c.textContent=''})}
 function attSet(k,patch){const d=attDate||attToday(),id=attKey(d,k),doc=ATT[id]||(ATT[id]={id,date:d,classKey:k,marks:{}});doc.marks=Object.assign({},doc.marks||{},patch);attClassUpd();return attSave(k,patch)}
