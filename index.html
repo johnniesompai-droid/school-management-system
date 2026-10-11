@@ -246,6 +246,22 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .cb-co.c1{width:130px;height:130px;right:-36px;top:-40px;background:rgba(167,139,250,.18)}
 .cb-co.c2{width:90px;height:90px;left:-30px;bottom:40px;background:rgba(56,189,248,.16);animation-delay:-3s;animation-duration:11s}
 .cb-ttl{background:rgba(255,255,255,.8)}
+/* งาน 4 ฝ่าย: โทนอ่อน + เคลื่อนไหว */
+.dv{position:relative;overflow:hidden;padding:20px 18px 18px;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 16%,#fff),color-mix(in srgb,var(--c) 6%,#fff) 60%,#fff);border:1.5px solid color-mix(in srgb,var(--c) 24%,#fff);box-shadow:0 12px 24px -16px color-mix(in srgb,var(--c) 75%,transparent);animation:lvIn .6s both;transition:transform .25s,box-shadow .25s,border-color .25s}
+.grid.g4>.dv:nth-child(2){animation-delay:.08s}.grid.g4>.dv:nth-child(3){animation-delay:.16s}.grid.g4>.dv:nth-child(4){animation-delay:.24s}
+.dv:hover,.dv.sel{border-color:color-mix(in srgb,var(--c) 70%,#fff);transform:translateY(-4px);box-shadow:0 18px 28px -16px color-mix(in srgb,var(--c) 80%,transparent)}
+.dv.sel{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 24%,#fff),color-mix(in srgb,var(--c) 9%,#fff) 60%,#fff)}
+.dv:after{content:"";position:absolute;right:-30px;top:-34px;width:120px;height:120px;border-radius:50%;background:color-mix(in srgb,var(--c) 16%,transparent);pointer-events:none;animation:lvDrift 8s ease-in-out infinite}
+.dv:nth-child(2):after{animation-delay:-2s}.dv:nth-child(3):after{animation-delay:-4s}.dv:nth-child(4):after{animation-delay:-6s}
+.dv:before{content:"✦";position:absolute;right:20px;bottom:14px;color:color-mix(in srgb,var(--c) 50%,#fff);font-size:.95rem;pointer-events:none;animation:lvTw 3s ease-in-out infinite}
+.dv>*{position:relative;z-index:1}
+.dv .bx{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 70%,#fff),var(--c))!important;box-shadow:0 8px 14px -6px var(--c);animation:lvBob 3.4s ease-in-out infinite}
+.dv:nth-child(2) .bx{animation-delay:-.8s}.dv:nth-child(3) .bx{animation-delay:-1.6s}.dv:nth-child(4) .bx{animation-delay:-2.4s}
+.dv h4{color:color-mix(in srgb,var(--c) 55%,#1F2A5C)}
+.dv span{color:color-mix(in srgb,var(--c) 80%,#1F2A5C);display:inline-block;transition:transform .25s}.dv:hover span{transform:translateX(5px)}
+.dvd{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 8%,#fff),#fff 50%);border:1px solid color-mix(in srgb,var(--c) 22%,#fff);animation:lvIn .5s both}
+.dvd>h3{color:color-mix(in srgb,var(--c) 55%,#1F2A5C)}
+@media(prefers-reduced-motion:reduce){.dv,.dv *,.dv:before,.dv:after,.dvd{animation:none!important}}
 @media(prefers-reduced-motion:reduce){.hs,.hs *,.hs::before,.hs::after,.hero-w::after,.grid.split>.grid>.grid.g2>.card,.grid.split>.grid>.grid.g2>.card:after,.svhm,.svhm *,.cb,.cb *,.cb:after{animation:none!important}}
 .hb-msg,.hb-st{transition:none}
 .hero-w{aspect-ratio:auto;max-height:none;height:280px;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(10,16,50,.12) 0%,rgba(10,16,50,.38) 45%,rgba(10,16,50,.72) 100%),var(--hero) center 20%/cover}
@@ -342,6 +358,20 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 @media(max-width:560px){.tdy-r{grid-template-columns:48px 1fr auto}.tdy-r span,.tdy-r small{display:none}}
 .ttks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}.ttk{background:#fff;border-radius:14px;padding:14px 16px;border-top:4px solid var(--c);box-shadow:var(--sh)}.ttk small{display:block;color:var(--mute);font-size:.78rem}.ttk b{font-size:1.6rem;color:var(--c)}@media(max-width:700px){.ttks{grid-template-columns:repeat(2,1fr)}}
 .ttok{background:#E6F7EE;color:#14663F;border:1px solid #BFE8D2;border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:.92rem}.ttw2{color:#B3132F;font-size:.85rem;margin-top:10px;line-height:1.5}.ttw2:empty{display:none}.ttt td.tc.cf{background:#ffe9ec}
+/* ตารางสอน: สีอ่อนในแต่ละคาบ + เด้งเมื่อชี้ */
+.ttt td.tc{background:#F7F9FF;transition:transform .18s,box-shadow .18s,background .18s}
+.ttt td.tc.sc0{background:#E3EEFF}.ttt td.tc.sc1{background:#E4F7EC}.ttt td.tc.sc2{background:#FFF0D2}.ttt td.tc.sc3{background:#F0E7FF}
+.ttt td.tc.sc4{background:#FFE5EB}.ttt td.tc.sc5{background:#DDF5F4}.ttt td.tc.sc6{background:#FFF8CC}.ttt td.tc.sc7{background:#E8ECFB}
+.ttt td.tc.cf{background:#FFD9DF}
+.ttt td.vt{background:linear-gradient(180deg,#F1EBFF,#E9F1FF)}.ttt td.vt+td.vt,.ttt td.vt:last-child{background:linear-gradient(180deg,#E3F6EE,#EAF4FF)}
+.ttt td.lunch{background:repeating-linear-gradient(135deg,#FFF6D8,#FFF6D8 6px,#FFEFC2 6px,#FFEFC2 12px)}
+.ttt thead th{background:#EDF2FF}.ttt thead tr:nth-child(3) th{background:#F4F0FF}.ttt tbody th{background:#EAF3FF}
+.ttw{padding:8px}
+.ttt td.tc:hover{transform:scale(1.07);z-index:3;box-shadow:0 8px 18px -6px rgba(60,70,150,.5);filter:saturate(1.15)}
+.ttt td.tc.ed:hover{background-color:inherit}
+.ttt td.tc.ed.em:hover{background:#EEF3FF}
+.ttmini .ttt td.tc:hover{transform:none;box-shadow:none;filter:none}
+@media print{.ttt td.tc:hover{transform:none;box-shadow:none;filter:none}.ttt td,.ttt th{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 .ttbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.ttbar small{color:var(--mute)}
 @media(max-width:700px){.ttsg{grid-template-columns:1fr}}
 @media print{.tt-np{display:none!important}.ttpaper{box-shadow:none;padding:0;border-radius:0}.ttt td.tc.ed:hover{background:none}.ttw{overflow:visible}.ttt{min-width:0;font-size:11px}.ttn textarea{border:0;padding:0;resize:none;background:none}.tth select{border-bottom-color:transparent}.ttt td.lunch{background:none}}
@@ -821,13 +851,13 @@ document.addEventListener('click',async e=>{const a=e.target.closest('[data-ad]'
 if(!confirm('ลบไฟล์นี้?'))return;const files=AD[key]||[],f=files[+idx];
 try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)=>i!=+idx);await db.collection('admindocs').doc(key).set({files:nf},{merge:true});AD[key]=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).includes(k));
-return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('เอกสารดาวน์โหลด'),divDocsBlock(k))}${k=='budget'?P(fileSectionTitle('งานพัสดุ'),divFieldBlock(k,'supply')):''}</div></div>${k=='budget'?projectSection():''}`};
+return `<div class="card dvd" style="--c:${d[3]}"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('เอกสารดาวน์โหลด'),divDocsBlock(k))}${k=='budget'?P(fileSectionTitle('งานพัสดุ'),divFieldBlock(k,'supply')):''}</div></div>${k=='budget'?projectSection():''}`};
 const V={
 home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${P('สถิติการเข้าเรียน',E())}${P('สถิตินักเรียน',E())}</div>
 <div class="grid g2"><div id="sv_home">${svHomeHtml()}</div></div></div>
 <div class="grid" style="align-content:start"><div id="an_home">${annHtml()}</div>${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
-div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
+div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" style="--c:${d[3]}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม / เอกสารดาวน์โหลด และเกษียนหนังสือราชการ')+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:m[3]=='tt'?[['tt:teach','ตารางสอน'],['tt:class','ตารางเรียน'],['tt:entry','บันทึกตารางสอน'],['tt:check','ตรวจสอบตาราง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
@@ -1529,10 +1559,11 @@ function ttResHtml(q){if(!q.trim())return '';const l=ttItems(q).slice(0,40);
 return l.length?`<div class="ttr">${l.map(x=>`<span class="ttc" data-ttp="${x.k}"><i class="${x.y=='ครู'?'t':''}">${x.y}</i>${esc(x.l)}</span>`).join('')}</div>`:'<div class="ttr" style="color:var(--mute)">ไม่พบรายการที่ค้นหา</div>'}
 function ttSearch(v){ttQ=v;const r=$('#tt_res');if(r)r.innerHTML=ttResHtml(v)}
 function ttSet(k,v){if(k=='year')ttYear=+v;else if(k=='dt')ttDraft.tid=v;ttMsg='';render()}
-function ttCellHtml(c,doc,can,mode){const d=(doc||{})[c];let inner='',cf='';
-if(mode=='c'){const l=d||[];inner=l.map(x=>`<b>${esc(x.s)}</b><small>${esc(ttNameOf(x.t))}</small>`).join('');if(l.length>1)cf=' cf'}
-else if(d)inner=`<b>${esc(d.s)}</b>`+(d.c?`<small>${esc(ttShort(d.c))}</small>`:'');
-return `<td class="tc${can?' ed':''}${inner?'':' em'}${cf}"${can?` data-ttc="${c}"`:''}>${inner}</td>`}
+const ttSc=s=>{let h=0;for(const ch of String(s||''))h=(h*31+ch.charCodeAt(0))>>>0;return h%8};
+function ttCellHtml(c,doc,can,mode){const d=(doc||{})[c];let inner='',cf='',sc='';
+if(mode=='c'){const l=d||[];if(l[0])sc=' sc'+ttSc(l[0].s);inner=l.map(x=>`<b>${esc(x.s)}</b><small>${esc(ttNameOf(x.t))}</small>`).join('');if(l.length>1)cf=' cf'}
+else if(d){sc=' sc'+ttSc(d.s);inner=`<b>${esc(d.s)}</b>`+(d.c?`<small>${esc(ttShort(d.c))}</small>`:'')}
+return `<td class="tc${sc}${can?' ed':''}${inner?'':' em'}${cf}"${can?` data-ttc="${c}"`:''}>${inner}</td>`}
 function ttTable(cells,can,mode){let h=`<table class="ttt"><thead><tr><th rowspan="3" class="tdy">วัน</th><th colspan="9">ชั่วโมงที่/คาบที่</th></tr><tr>${TTP.map((_,i)=>`<th>${i+1}</th>`).join('')}</tr><tr>${TTP.map(t=>`<th>${t[0]}</th>`).join('')}</tr></thead><tbody>`;
 TTD.forEach((d,i)=>{h+=`<tr><th>${d}</th>`;
 for(let p=1;p<=9;p++){if(p==1){if(i==0)h+=`<td rowspan="5" class="vt"><span>Home room กิจกรรมชั้นเรียน</span></td>`}
