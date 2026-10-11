@@ -286,6 +286,27 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .ath-bar{display:flex;height:9px;border-radius:6px;background:#E6EAF6;overflow:hidden}.ath-bar i{display:block;height:100%;transition:width .6s}.ath-bar .p{background:#34C98A}.ath-bar .a{background:#F0627A}.ath-bar .l{background:#F5C04A}
 .ath-f{margin-top:6px;font-size:.72rem;color:var(--mute)}
 @media(prefers-reduced-motion:reduce){.att-btn.on{animation:none!important}}
+/* แผนภูมิการมาเรียน */
+.atg{display:grid;grid-template-columns:minmax(0,1.62fr) minmax(0,1fr);gap:18px;margin-bottom:18px}
+@media(max-width:900px){.atg{grid-template-columns:1fr}}
+.atcd{background:#fff;border:1px solid #D6DDF7;border-radius:16px;overflow:hidden;box-shadow:0 10px 22px -14px rgba(80,85,176,.55);cursor:pointer;animation:lvIn .6s .1s both;transition:transform .25s,box-shadow .25s;min-width:0}
+.atcd:hover{transform:translateY(-3px);box-shadow:0 16px 26px -14px rgba(80,85,176,.6)}
+.atcd-h{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#5A55B0,#4F4BA3);color:#fff;padding:12px 18px;font-weight:600;font-size:1.02rem}
+.atcd-h span{display:grid;place-items:center}.atcd-h svg{width:22px;height:22px}.atcd-h small{margin-left:auto;font-weight:400;opacity:.85;font-size:.74rem}
+.atcd-b{padding:10px 14px 14px}
+.atsvg{width:100%;height:auto;display:block}.atsvg text,.atdsvg text{font-family:inherit}
+.atsvg .ax{font-size:12.5px;fill:#55607A}.atsvg .vl{font-size:11.5px;font-weight:700;fill:#2A2F5E}.atsvg .lg{font-size:13px;fill:#2A2F5E}.atsvg .pl{font-size:14px;font-weight:600}
+.atb{transform-box:fill-box;transform-origin:bottom;animation:atGrow .7s cubic-bezier(.2,.9,.3,1) both;transition:filter .2s}.atb:hover{filter:brightness(1.1) saturate(1.2)}
+@keyframes atGrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.atdw{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;padding:14px 12px;min-height:300px}
+.atdv{flex:0 0 172px;max-width:100%}.atdsvg{width:100%;height:auto;display:block}
+.atdn{animation:atDraw .9s ease-out both}@keyframes atDraw{from{opacity:0;stroke-width:6}to{opacity:1}}
+.atdsvg .dn-in{font-size:15px;font-weight:700;fill:#fff}.atdsvg .dn-out{font-size:12.5px;font-weight:700;fill:#2A2F5E}.atdsvg .dn-c1{font-size:12px;fill:#55607A}.atdsvg .dn-c2{font-size:19px;font-weight:700;fill:#1F2A5C}
+.atlg{flex:1 1 170px;min-width:160px;background:#F3F5FD;border:1px solid #E3E8F8;border-radius:14px;padding:10px 14px}
+.atl{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:.84rem;border-bottom:1px solid #E6EAF6}.atl:last-of-type{border:0}
+.atl i{width:16px;height:16px;border-radius:50%;flex:none}.atl b{font-weight:600;color:#1F2A5C}.atl span{margin-left:auto;font-weight:700;color:#1F2A5C}.atl em{font-style:normal;color:#55607A;min-width:42px;text-align:right}
+.atn{margin-top:6px;font-size:.72rem;color:var(--mute);text-align:center}
+@media(prefers-reduced-motion:reduce){.atb,.atdn,.atcd{animation:none!important}}
 @media(prefers-reduced-motion:reduce){.hs,.hs *,.hs::before,.hs::after,.hero-w::after,.grid.split>.grid>.grid.g2>.card,.grid.split>.grid>.grid.g2>.card:after,.svhm,.svhm *,.cb,.cb *,.cb:after{animation:none!important}}
 .hb-msg,.hb-st{transition:none}
 .hero-w{aspect-ratio:auto;max-height:none;height:280px;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(10,16,50,.12) 0%,rgba(10,16,50,.38) 45%,rgba(10,16,50,.72) 100%),var(--hero) center 20%/cover}
@@ -878,7 +899,8 @@ const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).include
 return `<div class="card dvd" style="--c:${d[3]}"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('เอกสารดาวน์โหลด'),divDocsBlock(k))}${k=='budget'?P(fileSectionTitle('งานพัสดุ'),divFieldBlock(k,'supply')):''}</div></div>${k=='budget'?projectSection():''}`};
 const V={
 home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การมาเรียนวันนี้','cal','#22B573','%',attPct()],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
-<div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${attHomeCard()}${P('สถิตินักเรียน',E())}</div>
+<div class="atg">${attBarCard()}${attDonutCard()}</div>
+<div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${P('สถิตินักเรียน',E())}</div>
 <div class="grid g2"><div id="sv_home">${svHomeHtml()}</div></div></div>
 <div class="grid" style="align-content:start"><div id="an_home">${annHtml()}</div>${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" style="--c:${d[3]}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
@@ -1875,6 +1897,40 @@ return db.collection('attendance').doc(id).set({date:d,classKey:k,marks,updatedB
 function attSet(k,patch){const d=attDate||attToday(),id=attKey(d,k),doc=ATT[id]||(ATT[id]={id,date:d,classKey:k,marks:{}});doc.marks=Object.assign({},doc.marks||{},patch);attClassUpd();return attSave(k,patch)}
 function attMark(k,sid,v){if(!attCan(k))return;const cur=attMarks(attDate||attToday(),k)[sid]||'';attSet(k,{[sid]:cur==v?'':v})}
 function attAllSet(k,v){if(!attCan(k))return;const o={};attRoster(k).forEach(x=>o[x.id]=v);attSet(k,o)}
+
+/* ===== แผนภูมิการมาเรียน (หน้าหลัก) ===== */
+const ATC={p:'#33A877',a:'#F0627A',l:'#F7B731'};
+const attShort=i=>String(LV[i]||'').replace(/^ชั้น/,'').replace('อนุบาล ','อ.').replace('ประถมศึกษาปีที่ ','ป.').trim();
+function attBarCard(){if(!me)return '';const d=attToday(),keys=attAll(),cn={};keys.forEach(k=>cn[k]=attCount(k,d));
+let mx=0;keys.forEach(k=>mx=Math.max(mx,cn[k].p,cn[k].a,cn[k].l));
+const stp=[1,2,5,10,20,50,100,200,500,1000].find(x=>mx/x<=5)||1000,top=Math.max(stp*Math.ceil(mx/stp),stp*2);
+const L=52,R=12,T=44,B=232,PH=B-T,gap=26,nm=CT.m[1],nb=CT.b[1],gw=(900-L-R-gap)/(nm+nb),bw=Math.min(16,gw/4),pad=(gw-bw*3-4)/2;
+const y=v=>B-v/top*PH;let o='';
+for(let t=0;t<=top;t+=stp)o+=`<line x1="${L}" x2="${900-R}" y1="${y(t)}" y2="${y(t)}" stroke="#E6EAF6"/><text x="${L-8}" y="${y(t)+4}" text-anchor="end" class="ax">${t}</text>`;
+o+=`<line x1="${L}" x2="${900-R}" y1="${B}" y2="${B}" stroke="#C9D0EA"/>`;
+let n=0;const xs=(t,i)=>L+(t=='m'?i*gw:nm*gw+gap+i*gw);
+Object.keys(CT).forEach(t=>{for(let i=0;i<CT[t][1];i++){const k=t+i,c=cn[k],x0=xs(t,i)+pad;
+[['p',c.p,'มาเรียน'],['a',c.a,'ขาด'],['l',c.l,'ลา']].forEach((b,j)=>{const x=x0+j*(bw+2),h=b[1]/top*PH;
+o+=`<rect class="atb" style="animation-delay:${n*35}ms" x="${x}" y="${y(b[1])}" width="${bw}" height="${h}" rx="2" fill="${ATC[b[0]]}"><title>${esc(classLabel(k))} · ${b[2]} ${b[1]} คน</title></rect><text x="${x+bw/2}" y="${y(b[1])-4}" text-anchor="middle" class="vl">${b[1]}</text>`;n++});
+o+=`<text x="${xs(t,i)+gw/2}" y="${B+20}" text-anchor="middle" class="ax">${esc(attShort(i))}</text>`}});
+const mw=nm*gw-6,bx=L+nm*gw+gap;
+o+=`<line x1="${bx-gap/2}" x2="${bx-gap/2}" y1="${T-6}" y2="${B+4}" stroke="#B9B2DC" stroke-dasharray="4 4"/>
+<rect x="${L+3}" y="${B+32}" width="${mw}" height="28" rx="7" fill="#E4DEFC"/><text x="${L+3+mw/2}" y="${B+51}" text-anchor="middle" class="pl" fill="#2D2A7A">ห้องเรียนหลัก</text>
+<rect x="${bx+3}" y="${B+32}" width="${nb*gw-6}" height="28" rx="7" fill="#D6ECFB"/><text x="${bx+3+(nb*gw-6)/2}" y="${B+51}" text-anchor="middle" class="pl" fill="#1E4F7A">ห้องเรียนสาขา</text>
+<text x="${L-40}" y="22" class="ax">จำนวน (คน)</text>`;
+[['p',705,'มาเรียน'],['a',795,'ขาด'],['l',855,'ลา']].forEach(l=>{o+=`<rect x="${l[1]}" y="12" width="14" height="14" rx="3" fill="${ATC[l[0]]}"/><text x="${l[1]+20}" y="24" class="lg">${l[2]}</text>`});
+return `<div class="atcd" data-r="att"><div class="atcd-h"><span>${ic('chart')}</span>สถิติการมาเรียน แยกตามชั้นเรียน<small>${thaiFullDate(new Date())}</small></div><div class="atcd-b"><svg viewBox="0 0 900 300" class="atsvg" role="img" aria-label="แผนภูมิแท่งการมาเรียนแยกตามชั้น">${o}</svg></div></div>`}
+function attDonutCard(){if(!me)return '';const d=attToday(),t=attSum(attAll(),d),tot=t.p+t.a+t.l,C=2*Math.PI*70;
+const segs=[['p','มาเรียน',t.p],['a','ขาด',t.a],['l','ลา',t.l]],pc=v=>tot?(v/tot*100).toFixed(1)+'%':'0.0%';
+let o='',acc=0;
+if(!tot)o=`<circle cx="100" cy="100" r="70" fill="none" stroke="#E6EAF6" stroke-width="34"/>`;
+else segs.forEach((g,i)=>{if(!g[2])return;const f=g[2]/tot,len=f*C,mid=(acc+f/2)*2*Math.PI-Math.PI/2;
+o+=`<circle class="atdn" style="animation-delay:${i*150}ms" cx="100" cy="100" r="70" fill="none" stroke="${ATC[g[0]]}" stroke-width="34" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-acc*C}" transform="rotate(-90 100 100)"><title>${g[1]} ${g[2]} คน (${pc(g[2])})</title></circle>`;
+const big=f>=.12,r=big?70:70+17+16,x=100+r*Math.cos(mid),yy=100+r*Math.sin(mid)+4;
+o+=`<text x="${x}" y="${yy}" text-anchor="middle" class="${big?'dn-in':'dn-out'}">${pc(g[2])}</text>`;acc+=f});
+const lg=segs.map(g=>`<div class="atl"><i style="background:${ATC[g[0]]}"></i><b>${g[1]}</b><span>${g[2]} คน</span><em>${pc(g[2])}</em></div>`).join('');
+return `<div class="atcd" data-r="att"><div class="atcd-h"><span>${ic('grid')}</span>สัดส่วนการมาเรียน (รวมทุกชั้นเรียน)</div><div class="atcd-b atdw"><div class="atdv"><svg viewBox="-12 -12 224 224" class="atdsvg">${o}<text x="100" y="94" text-anchor="middle" class="dn-c1">รวมทั้งหมด</text><text x="100" y="116" text-anchor="middle" class="dn-c2">${tot} คน</text></svg></div>
+<div class="atlg">${lg}<div class="atn">${tot?`เช็คชื่อแล้ว ${t.done} / ${t.rooms} ห้อง${t.u?` · ยังไม่เช็ค ${t.u} คน`:''}`:'ยังไม่มีการเช็คชื่อวันนี้'}</div></div></div></div>`}
 setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
