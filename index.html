@@ -312,12 +312,12 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .atcd .atlg{flex:0 1 340px}
 .atcd .atdv{flex:0 0 180px}
 
-.hrow{align-items:stretch}.hrow>.atcd{display:flex;flex-direction:column;cursor:pointer}.hrow>.atcd .atcd-b{flex:1;display:flex;align-items:center;padding:12px 16px 16px}
-.hrow .atsvg{width:100%;height:auto;max-height:100%}.hrow .anp{height:100%;box-sizing:border-box}#an_home{display:flex;flex-direction:column}#an_home>.anp{flex:1}
+.hrow{align-items:stretch}.hrow>.atcd{align-self:stretch}.hrow>.atcd{display:flex;flex-direction:column;cursor:pointer}.hrow>.atcd .atcd-b{flex:1;display:flex;align-items:center;padding:12px 16px 16px}
+.hrow>.atcd{contain:size;min-height:0}.hrow>.atcd .atcd-b{min-height:0;overflow:hidden;padding:10px 14px 12px}.hrow .atsvg{width:100%;height:100%;display:block}#an_home{align-self:start}
 .hs3 .bx{display:none}.hs3>div{width:100%}
 .atm{display:flex;align-items:center;gap:12px;margin-top:2px}.atm-d{width:92px;height:92px;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18))}
 .atm-t{font-size:20px;font-weight:700;fill:#0F7A4A;font-family:inherit}
-.atm-l{display:grid;gap:3px;font-size:.78rem;color:#fff;min-width:0;flex:1}.atm-l>div{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.atm-l{display:grid;gap:2px;font-size:.74rem;color:#fff;min-width:0;flex:1}.atm-l>div{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .atm-l i{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.7)}.atm-l em{font-style:normal;margin-left:auto;font-weight:700}.atm-l small{color:rgba(255,255,255,.85);font-size:.7rem}
 @media(prefers-reduced-motion:reduce){.atb,.atdn,.atcd{animation:none!important}}
 @media(prefers-reduced-motion:reduce){.hs,.hs *,.hs::before,.hs::after,.hero-w::after,.grid.split>.grid>.grid.g2>.card,.grid.split>.grid>.grid.g2>.card:after,.svhm,.svhm *,.cb,.cb *,.cb:after{animation:none!important}}
@@ -1859,7 +1859,7 @@ const attRoster=k=>ST.filter(x=>x.ty==k[0]&&x.lv==+k.slice(1));
 function attCount(k,d){const r=attRoster(k),mk=attMarks(d,k);let p=0,a=0,l=0;r.forEach(x=>{const v=mk[x.id];if(v=='p')p++;else if(v=='a')a++;else if(v=='l')l++});return{n:r.length,p,a,l,u:r.length-p-a-l}}
 function attSum(keys,d){const o={n:0,p:0,a:0,l:0,u:0,rooms:0,done:0};keys.forEach(k=>{const c=attCount(k,d);if(!c.n)return;o.n+=c.n;o.p+=c.p;o.a+=c.a;o.l+=c.l;o.u+=c.u;o.rooms++;if(c.p+c.a+c.l>0)o.done++});return o}
 const attAll=()=>[...attCls('m'),...attCls('b')];
-const attPctOf=o=>{const t=o.p+o.a+o.l;return t?Math.round(o.p/t*100):null};
+const attPctOf=o=>(o.p+o.a+o.l)&&o.n?Math.round(o.p/o.n*100):null;
 function attPct(){return attPctOf(attSum(attAll(),attToday()))}
 const attCan=k=>!!me&&(me.role=='founder'||isHomeroomOf(k));
 function attSub(){const d=attToday();if(attSubDate==d)return;attSubDate=d;if(attUn)attUn();
@@ -1911,7 +1911,7 @@ function attMark(k,sid,v){if(!attCan(k))return;const cur=attMarks(attDate||attTo
 function attAllSet(k,v){if(!attCan(k))return;const o={};attRoster(k).forEach(x=>o[x.id]=v);attSet(k,o)}
 
 /* ===== แผนภูมิการมาเรียน (หน้าหลัก) ===== */
-const ATC={p:'#33A877',a:'#F0627A',l:'#F7B731'};
+const ATC={p:'#33A877',a:'#F0627A',l:'#F7B731',u:'#CBD3E6'};
 const attShort=i=>String(LV[i]||'').replace(/^ชั้น/,'').replace('อนุบาล ','อ.').replace('ประถมศึกษาปีที่ ','ป.').trim();
 function attBarInner(){if(!me)return '';const d=attToday(),keys=attAll(),cn={};keys.forEach(k=>cn[k]=attCount(k,d));
 let mx=0;keys.forEach(k=>mx=Math.max(mx,cn[k].p,cn[k].a,cn[k].l));
@@ -1946,12 +1946,12 @@ return `<div class="atdw"><div class="atdv"><svg viewBox="-12 -12 224 224" class
 function attCombinedCard(){if(!me)return '';
 return `<div class="atcd" data-r="att"><div class="atcd-h"><span>${ic('chart')}</span>สถิติการมาเรียน แยกตามชั้นเรียน<small>${thaiFullDate(new Date())}</small></div>
 <div class="atcd-b">${attBarInner()}</div></div>`}
-function attMiniHtml(){if(!me)return '';const t=attSum(attAll(),attToday()),tot=t.p+t.a+t.l,C=2*Math.PI*38,pc=v=>tot?(v/tot*100).toFixed(1)+'%':'0.0%';
-const segs=[['p','มา',t.p],['a','ขาด',t.a],['l','ลา',t.l]];let o=`<circle cx="60" cy="60" r="58" fill="rgba(255,255,255,.93)"/>`,acc=0;
+function attMiniHtml(){if(!me)return '';const t=attSum(attAll(),attToday()),tot=t.n,C=2*Math.PI*38,pc=v=>tot?(v/tot*100).toFixed(1)+'%':'0.0%';
+const segs=[['p','มา',t.p],['a','ขาด',t.a],['l','ลา',t.l],['u','ยังไม่เช็ค',t.u]];let o=`<circle cx="60" cy="60" r="58" fill="rgba(255,255,255,.93)"/>`,acc=0;
 if(!tot)o+=`<circle cx="60" cy="60" r="38" fill="none" stroke="#E2E7F3" stroke-width="17"/>`;
 else segs.forEach((g,i)=>{if(!g[2])return;const f=g[2]/tot,len=f*C;o+=`<circle class="atdn" style="animation-delay:${i*150}ms" cx="60" cy="60" r="38" fill="none" stroke="${ATC[g[0]]}" stroke-width="17" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-acc*C}" transform="rotate(-90 60 60)"><title>${g[1]} ${g[2]} คน (${pc(g[2])})</title></circle>`;acc+=f});
-o+=`<text x="60" y="66" text-anchor="middle" class="atm-t">${tot?Math.round(t.p/tot*100)+'%':'–'}</text>`;
-return `<div class="atm"><svg viewBox="0 0 120 120" class="atm-d">${o}</svg><div class="atm-l">${segs.map(g=>`<div><i style="background:${ATC[g[0]]}"></i><span>${g[1]} ${g[2]} คน</span><em>${pc(g[2])}</em></div>`).join('')}<small>${tot?'รวม '+tot+' คน':'ยังไม่เช็คชื่อ'}</small></div></div>`}
+o+=`<text x="60" y="66" text-anchor="middle" class="atm-t">${tot&&(t.p+t.a+t.l)?Math.round(t.p/tot*100)+'%':'–'}</text>`;
+return `<div class="atm"><svg viewBox="0 0 120 120" class="atm-d">${o}</svg><div class="atm-l">${segs.map(g=>`<div><i style="background:${ATC[g[0]]}"></i><span>${g[1]} ${g[2]} คน</span><em>${pc(g[2])}</em></div>`).join('')}<small>นักเรียนทั้งหมด ${tot} คน</small></div></div>`}
 setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
