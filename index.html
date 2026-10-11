@@ -321,6 +321,10 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .atm-l i{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.7)}.atm-l em{font-style:normal;margin-left:auto;font-weight:700}.atm-l small{color:rgba(255,255,255,.85);font-size:.7rem}
 @media(prefers-reduced-motion:reduce){.atb,.atdn,.atcd{animation:none!important}}
 /* สภาพอากาศ */
+.wxh{position:absolute!important;right:22px;bottom:14px;z-index:2;pointer-events:none}
+.wxh-i{display:flex;align-items:center;gap:2px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.45))}
+.wxh-i .wx-sv{width:84px;height:70px}.wxh-i b{font-size:2.3rem;font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.65),0 0 3px rgba(0,0,0,.5)}
+@media(max-width:700px){.wxh{right:12px;bottom:8px}.wxh-i .wx-sv{width:56px;height:48px}.wxh-i b{font-size:1.5rem}}
 #wx_home{position:relative;min-height:0}
 .wxc{position:absolute;inset:0;border-radius:20px;overflow:hidden;padding:12px 16px 12px;display:flex;flex-direction:column;justify-content:space-between;gap:4px;background:linear-gradient(160deg,var(--g1),var(--g2));border:1px solid rgba(150,165,205,.35);box-shadow:0 10px 22px -14px rgba(70,90,160,.5),inset 0 1px 0 rgba(255,255,255,.8);color:#26304F;animation:lvIn .6s .1s both;cursor:pointer}
 .wx-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.wx-h b{font-size:.95rem;color:#312E81}.wx-h small{font-size:.66rem;color:#6B7794;text-align:right}
@@ -930,7 +934,7 @@ try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)
 const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).includes(k));
 return `<div class="card dvd" style="--c:${d[3]}"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('เอกสารดาวน์โหลด'),divDocsBlock(k))}${k=='budget'?P(fileSectionTitle('งานพัสดุ'),divFieldBlock(k,'supply')):''}</div></div>${k=='budget'?projectSection():''}`};
 const V={
-home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การมาเรียนวันนี้','cal','#22B573','%',null,'att',attMiniHtml()],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
+home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div><div id="wx_hero" class="wxh">${wxHeroHtml()}</div></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การมาเรียนวันนี้','cal','#22B573','%',null,'att',attMiniHtml()],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
 <div class="grid split hrow">${attCombinedCard()}<div id="an_home">${annHtml()}</div></div>
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2"><div id="wx_home">${wxHtml()}</div><div id="sv_home">${svHomeHtml()}</div></div></div>
 <div class="grid" style="align-content:start">${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
@@ -2014,7 +2018,8 @@ return `<div class="wxc wx-${k}" style="--g1:${g1};--g2:${g2}" onclick="wxLoad(t
 <div class="wx-sn"><span>🌅 ขึ้น <b>${hm(d.sunrise[0])} น.</b></span><span>🌇 ตก <b>${hm(d.sunset[0])} น.</b></span></div>
 <div class="wx-pm" style="--pc:${pc.c}"><i></i><span>PM2.5 <b>${pm==null?'–':r(pm)}</b> µg/ลบ.ม.</span><em>${pc.t}</em></div>
 <div class="wx-ch"><span>💧 ชื้น ${r(c.relative_humidity_2m)}%</span><span>☔ ฝน ${r(d.precipitation_probability_max[0])}%</span><span>🌬 ลม ${r(c.wind_speed_10m)} กม./ชม.</span><span>☀ UV ${r(d.uv_index_max[0])}</span></div></div>`}
-function wxUpd(){const el=document.getElementById('wx_home');if(el&&me)el.innerHTML=wxHtml()}
+function wxHeroHtml(){if(!me||!WX)return '';const c=WX.w.current,k=wxKind(c.weather_code,c.is_day==1);return `<div class="wxh-i" title="${esc(WXD[c.weather_code]||'')}">${wxScene(k)}<b>${Math.round(c.temperature_2m)}°</b></div>`}
+function wxUpd(){const el=document.getElementById('wx_home');if(el&&me)el.innerHTML=wxHtml();const h=document.getElementById('wx_hero');if(h&&me)h.innerHTML=wxHeroHtml()}
 setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
