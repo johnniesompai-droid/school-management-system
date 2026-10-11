@@ -347,6 +347,37 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .lt-f{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.lt-fn{color:var(--mute);font-size:.72rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lt-exp{margin-left:auto;color:var(--mute);font-size:.7rem}
 .lt-note{font-size:.78rem;color:var(--mute);margin:-4px 0 10px}.lt-to{display:flex;gap:6px;flex-wrap:wrap}
 .lt-pl{max-height:210px;overflow:auto;border:1.5px solid #E3E9FB;border-radius:12px;padding:6px;display:grid;gap:2px}.lt-p{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:8px;cursor:pointer;font-weight:400}.lt-p:hover{background:#F2F5FF}.lt-p small{display:block;color:var(--mute);font-size:.7rem}.lt-p input{width:16px;height:16px;margin:0}
+/* แบนเนอร์หนังสือเข้า-ออก */
+.lt-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}@media(max-width:1000px){.lt-row,.lt-adg{grid-template-columns:1fr!important}}
+.lt-adg{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
+.lbn{position:relative;border-radius:24px;padding:18px 18px 16px;overflow:hidden;min-width:0;animation:lvIn .6s .1s both;box-shadow:0 12px 26px -16px rgba(70,90,160,.55),inset 0 1px 0 rgba(255,255,255,.85);border:1px solid rgba(150,165,205,.35);background-size:260% 260%}
+.lbn>*{position:relative;z-index:1}
+.lbn-in{background:linear-gradient(135deg,#E8F3FF,#EAF6FF 35%,#E6F8F3 70%,#EEF4FF);--ac:#2F6BFF;--ac2:#14B8A6;animation:lvIn .6s .1s both,cbFlow 18s ease-in-out infinite}
+.lbn-out{background:linear-gradient(135deg,#F3EEFF,#FBEFFA 40%,#EEF1FF 75%,#F6EFFF);--ac:#8B5CF6;--ac2:#EC4899;animation:lvIn .6s .2s both,cbFlow 20s ease-in-out infinite}
+.lbn-ad{background:linear-gradient(135deg,#E8FAF3,#FFF8E3 45%,#EAF5FF 80%,#E8FAF3);--ac:#14B8A6;--ac2:#F5A524;animation:lvIn .6s .1s both,cbFlow 20s ease-in-out infinite}
+.lbn-o{position:absolute!important;z-index:0!important;border-radius:50%;pointer-events:none;background:radial-gradient(circle,color-mix(in srgb,var(--ac) 22%,transparent),transparent 70%);animation:lvDrift 9s ease-in-out infinite}
+.lbn-o.o1{width:170px;height:170px;right:-50px;top:-50px}.lbn-o.o2{width:130px;height:130px;left:-40px;bottom:-40px;background:radial-gradient(circle,color-mix(in srgb,var(--ac2) 20%,transparent),transparent 70%);animation-delay:-4s}
+.lbn-sp{position:absolute!important;z-index:0!important;color:var(--ac);font-style:normal;font-size:.9rem;opacity:.5;pointer-events:none;animation:lvTw 3s ease-in-out infinite}.lbn-sp.s1{right:20%;top:14px}.lbn-sp.s2{right:8%;top:52px;animation-delay:-1s;font-size:.7rem}.lbn-sp.s3{right:34%;top:30px;animation-delay:-2s;font-size:.6rem}
+.lbn-h{display:flex;align-items:center;gap:12px;margin-bottom:12px}.lbn-h h3{margin:0;font-size:1.15rem;color:#26304F}.lbn-h small{color:#6B7794;font-size:.74rem}
+.lbn-ic{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;display:grid;place-items:center;box-shadow:0 8px 16px -8px var(--ac);animation:lvBob 3.4s ease-in-out infinite}.lbn-ic svg{width:22px;height:22px}
+.lbn-un{margin-left:auto;background:#FF5A6E;color:#fff;border-radius:999px;padding:3px 12px;font-size:.78rem;font-weight:600;animation:lvGlow 2.4s infinite}
+.lbn-card{background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-radius:18px;padding:14px;box-shadow:0 6px 16px -12px rgba(70,90,160,.5)}
+.lbn-t{margin:16px 0 8px;font-size:.92rem;color:#312E81}.lbn-b{display:grid;gap:10px}
+.lt-i{background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.95);border-radius:16px;padding:12px 14px;display:grid;gap:8px;animation:anIn .5s both;transition:transform .2s,box-shadow .2s;min-width:0}.lt-i:hover{transform:translateY(-2px);box-shadow:0 12px 20px -14px rgba(70,90,160,.6)}
+.lt-i.un{box-shadow:inset 3px 0 0 #F5A524,0 6px 14px -12px rgba(245,165,36,.6)}
+.lt-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.lt-h b{flex:1;min-width:0;color:#26304F}.lt-h em{font-style:normal;font-size:.74rem;color:#B7791F;font-weight:600}.lt-h em.ok{color:#14804A}.lt-h em.od{color:#C0263F}
+.lt-tag{display:inline-block;color:#fff;border-radius:999px;padding:1px 9px;font-size:.66rem;font-weight:600;white-space:nowrap}
+.lt-mg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 14px}.lt-m{display:grid;font-size:.78rem;min-width:0}.lt-m span{color:#7B879C;font-size:.68rem}.lt-m b{font-weight:500;color:#26304F;overflow-wrap:anywhere}.lt-m.od b{color:#C0263F;font-weight:600}.lt-m.nt{grid-column:1/-1}
+.lt-f{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.lt-file{display:inline-flex;align-items:center;gap:6px;background:#F4F6FF;border-radius:10px;padding:3px 8px;font-size:.74rem;max-width:100%}.lt-file a{color:var(--blue);text-decoration:none;font-weight:600}.lt-file a:hover{text-decoration:underline}
+.lt-fk{color:#fff;border-radius:6px;padding:1px 6px;font-size:.6rem;font-weight:700}.lt-fn{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lt-exp{margin-left:auto;color:#7B879C;font-size:.68rem}.lt-to{display:flex;gap:6px;flex-wrap:wrap}
+.lt-empty{text-align:center;color:#7B879C;font-size:.84rem;padding:22px 10px;border:1.5px dashed rgba(150,165,205,.6);border-radius:14px;background:rgba(255,255,255,.5)}
+.lt-fm{display:grid;gap:10px}.lt-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:560px){.lt-two{grid-template-columns:1fr}}
+.lt-ph{display:flex;gap:8px;margin:6px 0}.lt-pl{max-height:170px;overflow:auto;border:1.5px solid #E3E9FB;border-radius:12px;padding:6px;display:grid;gap:2px;background:#fff}
+.lt-p{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:8px;cursor:pointer;font-weight:400}.lt-p:hover{background:#F2F5FF}.lt-p small{display:block;color:var(--mute);font-size:.7rem}.lt-p input{width:16px;height:16px;margin:0}
+.lt-fl{display:grid;gap:6px;margin-top:8px}.lt-fr{display:flex;align-items:center;gap:8px}.lt-fr .in{margin:0;flex:1;min-width:0}.lt-fr small{color:var(--mute);white-space:nowrap}.lt-fr button{border:0;background:none;color:#C0263F;cursor:pointer;font-size:1rem}
+.lt-sd{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.lt-sd small{color:#14804A}
+@media(prefers-reduced-motion:reduce){.lbn,.lbn *{animation:none!important}}
 /* ปฏิทินการมาเรียน */
 .ac-flt{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0 12px}.ac-flt label{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;color:var(--mute)}.ac-flt select{width:auto;margin:0}
 .ac-x tr.grp td{position:sticky;left:0;background:#EEF1FF;color:#312E81;font-weight:600;text-align:left;padding:5px 10px}
@@ -992,7 +1023,7 @@ home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div><div
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2"><div id="wx_home">${wxHtml()}</div><div id="sv_home">${svHomeHtml()}</div></div></div>
 <div class="grid" style="align-content:start">${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" style="--c:${d[3]}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
-admin:()=>PT('งานธุรการ','ทะเบียนเลขที่คำสั่ง/หนังสือ · แบบฟอร์ม / เอกสารดาวน์โหลด · เกษียนหนังสือราชการ')+`<div id="rg_wrap">${rgHtml()}</div>`+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
+admin:()=>PT('งานธุรการ','ทะเบียนเลขที่คำสั่ง/หนังสือ · แบบฟอร์ม / เอกสารดาวน์โหลด · เกษียนหนังสือราชการ')+ltAdminBanner()+`<div id="rg_wrap">${rgHtml()}</div>`+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:m[3]=='tt'?[['tt:teach','ตารางสอน'],['tt:class','ตารางเรียน'],['tt:entry','บันทึกตารางสอน'],['tt:check','ตรวจสอบตาราง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=e=>{e.stopPropagation();ntfToggle()};
@@ -1150,60 +1181,71 @@ try{for(const l of LT.filter(x=>!ltAliveItem(x)&&(x.createdBy==me._id||me.role==
 if(canManageAdmin())for(const m of MM.filter(x=>!ltAliveItem(x))){await rm(m.files);await db.collection('memos').doc(m.id).delete().catch(()=>{})}}catch(e){}ltPurging=false}
 setInterval(()=>{if(me&&ltInit)ltPurge()},36e5);
 async function ltRead(id){const l=LT.find(x=>x.id==id);if(!l||!me||!me.sid||l.createdBy==me._id||(l.reads&&l.reads[me.sid]))return;const t=new Date().toISOString();l.reads=Object.assign({},l.reads,{[me.sid]:t});updateBell&&updateBell();try{await db.collection('letters').doc(id).set({reads:{[me.sid]:t}},{merge:true})}catch(e){}}
-function ltSetTab(t){ltTab=t;ltUpd()}
-function ltUpd(){const w=document.getElementById('lt_wrap');if(w)w.innerHTML=ltBody()}
-function ltFilesHtml(files,id){return (files||[]).map(f=>`<a class="btn o" href="${f.url}" target="_blank" rel="noopener" onclick="${id?`ltRead('${id}')`:''}">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}" onclick="${id?`ltRead('${id}')`:''}" title="${esc(f.name)}">ดาวน์โหลด</a><small class="lt-fn">${esc(f.name)}</small>`).join('')}
-const ltExp=x=>`<small class="lt-exp">จะถูกลบอัตโนมัติใน ${ltLeft(x)} วัน</small>`;
-function ltIncoming(){const t=T0(),items=[];
+const LDN=()=>({title:'',sids:[],dl:'',note:'',q:'',files:[],busy:false,msg:''});
+let LD={c:LDN(),a:LDN()};
+function ltWhen(iso){if(!iso)return '–';try{const d=new Date(iso);return d.toLocaleDateString('th-TH',{timeZone:'Asia/Bangkok',day:'numeric',month:'short',year:'2-digit'})+' '+d.toLocaleTimeString('th-TH',{timeZone:'Asia/Bangkok',hour:'2-digit',minute:'2-digit'})+' น.'}catch(e){return iso.slice(0,10)}}
+function ltUpd(){const a=document.getElementById('lt_in'),b=document.getElementById('lt_out_list'),c=document.getElementById('lt_admin_list');if(a)a.innerHTML=ltInList();if(b)b.innerHTML=ltOutList(x=>x.via!='admin');if(c)c.innerHTML=ltOutList(x=>x.via=='admin')}
+function ltFilesHtml(files,id){const f=id?`ltRead('${id}')`:'';return (files||[]).map(x=>`<span class="lt-file"><span class="lt-fk" style="background:${fileKind(x.name)[1]}">${fileKind(x.name)[0]}</span><span class="lt-fn" title="${esc(x.name)}">${esc(x.name)}</span><a href="${x.url}" target="_blank" rel="noopener" onclick="${f}">เปิด</a><a href="${x.url}" download="${esc(x.name)}" onclick="${f}">โหลด</a></span>`).join('')}
+const ltExp=x=>`<small class="lt-exp">ลบอัตโนมัติใน ${ltLeft(x)} วัน</small>`;
+const ltMeta=(k,v,cls)=>`<div class="lt-m ${cls||''}"><span>${k}</span><b>${v}</b></div>`;
+function ltInList(){const items=[];
 MM.filter(m=>m.assigneeSid==me.sid&&ltAliveItem(m)).forEach(m=>items.push({k:'mm',m,at:m.createdAt||''}));
 ltAlive().filter(l=>l.createdBy!=me._id&&(l.toSids||[]).includes(me.sid)).forEach(l=>items.push({k:'lt',l,at:l.createdAt||''}));
 items.sort((a,b)=>b.at.localeCompare(a.at));
-if(!items.length)return E('ยังไม่มีหนังสือหรือไฟล์ที่ส่งถึงคุณ',110);
-return items.map(it=>{if(it.k=='mm'){const m=it.m,dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
-return `<div class="rw lt-i${m.ack?'':' un'}" style="flex-direction:column;align-items:stretch;gap:8px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><span class="lt-tag" style="background:#F5A524">เกษียนหนังสือ</span> <b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><small>จาก ${esc(m.createdByName||'งานธุรการ')}${m.date?' · วันที่เกษียน '+th(m.date):''}${m.deadline?' · ดำเนินการภายใน '+th(m.deadline):''}</small>${m.note?`<small style="white-space:pre-wrap">${esc(m.note)}</small>`:''}</span>
-<em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'#F5A524'}">${m.ack?'รับแล้ว เมื่อ '+th(m.ackAt.slice(0,10)):overdue?'เลยกำหนดแล้ว':'รอดำเนินการ'}</em></div>
-<div class="lt-f">${ltFilesHtml(m.files,'')}${!m.ack?`<button type="button" class="btn g" data-ackmm="${m.id}">รับทราบ / กดรับหนังสือ</button>`:''}${ltExp(m)}</div></div>`}
-const l=it.l,rd=!!(l.reads&&l.reads[me.sid]);
-return `<div class="rw lt-i${rd?'':' un'}" style="flex-direction:column;align-items:stretch;gap:8px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><span class="lt-tag" style="background:#2F6BFF">ไฟล์จากครู</span> <b>${esc(l.title||'')}</b><small>จาก ${esc(l.fromName||'')} · ${th((l.createdAt||'').slice(0,10))}${(l.toSids||[]).length>1?' · ส่งถึง '+(l.toSids||[]).length+' คน':''}</small>${l.note?`<small style="white-space:pre-wrap">${esc(l.note)}</small>`:''}</span>
-<em style="font-style:normal;font-size:.78rem;color:${rd?'#22B573':'#F5A524'}">${rd?'อ่านแล้ว':'ยังไม่ได้เปิดอ่าน'}</em></div>
-<div class="lt-f">${ltFilesHtml(l.files,l.id)}${!rd?`<button type="button" class="btn g" onclick="ltRead('${l.id}')">รับทราบ</button>`:''}${ltExp(l)}</div></div>`}).join('')}
-function ltOutgoing(){const items=[];ltAlive().filter(l=>l.createdBy==me._id).forEach(l=>items.push({k:'lt',l,at:l.createdAt||''}));
-MM.filter(m=>m.createdBy==me._id&&ltAliveItem(m)).forEach(m=>items.push({k:'mm',m,at:m.createdAt||''}));items.sort((a,b)=>b.at.localeCompare(a.at));
-if(!items.length)return E('ยังไม่มีหนังสือออก กดปุ่ม "ส่งไฟล์ถึงครู" เพื่อส่ง',110);
-return items.map(it=>{if(it.k=='mm'){const m=it.m;return `<div class="rw lt-i" style="flex-direction:column;align-items:stretch;gap:8px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><span class="lt-tag" style="background:#F5A524">เกษียนหนังสือ</span> <b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><small>ส่งถึง ${esc(m.assigneeName||'')} · ${th((m.createdAt||'').slice(0,10))}</small></span><em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':'#F5A524'}">${m.ack?'รับแล้ว':'ยังไม่รับ'}</em></div><div class="lt-f">${ltFilesHtml(m.files,'')}${ltExp(m)}</div></div>`}
-const l=it.l,rs=l.reads||{},names=(l.toNames||[]),sids=l.toSids||[],nr=sids.filter(x=>rs[x]).length;
-return `<div class="rw lt-i" style="flex-direction:column;align-items:stretch;gap:8px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><span class="lt-tag" style="background:#2F6BFF">ไฟล์ถึงครู</span> <b>${esc(l.title||'')}</b><small>${th((l.createdAt||'').slice(0,10))}${l.note?' · '+esc(l.note):''}</small></span><em style="font-style:normal;font-size:.78rem;color:${nr==sids.length?'#22B573':'#F5A524'}">อ่านแล้ว ${nr}/${sids.length} คน</em></div>
+if(!items.length)return `<div class="lt-empty">ยังไม่มีหนังสือหรือไฟล์ที่ส่งถึงคุณ</div>`;
+return items.map((it,n)=>{const isM=it.k=='mm',x=isM?it.m:it.l,from=isM?(x.createdByName||'งานธุรการ'):(x.fromName||''),title=(isM&&x.no?x.no+' · ':'')+(x.title||''),dl=x.deadline||'',rd=isM?!!x.ack:!!(x.reads&&x.reads[me.sid]),od=dl&&dl<svDay(new Date())&&!rd,tag=isM?['เกษียนหนังสือ','#F5A524']:x.via=='admin'?['จากงานธุรการ','#14B8A6']:['ไฟล์จากครู','#2F6BFF'];
+return `<div class="lt-i${rd?'':' un'}" style="animation-delay:${Math.min(n,8)*.06}s"><div class="lt-h"><span class="lt-tag" style="background:${tag[1]}">${tag[0]}</span><b>${esc(title)}</b><em class="${rd?'ok':od?'od':''}">${rd?(isM?'รับแล้ว':'อ่านแล้ว'):od?'เลยกำหนดแล้ว':'ยังไม่ได้เปิดอ่าน'}</em></div>
+<div class="lt-mg">${ltMeta('วันที่หนังสือเข้า',ltWhen(x.createdAt))}${ltMeta('ผู้ส่ง',esc(from))}${ltMeta('หมดเขตภายใน',dl?th(dl):'ไม่ระบุ',od?'od':'')}${ltMeta('หมายเหตุ',x.note?esc(x.note):'–','nt')}</div>
+<div class="lt-f">${ltFilesHtml(x.files,isM?'':x.id)}${!rd?(isM?`<button type="button" class="btn g" data-ackmm="${x.id}">รับทราบ</button>`:`<button type="button" class="btn g" onclick="ltRead('${x.id}')">รับทราบ</button>`):''}${ltExp(x)}</div></div>`}).join('')}
+function ltOutList(flt){const items=[];ltAlive().filter(l=>l.createdBy==me._id&&flt(l)).forEach(l=>items.push({k:'lt',l,at:l.createdAt||''}));
+if(flt({via:'teacher'}))MM.filter(m=>m.createdBy==me._id&&ltAliveItem(m)).forEach(m=>items.push({k:'mm',m,at:m.createdAt||''}));items.sort((a,b)=>b.at.localeCompare(a.at));
+if(!items.length)return `<div class="lt-empty">ยังไม่มีรายการที่ส่ง</div>`;
+return items.map((it,n)=>{if(it.k=='mm'){const m=it.m;return `<div class="lt-i" style="animation-delay:${Math.min(n,8)*.06}s"><div class="lt-h"><span class="lt-tag" style="background:#F5A524">เกษียนหนังสือ</span><b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><em class="${m.ack?'ok':''}">${m.ack?'รับแล้ว':'ยังไม่รับ'}</em></div><div class="lt-mg">${ltMeta('ส่งเมื่อ',ltWhen(m.createdAt))}${ltMeta('ผู้รับ',esc(m.assigneeName||''))}</div><div class="lt-f">${ltFilesHtml(m.files,'')}${ltExp(m)}</div></div>`}
+const l=it.l,rs=l.reads||{},names=l.toNames||[],sids=l.toSids||[],nr=sids.filter(x=>rs[x]).length;
+return `<div class="lt-i" style="animation-delay:${Math.min(n,8)*.06}s"><div class="lt-h"><span class="lt-tag" style="background:#8B5CF6">หนังสือออก</span><b>${esc(l.title||'')}</b><em class="${nr==sids.length?'ok':''}">อ่านแล้ว ${nr}/${sids.length}</em></div>
+<div class="lt-mg">${ltMeta('ส่งเมื่อ',ltWhen(l.createdAt))}${ltMeta('หมดเขตภายใน',l.deadline?th(l.deadline):'ไม่ระบุ')}${ltMeta('หมายเหตุ',l.note?esc(l.note):'–','nt')}</div>
 <div class="lt-to">${sids.map((x,i)=>`<span class="atc ${rs[x]?'p':'u'}" title="${rs[x]?'อ่านเมื่อ '+esc(ntfAgo(rs[x])):'ยังไม่อ่าน'}">${esc(names[i]||x)}${rs[x]?' ✓':''}</span>`).join('')}</div>
 <div class="lt-f">${ltFilesHtml(l.files,'')}<button type="button" class="btn r" onclick="ltDel('${l.id}')">ลบ</button>${ltExp(l)}</div></div>`}).join('')}
-function ltBody(){const un=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack&&ltAliveItem(m)).length+ltAlive().filter(l=>l.createdBy!=me._id&&(l.toSids||[]).includes(me.sid)&&!(l.reads&&l.reads[me.sid])).length;
-return `<div class="rg-tabs"><button class="${ltTab=='in'?'on':''}" style="--c:#2F6BFF" onclick="ltSetTab('in')">หนังสือเข้า${un?`<i>${un}</i>`:''}</button><button class="${ltTab=='out'?'on':''}" style="--c:#8B5CF6" onclick="ltSetTab('out')">หนังสือออก</button><span style="margin-left:auto"><button class="btn" onclick="ltCompose()">+ ส่งไฟล์ถึงครู</button></span></div>
-<div class="card"><h3>${ltTab=='in'?'หนังสือเข้า':'หนังสือออก'}</h3><div class="lt-note">เก็บข้อมูลและไฟล์ไว้ ${LT_DAYS} วัน หลังจากนั้นระบบจะลบทิ้งอัตโนมัติ</div>${ltTab=='in'?ltIncoming():ltOutgoing()}</div>`}
-V.comm=()=>PT('หนังสือเข้า & หนังสือออก','รับหนังสือราชการที่ได้รับมอบหมาย และส่งไฟล์ถึงครูท่านอื่นได้ พร้อมแจ้งเตือนผู้รับ')+`<div id="lt_wrap">${ltBody()}</div>`;
-/* ส่งไฟล์ถึงครู */
-function ltCompose(){if(!me)return;if(!me.sid)return alert('บัญชีของคุณยังไม่ได้ผูกกับรายชื่อบุคลากร จึงยังส่งไฟล์ไม่ได้');ltFiles=[];
-const ppl=PP.filter(p=>p.id!=me.sid).sort((a,b)=>dn(a).localeCompare(dn(b),'th'));
-const o=document.createElement('div');o.className='rgm';o.id='lt_m';o.innerHTML=`<div class="rgm-b" role="dialog"><h3>ส่งไฟล์ถึงครู</h3>
-<label class="lb">เรื่อง <i style="color:#E5484D">*</i><input class="in" id="lt_title" placeholder="เช่น ส่งแผนการสอนหน่วยที่ 3"></label>
-<div class="lb">ส่งถึง <i style="color:#E5484D">*</i> <small id="lt_cnt" style="color:var(--mute)">(เลือกแล้ว 0 คน)</small><input class="in" id="lt_q" placeholder="ค้นหาชื่อครู" oninput="ltFilter()" style="margin:6px 0"><div class="lt-pl" id="lt_pl">${ppl.map(p=>`<label class="lt-p" data-n="${esc(dn(p)).toLowerCase()}"><input type="checkbox" value="${p.id}" onchange="ltCount()"><span>${esc(dn(p))}${p.po?`<small>${esc(p.po)}</small>`:''}</span></label>`).join('')}</div>
-<button class="btn o" style="margin-top:6px" onclick="ltAll()">เลือก/ยกเลิกทั้งหมด</button></div>
-<label class="lb">รายละเอียด (ถ้ามี)<textarea class="in" id="lt_note" rows="2"></textarea></label>
-<div class="lb">แนบไฟล์ (สูงสุด 5 ไฟล์ · ไฟล์ละไม่เกิน 10MB · PDF, Word, Excel, รูปภาพ)<input class="in" type="file" id="lt_file" multiple onchange="ltPickFiles(this)"><small id="lt_fl" style="color:var(--mute)"></small></div>
-<div id="lt_msg" class="rg-warn"></div><div class="rgm-f"><button class="btn o" onclick="document.getElementById('lt_m').remove()">ยกเลิก</button><button class="btn" id="lt_sv" onclick="ltSend()">ส่งไฟล์</button></div></div>`;
-o.addEventListener('mousedown',e=>{if(e.target==o)o.remove()});document.body.appendChild(o)}
-function ltFilter(){const q=document.getElementById('lt_q').value.trim().toLowerCase();document.querySelectorAll('#lt_pl .lt-p').forEach(l=>l.style.display=!q||l.dataset.n.includes(q)?'':'none')}
-function ltCount(){const n=document.querySelectorAll('#lt_pl input:checked').length;document.getElementById('lt_cnt').textContent='(เลือกแล้ว '+n+' คน)'}
-function ltAll(){const bs=[...document.querySelectorAll('#lt_pl .lt-p')].filter(l=>l.style.display!='none').map(l=>l.querySelector('input')),on=bs.some(b=>!b.checked);bs.forEach(b=>b.checked=on);ltCount()}
-function ltPickFiles(el){const fs=[...el.files],bad=fs.find(f=>!allowedFile(f)||f.size>10*1024*1024);if(bad){alert('ไฟล์ "'+bad.name+'" ไม่รองรับหรือใหญ่เกิน 10MB');el.value='';ltFiles=[];document.getElementById('lt_fl').textContent='';return}
-if(fs.length>5){alert('แนบได้สูงสุด 5 ไฟล์');el.value='';ltFiles=[];return}ltFiles=fs;document.getElementById('lt_fl').textContent=fs.map(f=>f.name).join(', ')}
-async function ltSend(){const title=document.getElementById('lt_title').value.trim(),sids=[...document.querySelectorAll('#lt_pl input:checked')].map(b=>b.value),note=document.getElementById('lt_note').value.trim(),msg=document.getElementById('lt_msg');
-if(!title)return alert('กรุณากรอกเรื่อง');if(!sids.length)return alert('กรุณาเลือกผู้รับอย่างน้อย 1 คน');if(!ltFiles.length&&!note&&!confirm('ยังไม่ได้แนบไฟล์และไม่มีรายละเอียด ต้องการส่งต่อหรือไม่?'))return;
-const b=document.getElementById('lt_sv');b.disabled=true;const id=uid(),files=[];
-try{for(let i=0;i<ltFiles.length;i++){const f=ltFiles[i];msg.textContent=`กำลังอัปโหลดไฟล์ ${i+1}/${ltFiles.length}...`;const path=`letters/${id}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);files.push({name:f.name,url:await ref.getDownloadURL(),path,size:f.size})}
-msg.textContent='กำลังส่ง...';const pp=sids.map(x=>PP.find(p=>p.id==x));
-await db.collection('letters').doc(id).set({title,note,files,toSids:sids,toNames:pp.map(p=>p?dn(p):''),fromSid:me.sid,fromName:me.n,createdBy:me._id,createdAt:new Date().toISOString(),reads:{}});
-document.getElementById('lt_m').remove();ltTab='out';ltUpd()}
-catch(e){b.disabled=false;msg.textContent='';alert('ส่งไม่สำเร็จ: '+e.message)}}
+/* ฟอร์มส่งหนังสือ (p='c' หน้าหนังสือเข้า-ออก · p='a' เมนูงานธุรการ) */
+function ltFormHtml(p){const d=LD[p],ppl=PP.filter(x=>x.id!=me.sid).sort((a,b)=>dn(a).localeCompare(dn(b),'th')),q=d.q.trim().toLowerCase();
+return `<div class="lt-fm"><label class="lb">ชื่อเรื่อง <i style="color:#E5484D">*</i><input class="in" value="${esc(d.title)}" placeholder="เช่น ขอเชิญประชุมครู / ส่งแผนการสอน" oninput="LD.${p}.title=this.value"></label>
+<div class="lb">ผู้รับ (เลือกได้หลายคน) <i style="color:#E5484D">*</i> <small id="${p}_cnt" style="color:var(--mute)">เลือกแล้ว ${d.sids.length} คน</small>
+<div class="lt-ph"><input class="in" placeholder="ค้นหาชื่อครู" value="${esc(d.q)}" oninput="ltQ('${p}',this.value)" style="margin:0"><button type="button" class="btn o" onclick="ltAll('${p}')">เลือก/ยกเลิกทั้งหมด</button></div>
+<div class="lt-pl" id="${p}_pl">${ppl.map(x=>`<label class="lt-p" data-n="${esc(dn(x)).toLowerCase()}" style="${q&&!dn(x).toLowerCase().includes(q)?'display:none':''}"><input type="checkbox" ${d.sids.includes(x.id)?'checked':''} onchange="ltTog('${p}','${x.id}',this.checked)"><span>${esc(dn(x))}${x.po?`<small>${esc(x.po)}</small>`:''}</span></label>`).join('')}</div></div>
+<div class="lt-two"><label class="lb">หมดเขตภายในวันที่ (กดเลือกจากปฏิทิน)<input class="in" type="date" value="${d.dl}" onclick="try{this.showPicker()}catch(e){}" oninput="LD.${p}.dl=this.value"></label>
+<label class="lb">วันที่ส่ง<input class="in" value="ระบบบันทึกตามวัน-เวลาจริงเมื่อกดส่ง" disabled></label></div>
+<label class="lb">หมายเหตุ<textarea class="in" rows="2" placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)" oninput="LD.${p}.note=this.value">${esc(d.note)}</textarea></label>
+<div class="lb">แนบไฟล์ (สูงสุด 5 ไฟล์) ตั้งชื่อไฟล์ได้
+${dzBox('ltAddFile',[p])}
+<div class="lt-fl">${d.files.map((f,i)=>`<div class="lt-fr"><span class="lt-fk" style="background:${fileKind(f.file.name)[1]}">${fileKind(f.file.name)[0]}</span><input class="in" value="${esc(f.name)}" oninput="LD.${p}.files[${i}].name=this.value" title="ชื่อไฟล์ที่ผู้รับจะเห็น"><small>${fmtSize(f.file.size)}</small><button type="button" onclick="ltRmFile('${p}',${i})" title="เอาออก">✕</button></div>`).join('')}</div></div>
+<div class="lt-sd"><button type="button" class="btn" id="${p}_sv" ${d.busy?'disabled':''} onclick="ltSend('${p}')">${d.busy?'กำลังส่ง...':'ส่งหนังสือ'}</button><small id="${p}_msg">${esc(d.msg)}</small></div></div>`}
+function ltFormUpd(p){const w=document.getElementById('lt_form_'+p);if(w)w.innerHTML=ltFormHtml(p)}
+function ltQ(p,v){LD[p].q=v;const q=v.trim().toLowerCase();document.querySelectorAll('#'+p+'_pl .lt-p').forEach(l=>l.style.display=!q||l.dataset.n.includes(q)?'':'none')}
+function ltTog(p,id,on){const a=LD[p].sids,i=a.indexOf(id);if(on&&i<0)a.push(id);if(!on&&i>=0)a.splice(i,1);const c=document.getElementById(p+'_cnt');if(c)c.textContent='เลือกแล้ว '+a.length+' คน'}
+function ltAll(p){const bs=[...document.querySelectorAll('#'+p+'_pl .lt-p')].filter(l=>l.style.display!='none').map(l=>l.querySelector('input')),on=bs.some(b=>!b.checked);bs.forEach(b=>{b.checked=on;b.dispatchEvent(new Event('change'))})}
+function ltAddFile(p,f){if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');if(LD[p].files.length>=5)return alert('แนบได้สูงสุด 5 ไฟล์');LD[p].files.push({file:f,name:f.name});ltFormUpd(p)}
+function ltRmFile(p,i){LD[p].files.splice(i,1);ltFormUpd(p)}
+async function ltSend(p){const d=LD[p];if(d.busy)return;if(p=='a'&&!canManageAdmin())return alert('เฉพาะครูธุรการที่ส่งหนังสือจากเมนูนี้ได้');
+if(!me.sid)return alert('บัญชีของคุณยังไม่ได้ผูกกับรายชื่อบุคลากร จึงยังส่งไม่ได้');
+if(!d.title.trim())return alert('กรุณากรอกชื่อเรื่อง');if(!d.sids.length)return alert('กรุณาเลือกผู้รับอย่างน้อย 1 คน');
+d.busy=true;d.msg='';ltFormUpd(p);const id=uid(),files=[];
+try{for(let i=0;i<d.files.length;i++){const f=d.files[i],ext=(f.file.name.match(/\.[^.]+$/)||[''])[0];let nm=(f.name||'').trim()||f.file.name;if(ext&&!nm.toLowerCase().endsWith(ext.toLowerCase()))nm+=ext;
+d.msg=`กำลังอัปโหลดไฟล์ ${i+1}/${d.files.length}...`;const m=document.getElementById(p+'_msg');if(m)m.textContent=d.msg;
+const path=`letters/${id}/${Date.now()}_${f.file.name}`,ref=storage.ref(path);await ref.put(f.file);files.push({name:nm,url:await ref.getDownloadURL(),path,size:f.file.size})}
+const pp=d.sids.map(x=>PP.find(q=>q.id==x));
+await db.collection('letters').doc(id).set({title:d.title.trim(),note:d.note.trim(),deadline:d.dl||'',files,toSids:d.sids.slice(),toNames:pp.map(q=>q?dn(q):''),fromSid:me.sid,fromName:me.n,via:p=='a'?'admin':'teacher',createdBy:me._id,createdAt:new Date().toISOString(),reads:{}});
+LD[p]=LDN();LD[p].msg='ส่งหนังสือเรียบร้อยแล้ว ✓';ltFormUpd(p);ltUpd()}
+catch(e){d.busy=false;d.msg='';ltFormUpd(p);alert('ส่งไม่สำเร็จ: '+e.message)}}
 async function ltDel(id){const l=LT.find(x=>x.id==id);if(!l||!confirm('ลบรายการนี้และไฟล์แนบ?'))return;try{for(const f of l.files||[])await storage.ref(f.path).delete().catch(()=>{});await db.collection('letters').doc(id).delete()}catch(e){alert('ลบไม่สำเร็จ: '+e.message)}}
+const ltUnread=()=>MM.filter(m=>m.assigneeSid==me.sid&&!m.ack&&ltAliveItem(m)).length+ltAlive().filter(l=>l.createdBy!=me._id&&(l.toSids||[]).includes(me.sid)&&!(l.reads&&l.reads[me.sid])).length;
+const lbnSp=()=>'<i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i><i class="lbn-sp s3">✦</i><i class="lbn-o o1"></i><i class="lbn-o o2"></i>';
+function ltInBanner(){const un=ltUnread();return `<div class="lbn lbn-in">${lbnSp()}<div class="lbn-h"><span class="lbn-ic">${ic('doc')}</span><div><h3>หนังสือเข้า</h3><small>เก็บไว้ ${LT_DAYS} วัน แล้วลบอัตโนมัติ</small></div>${un?`<span class="lbn-un">ใหม่ ${un}</span>`:''}</div><div id="lt_in" class="lbn-b">${ltInList()}</div></div>`}
+function ltOutBanner(){return `<div class="lbn lbn-out">${lbnSp()}<div class="lbn-h"><span class="lbn-ic">${ic('cloudup')}</span><div><h3>หนังสือออก</h3><small>ส่งไฟล์ถึงครูได้หลายคน พร้อมแจ้งเตือนผู้รับ</small></div></div>
+<div class="lbn-card"><div id="lt_form_c">${ltFormHtml('c')}</div></div><h4 class="lbn-t">รายการที่ส่งแล้ว</h4><div id="lt_out_list" class="lbn-b">${ltOutList(x=>x.via!='admin')}</div></div>`}
+V.comm=()=>PT('หนังสือเข้า & หนังสือออก','รับหนังสือราชการที่ได้รับมอบหมาย และส่งไฟล์ถึงครูท่านอื่นได้ พร้อมแจ้งเตือนผู้รับ')+`<div class="lt-row">${ltInBanner()}${ltOutBanner()}</div>`;
+/* แบนเนอร์ส่งหนังสือ ในเมนูงานธุรการ (เฉพาะครูธุรการ/ผู้ก่อตั้ง) */
+function ltAdminBanner(){if(!me||!canManageAdmin())return '';return `<div class="lbn lbn-ad" style="margin-bottom:16px">${lbnSp()}<div class="lbn-h"><span class="lbn-ic">${ic('doc')}</span><div><h3>ส่งหนังสือ (งานธุรการ)</h3><small>ระบุเรื่อง ผู้รับหลายคน วันหมดเขต และหมายเหตุ · ผู้รับจะได้รับแจ้งเตือนทันที</small></div></div>
+<div class="lt-adg"><div class="lbn-card"><div id="lt_form_a">${ltFormHtml('a')}</div></div><div><h4 class="lbn-t" style="margin-top:0">รายการที่ส่งจากงานธุรการ</h4><div id="lt_admin_list" class="lbn-b" style="max-height:520px;overflow:auto">${ltOutList(x=>x.via=='admin')}</div></div></div></div>`}
 let SC=[],scTab='collect',scCurrentId=null,scSaveTimer=null;
 function classLabel(k){const ty=k[0],lv=+k.slice(1);return CT[ty]?CT[ty][0]+' · '+LV[lv]:''}
 function defaultExamCols(){return[{id:uid(),name:'สอบเก็บคะแนน',max:0},{id:uid(),name:'สอบกลางภาค',max:0},{id:uid(),name:'สอบปลายภาค',max:0}]}
