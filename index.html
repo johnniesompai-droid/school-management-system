@@ -165,7 +165,56 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .hb-st.st-now{background:rgba(52,211,153,.34);border-color:rgba(167,243,208,.65)}.hb-st.st-free{background:rgba(251,191,36,.28);border-color:rgba(253,230,138,.6)}
 .hb-lk{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.hb-lk .in{margin:0;flex:1;min-width:150px;color:#111}
 .hb .btn{background:#fff;color:#4A5CCB}
+/* ===== หน้าหลักมีชีวิตชีวา ===== */
+.grid.split>*{min-width:0}.anp,#an_home{min-width:0;max-width:100%}
+@keyframes lvIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes lvBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes lvDrift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-9px,8px) scale(1.1)}}
+@keyframes lvShine{0%{transform:translateX(-130%) skewX(-18deg)}55%,100%{transform:translateX(330%) skewX(-18deg)}}
+@keyframes lvRing{0%{box-shadow:0 0 0 0 rgba(107,79,179,.5)}80%,100%{box-shadow:0 0 0 8px rgba(107,79,179,0)}}
+@keyframes lvGlow{0%,100%{opacity:.35}50%{opacity:.8}}
+@keyframes lvTw{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.15) rotate(20deg)}}
+.hero-w::after{content:"";position:absolute;right:-60px;top:-60px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,236,170,.55),rgba(255,236,170,0) 68%);pointer-events:none;animation:lvGlow 6s ease-in-out infinite}
+.hero-w{position:relative}.hero-w>*{position:relative;z-index:1}
+.grid.g4>.hs{animation:lvIn .6s both}.grid.g4>.hs2{animation-delay:.08s}.grid.g4>.hs3{animation-delay:.16s}.grid.g4>.hs4{animation-delay:.24s}
+.hs .bx{animation:lvBob 3.6s ease-in-out infinite}.hs2 .bx{animation-delay:-.9s}.hs3 .bx{animation-delay:-1.8s}.hs4 .bx{animation-delay:-2.7s}
+.hs::after{animation:lvDrift 8s ease-in-out infinite}
+.hs::before{content:"";position:absolute;top:0;bottom:0;left:0;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);pointer-events:none;animation:lvShine 7s ease-in-out infinite}
+.hs2::before{animation-delay:1.2s}.hs3::before{animation-delay:2.4s}.hs4::before{animation-delay:3.6s}
+.grid.split>.grid>.grid.g2>.card{position:relative;overflow:hidden;border:1px solid #D9E2F8;background:linear-gradient(135deg,#F4F7FF,#EEF4FF 55%,#F6F1FF);box-shadow:0 10px 22px -14px rgba(90,110,220,.5);animation:lvIn .6s .1s both;transition:transform .25s,box-shadow .25s}
+.grid.split>.grid>.grid.g2>.card:nth-child(2){background:linear-gradient(135deg,#FFF6F9,#FFF3EC 55%,#FFFBEA);border-color:#F6DDE3;animation-delay:.2s}
+.grid.split>.grid>.grid.g2>.card:hover,.svhm:hover,.cb:hover{transform:translateY(-3px)}
+.grid.split>.grid>.grid.g2>.card:after{content:"";position:absolute;right:-26px;top:-30px;width:100px;height:100px;border-radius:50%;background:rgba(139,120,250,.12);pointer-events:none;animation:lvDrift 9s ease-in-out infinite}
+.grid.split>.grid>.grid.g2>.card:nth-child(2):after{background:rgba(251,146,60,.13);animation-delay:-3s}
+.grid.split>.grid>.grid.g2>.card>*{position:relative;z-index:1}
+.svhm{animation:lvIn .6s .15s both;transition:transform .25s}
+.svhm:after{animation:lvDrift 8s ease-in-out infinite}
+.svhm-h i{animation:lvBob 3s ease-in-out infinite}
+.svhm-g>div{position:relative;overflow:hidden}
+.svhm-g>div:before{content:"";position:absolute;top:0;bottom:0;left:0;width:35%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);animation:lvShine 6s ease-in-out infinite}
+.svhm-g>div:nth-child(2):before{animation-delay:1.5s}
+.svhm-p{animation:lvBob 3.2s ease-in-out infinite}
+.cb{animation:lvIn .7s .1s both;transition:transform .25s}
+.cb-d.td .n{animation:lvRing 2.2s infinite}
+.cb:after{content:"✦";position:absolute;right:18px;bottom:12px;color:#C4B5FD;font-size:1rem;pointer-events:none;animation:lvTw 3s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.hs,.hs *,.hs::before,.hs::after,.hero-w::after,.grid.split>.grid>.grid.g2>.card,.grid.split>.grid>.grid.g2>.card:after,.svhm,.svhm *,.cb,.cb *,.cb:after{animation:none!important}}
 .hb-msg,.hb-st{transition:none}
+.hero-w{aspect-ratio:auto;max-height:none;min-height:400px;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(10,16,50,.12) 0%,rgba(10,16,50,.38) 45%,rgba(10,16,50,.72) 100%),var(--hero) center 20%/cover}
+.hero-w #tt_today{width:100%}
+.hero-w .hb{background:none;box-shadow:none;border-radius:0;min-height:0;padding:22px 28px 20px;text-shadow:0 2px 10px rgba(0,0,0,.65),0 0 3px rgba(0,0,0,.5)}
+.hero-w .hb-pill{background:none;padding:0;backdrop-filter:none;margin-bottom:14px;font-weight:500}
+.hero-w .hb-st{background:none;border:0;border-left:3px solid rgba(255,255,255,.75);border-radius:0;box-shadow:none;padding:4px 0 4px 14px}
+.hero-w .hb-st.st-now{background:none;border-left-color:#6EE7B7}.hero-w .hb-st.st-free{background:none;border-left-color:#FCD34D}
+.hero-w .hb-msg p{opacity:1}
+.hero-w .tdy-l{gap:2px;padding:0 28px 18px}
+.hero-w .tdy-r{background:none!important;box-shadow:none!important;color:#fff;padding:4px 10px;border-left:3px solid transparent;border-radius:0;text-shadow:0 2px 8px rgba(0,0,0,.7),0 0 3px rgba(0,0,0,.5)}
+.hero-w .tdy-r em,.hero-w .tdy-r b{color:#fff}.hero-w .tdy-r span,.hero-w .tdy-r small{color:rgba(255,255,255,.88)}
+.hero-w .tdy-r.now{border-left-color:#6EE7B7}.hero-w .tdy-r.now b{color:#A7F3D0}
+.hero-w .tdy-r u{background:none!important;color:rgba(255,255,255,.9)!important;text-decoration:none;font-size:.78rem}.hero-w .tdy-r.now u{color:#A7F3D0!important;font-weight:600}
+.hero-w .hb{padding-bottom:10px}
+.hero-w .hb .btn{text-shadow:none}
+@media(max-width:700px){.hero-w{min-height:340px}.hero-w .hb{padding:16px 18px}}
+
 .fo-up{animation:foUp .38s ease forwards}.fi-up{animation:fiUp .55s ease}
 .fo-fade{animation:foFade .38s ease forwards}.fi-fade{animation:fiFade .6s ease}
 .fo-blur{animation:foBlur .38s ease forwards}.fi-blur{animation:fiBlur .55s ease}
@@ -704,9 +753,8 @@ try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)
 const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).includes(k));
 return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('เอกสารดาวน์โหลด'),divDocsBlock(k))}${k=='budget'?P(fileSectionTitle('งานพัสดุ'),divFieldBlock(k,'supply')):''}</div></div>${k=='budget'?projectSection():''}`};
 const V={
-home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
-<div class="grid split"><div class="grid" style="align-content:start"><div id="tt_today">${ttTodayHtml()}</div>
-<div class="grid g2">${P('สถิติการเข้าเรียน',E())}${P('สถิตินักเรียน',E())}</div>
+home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
+<div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${P('สถิติการเข้าเรียน',E())}${P('สถิตินักเรียน',E())}</div>
 <div class="grid g2"><div id="sv_home">${svHomeHtml()}</div></div></div>
 <div class="grid" style="align-content:start"><div id="an_home">${annHtml()}</div>${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
