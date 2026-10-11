@@ -238,7 +238,14 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .cb.hm .cb-e{animation:lvGlow 3s ease-in-out infinite}
 .cb-bot>*{animation:lvIn .6s .3s both}.cb-bot>*:nth-child(2){animation-delay:.45s}
 .cb::before{animation:lvDrift 14s ease-in-out infinite}
-@media(prefers-reduced-motion:reduce){.cb-bg,.cb-d,.cb .cb-e,.cb-bot>*,.cb::before{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.cb-bg,.cb-d,.cb .cb-e,.cb-bot>*{animation:none!important}}
+/* ปฏิทิน: พื้นหลังใหม่ (ไม่มีภูเขา/ตะวัน) */
+.cb::before{display:none!important;animation:none!important}
+.cb{background:linear-gradient(135deg,#F3F0FF,#EAF3FF 40%,#E6F8F1 70%,#FFF3F8);background-size:300% 300%;border:1px solid #D6DDF7!important;box-shadow:0 10px 22px -12px rgba(110,100,230,.45),inset 0 1px 0 rgba(255,255,255,.85)!important}
+.cb-co{border-radius:50%;animation:lvDrift 9s ease-in-out infinite}
+.cb-co.c1{width:130px;height:130px;right:-36px;top:-40px;background:rgba(167,139,250,.18)}
+.cb-co.c2{width:90px;height:90px;left:-30px;bottom:40px;background:rgba(56,189,248,.16);animation-delay:-3s;animation-duration:11s}
+.cb-ttl{background:rgba(255,255,255,.8)}
 @media(prefers-reduced-motion:reduce){.hs,.hs *,.hs::before,.hs::after,.hero-w::after,.grid.split>.grid>.grid.g2>.card,.grid.split>.grid>.grid.g2>.card:after,.svhm,.svhm *,.cb,.cb *,.cb:after{animation:none!important}}
 .hb-msg,.hb-st{transition:none}
 .hero-w{aspect-ratio:auto;max-height:none;height:280px;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(10,16,50,.12) 0%,rgba(10,16,50,.38) 45%,rgba(10,16,50,.72) 100%),var(--hero) center 20%/cover}
@@ -1489,7 +1496,7 @@ const pill=(it)=>{const cc=it.id?col[it.id]:it.h==1?['#FFD9E0','#B3132F']:['#E3E
 const list=items.length?`<div class="cb-l">${items.map(it=>`<div class="cb-i">${pill(it)}<span>${esc(it.n)}${it.h==1?' <small style="color:#B3132F">(วันหยุด)</small>':''}</span>${pg&&it.id?`<button data-ev="${it.id}" title="ลบ">×</button>`:''}</div>`).join('')}</div>`:'<div class="cb-n">ยังไม่มีกิจกรรมในเดือนนี้</div>';
 let right='';
 if(pg&&sel&&sel.startsWith(pre)){const d=+sel.slice(8),es=EV.filter(e=>e.d==sel),ho=holOf(y,m+1,d);right=`<div class="cb-p"><div class="cb-h"><i>${ic('cal')}</i>วันที่ ${d} ${TM[m]}</div>${ho.map(x=>`<div class="cb-i"><span style="color:${x.h?'#B3132F':'#2F5AA8'}">${esc(x.n)}${x.h?' (วันหยุด)':''}</span></div>`).join('')}${es.map(e=>`<div class="cb-i"><span>${esc(e.t)}</span><button data-ev="${e.id}" title="ลบ">×</button></div>`).join('')||(ho.length?'':'<div class="cb-n">ยังไม่มีกิจกรรมในวันนี้</div>')}<div style="display:flex;gap:8px;margin-top:10px"><input class="in" id="et" placeholder="ชื่อกิจกรรม" style="margin:0" onkeydown="if(event.key==\'Enter\')addEv()"><button class="btn" onclick="addEv()">เพิ่ม</button></div></div>`}
-return `<div class="cb ${pg?'pg':'hm'}"${pg?'':` data-r="cal:${y}-${m+1}"`}><i class="cb-bg cb-sun"></i><i class="cb-bg cb-cl c1"></i><i class="cb-bg cb-cl c2"></i><i class="cb-bg cb-bb b1"></i><i class="cb-bg cb-bb b2"></i><i class="cb-bg cb-bb b3"></i><span class="cb-bg cb-sk k1">✦</span><span class="cb-bg cb-sk k2">✦</span>${top}${grid}<div class="cb-bot${right?'':' one'}"><div class="cb-p"><div class="cb-h"><i>${ic('doc')}</i>กิจกรรมสำคัญประจำเดือน</div>${list}</div>${right}</div></div>`}
+return `<div class="cb ${pg?'pg':'hm'}"${pg?'':` data-r="cal:${y}-${m+1}"`}><i class="cb-bg cb-co c1"></i><i class="cb-bg cb-co c2"></i><i class="cb-bg cb-bb b1"></i><i class="cb-bg cb-bb b2"></i><i class="cb-bg cb-bb b3"></i><span class="cb-bg cb-sk k1">✦</span><span class="cb-bg cb-sk k2">✦</span>${top}${grid}<div class="cb-bot${right?'':' one'}"><div class="cb-p"><div class="cb-h"><i>${ic('doc')}</i>กิจกรรมสำคัญประจำเดือน</div>${list}</div>${right}</div></div>`}
 
 const upc=()=>{const t=T0(),l=EV.map(e=>({e,n:Math.round((dt(e.d)-t)/864e5)})).filter(x=>x.n>=0&&x.n<=7).sort((a,b)=>a.n-b.n||a.e.d.localeCompare(b.e.d));
 return `<div style="font-size:.72rem;color:var(--mute);margin-bottom:4px">กิจกรรมที่ใกล้ถึงวัน (ภายใน 7 วัน)</div>`+(l.length?l.map(x=>`<div class="rw" data-r="cal:${+x.e.d.slice(0,4)}-${+x.e.d.slice(5,7)}" style="cursor:pointer"><span><b>${esc(x.e.t)}</b><small>${th(x.e.d)}</small></span><em style="color:${x.n<=1?'var(--red)':'var(--blue)'};font-weight:500">${x.n==0?'วันนี้':x.n==1?'พรุ่งนี้':'อีก '+x.n+' วัน'}</em></div>`).join(''):E('ไม่มีกิจกรรมที่ใกล้ถึงวัน',80))};
