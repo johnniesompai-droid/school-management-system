@@ -262,6 +262,30 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .dvd{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 8%,#fff),#fff 50%);border:1px solid color-mix(in srgb,var(--c) 22%,#fff);animation:lvIn .5s both}
 .dvd>h3{color:color-mix(in srgb,var(--c) 55%,#1F2A5C)}
 @media(prefers-reduced-motion:reduce){.dv,.dv *,.dv:before,.dv:after,.dvd{animation:none!important}}
+/* การมาเรียน */
+.atc{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:500}
+.atc.p{background:#DDF5E8;color:#14804A}.atc.a{background:#FFE1E5;color:#C0263F}.atc.l{background:#FFF1CF;color:#9A6A00}.atc.u{background:#EEF1F8;color:#6B7794}
+.atc-row{display:flex;gap:5px;flex-wrap:wrap;margin:9px 0 2px}
+.att-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:-4px 0 14px}.att-sum{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap}.att-sum b{color:#312E81;margin-right:4px}
+.att-ssum{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:-4px 0 12px;font-size:.84rem;color:#312E81}.att-ssum b{margin-right:4px}.atp{margin-left:auto;font-weight:600;color:#14804A}
+.att-tb{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.att-act{display:inline-flex;gap:8px}
+.att-hr{margin:10px 0 12px;color:var(--mute);font-size:.82rem}
+.att-l{display:grid;gap:6px}
+.att-r{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:12px;background:#F6F8FF;border:1px solid #E3E9FB;transition:transform .18s,box-shadow .18s,background .2s}
+.att-r:hover{transform:translateY(-2px);box-shadow:0 8px 16px -10px rgba(60,70,150,.5)}
+.att-r.s-p{background:#EAF8F0;border-color:#CDEBD9}.att-r.s-a{background:#FFEDF0;border-color:#F7CDD5}.att-r.s-l{background:#FFF6DD;border-color:#F4E2A8}
+.att-n{width:26px;color:var(--mute);font-size:.8rem;text-align:right}.att-nm{flex:1;min-width:0}
+.att-b{display:inline-flex;gap:6px}
+.att-btn{min-width:44px;height:36px;border-radius:12px;border:1.5px solid #D5DBEE;background:#fff;font:inherit;font-weight:700;font-size:.95rem;color:#8793AD;cursor:pointer;transition:transform .15s,background .15s,color .15s,border-color .15s}
+.att-btn:hover:not(:disabled){transform:scale(1.1)}.att-btn:disabled{cursor:default;opacity:.7}
+.att-btn.p.on{background:#22B573;border-color:#22B573;color:#fff;animation:ntfPop .35s}.att-btn.a.on{background:#EF4B63;border-color:#EF4B63;color:#fff;animation:ntfPop .35s}.att-btn.l.on{background:#F5B52E;border-color:#F5B52E;color:#fff;animation:ntfPop .35s}
+.att-btn.p:hover:not(:disabled){border-color:#22B573;color:#22B573}.att-btn.a:hover:not(:disabled){border-color:#EF4B63;color:#EF4B63}.att-btn.l:hover:not(:disabled){border-color:#F5B52E;color:#B27E00}
+.att-ft{margin-top:12px;color:var(--mute)}
+.ath-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}.ath-pc b{font-size:2rem;color:#14804A;line-height:1}.ath-pc small{display:block;color:var(--mute);font-size:.74rem}.ath-ch{display:flex;gap:5px;flex-wrap:wrap}
+.ath-r{margin-bottom:10px}.ath-l{display:flex;justify-content:space-between;gap:8px;font-size:.78rem;margin-bottom:4px}.ath-l span{color:var(--mute)}
+.ath-bar{display:flex;height:9px;border-radius:6px;background:#E6EAF6;overflow:hidden}.ath-bar i{display:block;height:100%;transition:width .6s}.ath-bar .p{background:#34C98A}.ath-bar .a{background:#F0627A}.ath-bar .l{background:#F5C04A}
+.ath-f{margin-top:6px;font-size:.72rem;color:var(--mute)}
+@media(prefers-reduced-motion:reduce){.att-btn.on{animation:none!important}}
 @media(prefers-reduced-motion:reduce){.hs,.hs *,.hs::before,.hs::after,.hero-w::after,.grid.split>.grid>.grid.g2>.card,.grid.split>.grid>.grid.g2>.card:after,.svhm,.svhm *,.cb,.cb *,.cb:after{animation:none!important}}
 .hb-msg,.hb-st{transition:none}
 .hero-w{aspect-ratio:auto;max-height:none;height:280px;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(10,16,50,.12) 0%,rgba(10,16,50,.38) 45%,rgba(10,16,50,.72) 100%),var(--hero) center 20%/cover}
@@ -700,7 +724,7 @@ bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
 I.pen='<path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/>';
 const ic=(n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"${c?` class="${c}"`:''}>${I[n]}</svg>`;
-const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['saving','ออมเงิน','coin'],['att','การเข้าเรียน','cal'],['tt','ตารางสอน & ตารางเรียน','cal','tt'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
+const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['saving','ออมเงิน','coin'],['att','การมาเรียน','cal'],['tt','ตารางสอน & ตารางเรียน','cal','tt'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
 const SYS=[['staff','ทะเบียนบุคลากร','users'],['usr','ผู้ใช้งาน / สิทธิ์การใช้งาน','user'],['set','ตั้งค่าระบบ','gear'],['bak','สำรองข้อมูล','db'],['ie','Import / Export','ud'],['api','API & Integration','code']];
 const DIV=[['academic','กลุ่มบริหารงานวิชาการ','cap','#2F6BFF'],['budget','กลุ่มบริหารงานแผนงานและงบประมาณ','coin','#F5A524'],['personnel','กลุ่มบริหารงานบุคคล','users','#8B5CF6'],['general','กลุ่มบริหารงานทั่วไป','bld','#22B573']];
 const E=(t='ยังไม่มีข้อมูล',h)=>`<div class="empty"${h?` style="min-height:${h}px"`:''}>${t}</div>`;
@@ -853,8 +877,8 @@ try{await storage.ref(f.path).delete().catch(()=>{});const nf=files.filter((_,i)
 const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).includes(k));
 return `<div class="card dvd" style="--c:${d[3]}"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('เอกสารดาวน์โหลด'),divDocsBlock(k))}${k=='budget'?P(fileSectionTitle('งานพัสดุ'),divFieldBlock(k,'supply')):''}</div></div>${k=='budget'?projectSection():''}`};
 const V={
-home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
-<div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${P('สถิติการเข้าเรียน',E())}${P('สถิตินักเรียน',E())}</div>
+home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การมาเรียนวันนี้','cal','#22B573','%',attPct()],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
+<div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${attHomeCard()}${P('สถิตินักเรียน',E())}</div>
 <div class="grid g2"><div id="sv_home">${svHomeHtml()}</div></div></div>
 <div class="grid" style="align-content:start"><div id="an_home">${annHtml()}</div>${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" style="--c:${d[3]}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
@@ -866,10 +890,10 @@ $('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 function updateBell(){if(!me||!$('#ib'))return;const n=ntfList().filter(x=>x.unread).length,old=+($('#ib').dataset.n||0);$('#ib').dataset.n=n;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge${n>old?' pop':''}">${n>99?'99+':n}</i>`:'');if(document.getElementById('ntf_pop')&&!document.getElementById('ntf_pop').classList.contains('hid'))ntfRender()}
 let CUR='home';
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt(s):k=='ann'?V.ann():V.gen(m?m[1]:'')}
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt(s):k=='ann'?V.ann():k=='att'?V.att(s):V.gen(m?m[1]:'')}
 function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
-document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
+document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving'||k=='att')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
 const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
 $('aside').classList.remove('show');scrollTo(0,0)}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-r]');if(a)go(a.dataset.r)});
@@ -878,7 +902,7 @@ I.out='<path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/>';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dbApp=firebase.initializeApp(firebaseConfig),db=firebase.firestore(),fbAuth=firebase.auth(),storage=firebase.storage();
 db.enablePersistence({synchronizeTabs:true}).catch(()=>{});
-let HSV=[],HSVL=false,__svi=0,AN=[],annSlots=[null,null,null],annSeen={},annTk=0,NR=new Set(),annInit=false,annPrev=new Set(),mmInit=false,mmPrev=new Set();
+let HSV=[],HSVL=false,__svi=0,AN=[],annSlots=[null,null,null],annSeen={},annTk=0,ATT={},attDate=null,attLoaded={},attSubDate='',attUn=null,NR=new Set(),annInit=false,annPrev=new Set(),mmInit=false,mmPrev=new Set();
 let U=[],S=[],PP=[],ST=[],HR={},EV=[],me=null,founderExists=false,suppress=false,unsub=[];
 function auth(m){const fo=founderExists;m=fo?(m||'login'):'setup';
 const T={setup:['ตั้งค่าผู้ก่อตั้งระบบ','สร้างบัญชีผู้ก่อตั้ง (ทำครั้งเดียว)'],login:['เข้าสู่ระบบ','โรงเรียนบ้านผาเยอ'],reg:['สมัครสมาชิก','ต้องมีชื่อในทะเบียนบุคลากร และรอผู้ก่อตั้งอนุมัติ']}[m];
@@ -942,6 +966,7 @@ unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.da
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data()||{});render()},e=>{}));
 unsub.push(db.collection('budgetprojects').onSnapshot(qs=>{BP=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
 unsub.push(db.collection('savingtx').onSnapshot(qs=>{HSV=qs.docs.map(d=>{const x=d.data();return{s:x.studentId,w:x.type=='withdraw'?-1:1,a:+x.amount||0,d:svDay(x.createdAt)}});HSVL=true;svHomeUpd()},e=>{}));
+attSub();
 unsub.push(db.collection('announcements').onSnapshot(qs=>{AN=qs.docs.map(d=>{const x=d.data();return{id:d.id,t:x.t||'',k:x.k||'notice',pin:!!x.pin,exp:x.exp||'',by:x.createdByName||'',uid:x.createdBy||'',at:x.createdAt||''}});if(annInit){const t=annToday();AN.filter(a=>!annPrev.has(a.id)&&a.uid!=me._id&&(!a.exp||a.exp>=t)).slice(0,2).forEach(a=>ntfToast({title:a.k=='urgent'?'ข่าวด่วน':'ประกาศใหม่',text:a.t,route:'ann',c:a.k=='urgent'?'#E5484D':'#2F6BFF',id:'an:'+a.id}))}annPrev=new Set(AN.map(a=>a.id));annInit=true;annHomeUpd();updateBell();if(CUR=='ann')render()},e=>{}));
 unsub.push(db.collection('timetables').onSnapshot(qs=>{TT={};qs.docs.forEach(d=>TT[d.id]=d.data());render()},e=>{}));
 unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
@@ -949,7 +974,7 @@ unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,..
 unsub.push(db.collection('notifreads').doc(me._id).onSnapshot(d=>{NR=new Set((d.exists&&d.data().ids)||[]);updateBell()},e=>{}));
 unsub.push(db.collection('scoresheets').where('ownerUid','==',me._id).onSnapshot(qs=>{SC=qs.docs.map(d=>({id:d.id,...d.data()}));if(!(CUR.startsWith('score:')&&qs.metadata.hasPendingWrites))render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];if(attUn){attUn();attUn=null}ATT={};attLoaded={};attSubDate='';annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -1791,6 +1816,65 @@ const kill=()=>{t.classList.add('out');setTimeout(()=>t.remove(),320)};
 t.onclick=e=>{if(n.id)ntfMark(n.id.slice(3));kill();if(!(e.target.tagName=='EM'))go(n.route)};document.body.appendChild(t);setTimeout(kill,7000)}
 document.addEventListener('click',e=>{const el=document.getElementById('ntf_pop');if(el&&!el.classList.contains('hid')&&!el.contains(e.target)&&!e.target.closest('#ib'))el.classList.add('hid')});
 setInterval(()=>{const el=document.getElementById('ntf_pop');if(el&&!el.classList.contains('hid'))ntfRender()},60000);
+
+/* ===== การมาเรียน ===== */
+const attToday=()=>svDay(new Date()),attKey=(d,k)=>d+'_'+k;
+const attMarks=(d,k)=>(ATT[attKey(d,k)]||{}).marks||{};
+const attCls=t=>{const o=[];for(let i=0;i<CT[t][1];i++)o.push(t+i);return o};
+const attRoster=k=>ST.filter(x=>x.ty==k[0]&&x.lv==+k.slice(1));
+function attCount(k,d){const r=attRoster(k),mk=attMarks(d,k);let p=0,a=0,l=0;r.forEach(x=>{const v=mk[x.id];if(v=='p')p++;else if(v=='a')a++;else if(v=='l')l++});return{n:r.length,p,a,l,u:r.length-p-a-l}}
+function attSum(keys,d){const o={n:0,p:0,a:0,l:0,u:0,rooms:0,done:0};keys.forEach(k=>{const c=attCount(k,d);if(!c.n)return;o.n+=c.n;o.p+=c.p;o.a+=c.a;o.l+=c.l;o.u+=c.u;o.rooms++;if(c.p+c.a+c.l>0)o.done++});return o}
+const attAll=()=>[...attCls('m'),...attCls('b')];
+const attPctOf=o=>{const t=o.p+o.a+o.l;return t?Math.round(o.p/t*100):null};
+function attPct(){return attPctOf(attSum(attAll(),attToday()))}
+const attCan=k=>!!me&&(me.role=='founder'||isHomeroomOf(k));
+function attSub(){const d=attToday();if(attSubDate==d)return;attSubDate=d;if(attUn)attUn();
+attUn=db.collection('attendance').where('date','==',d).onSnapshot(qs=>{qs.docs.forEach(x=>{ATT[x.id]={id:x.id,...x.data()}});attLoaded[d]=1;attRefresh()},e=>{attLoaded[d]=1})}
+function attLoad(d){if(attLoaded[d])return;attLoaded[d]=1;db.collection('attendance').where('date','==',d).get().then(qs=>{qs.docs.forEach(x=>{ATT[x.id]={id:x.id,...x.data()}});attRefresh()}).catch(()=>{})}
+function attRefresh(){const[k,s]=CUR.split(':');if(k=='home'||(k=='att'&&!s))render();else if(k=='att')attClassUpd();updateBell&&0}
+setInterval(()=>{if(me)attSub()},300000);
+function attSetDate(v){if(!v)return;attDate=v;attLoad(v);render()}
+function attChips(o){return `<span class="atc p">มา ${o.p}</span><span class="atc a">ขาด ${o.a}</span><span class="atc l">ลา ${o.l}</span>`}
+function attHomeCard(){if(!me)return P('สถิติการมาเรียน',E());const d=attToday(),m=attSum(attCls('m'),d),b=attSum(attCls('b'),d),t=attSum(attAll(),d),pc=attPctOf(t);
+const bar=o=>`<div class="ath-bar"><i class="p" style="width:${o.n?o.p/o.n*100:0}%"></i><i class="a" style="width:${o.n?o.a/o.n*100:0}%"></i><i class="l" style="width:${o.n?o.l/o.n*100:0}%"></i></div>`;
+const row=(l,o)=>`<div class="ath-r"><div class="ath-l"><b>${l}</b><span>มา ${o.p} · ขาด ${o.a} · ลา ${o.l}</span></div>${bar(o)}</div>`;
+return `<div class="card ath" data-r="att" style="cursor:pointer"><h3>สถิติการมาเรียน<a>ดูทั้งหมด</a></h3>
+<div class="ath-top"><div class="ath-pc"><b>${pc===null?'–':pc+'%'}</b><small>${pc===null?'ยังไม่มีการเช็คชื่อวันนี้':'มาเรียนวันนี้'}</small></div><div class="ath-ch">${attChips(t)}</div></div>
+${row('ห้องเรียนหลัก',m)}${row('ห้องเรียนสาขา',b)}
+<div class="ath-f">เช็คชื่อแล้ว ${t.done} / ${t.rooms} ห้อง · ${thaiFullDate(new Date())}</div></div>`}
+function attPicker(){const d=attDate||attToday();attLoad(d);const M=ST.filter(x=>gd(x.tt)=='m').length,F=ST.filter(x=>gd(x.tt)=='f').length,all=attSum(attAll(),d),pc=attPctOf(all);
+const stat=(c,ico,l,v)=>`<div class="sts" style="--c:${c}"><span class="sts-i">${ic(ico)}</span><div><small>${l}</small><b>${v} คน</b></div><span class="sts-ar">›</span></div>`;
+const card=(t,i)=>{const cs=ST.filter(x=>x.ty==t&&x.lv==i),m=cs.filter(x=>gd(x.tt)=='m').length,f=cs.filter(x=>gd(x.tt)=='f').length,k=t+i,c=ST_COL[i%8],o=attCount(k,d),
+ts=(HR[k]||[]).map(id=>PP.find(p=>p.id==id)).filter(Boolean),
+col=(ico,cl,l,v)=>`<div class="stc-c"><span class="stc-ci" style="color:${cl}">${ic(ico)}</span><div><small>${l}</small><b>${v} คน</b></div></div>`;
+return `<div class="stc" style="--c:${c}" data-r="att:${k}"><h4>${esc(LV[i].replace(/^ชั้น/,'').trim())}</h4>
+<div class="stc-r">${col('user','#2F6BFF','ชาย',m)}${col('user','#F0529C','หญิง',f)}${col('users','#4B5A8C','รวม',cs.length)}</div>
+<div class="atc-row">${attChips(o)}${o.u&&o.n?`<span class="atc u">ยังไม่เช็ค ${o.u}</span>`:''}</div>
+<div class="stc-t"><small>ครูประจำชั้น</small>${ts.length?ts.map(p=>`<div class="stc-p">${p.im?`<img src="${p.im}">`:`<span class="stc-av">${ic('user')}</span>`}<span>${esc(dn(p))}</span></div>`).join(''):'<div class="stc-p" style="color:var(--mute)"><span class="stc-av">'+ic('user')+'</span><span>ยังไม่ได้เลือกครูประจำชั้น</span></div>'}</div></div>`};
+return `<div class="svh"><div class="svh-t"><span class="svh-i">${ic('users')}</span><div><h2>การมาเรียน</h2><p>การมาเรียนของนักเรียนแยกตามห้องเรียน</p></div></div>
+<div class="svh-s">${stat('#2F6BFF','users','นักเรียนทั้งหมด',ST.length)}${stat('#2BB5A0','user','นักเรียนชาย',M)}${stat('#F0529C','user','นักเรียนหญิง',F)}</div></div>
+<div class="att-bar"><label class="lb" style="display:inline-flex;align-items:center;gap:8px">วันที่<input class="in" type="date" style="width:auto;margin:0" value="${d}" onchange="attSetDate(this.value)"></label><span class="att-sum"><b>${pc===null?'ยังไม่มีการเช็คชื่อ':'มาเรียน '+pc+'%'}</b>${attChips(all)}<span class="atc u">ยังไม่เช็ค ${all.u}</span></span></div>`
++Object.keys(CT).map(t=>{const g=ST.filter(x=>x.ty==t),gm=g.filter(x=>gd(x.tt)=='m').length,gf=g.filter(x=>gd(x.tt)=='f').length,o=attSum(attCls(t),d);return `<div class="stsec"><h3>${ic(t=='m'?'home':'bld')} ${CT[t][0]}</h3><div class="stsum"><span class="m">ชาย <b>${gm}</b> คน</span><span class="f">หญิง <b>${gf}</b> คน</span><span class="t">รวมทั้งหมด <b>${g.length}</b> คน</span></div>
+<div class="att-ssum"><b>สรุปการมาเรียน${CT[t][0]}</b>${attChips(o)}<span class="atc u">ยังไม่เช็ค ${o.u}</span>${attPctOf(o)!==null?`<span class="atp">มาเรียน ${attPctOf(o)}%</span>`:''}</div>
+<div class="stcg ${t=='b'?'b5':''}">${LV.slice(0,CT[t][1]).map((n,i)=>card(t,i)).join('')}</div></div>`}).join('')}
+V.att=s=>s?attClass(s):attPicker();
+function attClass(k){const t=k[0],i=+k.slice(1);if(!CT[t]||!(i>=0&&i<CT[t][1]))return attPicker();const d=attDate||attToday();attLoad(d);
+return `<div class="pt"><h2>การมาเรียน · ${esc(LV[i])}</h2><p><a class="bk" data-r="att">‹ การมาเรียน</a> / ${CT[t][0]}${attCan(k)?'':' · ดูได้อย่างเดียว (เฉพาะครูประจำชั้นและผู้ก่อตั้งเช็คชื่อได้)'}</p></div><div class="card attc" id="att_wrap">${attClassInner(k)}</div>`}
+function attClassInner(k){const d=attDate||attToday(),r=attRoster(k),can=attCan(k),mk=attMarks(d,k),o=attCount(k,d);
+const ts=(HR[k]||[]).map(id=>PP.find(p=>p.id==id)).filter(Boolean).map(dn).join(', ');
+return `<div class="att-tb"><label class="lb" style="display:inline-flex;align-items:center;gap:8px">วันที่<input class="in" type="date" style="width:auto;margin:0" value="${d}" onchange="attSetDate(this.value)"></label>
+<span class="att-sum">${attChips(o)}<span class="atc u">ยังไม่เช็ค ${o.u}</span></span>
+${can?`<span class="att-act"><button class="btn o" onclick="attAllSet('${k}','p')">✓ มาทั้งห้อง</button><button class="btn o" onclick="attAllSet('${k}','')">ล้างทั้งหมด</button></span>`:''}</div>
+<div class="att-hr">ครูประจำชั้น: ${ts?esc(ts):'ยังไม่ได้เลือก'} · ${thaiFullDate(new Date(d+'T00:00:00'))}</div>
+${r.length?`<div class="att-l">${r.map((x,j)=>{const v=mk[x.id]||'',b=(c,tx,ti)=>`<button type="button" class="att-btn ${c}${v==c?' on':''}" ${can?`onclick="attMark('${k}','${x.id}','${c}')"`:'disabled'} title="${ti}">${tx}</button>`;
+return `<div class="att-r${v?' s-'+v:''}"><span class="att-n">${j+1}</span><span class="att-nm">${esc((x.tt||'')+x.fn+' '+x.ln)}</span><span class="att-b">${b('p','✓','มาเรียน')}${b('a','✕','ขาดเรียน')}${b('l','ลา','ลา')}</span></div>`}).join('')}</div>`:E('ยังไม่มีนักเรียนในชั้นนี้',100)}
+<div class="att-ft"><small id="att_msg">${can?'กดปุ่มเพื่อเช็คชื่อ ระบบบันทึกให้อัตโนมัติ (กดซ้ำเพื่อยกเลิก)':''}</small></div>`}
+function attClassUpd(){const w=document.getElementById('att_wrap'),k=CUR.split(':')[1];if(w&&k)w.innerHTML=attClassInner(k)}
+function attSave(k,marks){const d=attDate||attToday(),id=attKey(d,k),m=document.getElementById('att_msg');if(m)m.textContent='กำลังบันทึก...';
+return db.collection('attendance').doc(id).set({date:d,classKey:k,marks,updatedBy:me._id,updatedByName:me.n,updatedAt:new Date().toISOString()},{merge:true}).then(()=>{const e=document.getElementById('att_msg');if(e)e.textContent='บันทึกแล้ว ✓'}).catch(e=>{alert('บันทึกไม่สำเร็จ: '+e.message);const c=document.getElementById('att_msg');if(c)c.textContent=''})}
+function attSet(k,patch){const d=attDate||attToday(),id=attKey(d,k),doc=ATT[id]||(ATT[id]={id,date:d,classKey:k,marks:{}});doc.marks=Object.assign({},doc.marks||{},patch);attClassUpd();return attSave(k,patch)}
+function attMark(k,sid,v){if(!attCan(k))return;const cur=attMarks(attDate||attToday(),k)[sid]||'';attSet(k,{[sid]:cur==v?'':v})}
+function attAllSet(k,v){if(!attCan(k))return;const o={};attRoster(k).forEach(x=>o[x.id]=v);attSet(k,o)}
 setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
