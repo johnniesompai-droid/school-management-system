@@ -347,6 +347,14 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .lt-f{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.lt-fn{color:var(--mute);font-size:.72rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lt-exp{margin-left:auto;color:var(--mute);font-size:.7rem}
 .lt-note{font-size:.78rem;color:var(--mute);margin:-4px 0 10px}.lt-to{display:flex;gap:6px;flex-wrap:wrap}
 .lt-pl{max-height:210px;overflow:auto;border:1.5px solid #E3E9FB;border-radius:12px;padding:6px;display:grid;gap:2px}.lt-p{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:8px;cursor:pointer;font-weight:400}.lt-p:hover{background:#F2F5FF}.lt-p small{display:block;color:var(--mute);font-size:.7rem}.lt-p input{width:16px;height:16px;margin:0}
+/* แบนเนอร์สีอ่อน: แบบฟอร์ม + เกษียนหนังสือ (เมนูธุรการ) */
+.adbn{position:relative;overflow:hidden;border-radius:24px;padding:14px;margin-bottom:16px;border:1px solid rgba(150,165,205,.35);box-shadow:0 12px 26px -16px rgba(70,90,160,.55),inset 0 1px 0 rgba(255,255,255,.85);background-size:260% 260%;animation:lvIn .6s both,cbFlow 20s ease-in-out infinite;--ac:#8B5CF6;--ac2:#EC4899}
+.adbn>*{position:relative;z-index:1}.adbn>.lbn-o,.adbn>.lbn-sp{position:absolute;z-index:0}
+.adbn-f{background:linear-gradient(135deg,#E8F3FF,#F1ECFF 45%,#E6F8F3 80%,#E8F3FF);--ac:#6366F1;--ac2:#14B8D6}
+.adbn-m{background:linear-gradient(135deg,#FFF3E4,#FFEFF3 45%,#F4EDFF 80%,#FFF3E4);--ac:#F5A524;--ac2:#EC4899}
+.adbn .card{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);box-shadow:0 6px 16px -12px rgba(70,90,160,.5);backdrop-filter:blur(2px);margin-bottom:0}
+.adbn .card:hover{transform:none}
+@media(prefers-reduced-motion:reduce){.adbn,.adbn *{animation:none!important}}
 /* แบนเนอร์ทะเบียนเลขที่ 3 ใบ */
 .rgb-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:16px}@media(max-width:1100px){.rgb-row{grid-template-columns:1fr}}
 .rgb{position:relative;overflow:hidden;border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:330px;border:1px solid rgba(150,165,205,.35);box-shadow:0 12px 26px -16px rgba(70,90,160,.55),inset 0 1px 0 rgba(255,255,255,.85);animation:lvIn .6s both;min-width:0}
@@ -361,6 +369,14 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .rgb-more{align-self:stretch;background:rgba(255,255,255,.7)}
 .rgm-b.rgv{width:min(1000px,100%)}
 @media(prefers-reduced-motion:reduce){.rgb,.rgb *{animation:none!important}}
+/* ตารางไฟล์ในแบนเนอร์หนังสือ */
+.lt-ft{flex:1 1 100%;min-width:0;overflow:hidden;border-radius:10px;background:rgba(255,255,255,.7)}
+.lt-ft table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:.76rem}
+.lt-ft th{background:var(--soft);color:#1F3F99;text-align:left;padding:5px 6px;font-weight:500;white-space:nowrap}
+.lt-ft td{padding:5px 6px;border-top:1px solid var(--line);vertical-align:middle}
+.lt-fnm{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;line-height:1.3}
+.lt-ft .dzrow-actions .btn{padding:4px 7px}.lt-ft .dzrow-actions .btn svg{width:15px;height:15px}
+.lbn-in .lbn-b,.lbn-out #lt_out_list{max-height:560px;overflow:auto;padding-right:2px}
 /* แบนเนอร์หนังสือเข้า-ออก */
 .lt-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}@media(max-width:1000px){.lt-row,.lt-adg{grid-template-columns:1fr!important}}
 .lt-adg{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
@@ -1019,6 +1035,7 @@ let AD={};
 const canManageAdmin=()=>{if(!me)return false;if(me.role=='founder')return true;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&/ธุรการ/.test(mp.po||''))};
 const adminContactCard=()=>{const as=PP.filter(p=>/ธุรการ/.test(p.po||''));
 return as.length?as.map(p=>`<div class="pc" style="display:flex;gap:8px;align-items:center">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}${p.ph?' · '+esc(p.ph):''}</small></span></div>`).join(''):E('ยังไม่มีข้อมูลครูธุรการในหน้าบุคลากร',80)};
+const adSp=()=>'<i class="lbn-o o1"></i><i class="lbn-o o2"></i><i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i><i class="lbn-sp s3">✦</i>';
 const adminDocsBlock=key=>{const files=AD[key]||[],can=canManageAdmin();
 return docsSplit(fileListSection(files,'data-ad',key+':',can),can?upCard('แนบไฟล์เอกสาร',`<input class="in" id="ad_name_${key}" placeholder="ชื่อเอกสาร (ไม่บังคับ)" style="margin:0 0 10px">${dzBox('uploadAdminDoc',[key])}<div id="ad_msg_${key}" class="upc-m"></div>`):'')};
 async function uploadAdminDoc(key,file){const f=file;if(!f)return;if(!allowedFile(f))return alert('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)return alert('ไฟล์ใหญ่เกิน 10MB');
@@ -1037,7 +1054,7 @@ home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div><div
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2"><div id="wx_home">${wxHtml()}</div><div id="sv_home">${svHomeHtml()}</div></div></div>
 <div class="grid" style="align-content:start">${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" style="--c:${d[3]}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
-admin:()=>PT('งานธุรการ','ทะเบียนเลขที่คำสั่ง/หนังสือ · แบบฟอร์ม / เอกสารดาวน์โหลด · เกษียนหนังสือราชการ')+ltAdminBanner()+`<div id="rg_wrap">${rgHtml()}</div>`+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
+admin:()=>PT('งานธุรการ','ทะเบียนเลขที่คำสั่ง/หนังสือ · แบบฟอร์ม / เอกสารดาวน์โหลด · เกษียนหนังสือราชการ')+ltAdminBanner()+`<div id="rg_wrap">${rgHtml()}</div>`+`<div class="adbn adbn-f">${adSp()}<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div></div>`+`<div class="adbn adbn-m">${adSp()}${memoSection()}</div>`,
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:m[3]=='tt'?[['tt:teach','ตารางสอน'],['tt:class','ตารางเรียน'],['tt:entry','บันทึกตารางสอน'],['tt:check','ตรวจสอบตาราง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=e=>{e.stopPropagation();ntfToggle()};
@@ -1199,7 +1216,8 @@ const LDN=()=>({title:'',sids:[],dl:'',note:'',q:'',files:[],busy:false,msg:''})
 let LD={c:LDN(),a:LDN()};
 function ltWhen(iso){if(!iso)return '–';try{const d=new Date(iso);return d.toLocaleDateString('th-TH',{timeZone:'Asia/Bangkok',day:'numeric',month:'short',year:'2-digit'})+' '+d.toLocaleTimeString('th-TH',{timeZone:'Asia/Bangkok',hour:'2-digit',minute:'2-digit'})+' น.'}catch(e){return iso.slice(0,10)}}
 function ltUpd(){const a=document.getElementById('lt_in'),b=document.getElementById('lt_out_list'),c=document.getElementById('lt_admin_list');if(a)a.innerHTML=ltInList();if(b)b.innerHTML=ltOutList(x=>x.via!='admin');if(c)c.innerHTML=ltOutList(x=>x.via=='admin')}
-function ltFilesHtml(files,id){const f=id?`ltRead('${id}')`:'';return (files||[]).map(x=>`<span class="lt-file"><span class="lt-fk" style="background:${fileKind(x.name)[1]}">${fileKind(x.name)[0]}</span><span class="lt-fn" title="${esc(x.name)}">${esc(x.name)}</span><a href="${x.url}" target="_blank" rel="noopener" onclick="${f}">เปิด</a><a href="${x.url}" download="${esc(x.name)}" onclick="${f}">โหลด</a></span>`).join('')}
+function ltFilesHtml(files,id){const f=id?`ltRead('${id}')`:'';if(!(files||[]).length)return '';
+return `<div class="lt-ft"><table><colgroup><col style="width:34px"><col><col style="width:54px"><col style="width:76px"></colgroup><thead><tr><th>ลำดับ</th><th>ชื่อไฟล์</th><th>ประเภท</th><th>จัดการ</th></tr></thead><tbody>${files.map((x,i)=>{const[k,c]=fileKind(x.name);return `<tr><td>${i+1}</td><td><span class="lt-fnm" title="${esc(x.name)}">${esc(x.name)}</span></td><td><span class="dz-badge" style="background:${c}1a;color:${c}">${k}</span></td><td><span class="dzrow-actions"><a class="btn o" href="${x.url}" target="_blank" rel="noopener" title="เปิดดู" onclick="${f}">${ic('eye')}</a><a class="btn o" href="${x.url}" download="${esc(x.name)}" title="ดาวน์โหลด" onclick="${f}">${ic('down')}</a></span></td></tr>`}).join('')}</tbody></table></div>`}
 const ltExp=x=>`<small class="lt-exp">ลบอัตโนมัติใน ${ltLeft(x)} วัน</small>`;
 const ltMeta=(k,v,cls)=>`<div class="lt-m ${cls||''}"><span>${k}</span><b>${v}</b></div>`;
 function ltInList(){const items=[];
@@ -1925,7 +1943,8 @@ if(now.wd==4)gen.push('Happy Friday! ใกล้ถึงสุดสัปด�
 const rnd=a=>a[Math.floor(Math.random()*a.length)],pool=[...sub,...gen];
 let t=rnd(T),u=rnd(pool),tries=0;while(window.__hb&&window.__hb.t==t&&tries++<5)t=rnd(T);tries=0;while(window.__hb&&window.__hb.u==u&&tries++<5)u=rnd(pool);
 window.__hb={t,u};return window.__hb}
-const ttThDate=()=>{const n=ttNowTH();return `${n.d} ${TMS[n.mo-1]} ${n.y+543} ${ttHM(n.min)} น.`};
+const TMF='มกราคม กุมภาพันธ์ มีนาคม เมษายน พฤษภาคม มิถุนายน กรกฎาคม สิงหาคม กันยายน ตุลาคม พฤศจิกายน ธันวาคม'.split(' ');
+const ttThDate=()=>{const n=ttNowTH();return `${DWT[(n.wd+1)%7]} ${n.d} ${TMF[n.mo-1]} ${n.y+543} ${ttHM(n.min)}น.`};
 function ttStatus(){const now=ttNowTH(),own=ttOwn();
 if(!me)return{k:'x',h:''};
 if(!me.sid||!own){if(ttFounder()){const g=PP.find(p=>nm(p)==(me.n||'').trim()||dn(p).trim()==(me.n||'').trim());return{k:'link',h:`<i>เชื่อมบัญชี</i><b>เลือกชื่อของคุณจากรายชื่อบุคลากร</b><span>ทำครั้งเดียว แล้วระบบจะแสดงคาบสอนของคุณที่นี่</span><div class="hb-lk"><select class="in" id="lk_sel"><option value="">-- เลือกชื่อ --</option>${ttTeachers().map(p=>`<option value="${p.id}"${g&&g.id==p.id?' selected':''}>${esc(dn(p))}</option>`).join('')}</select><button class="btn" onclick="linkMe()">เชื่อมบัญชี</button></div>`}}
