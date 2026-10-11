@@ -313,7 +313,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .atcd .atdv{flex:0 0 180px}
 
 .hrow{align-items:stretch}.hrow>.atcd{align-self:stretch}.hrow>.atcd{display:flex;flex-direction:column;cursor:pointer}.hrow>.atcd .atcd-b{flex:1;display:flex;align-items:center;padding:12px 16px 16px}
-.hrow>.atcd{contain:size;min-height:0}.hrow>.atcd .atcd-b{min-height:0;overflow:hidden;padding:10px 14px 12px}.hrow .atsvg{width:100%;height:100%;display:block}#an_home{align-self:start}
+.hrow>.atcd{contain:size;min-height:0}.hrow>.atcd .atcd-b{min-height:0;overflow:hidden;padding:10px 14px 12px}.hrow .atsvg{width:100%;height:100%;display:block}.hrow>.atcd .atcd-b{padding:0 14px 0}#an_home{align-self:start}
 .hs3 .bx{display:none}.hs3>div{width:100%}
 .atm{display:flex;align-items:center;gap:12px;margin-top:2px}.atm-d{width:92px;height:92px;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18))}
 .atm-t{font-size:20px;font-weight:700;fill:#0F7A4A;font-family:inherit}
@@ -1772,7 +1772,7 @@ return{seq,per,tot,day,dep,wd}}
 function svRotHtml(c){const k=c.seq[__svi%c.seq.length],p=c.per[k];
 return `<span class="svhm-p">${esc(classLabel(k))}</span><div class="svhm-rg"><div><small>ออมวันนี้</small><b>฿ ${svFm(p.day)}</b></div><div><small>ยอดสะสม</small><b>฿ ${svFm(p.tot)}</b></div><div><small>นักเรียน</small><b>${p.n} คน</b></div></div><div class="svhm-dots">${c.seq.map((_,i)=>`<i class="${i==__svi%c.seq.length?'on':''}"></i>`).join('')}</div>`}
 function svHomeHtml(){if(!me)return '';const c=svHomeCalc();
-return `<div class="svhm"><div class="svhm-h"><i>${ic('coin')}</i>ออมเงิน<small>${HSVL?'ข้อมูล ณ วันที่ '+thaiFullDate(new Date()):'กำลังโหลด...'}</small></div>
+return `<div class="svhm" data-r="saving" style="cursor:pointer" title="ไปที่เมนูออมเงิน"><div class="svhm-h"><i>${ic('coin')}</i>ออมเงิน<small>${HSVL?'ข้อมูล ณ วันที่ '+thaiFullDate(new Date()):'กำลังโหลด...'}</small></div>
 <div class="svhm-g"><div><small>ยอดเงินออมวันนี้</small><b>฿ ${svFm(c.day)}</b><em>ฝาก ${svFm(c.dep)} · ถอน ${svFm(c.wd)}</em></div><div><small>ยอดเงินออมรวม</small><b>฿ ${svFm(c.tot)}</b><em>ทุกชั้น อนุบาล - ป.6</em></div></div>
 <div class="svhm-r"><div id="sv_rot">${svRotHtml(c)}</div></div></div>`}
 function svHomeUpd(){const el=document.getElementById('sv_home');if(!el||!me)return;el.innerHTML=svHomeHtml()}
@@ -1913,13 +1913,13 @@ function attAllSet(k,v){if(!attCan(k))return;const o={};attRoster(k).forEach(x=>
 /* ===== แผนภูมิการมาเรียน (หน้าหลัก) ===== */
 const ATC={p:'#33A877',a:'#F0627A',l:'#F7B731',u:'#CBD3E6'};
 const attShort=i=>String(LV[i]||'').replace(/^ชั้น/,'').replace('อนุบาล ','อ.').replace('ประถมศึกษาปีที่ ','ป.').trim();
-function attBarInner(){if(!me)return '';const d=attToday(),keys=attAll(),cn={};keys.forEach(k=>cn[k]=attCount(k,d));
+function attBarInner(W=900,H=394){if(!me)return '';const d=attToday(),keys=attAll(),cn={};keys.forEach(k=>cn[k]=attCount(k,d));
 let mx=0;keys.forEach(k=>mx=Math.max(mx,cn[k].p,cn[k].a,cn[k].l));
 const stp=[1,2,5,10,20,50,100,200,500,1000].find(x=>mx/x<=5)||1000,top=Math.max(stp*Math.ceil(mx/stp),stp*2);
-const L=52,R=12,T=44,B=326,PH=B-T,gap=26,nm=CT.m[1],nb=CT.b[1],gw=(900-L-R-gap)/(nm+nb),bw=Math.min(16,gw/4),pad=(gw-bw*3-4)/2;
+const L=52,R=12,T=44,B=H-68,PH=B-T,gap=26,nm=CT.m[1],nb=CT.b[1],gw=(W-L-R-gap)/(nm+nb),bw=Math.min(28,gw/3.6),pad=(gw-bw*3-4)/2;
 const y=v=>B-v/top*PH;let o='';
-for(let t=0;t<=top;t+=stp)o+=`<line x1="${L}" x2="${900-R}" y1="${y(t)}" y2="${y(t)}" stroke="#E6EAF6"/><text x="${L-8}" y="${y(t)+4}" text-anchor="end" class="ax">${t}</text>`;
-o+=`<line x1="${L}" x2="${900-R}" y1="${B}" y2="${B}" stroke="#C9D0EA"/>`;
+for(let t=0;t<=top;t+=stp)o+=`<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="#E6EAF6"/><text x="${L-8}" y="${y(t)+4}" text-anchor="end" class="ax">${t}</text>`;
+o+=`<line x1="${L}" x2="${W-R}" y1="${B}" y2="${B}" stroke="#C9D0EA"/>`;
 let n=0;const xs=(t,i)=>L+(t=='m'?i*gw:nm*gw+gap+i*gw);
 Object.keys(CT).forEach(t=>{for(let i=0;i<CT[t][1];i++){const k=t+i,c=cn[k],x0=xs(t,i)+pad;
 [['p',c.p,'มาเรียน'],['a',c.a,'ขาด'],['l',c.l,'ลา']].forEach((b,j)=>{const x=x0+j*(bw+2),h=b[1]/top*PH;
@@ -1930,8 +1930,8 @@ o+=`<line x1="${bx-gap/2}" x2="${bx-gap/2}" y1="${T-6}" y2="${B+4}" stroke="#B9B
 <rect x="${L+3}" y="${B+32}" width="${mw}" height="28" rx="7" fill="#E4DEFC"/><text x="${L+3+mw/2}" y="${B+51}" text-anchor="middle" class="pl" fill="#2D2A7A">ห้องเรียนหลัก</text>
 <rect x="${bx+3}" y="${B+32}" width="${nb*gw-6}" height="28" rx="7" fill="#D6ECFB"/><text x="${bx+3+(nb*gw-6)/2}" y="${B+51}" text-anchor="middle" class="pl" fill="#1E4F7A">ห้องเรียนสาขา</text>
 <text x="${L-40}" y="22" class="ax">จำนวน (คน)</text>`;
-[['p',705,'มาเรียน'],['a',795,'ขาด'],['l',855,'ลา']].forEach(l=>{o+=`<rect x="${l[1]}" y="12" width="14" height="14" rx="3" fill="${ATC[l[0]]}"/><text x="${l[1]+20}" y="24" class="lg">${l[2]}</text>`});
-return `<svg viewBox="0 0 900 394" class="atsvg" role="img" aria-label="แผนภูมิแท่งการมาเรียนแยกตามชั้น">${o}</svg>`}
+[['p',W-195,'มาเรียน'],['a',W-105,'ขาด'],['l',W-45,'ลา']].forEach(l=>{o+=`<rect x="${l[1]}" y="12" width="14" height="14" rx="3" fill="${ATC[l[0]]}"/><text x="${l[1]+20}" y="24" class="lg">${l[2]}</text>`});
+return `<svg viewBox="0 0 ${W} ${H}" class="atsvg" role="img" aria-label="แผนภูมิแท่งการมาเรียนแยกตามชั้น">${o}</svg>`}
 function attDonutInner(){if(!me)return '';const d=attToday(),t=attSum(attAll(),d),tot=t.p+t.a+t.l,C=2*Math.PI*70;
 const segs=[['p','มาเรียน',t.p],['a','ขาด',t.a],['l','ลา',t.l]],pc=v=>tot?(v/tot*100).toFixed(1)+'%':'0.0%';
 let o='',acc=0;
@@ -1952,6 +1952,11 @@ if(!tot)o+=`<circle cx="60" cy="60" r="38" fill="none" stroke="#E2E7F3" stroke-w
 else segs.forEach((g,i)=>{if(!g[2])return;const f=g[2]/tot,len=f*C;o+=`<circle class="atdn" style="animation-delay:${i*150}ms" cx="60" cy="60" r="38" fill="none" stroke="${ATC[g[0]]}" stroke-width="17" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-acc*C}" transform="rotate(-90 60 60)"><title>${g[1]} ${g[2]} คน (${pc(g[2])})</title></circle>`;acc+=f});
 o+=`<text x="60" y="66" text-anchor="middle" class="atm-t">${tot&&(t.p+t.a+t.l)?Math.round(t.p/tot*100)+'%':'–'}</text>`;
 return `<div class="atm"><svg viewBox="0 0 120 120" class="atm-d">${o}</svg><div class="atm-l">${segs.map(g=>`<div><i style="background:${ATC[g[0]]}"></i><span>${g[1]} ${g[2]} คน</span><em>${pc(g[2])}</em></div>`).join('')}<small>นักเรียนทั้งหมด ${tot} คน</small></div></div>`}
+
+let attFW=0,attFH=0;
+function attFit(){const b=document.querySelector('.hrow .atcd-b');if(!b||!me)return;const cs=getComputedStyle(b),w=Math.round(b.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)),h=Math.round(b.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom));
+if(w<300||h<200)return;if(Math.abs(w-attFW)<3&&Math.abs(h-attFH)<3&&b.dataset.fit)return;attFW=w;attFH=h;b.dataset.fit=1;b.innerHTML=attBarInner(w,h)}
+(function(){const r=render;render=function(){const x=r.apply(this,arguments);attFW=0;attFH=0;attFit();return x};addEventListener('resize',()=>{clearTimeout(window.__aft);window.__aft=setTimeout(attFit,120)})})();
 setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
