@@ -165,6 +165,30 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .hb-st.st-now{background:rgba(52,211,153,.34);border-color:rgba(167,243,208,.65)}.hb-st.st-free{background:rgba(251,191,36,.28);border-color:rgba(253,230,138,.6)}
 .hb-lk{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.hb-lk .in{margin:0;flex:1;min-width:150px;color:#111}
 .hb .btn{background:#fff;color:#4A5CCB}
+/* ===== แจ้งเตือน ===== */
+.bell-badge{top:-8px!important;right:-9px!important;min-width:19px;height:19px;border-radius:50%!important;padding:0 4px!important;display:flex;align-items:center;justify-content:center;font-size:.66rem!important;font-weight:700;line-height:1!important;background:#F02849!important;border:2px solid #fff;box-sizing:border-box;box-shadow:0 2px 6px rgba(240,40,73,.5)}
+.bell-badge.pop{animation:ntfPop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes ntfPop{0%{transform:scale(.2)}100%{transform:scale(1)}}
+@keyframes ntfDrop{from{opacity:0;transform:translateY(-8px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes ntfSlide{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+.ntf{position:fixed;z-index:300;width:360px;max-width:calc(100vw - 20px);max-height:74vh;overflow:hidden;display:flex;flex-direction:column;background:#fff;border-radius:18px;box-shadow:0 18px 40px -12px rgba(40,50,110,.45),0 0 0 1px rgba(120,130,200,.18);transform-origin:top right;animation:ntfDrop .22s ease}
+.ntf.hid{display:none}
+.ntf:before{content:"";position:absolute;top:-6px;right:var(--ar,24px);width:12px;height:12px;background:#F3F0FF;transform:rotate(45deg);border-radius:3px 0 0 0}
+.ntf-h{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;background:linear-gradient(135deg,#F3F0FF,#EAF3FF);position:relative}
+.ntf-h b{font-size:1rem;color:#312E81}.ntf-h a{font-size:.74rem;color:var(--blue);cursor:pointer}
+.ntf-l{overflow:auto;padding:6px}
+.ntf-i{display:flex;gap:10px;padding:10px;border-radius:12px;cursor:pointer;align-items:flex-start;transition:background .15s}
+.ntf-i:hover{background:#F5F7FF}.ntf-i.un{background:#F0F5FF}.ntf-i.un:hover{background:#E6EEFF}
+.ntf-ic{flex:none;width:38px;height:38px;border-radius:50%;color:#fff;display:grid;place-items:center}.ntf-ic svg{width:19px;height:19px}
+.ntf-b{flex:1;min-width:0}.ntf-b b{display:block;font-size:.84rem;font-weight:600;color:#1F2A44}
+.ntf-b span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:.8rem;color:#4A556F;margin-top:1px}
+.ntf-b small{display:block;margin-top:3px;font-size:.7rem;color:#2F6BFF}.ntf-i:not(.un) .ntf-b small{color:var(--mute)}
+.ntf-dot{flex:none;width:10px;height:10px;border-radius:50%;background:#2F6BFF;margin-top:6px}
+.ntf-e{padding:30px 10px;text-align:center;color:#A3ADC0;font-size:.84rem}
+.ntf-f{padding:9px 16px;border-top:1px solid var(--line);text-align:center;font-size:.8rem}.ntf-f a{color:var(--blue);cursor:pointer}
+.ntf-t{position:fixed;bottom:20px;right:18px;z-index:310;width:330px;max-width:calc(100vw - 24px);display:flex;gap:11px;align-items:flex-start;background:#fff;border-radius:16px;padding:12px 14px;box-shadow:0 16px 34px -12px rgba(40,50,110,.5),0 0 0 1px rgba(120,130,200,.2);border-left:4px solid var(--c);cursor:pointer;animation:ntfSlide .35s cubic-bezier(.2,1.2,.4,1)}
+.ntf-t .ntf-ic{background:var(--c)}.ntf-t.out{opacity:0;transform:translateX(40px);transition:.3s}
+.ntf-t em{position:absolute;top:6px;right:10px;font-style:normal;color:#A3ADC0;font-size:.9rem}
 /* ===== หน้าหลักมีชีวิตชีวา ===== */
 .grid.split>*{min-width:0}.anp,#an_home{min-width:0;max-width:100%}
 @keyframes lvIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -194,15 +218,37 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .svhm-g>div:before{content:"";position:absolute;top:0;bottom:0;left:0;width:35%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);animation:lvShine 6s ease-in-out infinite}
 .svhm-g>div:nth-child(2):before{animation-delay:1.5s}
 .svhm-p{animation:lvBob 3.2s ease-in-out infinite}
-.cb{animation:lvIn .7s .1s both;transition:transform .25s}
+.cb{background:linear-gradient(160deg,#cfe4ff,#e4defc 30%,#f3eefd 55%,#d9f3ec 80%,#cfe4ff);background-size:300% 300%;animation:lvIn .7s .1s both,cbFlow 20s ease-in-out infinite;transition:transform .25s}
 .cb-d.td .n{animation:lvRing 2.2s infinite}
 .cb:after{content:"✦";position:absolute;right:18px;bottom:12px;color:#C4B5FD;font-size:1rem;pointer-events:none;animation:lvTw 3s ease-in-out infinite}
+@keyframes cbFlow{0%,100%{background-position:0% 0%}50%{background-position:100% 100%}}
+@keyframes cbCloud{0%{transform:translateX(-30%)}100%{transform:translateX(130%)}}
+@keyframes cbUp{0%{transform:translateY(0) scale(.8);opacity:0}15%{opacity:.8}100%{transform:translateY(-190px) scale(1.1);opacity:0}}
+@keyframes cbSun{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.12);opacity:1}}
+.cb>*{z-index:1}.cb>.cb-bg{position:absolute!important;z-index:0;pointer-events:none;display:block}
+.cb-sun{right:22px;top:14px;width:54px;height:54px;border-radius:50%;background:radial-gradient(circle,#FFF3B8 0 38%,rgba(255,226,130,.55) 40%,rgba(255,226,130,0) 72%);animation:cbSun 5s ease-in-out infinite}
+.cb-cl{height:22px;border-radius:20px;background:rgba(255,255,255,.7);filter:blur(1px);animation:cbCloud 26s linear infinite}
+.cb-cl:before{content:"";position:absolute;left:18%;top:-10px;width:44%;height:22px;border-radius:50%;background:inherit}
+.cb-cl.c1{width:90px;top:22px;left:0}.cb-cl.c2{width:64px;top:66px;left:0;animation-duration:34s;animation-delay:-14s;opacity:.7}
+.cb-bb{bottom:-10px;border-radius:50%;background:rgba(167,139,250,.35);animation:cbUp 9s ease-in infinite}
+.cb-bb.b1{left:12%;width:14px;height:14px}.cb-bb.b2{left:48%;width:10px;height:10px;background:rgba(56,189,248,.35);animation-delay:-3s;animation-duration:11s}.cb-bb.b3{left:82%;width:16px;height:16px;background:rgba(52,211,153,.35);animation-delay:-6s;animation-duration:10s}
+.cb-sk{color:#C4B5FD;font-size:.95rem;animation:lvTw 3s ease-in-out infinite}.cb-sk.k1{left:30%;top:16px}.cb-sk.k2{right:90px;bottom:60px;color:#7DD3FC;animation-delay:-1.4s}
+.cb-d{transition:background .2s,transform .2s}.cb.pg .cb-d:hover{background:#f3edff;transform:scale(1.04);z-index:2;box-shadow:0 6px 14px -6px rgba(90,60,170,.45)}
+.cb.pg .cb-e{animation:lvBob 4s ease-in-out infinite}.cb.pg .cb-e:nth-child(odd){animation-delay:-1.5s}
+.cb.hm .cb-e{animation:lvGlow 3s ease-in-out infinite}
+.cb-bot>*{animation:lvIn .6s .3s both}.cb-bot>*:nth-child(2){animation-delay:.45s}
+.cb::before{animation:lvDrift 14s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.cb-bg,.cb-d,.cb .cb-e,.cb-bot>*,.cb::before{animation:none!important}}
 @media(prefers-reduced-motion:reduce){.hs,.hs *,.hs::before,.hs::after,.hero-w::after,.grid.split>.grid>.grid.g2>.card,.grid.split>.grid>.grid.g2>.card:after,.svhm,.svhm *,.cb,.cb *,.cb:after{animation:none!important}}
 .hb-msg,.hb-st{transition:none}
-.hero-w{aspect-ratio:auto;max-height:none;min-height:400px;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(10,16,50,.12) 0%,rgba(10,16,50,.38) 45%,rgba(10,16,50,.72) 100%),var(--hero) center 20%/cover}
-.hero-w #tt_today{width:100%}
+.hero-w{aspect-ratio:auto;max-height:none;height:280px;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(10,16,50,.12) 0%,rgba(10,16,50,.38) 45%,rgba(10,16,50,.72) 100%),var(--hero) center 20%/cover}
+.hero-w #tt_today{width:60%;min-width:0}
+.hero-w .hb{display:block}
+.hero-w .hb-msg h2{font-size:1.45rem}.hero-w .hb-msg p{font-size:.86rem;margin-top:3px}
+.hero-w .hb-st{margin-top:8px;padding:2px 0 2px 12px;gap:1px}.hero-w .hb-st b{font-size:1rem}.hero-w .hb-st i,.hero-w .hb-st span{font-size:.74rem}
+.hero-w .tdy-l{padding:0 28px 12px;max-height:96px;overflow:hidden;gap:0}.hero-w .tdy-r{padding:2px 10px;font-size:.8rem}
 .hero-w .hb{background:none;box-shadow:none;border-radius:0;min-height:0;padding:22px 28px 20px;text-shadow:0 2px 10px rgba(0,0,0,.65),0 0 3px rgba(0,0,0,.5)}
-.hero-w .hb-pill{background:none;padding:0;backdrop-filter:none;margin-bottom:14px;font-weight:500}
+.hero-w .hb-pill{background:none;padding:0;backdrop-filter:none;margin-bottom:6px;font-weight:500}
 .hero-w .hb-st{background:none;border:0;border-left:3px solid rgba(255,255,255,.75);border-radius:0;box-shadow:none;padding:4px 0 4px 14px}
 .hero-w .hb-st.st-now{background:none;border-left-color:#6EE7B7}.hero-w .hb-st.st-free{background:none;border-left-color:#FCD34D}
 .hero-w .hb-msg p{opacity:1}
@@ -211,9 +257,9 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .hero-w .tdy-r em,.hero-w .tdy-r b{color:#fff}.hero-w .tdy-r span,.hero-w .tdy-r small{color:rgba(255,255,255,.88)}
 .hero-w .tdy-r.now{border-left-color:#6EE7B7}.hero-w .tdy-r.now b{color:#A7F3D0}
 .hero-w .tdy-r u{background:none!important;color:rgba(255,255,255,.9)!important;text-decoration:none;font-size:.78rem}.hero-w .tdy-r.now u{color:#A7F3D0!important;font-weight:600}
-.hero-w .hb{padding-bottom:10px}
+.hero-w .hb{padding-bottom:4px}
 .hero-w .hb .btn{text-shadow:none}
-@media(max-width:700px){.hero-w{min-height:340px}.hero-w .hb{padding:16px 18px}}
+@media(max-width:700px){.hero-w{height:340px}.hero-w #tt_today{width:100%}.hero-w .hb{padding:16px 18px}}
 
 .fo-up{animation:foUp .38s ease forwards}.fi-up{animation:fiUp .55s ease}
 .fo-fade{animation:foFade .38s ease forwards}.fi-fade{animation:fiFade .6s ease}
@@ -512,6 +558,23 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .scd-pill{display:inline-block;background:#fff;border-radius:20px;padding:4px 14px;font-size:.78rem;font-weight:600;color:var(--c);margin:8px 0 14px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 .scd-i{display:flex;gap:22px;flex-wrap:wrap;color:var(--c);font-weight:500;margin-bottom:22px;align-items:center}.scd-i span{display:inline-flex;align-items:center;gap:8px}.scd-i svg{width:22px;height:22px}
 .scd-b{position:relative;z-index:1;width:100%;border:0;border-radius:40px;background:var(--c);color:#fff;font:inherit;font-weight:600;padding:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-size:1.05rem}.scd-b:hover{filter:brightness(1.08)}.scd-b svg{width:22px;height:22px}
+/* ห้องเรียน: โทนอ่อน + เคลื่อนไหว */
+.scbar h2{color:#312E81}.scbar h2 small{color:#7C86B5}
+.scnew{background:linear-gradient(135deg,#8B8DF5,#5E7CF2);box-shadow:0 8px 16px -8px rgba(94,124,242,.9);position:relative;overflow:hidden;transition:transform .2s}.scnew:hover{background:linear-gradient(135deg,#8B8DF5,#5E7CF2);transform:translateY(-2px)}
+.scnew:after{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:lvShine 4s ease-in-out infinite}
+.scd{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 14%,#fff),color-mix(in srgb,var(--c) 5%,#fff) 60%,#fff);border:1px solid color-mix(in srgb,var(--c) 22%,#fff);box-shadow:0 12px 24px -16px color-mix(in srgb,var(--c) 70%,transparent);animation:lvIn .6s both;transition:transform .25s,box-shadow .25s}
+.scd:hover{transform:translateY(-4px);box-shadow:0 18px 28px -16px color-mix(in srgb,var(--c) 75%,transparent)}
+.scg.ns .scd{animation:none}
+.scg .scd:nth-child(2){animation-delay:.07s}.scg .scd:nth-child(3){animation-delay:.14s}.scg .scd:nth-child(4){animation-delay:.21s}.scg .scd:nth-child(5){animation-delay:.28s}.scg .scd:nth-child(6){animation-delay:.35s}.scg .scd:nth-child(n+7){animation-delay:.4s}
+.scd::after{background:color-mix(in srgb,var(--c) 16%,transparent);animation:lvDrift 8s ease-in-out infinite}
+.scd::before{content:"✦";position:absolute;right:70px;top:16px;color:color-mix(in srgb,var(--c) 45%,#fff);font-size:.9rem;pointer-events:none;animation:lvTw 3s ease-in-out infinite}
+.scd>*{position:relative;z-index:1}
+.scd-h h4{color:color-mix(in srgb,var(--c) 55%,#1F2A5C)}
+.scd-pill{background:rgba(255,255,255,.85);animation:lvBob 3.4s ease-in-out infinite}
+.scd-i svg{animation:lvBob 3.6s ease-in-out infinite}.scd-i span:nth-child(2) svg{animation-delay:-1.4s}
+.scd-b{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 60%,#fff),color-mix(in srgb,var(--c) 85%,#fff));box-shadow:0 8px 16px -10px var(--c);overflow:hidden}
+.scd-b:after{content:"";position:absolute;top:0;bottom:0;left:0;width:35%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:lvShine 5s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.scd,.scd *,.scd::before,.scd::after,.scnew:after,.scd-b:after{animation:none!important}}
 .mdl{position:fixed;inset:0;background:rgba(20,25,50,.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}.mdl.hid{display:none}
 .mdl-b{background:#fff;border-radius:18px;padding:22px;width:min(560px,100%);max-height:90vh;overflow:auto}.mdl-b h3{display:flex;justify-content:space-between;margin:0 0 14px}.mdl-b h3 a{cursor:pointer;color:var(--mute)}
 
@@ -761,9 +824,9 @@ div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริห
 admin:()=>PT('งานธุรการ','แบบฟอร์ม / เอกสารดาวน์โหลด และเกษียนหนังสือราชการ')+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:m[3]=='tt'?[['tt:teach','ตารางสอน'],['tt:class','ตารางเรียน'],['tt:entry','บันทึกตารางสอน'],['tt:check','ตรวจสอบตาราง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
-$('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=()=>go('comm');
+$('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=e=>{e.stopPropagation();ntfToggle()};
 $('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
-function updateBell(){if(!me||!$('#ib'))return;const n=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack).length;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge">${n}</i>`:'')}
+function updateBell(){if(!me||!$('#ib'))return;const n=ntfList().filter(x=>x.unread).length,old=+($('#ib').dataset.n||0);$('#ib').dataset.n=n;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge${n>old?' pop':''}">${n>99?'99+':n}</i>`:'');if(document.getElementById('ntf_pop')&&!document.getElementById('ntf_pop').classList.contains('hid'))ntfRender()}
 let CUR='home';
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
 $('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt(s):k=='ann'?V.ann():V.gen(m?m[1]:'')}
@@ -778,7 +841,7 @@ I.out='<path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/>';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dbApp=firebase.initializeApp(firebaseConfig),db=firebase.firestore(),fbAuth=firebase.auth(),storage=firebase.storage();
 db.enablePersistence({synchronizeTabs:true}).catch(()=>{});
-let HSV=[],HSVL=false,__svi=0,AN=[],annSlots=[null,null,null],annSeen={},annTk=0;
+let HSV=[],HSVL=false,__svi=0,AN=[],annSlots=[null,null,null],annSeen={},annTk=0,NR=new Set(),annInit=false,annPrev=new Set(),mmInit=false,mmPrev=new Set();
 let U=[],S=[],PP=[],ST=[],HR={},EV=[],me=null,founderExists=false,suppress=false,unsub=[];
 function auth(m){const fo=founderExists;m=fo?(m||'login'):'setup';
 const T={setup:['ตั้งค่าผู้ก่อตั้งระบบ','สร้างบัญชีผู้ก่อตั้ง (ทำครั้งเดียว)'],login:['เข้าสู่ระบบ','โรงเรียนบ้านผาเยอ'],reg:['สมัครสมาชิก','ต้องมีชื่อในทะเบียนบุคลากร และรอผู้ก่อตั้งอนุมัติ']}[m];
@@ -842,13 +905,14 @@ unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.da
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data()||{});render()},e=>{}));
 unsub.push(db.collection('budgetprojects').onSnapshot(qs=>{BP=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
 unsub.push(db.collection('savingtx').onSnapshot(qs=>{HSV=qs.docs.map(d=>{const x=d.data();return{s:x.studentId,w:x.type=='withdraw'?-1:1,a:+x.amount||0,d:svDay(x.createdAt)}});HSVL=true;svHomeUpd()},e=>{}));
-unsub.push(db.collection('announcements').onSnapshot(qs=>{AN=qs.docs.map(d=>{const x=d.data();return{id:d.id,t:x.t||'',k:x.k||'notice',pin:!!x.pin,exp:x.exp||'',by:x.createdByName||'',uid:x.createdBy||'',at:x.createdAt||''}});annHomeUpd();if(CUR=='ann')render()},e=>{}));
+unsub.push(db.collection('announcements').onSnapshot(qs=>{AN=qs.docs.map(d=>{const x=d.data();return{id:d.id,t:x.t||'',k:x.k||'notice',pin:!!x.pin,exp:x.exp||'',by:x.createdByName||'',uid:x.createdBy||'',at:x.createdAt||''}});if(annInit){const t=annToday();AN.filter(a=>!annPrev.has(a.id)&&a.uid!=me._id&&(!a.exp||a.exp>=t)).slice(0,2).forEach(a=>ntfToast({title:a.k=='urgent'?'ข่าวด่วน':'ประกาศใหม่',text:a.t,route:'ann',c:a.k=='urgent'?'#E5484D':'#2F6BFF',id:'an:'+a.id}))}annPrev=new Set(AN.map(a=>a.id));annInit=true;annHomeUpd();updateBell();if(CUR=='ann')render()},e=>{}));
 unsub.push(db.collection('timetables').onSnapshot(qs=>{TT={};qs.docs.forEach(d=>TT[d.id]=d.data());render()},e=>{}));
 unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
-unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,...d.data()}));updateBell();render()},e=>{}));
+unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,...d.data()}));if(mmInit)MM.filter(m=>me.sid&&m.assigneeSid==me.sid&&!m.ack&&!mmPrev.has(m.id)).slice(0,2).forEach(m=>ntfToast({title:'หนังสือเข้าใหม่',text:m.title||'',route:'comm',c:'#F5A524'}));mmPrev=new Set(MM.map(m=>m.id));mmInit=true;updateBell();render()},e=>{}));
+unsub.push(db.collection('notifreads').doc(me._id).onSnapshot(d=>{NR=new Set((d.exists&&d.data().ids)||[]);updateBell()},e=>{}));
 unsub.push(db.collection('scoresheets').where('ownerUid','==',me._id).onSnapshot(qs=>{SC=qs.docs.map(d=>({id:d.id,...d.data()}));if(!(CUR.startsWith('score:')&&qs.metadata.hasPendingWrites))render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];annSlots=[null,null,null];annSeen={}}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -1093,7 +1157,7 @@ return `<div class="scd" style="--c:${c}"><div class="scd-h"><h4>${esc(s.subject
 <span class="scd-pill">${esc(LV[lv]||'')} (${esc(CT[ty]?CT[ty][0]:'')})${s.code?' · '+esc(s.code):''}</span>
 <div class="scd-i"><span>${ic('users')} ${n} คน</span><span>${ic('cal')} ${fmtThD(s.createdAt)}</span></div>
 <button type="button" class="scd-b" data-r="score:${s.id}">${ic('eye')} ดูห้องเรียน</button></div>`}).join(''):`<div style="grid-column:1/-1">${E(SC.length?'ไม่พบห้องเรียนที่ค้นหา':'ยังไม่มีห้องเรียน กด "+ สร้างห้องเรียน" เพื่อเริ่มต้น',120)}</div>`}
-function scSearch(v){scQ=v;const g=$('#sc_grid');if(g)g.innerHTML=scGrid()}
+function scSearch(v){scQ=v;const g=$('#sc_grid');if(g){g.classList.add('ns');g.innerHTML=scGrid()}}
 function scOpen(){const m=$('#sc_modal');if(m)m.classList.remove('hid')}
 function scClose(){const m=$('#sc_modal');if(m)m.classList.add('hid')}
 V.score=s=>s?scoreSheetPage(s):`<div style="display:flex;justify-content:flex-end;margin-bottom:6px">${scUserChip()}</div>
@@ -1425,7 +1489,7 @@ const pill=(it)=>{const cc=it.id?col[it.id]:it.h==1?['#FFD9E0','#B3132F']:['#E3E
 const list=items.length?`<div class="cb-l">${items.map(it=>`<div class="cb-i">${pill(it)}<span>${esc(it.n)}${it.h==1?' <small style="color:#B3132F">(วันหยุด)</small>':''}</span>${pg&&it.id?`<button data-ev="${it.id}" title="ลบ">×</button>`:''}</div>`).join('')}</div>`:'<div class="cb-n">ยังไม่มีกิจกรรมในเดือนนี้</div>';
 let right='';
 if(pg&&sel&&sel.startsWith(pre)){const d=+sel.slice(8),es=EV.filter(e=>e.d==sel),ho=holOf(y,m+1,d);right=`<div class="cb-p"><div class="cb-h"><i>${ic('cal')}</i>วันที่ ${d} ${TM[m]}</div>${ho.map(x=>`<div class="cb-i"><span style="color:${x.h?'#B3132F':'#2F5AA8'}">${esc(x.n)}${x.h?' (วันหยุด)':''}</span></div>`).join('')}${es.map(e=>`<div class="cb-i"><span>${esc(e.t)}</span><button data-ev="${e.id}" title="ลบ">×</button></div>`).join('')||(ho.length?'':'<div class="cb-n">ยังไม่มีกิจกรรมในวันนี้</div>')}<div style="display:flex;gap:8px;margin-top:10px"><input class="in" id="et" placeholder="ชื่อกิจกรรม" style="margin:0" onkeydown="if(event.key==\'Enter\')addEv()"><button class="btn" onclick="addEv()">เพิ่ม</button></div></div>`}
-return `<div class="cb ${pg?'pg':'hm'}"${pg?'':` data-r="cal:${y}-${m+1}"`}>${top}${grid}<div class="cb-bot${right?'':' one'}"><div class="cb-p"><div class="cb-h"><i>${ic('doc')}</i>กิจกรรมสำคัญประจำเดือน</div>${list}</div>${right}</div></div>`}
+return `<div class="cb ${pg?'pg':'hm'}"${pg?'':` data-r="cal:${y}-${m+1}"`}><i class="cb-bg cb-sun"></i><i class="cb-bg cb-cl c1"></i><i class="cb-bg cb-cl c2"></i><i class="cb-bg cb-bb b1"></i><i class="cb-bg cb-bb b2"></i><i class="cb-bg cb-bb b3"></i><span class="cb-bg cb-sk k1">✦</span><span class="cb-bg cb-sk k2">✦</span>${top}${grid}<div class="cb-bot${right?'':' one'}"><div class="cb-p"><div class="cb-h"><i>${ic('doc')}</i>กิจกรรมสำคัญประจำเดือน</div>${list}</div>${right}</div></div>`}
 
 const upc=()=>{const t=T0(),l=EV.map(e=>({e,n:Math.round((dt(e.d)-t)/864e5)})).filter(x=>x.n>=0&&x.n<=7).sort((a,b)=>a.n-b.n||a.e.d.localeCompare(b.e.d));
 return `<div style="font-size:.72rem;color:var(--mute);margin-bottom:4px">กิจกรรมที่ใกล้ถึงวัน (ภายใน 7 วัน)</div>`+(l.length?l.map(x=>`<div class="rw" data-r="cal:${+x.e.d.slice(0,4)}-${+x.e.d.slice(5,7)}" style="cursor:pointer"><span><b>${esc(x.e.t)}</b><small>${th(x.e.d)}</small></span><em style="color:${x.n<=1?'var(--red)':'var(--blue)'};font-weight:500">${x.n==0?'วันนี้':x.n==1?'พรุ่งนี้':'อีก '+x.n+' วัน'}</em></div>`).join(''):E('ไม่มีกิจกรรมที่ใกล้ถึงวัน',80))};
@@ -1649,7 +1713,7 @@ function annTick(){if(!me||!document.getElementById('an_s0'))return;const{pool}=
 if(k&&k!=cur){annSlots[i]=k;hbSwap(document.getElementById('an_s'+i),annRow(pool.find(x=>x.key==k)))}}
 setInterval(annTick,20000);
 const annCan=a=>!!me&&(me.role=='founder'||a.uid==me._id);
-V.ann=()=>{const t=annToday(),all=AN.slice().sort((a,b)=>(b.at||'').localeCompare(a.at||'')),np=annActive().filter(a=>a.pin).length;
+V.ann=()=>{if(me&&AN.some(a=>!NR.has(a.id)))setTimeout(ntfReadAll,0);const t=annToday(),all=AN.slice().sort((a,b)=>(b.at||'').localeCompare(a.at||'')),np=annActive().filter(a=>a.pin).length;
 const row=a=>{const ex=a.exp&&a.exp<t;return `<div class="an-li" style="${ex?'opacity:.55':''}"><span class="an-tag" style="background:${a.k=='urgent'?'#E5484D':'#2F6BFF'}">${a.k=='urgent'?'ข่าวด่วน':'ประกาศ'}</span><div style="flex:1;min-width:0"><b style="font-weight:500">${a.pin?'📌 ':''}${esc(a.t)}</b><small>โดย ${esc(a.by||'-')} · ${a.exp?(ex?'หมดอายุแล้ว ':'แสดงถึง ')+th(a.exp):'ไม่หมดอายุ'}</small></div>${annCan(a)?`<button class="btn o" data-an="pin:${a.id}">${a.pin?'เลิกปักหมุด':'ปักหมุด'}</button> <button class="btn o" data-an="del:${a.id}">ลบ</button>`:''}</div>`};
 return PT('ประกาศ & ข่าวด่วน','ครูทุกคนเพิ่มประกาศได้ ข้อความจะแสดงในแบนเนอร์ข่าวประชาสัมพันธ์หน้าหลัก')+
 P('เพิ่มประกาศ / ข่าวด่วน',`<div class="anf"><label class="lb">ข้อความ (ไม่เกิน 120 ตัวอักษร)<input class="in" id="an_t" maxlength="120" placeholder="เช่น พรุ่งนี้ประชุมครู 15.00 น."></label>
@@ -1665,6 +1729,30 @@ $('#an_t').value='';$('#an_p').checked=false;m.textContent='บันทึก�
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-an]');if(!b||!me)return;const[k,id]=b.dataset.an.split(':'),a=AN.find(x=>x.id==id);if(!a||!annCan(a))return;
 try{if(k=='del'){if(!confirm('ลบประกาศนี้?'))return;await db.collection('announcements').doc(id).delete()}
 else{if(!a.pin&&annActive().filter(x=>x.pin).length>=2)return alert('ปักหมุดได้สูงสุด 2 ข้อความ');await db.collection('announcements').doc(id).update({pin:!a.pin})}}catch(err){alert('ไม่สำเร็จ: '+err.message)}});
+
+function ntfAgo(iso){if(!iso)return '';const m=Math.floor((Date.now()-new Date(iso).getTime())/6e4);if(m<1)return 'เมื่อสักครู่';if(m<60)return m+' นาทีที่แล้ว';const h=Math.floor(m/60);if(h<24)return h+' ชั่วโมงที่แล้ว';const d=Math.floor(h/24);return d<30?d+' วันที่แล้ว':th(iso.slice(0,10))}
+function ntfList(){if(!me)return [];const t=annToday(),o=[];
+AN.forEach(a=>{if(a.uid==me._id||(a.exp&&a.exp<t))return;o.push({id:'an:'+a.id,aid:a.id,title:a.k=='urgent'?'ข่าวด่วน':'ประกาศใหม่',text:a.t,sub:a.by?'โดย '+a.by:'',at:a.at,route:'ann',c:a.k=='urgent'?'#E5484D':'#2F6BFF',icon:'mega',unread:!NR.has(a.id)})});
+if(me.sid)MM.forEach(m=>{if(m.assigneeSid!=me.sid)return;o.push({id:'mm:'+m.id,title:'หนังสือเข้า',text:m.title||'',sub:'',at:m.createdAt,route:'comm',c:'#F5A524',icon:'doc',unread:!m.ack})});
+return o.sort((a,b)=>(b.at||'').localeCompare(a.at||'')).slice(0,30)}
+function ntfRender(){const el=document.getElementById('ntf_pop');if(!el)return;const l=ntfList(),un=l.filter(x=>x.unread).length;
+el.innerHTML=`<div class="ntf-h"><b>การแจ้งเตือน${un?' ('+un+')':''}</b>${un?'<a onclick="ntfReadAll(event)">อ่านทั้งหมดแล้ว</a>':''}</div><div class="ntf-l">${l.length?l.map((x,i)=>`<div class="ntf-i${x.unread?' un':''}" onclick="ntfOpen(${i})"><span class="ntf-ic" style="background:${x.c}">${ic(x.icon)}</span><div class="ntf-b"><b>${esc(x.title)}</b><span>${esc(x.text)}</span><small>${esc(ntfAgo(x.at))}${x.sub?' · '+esc(x.sub):''}</small></div>${x.unread?'<i class="ntf-dot"></i>':''}</div>`).join(''):'<div class="ntf-e">ยังไม่มีการแจ้งเตือน</div>'}</div><div class="ntf-f"><a data-r="ann" onclick="ntfClose()">ดูประกาศทั้งหมด</a></div>`}
+function ntfToggle(){let el=document.getElementById('ntf_pop');if(!el){el=document.createElement('div');el.id='ntf_pop';el.className='ntf hid';document.body.appendChild(el)}
+if(!el.classList.contains('hid')){el.classList.add('hid');return}
+const r=$('#ib').getBoundingClientRect(),w=Math.min(360,innerWidth-20),left=Math.max(10,Math.min(r.right-w+24,innerWidth-w-10));
+el.style.top=(r.bottom+12)+'px';el.style.left=left+'px';el.style.setProperty('--ar',Math.max(12,left+w-(r.left+r.width/2)-6)+'px');ntfRender();el.classList.remove('hid')}
+function ntfClose(){const el=document.getElementById('ntf_pop');if(el)el.classList.add('hid')}
+function ntfSaveRead(){if(!me)return;const ids=[...NR].filter(i=>AN.some(a=>a.id==i));db.collection('notifreads').doc(me._id).set({ids},{merge:true}).catch(()=>{})}
+function ntfMark(id){if(!id||NR.has(id))return;NR.add(id);ntfSaveRead();updateBell()}
+function ntfOpen(i){const x=ntfList()[i];if(!x)return;if(x.aid)ntfMark(x.aid);ntfClose();go(x.route)}
+function ntfReadAll(e){e&&e.stopPropagation();AN.forEach(a=>NR.add(a.id));ntfSaveRead();updateBell()}
+function ntfToast(n){const t=document.createElement('div');t.className='ntf-t';t.style.setProperty('--c',n.c||'#2F6BFF');
+t.innerHTML=`<span class="ntf-ic">${ic(n.route=='comm'?'doc':'mega')}</span><div class="ntf-b"><b>${esc(n.title)}</b><span>${esc(n.text)}</span><small>เมื่อสักครู่ · กดเพื่อดู</small></div><em>✕</em>`;
+const off=document.querySelectorAll('.ntf-t').length;t.style.bottom=(20+off*92)+'px';
+const kill=()=>{t.classList.add('out');setTimeout(()=>t.remove(),320)};
+t.onclick=e=>{if(n.id)ntfMark(n.id.slice(3));kill();if(!(e.target.tagName=='EM'))go(n.route)};document.body.appendChild(t);setTimeout(kill,7000)}
+document.addEventListener('click',e=>{const el=document.getElementById('ntf_pop');if(el&&!el.classList.contains('hid')&&!el.contains(e.target)&&!e.target.closest('#ib'))el.classList.add('hid')});
+setInterval(()=>{const el=document.getElementById('ntf_pop');if(el&&!el.classList.contains('hid'))ntfRender()},60000);
 setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
