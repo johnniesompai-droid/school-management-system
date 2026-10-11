@@ -306,6 +306,11 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .atl{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:.84rem;border-bottom:1px solid #E6EAF6}.atl:last-of-type{border:0}
 .atl i{width:16px;height:16px;border-radius:50%;flex:none}.atl b{font-weight:600;color:#1F2A5C}.atl span{margin-left:auto;font-weight:700;color:#1F2A5C}.atl em{font-style:normal;color:#55607A;min-width:42px;text-align:right}
 .atn{margin-top:6px;font-size:.72rem;color:var(--mute);text-align:center}
+
+.atsub{font-weight:600;color:#3B3794;font-size:.9rem;padding:2px 4px 6px;display:flex;align-items:center;gap:8px}.atsub:before{content:"";width:4px;height:16px;border-radius:2px;background:linear-gradient(#7C74E0,#5A55B0)}
+.atcd .atdw{min-height:0;gap:28px;padding:6px 8px 4px;border-top:1px dashed #D6DDF7}
+.atcd .atlg{flex:0 1 340px}
+.atcd .atdv{flex:0 0 180px}
 @media(prefers-reduced-motion:reduce){.atb,.atdn,.atcd{animation:none!important}}
 @media(prefers-reduced-motion:reduce){.hs,.hs *,.hs::before,.hs::after,.hero-w::after,.grid.split>.grid>.grid.g2>.card,.grid.split>.grid>.grid.g2>.card:after,.svhm,.svhm *,.cb,.cb *,.cb:after{animation:none!important}}
 .hb-msg,.hb-st{transition:none}
@@ -899,9 +904,7 @@ const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).include
 return `<div class="card dvd" style="--c:${d[3]}"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('เอกสารดาวน์โหลด'),divDocsBlock(k))}${k=='budget'?P(fileSectionTitle('งานพัสดุ'),divFieldBlock(k,'supply')):''}</div></div>${k=='budget'?projectSection():''}`};
 const V={
 home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การมาเรียนวันนี้','cal','#22B573','%',attPct()],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
-<div class="atg">${attBarCard()}${attDonutCard()}</div>
-<div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${P('สถิตินักเรียน',E())}</div>
-<div class="grid g2"><div id="sv_home">${svHomeHtml()}</div></div></div>
+<div class="grid split"><div class="grid" style="align-content:start">${attCombinedCard()}<div class="grid g2">${P('สถิตินักเรียน',E())}<div id="sv_home">${svHomeHtml()}</div></div></div>
 <div class="grid" style="align-content:start"><div id="an_home">${annHtml()}</div>${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" style="--c:${d[3]}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม / เอกสารดาวน์โหลด และเกษียนหนังสือราชการ')+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
@@ -1901,7 +1904,7 @@ function attAllSet(k,v){if(!attCan(k))return;const o={};attRoster(k).forEach(x=>
 /* ===== แผนภูมิการมาเรียน (หน้าหลัก) ===== */
 const ATC={p:'#33A877',a:'#F0627A',l:'#F7B731'};
 const attShort=i=>String(LV[i]||'').replace(/^ชั้น/,'').replace('อนุบาล ','อ.').replace('ประถมศึกษาปีที่ ','ป.').trim();
-function attBarCard(){if(!me)return '';const d=attToday(),keys=attAll(),cn={};keys.forEach(k=>cn[k]=attCount(k,d));
+function attBarInner(){if(!me)return '';const d=attToday(),keys=attAll(),cn={};keys.forEach(k=>cn[k]=attCount(k,d));
 let mx=0;keys.forEach(k=>mx=Math.max(mx,cn[k].p,cn[k].a,cn[k].l));
 const stp=[1,2,5,10,20,50,100,200,500,1000].find(x=>mx/x<=5)||1000,top=Math.max(stp*Math.ceil(mx/stp),stp*2);
 const L=52,R=12,T=44,B=232,PH=B-T,gap=26,nm=CT.m[1],nb=CT.b[1],gw=(900-L-R-gap)/(nm+nb),bw=Math.min(16,gw/4),pad=(gw-bw*3-4)/2;
@@ -1919,8 +1922,8 @@ o+=`<line x1="${bx-gap/2}" x2="${bx-gap/2}" y1="${T-6}" y2="${B+4}" stroke="#B9B
 <rect x="${bx+3}" y="${B+32}" width="${nb*gw-6}" height="28" rx="7" fill="#D6ECFB"/><text x="${bx+3+(nb*gw-6)/2}" y="${B+51}" text-anchor="middle" class="pl" fill="#1E4F7A">ห้องเรียนสาขา</text>
 <text x="${L-40}" y="22" class="ax">จำนวน (คน)</text>`;
 [['p',705,'มาเรียน'],['a',795,'ขาด'],['l',855,'ลา']].forEach(l=>{o+=`<rect x="${l[1]}" y="12" width="14" height="14" rx="3" fill="${ATC[l[0]]}"/><text x="${l[1]+20}" y="24" class="lg">${l[2]}</text>`});
-return `<div class="atcd" data-r="att"><div class="atcd-h"><span>${ic('chart')}</span>สถิติการมาเรียน แยกตามชั้นเรียน<small>${thaiFullDate(new Date())}</small></div><div class="atcd-b"><svg viewBox="0 0 900 300" class="atsvg" role="img" aria-label="แผนภูมิแท่งการมาเรียนแยกตามชั้น">${o}</svg></div></div>`}
-function attDonutCard(){if(!me)return '';const d=attToday(),t=attSum(attAll(),d),tot=t.p+t.a+t.l,C=2*Math.PI*70;
+return `<svg viewBox="0 0 900 300" class="atsvg" role="img" aria-label="แผนภูมิแท่งการมาเรียนแยกตามชั้น">${o}</svg>`}
+function attDonutInner(){if(!me)return '';const d=attToday(),t=attSum(attAll(),d),tot=t.p+t.a+t.l,C=2*Math.PI*70;
 const segs=[['p','มาเรียน',t.p],['a','ขาด',t.a],['l','ลา',t.l]],pc=v=>tot?(v/tot*100).toFixed(1)+'%':'0.0%';
 let o='',acc=0;
 if(!tot)o=`<circle cx="100" cy="100" r="70" fill="none" stroke="#E6EAF6" stroke-width="34"/>`;
@@ -1929,8 +1932,11 @@ o+=`<circle class="atdn" style="animation-delay:${i*150}ms" cx="100" cy="100" r=
 const big=f>=.12,r=big?70:70+17+16,x=100+r*Math.cos(mid),yy=100+r*Math.sin(mid)+4;
 o+=`<text x="${x}" y="${yy}" text-anchor="middle" class="${big?'dn-in':'dn-out'}">${pc(g[2])}</text>`;acc+=f});
 const lg=segs.map(g=>`<div class="atl"><i style="background:${ATC[g[0]]}"></i><b>${g[1]}</b><span>${g[2]} คน</span><em>${pc(g[2])}</em></div>`).join('');
-return `<div class="atcd" data-r="att"><div class="atcd-h"><span>${ic('grid')}</span>สัดส่วนการมาเรียน (รวมทุกชั้นเรียน)</div><div class="atcd-b atdw"><div class="atdv"><svg viewBox="-12 -12 224 224" class="atdsvg">${o}<text x="100" y="94" text-anchor="middle" class="dn-c1">รวมทั้งหมด</text><text x="100" y="116" text-anchor="middle" class="dn-c2">${tot} คน</text></svg></div>
-<div class="atlg">${lg}<div class="atn">${tot?`เช็คชื่อแล้ว ${t.done} / ${t.rooms} ห้อง${t.u?` · ยังไม่เช็ค ${t.u} คน`:''}`:'ยังไม่มีการเช็คชื่อวันนี้'}</div></div></div></div>`}
+return `<div class="atdw"><div class="atdv"><svg viewBox="-12 -12 224 224" class="atdsvg">${o}<text x="100" y="94" text-anchor="middle" class="dn-c1">รวมทั้งหมด</text><text x="100" y="116" text-anchor="middle" class="dn-c2">${tot} คน</text></svg></div>
+<div class="atlg">${lg}<div class="atn">${tot?`เช็คชื่อแล้ว ${t.done} / ${t.rooms} ห้อง${t.u?` · ยังไม่เช็ค ${t.u} คน`:''}`:'ยังไม่มีการเช็คชื่อวันนี้'}</div></div></div>`}
+function attCombinedCard(){if(!me)return '';
+return `<div class="atcd" data-r="att"><div class="atcd-h"><span>${ic('chart')}</span>สถิติการมาเรียน<small>${thaiFullDate(new Date())}</small></div>
+<div class="atcd-b"><div class="atsub">สถิติการมาเรียน แยกตามชั้นเรียน</div>${attBarInner()}<div class="atsub" style="margin-top:6px">สัดส่วนการมาเรียน (รวมทุกชั้นเรียน)</div>${attDonutInner()}</div></div>`}
 setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
