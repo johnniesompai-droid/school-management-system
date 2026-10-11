@@ -181,6 +181,37 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 @media(prefers-reduced-motion:reduce){[class*=fo-],[class*=fi-]{animation:none!important}}
 @media(max-width:700px){.hb{grid-template-columns:1fr;padding:18px}.hb-msg h2{font-size:1.35rem}.hb-pill{margin-bottom:14px}}
 #hb_list{margin-top:12px}
+.svhm{border-radius:20px;padding:18px 20px;color:#14532D;background:linear-gradient(135deg,#ECFDF3,#D9F7E6 60%,#CFF3E0);border:1px solid #BDEBD0;box-shadow:0 10px 22px -12px rgba(34,181,115,.55),inset 0 1px 0 rgba(255,255,255,.8);position:relative;overflow:hidden}
+.svhm:after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:rgba(34,181,115,.12)}
+.svhm-h{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.02rem;position:relative;z-index:1}
+.svhm-h i{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#34D399,#16A36A);color:#fff;display:grid;place-items:center;box-shadow:0 5px 10px -4px rgba(22,163,106,.7)}
+.svhm-h i svg{width:18px;height:18px}.svhm-h small{margin-left:auto;font-weight:400;color:#3F7D5A;font-size:.74rem}
+.svhm-g{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;position:relative;z-index:1}
+.svhm-g>div{background:rgba(255,255,255,.75);border-radius:14px;padding:9px 12px}
+.svhm small{display:block;color:#3F7D5A;font-size:.72rem}.svhm-g b{font-size:1.18rem;color:#0F7A4A;font-weight:600}
+.svhm-g em{display:block;font-style:normal;font-size:.68rem;color:#6B9B82}
+.svhm-r{margin-top:12px;border-top:1px dashed #9ED9B9;padding-top:10px;position:relative;z-index:1}
+.svhm-p{display:inline-block;background:#16A36A;color:#fff;border-radius:999px;padding:3px 12px;font-size:.78rem;font-weight:500}
+.svhm-rg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+.svhm-rg b{display:block;font-size:.95rem;color:#14532D;font-weight:600}
+.svhm-dots{display:flex;gap:4px;margin-top:9px;flex-wrap:wrap}.svhm-dots i{width:6px;height:6px;border-radius:50%;background:#B7E4CB}.svhm-dots i.on{background:#16A36A;width:16px;border-radius:4px}
+.anp{background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 6px 18px -10px rgba(40,60,120,.25);border:1px solid var(--line)}
+.anp-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.anp-h h3{margin:0;font-size:.92rem;font-weight:600}
+.anp-h a{font-size:.74rem;background:var(--blue);color:#fff;border-radius:999px;padding:4px 12px;cursor:pointer;font-weight:400}
+.an-sec{font-size:.68rem;color:var(--mute);margin:2px 0 4px;display:flex;align-items:center;gap:5px}
+.an-r{height:46px;border-radius:12px;margin-bottom:6px;overflow:hidden;background:#F5F7FC}
+.an-r.pin{background:linear-gradient(90deg,#FFF6D9,#FFFBEA);border:1px solid #F6DE93}
+.an-r.emp{background:transparent;border:1.5px dashed var(--line)}
+.an-in{display:flex;align-items:center;gap:9px;height:100%;padding:0 12px;min-width:0}
+.an-r[data-r],.an-in[data-r]{cursor:pointer}
+.an-tag{flex:none;color:#fff;border-radius:999px;font-size:.66rem;padding:2px 9px;font-weight:500;white-space:nowrap}
+.an-t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.82rem;color:var(--ink,#1F2A44)}
+.an-m{flex:none;font-style:normal;font-size:.7rem;color:var(--mute);white-space:nowrap}
+.an-e{color:#A3ADC0;font-size:.76rem}
+.anf{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:end}
+@media(max-width:760px){.anf{grid-template-columns:1fr}}
+.an-li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}.an-li:last-child{border:0}
+.an-li small{display:block;color:var(--mute);font-size:.72rem}
 .tdy-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}.tdy-h b{font-size:1rem;color:#1F2A5C}.tdy-h span{font-size:.78rem;color:var(--mute)}
 .tdy-n{padding:18px 8px;text-align:center;color:var(--mute);font-size:.88rem;border:1px dashed var(--line);border-radius:12px}
 .tdy-b{border-radius:14px;padding:12px 16px;color:#fff;display:flex;flex-direction:column;gap:2px;margin-bottom:10px;box-shadow:0 6px 14px -6px rgba(0,0,0,.3)}.tdy-b i{font-style:normal;font-size:.72rem;opacity:.9;letter-spacing:.3px}.tdy-b b{font-size:1.15rem}.tdy-b span{font-size:.82rem;opacity:.95}
@@ -654,9 +685,10 @@ const detail=k=>{const d=DIV.find(x=>x[0]==k),ps=PP.filter(p=>(p.wk||[]).include
 return `<div class="card"><h3>${d[1]}<a data-r="div">ปิด</a></h3><div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('เอกสารดาวน์โหลด'),divDocsBlock(k))}${k=='budget'?P(fileSectionTitle('งานพัสดุ'),divFieldBlock(k,'supply')):''}</div></div>${k=='budget'?projectSection():''}`};
 const V={
 home:()=>`<div class="hero"></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การเข้าเรียนวันนี้','cal','#22B573','%'],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
-<div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${P('สถิติการเข้าเรียน',E())}${P('สถิตินักเรียน',E())}</div>
-<div id="tt_today">${ttTodayHtml()}</div></div>
-<div class="grid" style="align-content:start">${P('ข่าวประชาสัมพันธ์',upc(),'ดูทั้งหมด')}${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
+<div class="grid split"><div class="grid" style="align-content:start"><div id="tt_today">${ttTodayHtml()}</div>
+<div class="grid g2">${P('สถิติการเข้าเรียน',E())}${P('สถิตินักเรียน',E())}</div>
+<div class="grid g2"><div id="sv_home">${svHomeHtml()}</div></div></div>
+<div class="grid" style="align-content:start"><div id="an_home">${annHtml()}</div>${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม / เอกสารดาวน์โหลด และเกษียนหนังสือราชการ')+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
@@ -666,7 +698,7 @@ $('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
 function updateBell(){if(!me||!$('#ib'))return;const n=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack).length;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge">${n}</i>`:'')}
 let CUR='home';
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS].find(x=>x[0]==k);
-$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt(s):V.gen(m?m[1]:'')}
+$('#view').innerHTML=k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='admin'?V.admin():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt(s):k=='ann'?V.ann():V.gen(m?m[1]:'')}
 function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
@@ -678,6 +710,7 @@ I.out='<path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/>';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dbApp=firebase.initializeApp(firebaseConfig),db=firebase.firestore(),fbAuth=firebase.auth(),storage=firebase.storage();
 db.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+let HSV=[],HSVL=false,__svi=0,AN=[],annSlots=[null,null,null],annSeen={},annTk=0;
 let U=[],S=[],PP=[],ST=[],HR={},EV=[],me=null,founderExists=false,suppress=false,unsub=[];
 function auth(m){const fo=founderExists;m=fo?(m||'login'):'setup';
 const T={setup:['ตั้งค่าผู้ก่อตั้งระบบ','สร้างบัญชีผู้ก่อตั้ง (ทำครั้งเดียว)'],login:['เข้าสู่ระบบ','โรงเรียนบ้านผาเยอ'],reg:['สมัครสมาชิก','ต้องมีชื่อในทะเบียนบุคลากร และรอผู้ก่อตั้งอนุมัติ']}[m];
@@ -740,12 +773,14 @@ unsub.push(db.collection('events').onSnapshot(qs=>{EV=qs.docs.map(d=>({id:d.id,.
 unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.data():{ids:[]};render()},e=>{}));
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data()||{});render()},e=>{}));
 unsub.push(db.collection('budgetprojects').onSnapshot(qs=>{BP=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
+unsub.push(db.collection('savingtx').onSnapshot(qs=>{HSV=qs.docs.map(d=>{const x=d.data();return{s:x.studentId,w:x.type=='withdraw'?-1:1,a:+x.amount||0,d:svDay(x.createdAt)}});HSVL=true;svHomeUpd()},e=>{}));
+unsub.push(db.collection('announcements').onSnapshot(qs=>{AN=qs.docs.map(d=>{const x=d.data();return{id:d.id,t:x.t||'',k:x.k||'notice',pin:!!x.pin,exp:x.exp||'',by:x.createdByName||'',uid:x.createdBy||'',at:x.createdAt||''}});annHomeUpd();if(CUR=='ann')render()},e=>{}));
 unsub.push(db.collection('timetables').onSnapshot(qs=>{TT={};qs.docs.forEach(d=>TT[d.id]=d.data());render()},e=>{}));
 unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
 unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,...d.data()}));updateBell();render()},e=>{}));
 unsub.push(db.collection('scoresheets').where('ownerUid','==',me._id).onSnapshot(qs=>{SC=qs.docs.map(d=>({id:d.id,...d.data()}));if(!(CUR.startsWith('score:')&&qs.metadata.hasPendingWrites))render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[]}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];annSlots=[null,null,null];annSeen={}}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -1498,6 +1533,70 @@ const l=document.getElementById('hb_list');if(l)l.innerHTML=ttListHtml(st)}
 function ttGreetTick(){const m=document.getElementById('hb_msg');if(!m||!me)return;const g=ttGreetPick();hbSwap(m,`<h2>${esc(g.t)}</h2><p>${esc(g.u)}</p>`)}
 function linkMe(){const v=$('#lk_sel').value;if(!v)return alert('กรุณาเลือกชื่อของคุณ');
 db.collection('users').doc(me._id).set({sid:v},{merge:true}).then(()=>{me.sid=v;updateUserBadge();render()}).catch(e=>alert('เชื่อมบัญชีไม่สำเร็จ: '+e.message))}
+
+const svDay=iso=>{try{return new Date(iso).toLocaleDateString('sv-SE',{timeZone:'Asia/Bangkok'})}catch(e){return''}};
+function svHomeCalc(){const td=svDay(new Date()),cls={};ST.forEach(x=>{cls[x.id]=x.ty+x.lv});
+const seq=[];['m','b'].forEach(t=>{for(let i=0;i<CT[t][1];i++)seq.push(t+i)});
+const per={};seq.forEach(k=>per[k]={tot:0,day:0,n:0});ST.forEach(x=>{const k=x.ty+x.lv;if(per[k])per[k].n++});
+let tot=0,day=0,dep=0,wd=0;HSV.forEach(t=>{const v=t.w*t.a;tot+=v;const k=cls[t.s];if(k&&per[k])per[k].tot+=v;if(t.d==td){day+=v;if(t.w>0)dep+=t.a;else wd+=t.a;if(k&&per[k])per[k].day+=v}});
+return{seq,per,tot,day,dep,wd}}
+function svRotHtml(c){const k=c.seq[__svi%c.seq.length],p=c.per[k];
+return `<span class="svhm-p">${esc(classLabel(k))}</span><div class="svhm-rg"><div><small>ออมวันนี้</small><b>฿ ${svFm(p.day)}</b></div><div><small>ยอดสะสม</small><b>฿ ${svFm(p.tot)}</b></div><div><small>นักเรียน</small><b>${p.n} คน</b></div></div><div class="svhm-dots">${c.seq.map((_,i)=>`<i class="${i==__svi%c.seq.length?'on':''}"></i>`).join('')}</div>`}
+function svHomeHtml(){if(!me)return '';const c=svHomeCalc();
+return `<div class="svhm"><div class="svhm-h"><i>${ic('coin')}</i>ออมเงิน<small>${HSVL?'ข้อมูล ณ วันที่ '+thaiFullDate(new Date()):'กำลังโหลด...'}</small></div>
+<div class="svhm-g"><div><small>ยอดเงินออมวันนี้</small><b>฿ ${svFm(c.day)}</b><em>ฝาก ${svFm(c.dep)} · ถอน ${svFm(c.wd)}</em></div><div><small>ยอดเงินออมรวม</small><b>฿ ${svFm(c.tot)}</b><em>ทุกชั้น อนุบาล - ป.6</em></div></div>
+<div class="svhm-r"><div id="sv_rot">${svRotHtml(c)}</div></div></div>`}
+function svHomeUpd(){const el=document.getElementById('sv_home');if(!el||!me)return;el.innerHTML=svHomeHtml()}
+function svHomeTick(){const r=document.getElementById('sv_rot');if(!r||!me||!HSVL)return;__svi++;hbSwap(r,svRotHtml(svHomeCalc()))}
+setInterval(svHomeTick,5000);
+
+const annToday=()=>svDay(new Date());
+const annActive=()=>{const t=annToday();return AN.filter(a=>!a.exp||a.exp>=t)};
+const annNextBd=iso=>{if(!iso||!/^\d{4}-\d{2}-\d{2}/.test(iso))return 999;const t=T0(),m=+iso.slice(5,7),d=+iso.slice(8,10);let x=new Date(t.getFullYear(),m-1,d);if(x<t)x=new Date(t.getFullYear()+1,m-1,d);return Math.round((x-t)/864e5)};
+const annWhen=n=>n==0?'วันนี้':n==1?'พรุ่งนี้':'อีก '+n+' วัน';
+function annItems(){const t=T0(),act=annActive().sort((a,b)=>(b.at||'').localeCompare(a.at||''));
+const mk=a=>({key:'an:'+a.id,tag:a.k=='urgent'?'ข่าวด่วน':'ประกาศ',c:a.k=='urgent'?'#E5484D':'#2F6BFF',t:a.t,m:a.by?'โดย '+a.by:'',r:'ann'});
+let pins=act.filter(a=>a.pin).sort((a,b)=>(a.k=='urgent'?0:1)-(b.k=='urgent'?0:1)).slice(0,2);
+if(pins.length<2){const u=act.filter(a=>!a.pin&&a.k=='urgent').slice(0,2-pins.length);pins=pins.concat(u)}
+const ids=new Set(pins.map(a=>a.id)),pool=act.filter(a=>!ids.has(a.id)).map(mk);
+EV.map(e=>({e,n:Math.round((dt(e.d)-t)/864e5)})).filter(x=>x.n>=0&&x.n<=7).sort((a,b)=>a.n-b.n).forEach(x=>pool.push({key:'ev:'+x.e.id,tag:'กิจกรรม',c:'#8B5CF6',t:x.e.t,m:annWhen(x.n),r:'cal:'+(+x.e.d.slice(0,4))+'-'+(+x.e.d.slice(5,7))}));
+if(me&&me.sid){const n=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack).length;if(n)pool.push({key:'memo',tag:'หนังสือเข้า',c:'#F5A524',t:'มีหนังสือรอรับทราบ '+n+' ฉบับ',m:'กดเพื่อดู',r:'comm'})}
+PP.forEach(p=>{const n=annNextBd(p.bd);if(n<=7)pool.push({key:'bp:'+p.id,tag:'วันเกิด',c:'#EC4899',t:'สุขสันต์วันเกิด '+dn(p),m:annWhen(n),r:''})});
+ST.forEach(x=>{const n=annNextBd(x.bd);if(n<=7)pool.push({key:'bs:'+x.id,tag:'วันเกิด',c:'#EC4899',t:'สุขสันต์วันเกิด '+((x.tt||'')+x.fn+' '+x.ln).trim()+' ('+String(LV[x.lv]||'').replace(/^ชั้น/,'').trim()+')',m:annWhen(n),r:''})});
+if(me&&(me.role=='founder'||isDirector())){PP.forEach(p=>{if(!p.lc)return;const n=Math.round((dt(p.lc)-t)/864e5);if(n<=90)pool.push({key:'lc:'+p.id,tag:'ใบประกอบฯ',c:'#E5484D',t:n<0?dn(p)+' · ใบประกอบวิชาชีพหมดอายุแล้ว':dn(p)+' · ใบประกอบวิชาชีพจะหมดอายุ',m:n<0?'หมดอายุแล้ว '+(-n)+' วัน':'เหลือ '+n+' วัน',r:'hr'})})}
+if(me&&me.role=='founder'){const y=ttYDef(),miss=PP.filter(p=>!TT['t_'+p.id+'_'+y]).length;if(PP.length&&miss)pool.push({key:'ttm',tag:'ตารางสอน',c:'#0EA5E9',t:'ครู '+miss+' คนยังไม่ได้บันทึกตารางสอนปีการศึกษา '+y,m:'ตรวจสอบ',r:'tt:check'});
+const pe=U.filter(u=>u.st=='pending').length;if(pe)pool.push({key:'pend',tag:'สมาชิกใหม่',c:'#14B8A6',t:'มีสมาชิกใหม่รออนุมัติ '+pe+' คน',m:'อนุมัติ',r:'usr'})}
+return{pins:pins.map(a=>({...mk(a),pin:true})),pool}}
+function annRow(it,cls){if(!it)return `<div class="an-in an-e">ยังไม่มีข่าวสารในขณะนี้</div>`;
+return `<div class="an-in"${it.r?` data-r="${it.r}"`:''} title="${esc(it.t)}"><span class="an-tag" style="background:${it.c}">${it.pin?'📌 ':''}${esc(it.tag)}</span><span class="an-t">${esc(it.t)}</span>${it.m?`<em class="an-m">${esc(it.m)}</em>`:''}</div>`}
+function annFill(pool){for(let i=0;i<3;i++){const cur=annSlots[i];if(cur&&pool.find(x=>x.key==cur))continue;annSlots[i]=annPick(pool,i)}}
+function annPick(pool,i){const used=new Set(annSlots.filter((k,j)=>j!=i&&k)),c=pool.filter(x=>!used.has(x.key)&&x.key!=annSlots[i]);if(!c.length)return annSlots[i]&&pool.find(x=>x.key==annSlots[i])?annSlots[i]:null;
+let f=c.filter(x=>!annSeen[x.key]);if(!f.length){annSeen={};f=c}const x=f[Math.floor(Math.random()*f.length)];annSeen[x.key]=1;return x.key}
+function annHtml(){if(!me)return '';const{pins,pool}=annItems();annFill(pool);
+const pr=[0,1].map(i=>pins[i]?`<div class="an-r pin">${annRow(pins[i])}</div>`:`<div class="an-r emp"><div class="an-in an-e" data-r="ann" style="cursor:pointer">ปักหมุดข้อความสำคัญได้ที่นี่ · กด “เพิ่มประกาศ”</div></div>`).join('');
+const sl=[0,1,2].map(i=>`<div class="an-r" id="an_s${i}">${annRow(pool.find(x=>x.key==annSlots[i]))}</div>`).join('');
+return `<div class="anp"><div class="anp-h"><h3>ข่าวประชาสัมพันธ์</h3><a data-r="ann">+ เพิ่มประกาศ / ข่าวด่วน</a></div><div class="an-sec">ข้อความปักหมุด</div>${pr}<div class="an-sec" style="margin-top:8px">ข่าวสารล่าสุด (สุ่มเปลี่ยนทุก 1 นาที)</div>${sl}</div>`}
+function annHomeUpd(){const el=document.getElementById('an_home');if(el&&me)el.innerHTML=annHtml()}
+function annTick(){if(!me||!document.getElementById('an_s0'))return;const{pool}=annItems(),i=annTk++%3,cur=annSlots[i],k=annPick(pool,i);
+if(k&&k!=cur){annSlots[i]=k;hbSwap(document.getElementById('an_s'+i),annRow(pool.find(x=>x.key==k)))}}
+setInterval(annTick,20000);
+const annCan=a=>!!me&&(me.role=='founder'||a.uid==me._id);
+V.ann=()=>{const t=annToday(),all=AN.slice().sort((a,b)=>(b.at||'').localeCompare(a.at||'')),np=annActive().filter(a=>a.pin).length;
+const row=a=>{const ex=a.exp&&a.exp<t;return `<div class="an-li" style="${ex?'opacity:.55':''}"><span class="an-tag" style="background:${a.k=='urgent'?'#E5484D':'#2F6BFF'}">${a.k=='urgent'?'ข่าวด่วน':'ประกาศ'}</span><div style="flex:1;min-width:0"><b style="font-weight:500">${a.pin?'📌 ':''}${esc(a.t)}</b><small>โดย ${esc(a.by||'-')} · ${a.exp?(ex?'หมดอายุแล้ว ':'แสดงถึง ')+th(a.exp):'ไม่หมดอายุ'}</small></div>${annCan(a)?`<button class="btn o" data-an="pin:${a.id}">${a.pin?'เลิกปักหมุด':'ปักหมุด'}</button> <button class="btn o" data-an="del:${a.id}">ลบ</button>`:''}</div>`};
+return PT('ประกาศ & ข่าวด่วน','ครูทุกคนเพิ่มประกาศได้ ข้อความจะแสดงในแบนเนอร์ข่าวประชาสัมพันธ์หน้าหลัก')+
+P('เพิ่มประกาศ / ข่าวด่วน',`<div class="anf"><label class="lb">ข้อความ (ไม่เกิน 120 ตัวอักษร)<input class="in" id="an_t" maxlength="120" placeholder="เช่น พรุ่งนี้ประชุมครู 15.00 น."></label>
+<label class="lb">ประเภท<select class="in" id="an_k"><option value="notice">ประกาศ</option><option value="urgent">ข่าวด่วน</option></select></label>
+<label class="lb">แสดงนาน<select class="in" id="an_d"><option value="1">1 วัน</option><option value="3">3 วัน</option><option value="7" selected>7 วัน</option><option value="14">14 วัน</option><option value="30">30 วัน</option><option value="0">ไม่หมดอายุ</option></select></label></div>
+<div style="display:flex;align-items:center;gap:14px;margin-top:12px;flex-wrap:wrap"><label style="display:flex;gap:6px;align-items:center;font-size:.84rem"><input type="checkbox" id="an_p"> ปักหมุด (ได้สูงสุด 2 ข้อความ · ตอนนี้ปักอยู่ ${np})</label><button class="btn" onclick="annSave()">บันทึกประกาศ</button><small id="an_msg" style="color:var(--mute)"></small></div>`)+
+P('ประกาศทั้งหมด',all.length?all.map(row).join(''):E('ยังไม่มีประกาศ',90))};
+async function annSave(){const t=$('#an_t').value.trim(),k=$('#an_k').value,d=+$('#an_d').value,pin=$('#an_p').checked,m=$('#an_msg');
+if(!t)return alert('กรุณาพิมพ์ข้อความ');if(pin&&annActive().filter(a=>a.pin).length>=2)return alert('ปักหมุดได้สูงสุด 2 ข้อความ กรุณาเลิกปักหมุดข้อความเดิมก่อน');
+m.textContent='กำลังบันทึก...';
+try{await db.collection('announcements').doc(uid()).set({t,k,pin,exp:d?svDay(new Date(Date.now()+d*864e5)):'',createdBy:me._id,createdByName:me.n,createdAt:new Date().toISOString()});
+$('#an_t').value='';$('#an_p').checked=false;m.textContent='บันทึกแล้ว'}catch(e){m.textContent='บันทึกไม่สำเร็จ: '+e.message}}
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-an]');if(!b||!me)return;const[k,id]=b.dataset.an.split(':'),a=AN.find(x=>x.id==id);if(!a||!annCan(a))return;
+try{if(k=='del'){if(!confirm('ลบประกาศนี้?'))return;await db.collection('announcements').doc(id).delete()}
+else{if(!a.pin&&annActive().filter(x=>x.pin).length>=2)return alert('ปักหมุดได้สูงสุด 2 ข้อความ');await db.collection('announcements').doc(id).update({pin:!a.pin})}}catch(err){alert('ไม่สำเร็จ: '+err.message)}});
 setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
