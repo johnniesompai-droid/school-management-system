@@ -328,6 +328,20 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .hw-e .hwi{width:84px;margin:0;text-align:center;padding:6px}.hw-e .pv{color:var(--mute);font-size:.76rem;white-space:nowrap}.hw-e .ag{white-space:nowrap;color:var(--mute)}.hw-e td{vertical-align:middle}.hw-e .bm{font-size:1rem}
 .hw-note{margin-top:12px;font-size:.74rem;color:var(--mute);line-height:1.7}.hw-note b{color:#312E81}
 @media(max-width:900px){.hwts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* ทะเบียนเลขที่ */
+.rg-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}.rg-tabs button{border:1.5px solid #D5DBEE;background:#fff;border-radius:999px;padding:7px 16px;font:inherit;font-weight:600;cursor:pointer;color:#55607A;transition:transform .15s,background .2s}.rg-tabs button:hover{transform:translateY(-2px)}
+.rg-tabs button.on{background:var(--c);border-color:var(--c);color:#fff}.rg-tabs button i{font-style:normal;margin-left:8px;background:rgba(0,0,0,.12);border-radius:999px;padding:0 8px;font-size:.74rem}.rg-tabs button:not(.on) i{background:#EEF1F8}
+.rg-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.rg-bar>b{color:#312E81}
+.rg-t td.rg-d,.rg-t th{text-align:left}.rg-t td{vertical-align:top}.rg-d small{display:block;color:var(--mute);font-size:.74rem}
+.rg-no{display:inline-block;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);border-radius:10px;padding:2px 10px}
+.rg-a{white-space:nowrap}.rg-a button{border:0;background:none;color:var(--mute);cursor:pointer;padding:4px}.rg-a button svg{width:16px;height:16px}.rg-a button:hover{color:var(--blue)}
+.rg-cnt{margin-top:8px;color:var(--mute);font-size:.78rem}
+.rgm{position:fixed;inset:0;background:rgba(20,25,60,.45);backdrop-filter:blur(3px);z-index:3000;display:grid;place-items:center;padding:16px;animation:lvIn .2s both}
+.rgm-b{background:#fff;border-radius:20px;padding:22px;width:min(560px,100%);max-height:92vh;overflow:auto;box-shadow:0 24px 60px rgba(30,40,100,.35);display:grid;gap:12px}.rgm-b h3{margin:0;font-size:1.15rem;color:#312E81}
+.rgm-g{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rg-nr{display:flex;align-items:center;gap:8px}.rg-nr b{color:#312E81;white-space:nowrap}
+.rg-warn{font-size:.8rem;min-height:18px}.rg-warn.bad{color:#C0263F;background:#FFE1E5;border-radius:10px;padding:6px 10px}
+.rgm-f{display:flex;justify-content:flex-end;gap:10px}
+@media(max-width:560px){.rgm-g{grid-template-columns:1fr}}
 /* ปฏิทินการมาเรียน */
 .ac-flt{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0 12px}.ac-flt label{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;color:var(--mute)}.ac-flt select{width:auto;margin:0}
 .ac-x tr.grp td{position:sticky;left:0;background:#EEF1FF;color:#312E81;font-weight:600;text-align:left;padding:5px 10px}
@@ -798,7 +812,7 @@ const firebaseConfig={apiKey:"AIzaSyCetA8GzKLX805V9nEpPXjdoh8eGtVMqXY",authDomai
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 window.addEventListener('pageshow',()=>{window.scrollTo(0,0)});
 const $=q=>document.querySelector(q);
-const I={scale:'<path d="M12 3v18M8 21h8M4 7h16"/><path d="M4 7l-2.5 6a2.8 2.8 0 0 0 5 0zM20 7l-2.5 6a2.8 2.8 0 0 0 5 0z"/>',mega:`<path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 9a4 4 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/><path d="M7 14l1 5h2"/>`,book:`<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/><path d="M9 7h6"/>`,refresh:`<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>`,print:`<path d="M7 9V3h10v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/>`,info:`<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>`,check:`<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>`,home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+const I={edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',scale:'<path d="M12 3v18M8 21h8M4 7h16"/><path d="M4 7l-2.5 6a2.8 2.8 0 0 0 5 0zM20 7l-2.5 6a2.8 2.8 0 0 0 5 0z"/>',mega:`<path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 9a4 4 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/><path d="M7 14l1 5h2"/>`,book:`<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/><path d="M9 7h6"/>`,refresh:`<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>`,print:`<path d="M7 9V3h10v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/>`,info:`<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>`,check:`<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>`,home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
 users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.8 0 4.5 1.9 4.5 4.5"/>',
 grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
 doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/>',
@@ -973,7 +987,7 @@ home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div><div
 <div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2"><div id="wx_home">${wxHtml()}</div><div id="sv_home">${svHomeHtml()}</div></div></div>
 <div class="grid" style="align-content:start">${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" style="--c:${d[3]}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
-admin:()=>PT('งานธุรการ','แบบฟอร์ม / เอกสารดาวน์โหลด และเกษียนหนังสือราชการ')+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
+admin:()=>PT('งานธุรการ','ทะเบียนเลขที่คำสั่ง/หนังสือ · แบบฟอร์ม / เอกสารดาวน์โหลด · เกษียนหนังสือราชการ')+`<div id="rg_wrap">${rgHtml()}</div>`+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['par','ผู้ปกครอง']]:m[3]=='tt'?[['tt:teach','ตารางสอน'],['tt:class','ตารางเรียน'],['tt:entry','บันทึกตารางสอน'],['tt:check','ตรวจสอบตาราง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=e=>{e.stopPropagation();ntfToggle()};
@@ -1057,7 +1071,7 @@ unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.da
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data()||{});render()},e=>{}));
 unsub.push(db.collection('budgetprojects').onSnapshot(qs=>{BP=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
 unsub.push(db.collection('savingtx').onSnapshot(qs=>{HSV=qs.docs.map(d=>{const x=d.data();return{s:x.studentId,w:x.type=='withdraw'?-1:1,a:+x.amount||0,d:svDay(x.createdAt)}});HSVL=true;svHomeUpd()},e=>{}));
-attSub();wxLoad(true);unsub.push(db.collection('growth').onSnapshot(qs=>{HW={};qs.docs.forEach(d=>HW[d.id]=d.data());hwRefresh();if(!hwInit){hwInit=true;setTimeout(hwRemindToast,3500)}},e=>{}));
+attSub();wxLoad(true);unsub.push(db.collection('registers').onSnapshot(qs=>{RG=qs.docs.map(d=>({id:d.id,...d.data()}));rgUpd()},e=>{}));unsub.push(db.collection('growth').onSnapshot(qs=>{HW={};qs.docs.forEach(d=>HW[d.id]=d.data());hwRefresh();if(!hwInit){hwInit=true;setTimeout(hwRemindToast,3500)}},e=>{}));
 unsub.push(db.collection('announcements').onSnapshot(qs=>{AN=qs.docs.map(d=>{const x=d.data();return{id:d.id,t:x.t||'',k:x.k||'notice',pin:!!x.pin,exp:x.exp||'',by:x.createdByName||'',uid:x.createdBy||'',at:x.createdAt||''}});if(annInit){const t=annToday();AN.filter(a=>!annPrev.has(a.id)&&a.uid!=me._id&&(!a.exp||a.exp>=t)).slice(0,2).forEach(a=>ntfToast({title:a.k=='urgent'?'ข่าวด่วน':'ประกาศใหม่',text:a.t,route:'ann',c:a.k=='urgent'?'#E5484D':'#2F6BFF',id:'an:'+a.id}))}annPrev=new Set(AN.map(a=>a.id));annInit=true;annHomeUpd();updateBell();if(CUR=='ann')render()},e=>{}));
 unsub.push(db.collection('timetables').onSnapshot(qs=>{TT={};qs.docs.forEach(d=>TT[d.id]=d.data());render()},e=>{}));
 unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
@@ -1065,7 +1079,7 @@ unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,..
 unsub.push(db.collection('notifreads').doc(me._id).onSnapshot(d=>{NR=new Set((d.exists&&d.data().ids)||[]);updateBell()},e=>{}));
 unsub.push(db.collection('scoresheets').where('ownerUid','==',me._id).onSnapshot(qs=>{SC=qs.docs.map(d=>({id:d.id,...d.data()}));if(!(CUR.startsWith('score:')&&qs.metadata.hasPendingWrites))render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];if(attUn){attUn();attUn=null}ATT={};HW={};hwInit=false;attLoaded={};attMLoaded={};attSubDate='';annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];if(attUn){attUn();attUn=null}ATT={};HW={};RG=[];hwInit=false;attLoaded={};attMLoaded={};attSubDate='';annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -2008,6 +2022,57 @@ const m=document.getElementById('hw_msg');if(m)m.textContent='กำลังบ
 try{const b=db.batch();out.forEach(o=>{b.set(db.collection('growth').doc(o.sid),{sid:o.sid,classKey:k,months:{[ym]:{w:o.w,h:o.h,d:hwDate,by:me._id,byName:me.n,at:new Date().toISOString()}},updatedAt:new Date().toISOString()},{merge:true})});await b.commit();
 out.forEach(o=>{const g=HW[o.sid]=HW[o.sid]||{};g.months=Object.assign({},g.months,{[ym]:{w:o.w,h:o.h,d:hwDate}})});hwD={};hwMsg='บันทึกแล้ว ✓ ('+out.length+' คน)';hwClassUpd();updateBell()}
 catch(e){hwMsg='';alert('บันทึกไม่สำเร็จ: '+e.message);hwClassUpd()}}
+
+
+/* ===== ทะเบียนเลขที่ (คำสั่ง / หนังสือราชการ / หนังสือนำส่ง) ===== */
+let RG=[],rgTab='order',rgQ='',rgYr='';
+const RGT={order:{n:'ทะเบียนเลขที่คำสั่งโรงเรียน',s:'คำสั่ง',lab:'เรื่อง / รายละเอียดคำสั่ง',ph:'เช่น แต่งตั้งคณะกรรมการดำเนินงานโรงเรียน ปีการศึกษา 2569',to:'ผู้เกี่ยวข้อง / หน่วยงาน (ถ้ามี)',c:'#2F6BFF'},
+letter:{n:'ทะเบียนเลขที่หนังสือราชการ',s:'หนังสือราชการ',lab:'เรื่อง / รายละเอียดหนังสือ',ph:'เช่น ขอความอนุเคราะห์วิทยากรอบรม',to:'ถึง / เรียน',c:'#8B5CF6'},
+send:{n:'ทะเบียนเลขที่หนังสือนำส่ง',s:'หนังสือนำส่ง',lab:'เรื่อง / รายละเอียดสิ่งที่นำส่ง',ph:'เช่น ส่งรายงานผลการดำเนินงานประจำเดือน',to:'ส่งถึง',c:'#22B573'}};
+const rgCan=()=>canManageAdmin();
+const rgBE=d=>d&&/^\d{4}/.test(d)?+d.slice(0,4)+543:+svDay(new Date()).slice(0,4)+543;
+const rgOf=t=>RG.filter(r=>r.type==t);
+function rgNext(t,yr,skip){let m=0;rgOf(t).forEach(r=>{if(r.yr==yr&&r.id!=skip&&r.no>m)m=r.no});return m+1}
+const rgFmt=r=>r.no+'/'+r.yr;
+function rgYears(){const y=new Set([+svDay(new Date()).slice(0,4)+543]);RG.forEach(r=>y.add(r.yr));return [...y].sort((a,b)=>b-a)}
+function rgRows(){const q=rgQ.trim().toLowerCase();return rgOf(rgTab).filter(r=>(!rgYr||r.yr==rgYr)&&(!q||[rgFmt(r),r.title,r.to,r.note,r.by,r.date&&th(r.date)].join(' ').toLowerCase().includes(q))).sort((a,b)=>b.yr-a.yr||b.no-a.no)}
+function rgList(){const T=RGT[rgTab],rows=rgRows(),can=rgCan();
+if(!rows.length)return E(RG.length||rgQ?'ไม่พบรายการที่ตรงกับตัวกรอง':'ยังไม่มี'+T.s+' กดปุ่ม "เพิ่ม'+T.s+'" เพื่อเริ่มบันทึก',110);
+return `<div class="ac-tw"><table class="ac-t rg-t"><thead><tr><th style="width:92px">เลขที่</th><th style="width:130px">ลงวันที่</th><th>${T.lab}</th><th>${T.to.replace(/ \(.*\)/,'')}</th><th>ผู้บันทึก</th>${can?'<th style="width:78px"></th>':''}</tr></thead><tbody>${rows.map(r=>`<tr><td><b class="rg-no" style="--c:${T.c}">${esc(rgFmt(r))}</b></td><td>${r.date?th(r.date):'–'}</td><td class="rg-d">${esc(r.title||'')}${r.note?`<small>${esc(r.note)}</small>`:''}</td><td class="rg-d">${esc(r.to||'')}</td><td class="rg-d"><small style="margin:0">${esc(r.by||'')}</small></td>${can?`<td class="rg-a"><button title="แก้ไข" onclick="rgOpen('${r.id}')">${ic('edit')}</button><button title="ลบ" onclick="rgDel('${r.id}')">${ic('trash')}</button></td>`:''}</tr>`).join('')}</tbody></table></div><div class="rg-cnt">ทั้งหมด ${rows.length} รายการ</div>`}
+function rgHtml(){const T=RGT[rgTab],can=rgCan();
+return `<div class="card rgc"><h3 style="justify-content:flex-start;gap:8px">${ic("doc")} ทะเบียนเลขที่คำสั่งและหนังสือ</h3>
+<div class="rg-tabs">${Object.keys(RGT).map(k=>`<button class="${k==rgTab?'on':''}" style="--c:${RGT[k].c}" onclick="rgSetTab('${k}')">${RGT[k].n.replace('ทะเบียนเลขที่','')}<i>${rgOf(k).length}</i></button>`).join('')}</div>
+<div class="rg-bar"><b>${T.n}</b><span style="margin-left:auto;display:inline-flex;gap:8px;flex-wrap:wrap;align-items:center"><input class="in" id="rg_q" placeholder="ค้นหาเลขที่ / เรื่อง / วันที่" value="${esc(rgQ)}" oninput="rgQ=this.value;rgListUpd()" style="width:220px;margin:0"><select class="in" style="width:auto;margin:0" onchange="rgYr=this.value;rgListUpd()"><option value="">ทุกปี (พ.ศ.)</option>${rgYears().map(y=>`<option value="${y}"${String(y)==String(rgYr)?' selected':''}>${y}</option>`).join('')}</select><button class="btn o" onclick="rgXls()">ส่งออก Excel</button>${can?`<button class="btn" onclick="rgOpen()">+ เพิ่ม${T.s}</button>`:''}</span></div>
+<div id="rg_list">${rgList()}</div>${can?'':'<div class="rg-cnt">ดูได้อย่างเดียว · เฉพาะครูธุรการและผู้ก่อตั้งเพิ่ม/แก้ไขได้</div>'}</div>`}
+function rgUpd(){const w=document.getElementById('rg_wrap');if(w&&CUR=='admin'){const q=document.activeElement&&document.activeElement.id=='rg_q';if(!q)w.innerHTML=rgHtml();else rgListUpd()}}
+function rgListUpd(){const l=document.getElementById('rg_list');if(l)l.innerHTML=rgList()}
+function rgSetTab(k){rgTab=k;rgQ='';const w=document.getElementById('rg_wrap');if(w)w.innerHTML=rgHtml()}
+/* pop-up เพิ่ม/แก้ไข */
+function rgOpen(id){if(!rgCan())return;const T=RGT[rgTab],r=id?RG.find(x=>x.id==id):null,d=r?r.date:svDay(new Date()),yr=rgBE(d),no=r?r.no:rgNext(rgTab,yr);
+const o=document.createElement('div');o.className='rgm';o.id='rg_m';o.dataset.id=id||'';o.dataset.t=rgTab;o.innerHTML=`<div class="rgm-b" role="dialog"><h3>${r?'แก้ไข':'เพิ่ม'}${T.s}</h3>
+<div class="rgm-g"><label class="lb">วันที่ (กดเพื่อเลือกจากปฏิทิน)<input class="in" type="date" id="rg_date" value="${d}" onclick="try{this.showPicker()}catch(e){}" onchange="rgDateCh()"></label>
+<label class="lb">เลขที่<span class="rg-nr"><input class="in" type="number" min="1" id="rg_no" value="${no}" oninput="this.dataset.u=1;rgChk()"><b id="rg_yr">/ ${yr}</b></span></label></div>
+<div id="rg_warn" class="rg-warn"></div>
+<label class="lb">${T.lab}<textarea class="in" id="rg_title" rows="3" placeholder="${esc(T.ph)}">${esc(r?r.title||'':'')}</textarea></label>
+<label class="lb">${T.to}<input class="in" id="rg_to" value="${esc(r?r.to||'':'')}"></label>
+<label class="lb">หมายเหตุ (ถ้ามี)<input class="in" id="rg_note" value="${esc(r?r.note||'':'')}"></label>
+<div class="rgm-f"><button class="btn o" onclick="rgClose()">ยกเลิก</button><button class="btn" id="rg_sv" onclick="rgSave()">บันทึก</button></div></div>`;
+o.addEventListener('mousedown',e=>{if(e.target==o)rgClose()});document.body.appendChild(o);rgChk();setTimeout(()=>{const t=document.getElementById('rg_title');t&&t.focus()},50)}
+function rgClose(){const m=document.getElementById('rg_m');if(m)m.remove()}
+function rgDateCh(){const m=document.getElementById('rg_m'),d=document.getElementById('rg_date').value,yr=rgBE(d),n=document.getElementById('rg_no');document.getElementById('rg_yr').textContent='/ '+yr;if(!n.dataset.u)n.value=rgNext(m.dataset.t,yr,m.dataset.id);rgChk()}
+function rgChk(){const m=document.getElementById('rg_m');if(!m)return;const t=m.dataset.t,yr=rgBE(document.getElementById('rg_date').value),no=+document.getElementById('rg_no').value,dup=RG.find(r=>r.type==t&&r.yr==yr&&r.no==no&&r.id!=m.dataset.id),w=document.getElementById('rg_warn');
+w.innerHTML=dup?`⚠ เลขที่ ${no}/${yr} มีอยู่แล้ว (${esc(dup.title||'')}) กรุณาตรวจสอบ`:`<span style="color:#14804A">✓ เลขถัดไปที่ว่าง: ${rgNext(t,yr,m.dataset.id)}/${yr}</span>`;w.className='rg-warn'+(dup?' bad':'')}
+async function rgSave(){if(!rgCan())return;const m=document.getElementById('rg_m'),t=m.dataset.t,id=m.dataset.id,date=document.getElementById('rg_date').value,no=parseInt(document.getElementById('rg_no').value),title=document.getElementById('rg_title').value.trim();
+if(!date)return alert('กรุณาเลือกวันที่');if(!(no>0))return alert('กรุณากรอกเลขที่');if(!title)return alert('กรุณากรอกรายละเอียด');
+const yr=rgBE(date);if(RG.some(r=>r.type==t&&r.yr==yr&&r.no==no&&r.id!=id)&&!confirm('เลขที่ '+no+'/'+yr+' มีอยู่แล้ว ต้องการบันทึกซ้ำหรือไม่?'))return;
+const data={type:t,no,yr,date,title,to:document.getElementById('rg_to').value.trim(),note:document.getElementById('rg_note').value.trim()};
+const b=document.getElementById('rg_sv');b.disabled=true;b.textContent='กำลังบันทึก...';
+try{if(id)await db.collection('registers').doc(id).set({...data,updatedBy:me._id,updatedAt:new Date().toISOString()},{merge:true});else await db.collection('registers').doc(uid()).set({...data,by:me.n,createdBy:me._id,createdAt:new Date().toISOString()});rgClose()}
+catch(e){b.disabled=false;b.textContent='บันทึก';alert('บันทึกไม่สำเร็จ: '+e.message)}}
+async function rgDel(id){if(!rgCan())return;const r=RG.find(x=>x.id==id);if(!r||!confirm('ลบรายการเลขที่ '+rgFmt(r)+' ?'))return;try{await db.collection('registers').doc(id).delete()}catch(e){alert('ลบไม่สำเร็จ: '+e.message)}}
+function rgXls(){if(typeof XLSX=='undefined')return alert('โหลดตัวสร้าง Excel ไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');const T=RGT[rgTab],rows=rgRows().slice().sort((a,b)=>a.yr-b.yr||a.no-b.no);
+const ws=XLSX.utils.aoa_to_sheet([[T.n+(rgYr?' ปี '+rgYr:'')],[],['เลขที่','ลงวันที่',T.lab,T.to,'หมายเหตุ','ผู้บันทึก'],...rows.map(r=>[rgFmt(r),r.date?th(r.date):'',r.title||'',r.to||'',r.note||'',r.by||''])]);
+ws['!cols']=[{wch:10},{wch:16},{wch:60},{wch:30},{wch:24},{wch:18}];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,T.s);XLSX.writeFile(wb,`${T.n}${rgYr?'_'+rgYr:''}.xlsx`)}
 
 /* ===== การมาเรียน ===== */
 const attToday=()=>svDay(new Date()),attKey=(d,k)=>d+'_'+k;
