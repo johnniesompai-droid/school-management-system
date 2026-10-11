@@ -27,7 +27,7 @@ aside{width:232px;background:#fff;border-right:1px solid var(--line);padding:16p
 .sres small{display:block;color:var(--mute);font-size:.72rem;margin-top:2px}
 .chip{margin-left:auto;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.8rem}
 .ico{color:#55607A;cursor:pointer;position:relative}.bell-badge{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-size:.6rem;line-height:1.5;border-radius:9px;padding:0 5px;font-style:normal}.user{display:flex;gap:10px;align-items:center;line-height:1.2}.user small{display:block;color:var(--mute);font-size:.7rem}
-.av{width:36px;height:36px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--blue)}
+.av{width:36px;height:36px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--blue);overflow:hidden;flex-shrink:0}
 #view{padding:20px;display:grid;gap:16px}
 .grid{display:grid;gap:16px}.g6{grid-template-columns:repeat(6,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:repeat(3,minmax(0,1fr))}.split>:first-child{grid-column:span 2}
 .card{background:#fff;border-radius:14px;box-shadow:var(--sh);padding:16px}.card .card{box-shadow:none;border:1px solid var(--line)}
@@ -1106,7 +1106,9 @@ finally{suppress=false}}
 function mkNav(){const f=me.role=='founder',sys=SYS.filter(m=>f||!['usr','staff'].includes(m[0]));
 $('#nav').innerHTML=MENU.map(nav).join('')+'<h6>ระบบกลาง</h6>'+sys.map(nav).join('');
 const n=U.filter(u=>u.st=='pending').length,a=$('[data-r=usr]');if(a&&n)a.innerHTML+=`<i class="bd">${n}</i>`}
-function updateUserBadge(){const s=S.find(x=>x.id==me.sid);$('#un').textContent=me.n;$('#ur').textContent=me.role=='founder'?'ผู้ก่อตั้ง':(s&&s.p)||'สมาชิก'}
+function updateUserBadge(){if(!me)return;const s=S.find(x=>x.id==me.sid),pp=me.sid&&PP.find(x=>x.id==me.sid),f=me.role=='founder';
+$('#un').textContent=(!f&&pp)?dn(pp):me.n;$('#ur').textContent=f?'ผู้ก่อตั้ง':(pp&&pp.po)||(s&&s.p)||'สมาชิก';
+const av=$('#au');if(av){const im=!f&&pp&&pp.im;if(av.dataset.im!==(im||'')){av.dataset.im=im||'';av.innerHTML=im?`<img src="${im}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`:ic('user')}}}
 let BD={ids:[]};
 const bdCnt=i=>ST.filter(s=>s.lv==i&&(BD.ids||[]).includes(s.id)).length;
 const gsum=l=>{const m=l.filter(x=>gd(x.tt)=='m').length,f=l.filter(x=>gd(x.tt)=='f').length,u=l.length-m-f;
@@ -1130,7 +1132,7 @@ function addBd(){const v=$('#bs').value;if(!v)return;const ids=[...(BD.ids||[]),
 document.addEventListener('click',e=>{const a=e.target.closest('[data-bd]');if(!a||!me)return;if(confirm('เอาออกจากรายชื่อนักเรียนพักนอน?')){const ids=(BD.ids||[]).filter(x=>x!=a.dataset.bd);BD={ids};db.collection('boarding').doc('list').set({ids}).catch(()=>{});render()}});
 function attachListeners(){unsub.forEach(u=>u());unsub=[];
 unsub.push(db.collection('staff').onSnapshot(qs=>{S=qs.docs.map(d=>({id:d.id,...d.data()}));if(me)updateUserBadge();render()},e=>alert('โหลดข้อมูลบุคลากรไม่สำเร็จ: '+e.message)));
-unsub.push(db.collection('people').onSnapshot(qs=>{PP=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>alert('โหลดข้อมูลบุคลากรไม่สำเร็จ: '+e.message)));
+unsub.push(db.collection('people').onSnapshot(qs=>{PP=qs.docs.map(d=>({id:d.id,...d.data()}));updateUserBadge();render()},e=>alert('โหลดข้อมูลบุคลากรไม่สำเร็จ: '+e.message)));
 unsub.push(db.collection('students').onSnapshot(qs=>{ST=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>alert('โหลดข้อมูลนักเรียนไม่สำเร็จ: '+e.message)));
 unsub.push(db.collection('homeroom').onSnapshot(qs=>{HR={};qs.docs.forEach(d=>HR[d.id]=d.data().ids||[]);render()},e=>{}));
 unsub.push(db.collection('events').onSnapshot(qs=>{EV=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
@@ -2352,7 +2354,7 @@ return `<div class="svh"><div class="svh-t"><span class="svh-i">${ic('users')}</
 <div class="stcg ${t=='b'?'b5':''}">${LV.slice(0,CT[t][1]).map((n,i)=>card(t,i)).join('')}</div></div>`}).join('')+attPickerCal()}
 V.att=s=>s?attClass(s):attPicker();
 function attClass(k){const t=k[0],i=+k.slice(1);if(!CT[t]||!(i>=0&&i<CT[t][1]))return attPicker();const d=attDate||attToday();attLoad(d);
-return `<div class="pt"><h2>การมาเรียน · ${esc(LV[i])}</h2><p><a class="bk" data-r="att">‹ การมาเรียน</a> / ${CT[t][0]}${attCan(k)?'':' · ดูได้อย่างเดียว (เฉพาะครูประจำชั้นและผู้ก่อตั้งเช็คชื่อได้)'}</p></div><div id="att_cal">${attClassCal(k)}</div><div class="card attc" id="att_wrap">${attClassInner(k)}</div>`}
+return `<div class="pt"><h2>การมาเรียน · ${esc(LV[i])}</h2><p><a class="bk" data-r="att">‹ การมาเรียน</a> / ${CT[t][0]}${attCan(k)?'':' · ดูได้อย่างเดียว (เฉพาะครูประจำชั้นและผู้ก่อตั้งเช็คชื่อได้)'}</p></div><div class="card attc" id="att_wrap">${attClassInner(k)}</div><div id="att_cal" style="margin-top:16px">${attClassCal(k)}</div>`}
 function attClassInner(k){if(attTblK==k)return attTblHtml([k],k);const d=attDate||attToday(),r=attRoster(k),can=attCan(k),mk=attMarks(d,k),o=attCount(k,d);
 const ts=(HR[k]||[]).map(id=>PP.find(p=>p.id==id)).filter(Boolean).map(dn).join(', ');
 return `<div class="att-tb"><label class="lb" style="display:inline-flex;align-items:center;gap:8px">วันที่<input class="in" type="date" style="width:auto;margin:0" value="${d}" onchange="attSetDate(this.value)"></label>
