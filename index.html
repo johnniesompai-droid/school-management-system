@@ -320,6 +320,25 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .atm-l{display:grid;gap:2px;font-size:.74rem;color:#fff;min-width:0;flex:1}.atm-l>div{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .atm-l i{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.7)}.atm-l em{font-style:normal;margin-left:auto;font-weight:700}.atm-l small{color:rgba(255,255,255,.85);font-size:.7rem}
 @media(prefers-reduced-motion:reduce){.atb,.atdn,.atcd{animation:none!important}}
+/* สภาพอากาศ */
+#wx_home{position:relative;min-height:0}
+.wxc{position:absolute;inset:0;border-radius:20px;overflow:hidden;padding:12px 16px 12px;display:flex;flex-direction:column;justify-content:space-between;gap:4px;background:linear-gradient(160deg,var(--g1),var(--g2));border:1px solid rgba(150,165,205,.35);box-shadow:0 10px 22px -14px rgba(70,90,160,.5),inset 0 1px 0 rgba(255,255,255,.8);color:#26304F;animation:lvIn .6s .1s both;cursor:pointer}
+.wx-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.wx-h b{font-size:.95rem;color:#312E81}.wx-h small{font-size:.66rem;color:#6B7794;text-align:right}
+.wx-msg{margin:auto;text-align:center;color:#6B7794;font-size:.84rem;line-height:1.8}.wx-msg a{color:var(--blue);cursor:pointer}
+.wx-top{display:flex;align-items:center;gap:6px;min-height:0}.wx-sv{width:92px;height:76px;flex:none;overflow:visible}
+.wx-t{display:grid;gap:0;line-height:1.15}.wx-t b{font-size:2.1rem;font-weight:700;color:#1F2A5C}.wx-t b i{font-style:normal;font-size:.9rem;font-weight:500;margin-left:2px;color:#55607A}.wx-t span{font-size:.88rem;font-weight:600}.wx-t small{font-size:.7rem;color:#6B7794}
+.wx-hl{display:flex;gap:14px;font-size:.78rem}.wx-hl .hi b{color:#E4572E}.wx-hl .lo b{color:#2F7FE0}
+.wx-sn{display:flex;gap:14px;font-size:.76rem;color:#55607A}.wx-sn b{color:#26304F}
+.wx-pm{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.7);border-radius:12px;padding:5px 10px;font-size:.76rem;white-space:nowrap;overflow:hidden}.wx-pm i{width:11px;height:11px;border-radius:50%;background:var(--pc);flex:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--pc) 28%,transparent);animation:lvGlow 2.4s infinite}.wx-pm b{font-size:.95rem;color:var(--pc)}.wx-pm em{font-style:normal;margin-left:auto;font-weight:600;color:var(--pc);overflow:hidden;text-overflow:ellipsis}
+.wx-ch{display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;font-size:.7rem;color:#55607A;white-space:nowrap}
+.wx-rays{transform-origin:60px 48px;animation:wxSpin 22s linear infinite}.wx-glow{animation:lvGlow 3s ease-in-out infinite}
+.wx-cl{animation:wxDrift 7s ease-in-out infinite alternate}.wx-st{animation:lvTw 2.6s ease-in-out infinite}
+.wx-moon{animation:lvBob 4s ease-in-out infinite}
+.wx-dr{animation:wxDrop .9s linear infinite}.wx-bolt{animation:wxBolt 3.2s infinite}.wx-fb{animation:wxDrift 5s ease-in-out infinite alternate}
+@keyframes wxSpin{to{transform:rotate(360deg)}}@keyframes wxDrift{from{transform:translateX(-5px)}to{transform:translateX(7px)}}
+@keyframes wxDrop{0%{opacity:0;transform:translateY(-6px)}20%{opacity:1}100%{opacity:0;transform:translateY(22px)}}
+@keyframes wxBolt{0%,86%,100%{opacity:.15}88%,92%{opacity:1}90%{opacity:.3}}
+@media(prefers-reduced-motion:reduce){.wxc *{animation:none!important}}
 @media(prefers-reduced-motion:reduce){.hs,.hs *,.hs::before,.hs::after,.hero-w::after,.grid.split>.grid>.grid.g2>.card,.grid.split>.grid>.grid.g2>.card:after,.svhm,.svhm *,.cb,.cb *,.cb:after{animation:none!important}}
 .hb-msg,.hb-st{transition:none}
 .hero-w{aspect-ratio:auto;max-height:none;height:280px;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(10,16,50,.12) 0%,rgba(10,16,50,.38) 45%,rgba(10,16,50,.72) 100%),var(--hero) center 20%/cover}
@@ -913,7 +932,7 @@ return `<div class="card dvd" style="--c:${d[3]}"><h3>${d[1]}<a data-r="div">ป
 const V={
 home:()=>`<div class="hero hero-w"><div id="tt_today">${ttTodayHtml()}</div></div><div class="grid g4">${[['นักเรียนทั้งหมด','cap','#2F6BFF','คน',ST.length,'stud',sx(ST.map(x=>x.tt),'นักเรียนชาย','นักเรียนหญิง')],['บุคลากรทั้งหมด','users','#8B5CF6','คน',PP.length,'hr',sx(PP.map(x=>x.tt),'ครูชาย','ครูหญิง')],['การมาเรียนวันนี้','cal','#22B573','%',null,'att',attMiniHtml()],['งานรอดำเนินการ','doc','#F5A524','รายการ']].map((s,i)=>`<div class="card stat hs hs${i+1}"${s[5]?` data-r="${s[5]}"`:''}><div class="bx">${ic(s[1])}</div><div><small>${s[0]}</small>${s[6]||`<b>${s[4]??'–'}</b><small>${s[3]}</small>`}</div></div>`).join('')}</div>
 <div class="grid split hrow">${attCombinedCard()}<div id="an_home">${annHtml()}</div></div>
-<div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2">${P('สถิตินักเรียน',E())}<div id="sv_home">${svHomeHtml()}</div></div></div>
+<div class="grid split"><div class="grid" style="align-content:start"><div class="grid g2"><div id="wx_home">${wxHtml()}</div><div id="sv_home">${svHomeHtml()}</div></div></div>
 <div class="grid" style="align-content:start">${calBoard(new Date().getFullYear(),new Date().getMonth(),'home')}</div></div>`,
 div:k=>PT('งาน 4 ฝ่าย','เลือกกลุ่มบริหารงานเพื่อดูรายละเอียด')+`<div class="grid g4">${DIV.map(d=>`<div class="card dv${k==d[0]?' sel':''}" style="--c:${d[3]}" data-r="div:${d[0]}"><div class="bx" style="background:${d[3]}">${ic(d[2])}</div><h4>${d[1]}</h4><span>เปิดดูรายละเอียด ›</span></div>`).join('')}</div>`+(k?detail(k):''),
 admin:()=>PT('งานธุรการ','แบบฟอร์ม / เอกสารดาวน์โหลด และเกษียนหนังสือราชการ')+`<div class="grid" style="grid-template-columns:1fr">${P(fileSectionTitle('แบบฟอร์ม / เอกสารดาวน์โหลด'),adminDocsBlock('forms'))}</div>`+memoSection(),
@@ -1000,7 +1019,7 @@ unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.da
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data()||{});render()},e=>{}));
 unsub.push(db.collection('budgetprojects').onSnapshot(qs=>{BP=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
 unsub.push(db.collection('savingtx').onSnapshot(qs=>{HSV=qs.docs.map(d=>{const x=d.data();return{s:x.studentId,w:x.type=='withdraw'?-1:1,a:+x.amount||0,d:svDay(x.createdAt)}});HSVL=true;svHomeUpd()},e=>{}));
-attSub();
+attSub();wxLoad(true);
 unsub.push(db.collection('announcements').onSnapshot(qs=>{AN=qs.docs.map(d=>{const x=d.data();return{id:d.id,t:x.t||'',k:x.k||'notice',pin:!!x.pin,exp:x.exp||'',by:x.createdByName||'',uid:x.createdBy||'',at:x.createdAt||''}});if(annInit){const t=annToday();AN.filter(a=>!annPrev.has(a.id)&&a.uid!=me._id&&(!a.exp||a.exp>=t)).slice(0,2).forEach(a=>ntfToast({title:a.k=='urgent'?'ข่าวด่วน':'ประกาศใหม่',text:a.t,route:'ann',c:a.k=='urgent'?'#E5484D':'#2F6BFF',id:'an:'+a.id}))}annPrev=new Set(AN.map(a=>a.id));annInit=true;annHomeUpd();updateBell();if(CUR=='ann')render()},e=>{}));
 unsub.push(db.collection('timetables').onSnapshot(qs=>{TT={};qs.docs.forEach(d=>TT[d.id]=d.data());render()},e=>{}));
 unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
@@ -1957,6 +1976,45 @@ let attFW=0,attFH=0;
 function attFit(){const b=document.querySelector('.hrow .atcd-b');if(!b||!me)return;const cs=getComputedStyle(b),w=Math.round(b.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)),h=Math.round(b.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom));
 if(w<300||h<200)return;if(Math.abs(w-attFW)<3&&Math.abs(h-attFH)<3&&b.dataset.fit)return;attFW=w;attFH=h;b.dataset.fit=1;b.innerHTML=attBarInner(w,h)}
 (function(){const r=render;render=function(){const x=r.apply(this,arguments);attFW=0;attFH=0;attFit();return x};addEventListener('resize',()=>{clearTimeout(window.__aft);window.__aft=setTimeout(attFit,120)})})();
+
+/* ===== สภาพอากาศ (Open-Meteo) บ้านผาเยอ ต.กองก๋อย อ.สบเมย จ.แม่ฮ่องสอน ===== */
+const WX_LAT=17.70,WX_LON=97.90;
+let WX=null,WXERR=false,WXT=0,WXBUSY=false;
+async function wxLoad(force){if(!me||WXBUSY)return;if(!force&&WX&&Date.now()-WXT<18*6e4)return;WXBUSY=true;WXT=Date.now();
+const q=`latitude=${WX_LAT}&longitude=${WX_LON}&timezone=Asia%2FBangkok`;
+try{const[r1,r2]=await Promise.allSettled([fetch(`https://api.open-meteo.com/v1/forecast?${q}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,is_day&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max,uv_index_max&forecast_days=1`).then(r=>r.json()),
+fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?${q}&current=pm2_5,pm10,us_aqi`).then(r=>r.json())]);
+if(r1.status!='fulfilled'||!r1.value||!r1.value.current)throw 0;
+WX={w:r1.value,a:r2.status=='fulfilled'&&r2.value&&r2.value.current?r2.value:null,t:Date.now()};WXERR=false}catch(e){if(!WX)WXERR=true;WXT=0}
+WXBUSY=false;wxUpd()}
+setInterval(()=>{if(me)wxLoad()},5*6e4);addEventListener('online',()=>{if(me)wxLoad(true)});
+const WXD={0:'ท้องฟ้าโปร่ง',1:'ส่วนใหญ่โปร่ง',2:'มีเมฆบางส่วน',3:'เมฆมาก',45:'มีหมอก',48:'หมอกจัด',51:'ฝนปรอย',53:'ฝนปรอย',55:'ฝนปรอยหนา',56:'ฝนปรอยเย็นจัด',57:'ฝนปรอยเย็นจัด',61:'ฝนตกเล็กน้อย',63:'ฝนตกปานกลาง',65:'ฝนตกหนัก',66:'ฝนเยือกแข็ง',67:'ฝนเยือกแข็งหนัก',80:'ฝนตกเป็นช่วง',81:'ฝนซู่',82:'ฝนตกหนักมาก',95:'พายุฝนฟ้าคะนอง',96:'พายุฝนฟ้าคะนอง มีลูกเห็บ',99:'พายุฝนฟ้าคะนอง มีลูกเห็บ'};
+function wxKind(c,day){if(c>=95)return'storm';if((c>=51&&c<=67)||(c>=80&&c<=82))return'rain';if(c==45||c==48)return'fog';if(c==3)return day?'cloud':'ncloud';if(c==2)return day?'partly':'npartly';return day?'sun':'night'}
+const WXBG={sun:'#FFF3CF,#DDF0FF',partly:'#EAF4FF,#FFF4D9',cloud:'#E6ECF6,#F4F6FB',rain:'#D6E3F3,#E9EFF8',storm:'#D1D6EB,#E6E5F4',fog:'#E9EDF2,#F5F6F9',night:'#D8DCF6,#EEE8FB',ncloud:'#DCE0F0,#ECEBF6',npartly:'#D8DDF5,#EDEAF8'};
+const wxCloud=(x,y,sc,f)=>`<g transform="translate(${x} ${y}) scale(${sc})" class="wx-cl"><path d="M22 62a15 15 0 0 1 2-30 21 21 0 0 1 40-5 16 16 0 0 1 8 35z" fill="${f||'#fff'}" stroke="rgba(120,140,190,.35)" stroke-width="1.2"/></g>`;
+function wxScene(k){let o='';const sun=`<g class="wx-sun"><circle cx="60" cy="48" r="26" fill="#FFE59A" opacity=".5" class="wx-glow"/><g class="wx-rays" stroke="#FFB92E" stroke-width="4" stroke-linecap="round">${[0,45,90,135,180,225,270,315].map(a=>`<line x1="60" y1="${48-27}" x2="60" y2="${48-33}" transform="rotate(${a} 60 48)"/>`).join('')}</g><circle cx="60" cy="48" r="19" fill="#FFC93C"/></g>`;
+const moon=`<g class="wx-moon"><circle cx="74" cy="32" r="18" fill="#FFD25A"/><circle cx="83" cy="26" r="15" fill="#D9DDF6"/></g><g fill="#fff">${[[20,20],[98,24],[30,70],[100,66],[84,12]].map((p,i)=>`<circle class="wx-st" style="animation-delay:${i*.5}s" cx="${p[0]}" cy="${p[1]}" r="2"/>`).join('')}</g>`;
+const drops=n=>[...Array(n)].map((_,i)=>`<line class="wx-dr" style="animation-delay:${(i*.17).toFixed(2)}s" x1="${34+i*9}" y1="62" x2="${31+i*9}" y2="72" stroke="#5B9BE6" stroke-width="2.4" stroke-linecap="round"/>`).join('');
+if(k=='sun')o=sun;else if(k=='night')o=moon;
+else if(k=='partly')o=sun.replace('translate','translate')+wxCloud(6,34,.78);
+else if(k=='npartly')o=moon+wxCloud(6,34,.78);
+else if(k=='cloud'||k=='ncloud')o=wxCloud(10,8,.8,'#E8EDF7')+wxCloud(34,20,.95);
+else if(k=='fog')o=`<g class="wx-fg">${[30,46,62].map((y,i)=>`<rect class="wx-fb" style="animation-delay:${i*.7}s" x="${20+i*8}" y="${y}" width="${70-i*6}" height="8" rx="4" fill="#B8C2D6" opacity=".75"/>`).join('')}</g>`;
+else if(k=='rain')o=wxCloud(20,4,1,'#EEF2FA')+drops(7);
+else if(k=='storm')o=wxCloud(20,2,1,'#D9DDEB')+`<polygon class="wx-bolt" points="62,52 50,72 60,72 54,92 76,64 65,64 72,52" fill="#FFC93C"/>`+drops(4);
+return `<svg viewBox="0 0 120 100" class="wx-sv">${o}</svg>`}
+function wxPm(v){if(v==null)return{c:'#9AA6C0',t:'–'};return v<=15?{c:'#2F9BE6',t:'ดีมาก'}:v<=25?{c:'#2FB36E',t:'ดี'}:v<=37.5?{c:'#E9B500',t:'ปานกลาง'}:v<=75?{c:'#F08A24',t:'เริ่มมีผลต่อสุขภาพ'}:{c:'#E5484D',t:'มีผลต่อสุขภาพ'}}
+function wxHtml(){if(!me)return '';
+if(!WX)return `<div class="wxc" style="--g1:#EEF3FF;--g2:#F7F1FF"><div class="wx-h"><b>สภาพอากาศ</b><small>ต.กองก๋อย อ.สบเมย</small></div><div class="wx-msg">${WXERR?'โหลดข้อมูลสภาพอากาศไม่ได้ (ต้องเชื่อมต่ออินเทอร์เน็ต)<br><a onclick="wxLoad(true)">ลองใหม่</a>':'กำลังโหลดสภาพอากาศ...'}</div></div>`;
+const c=WX.w.current,d=WX.w.daily,day=c.is_day==1,k=wxKind(c.weather_code,day),pm=WX.a?WX.a.current.pm2_5:null,pc=wxPm(pm),[g1,g2]=WXBG[k].split(','),hm=x=>x?String(x).slice(11,16):'--:--',r=n=>n==null?'–':Math.round(n);
+const up=new Date(WX.t),ut=String(up.getHours()).padStart(2,'0')+':'+String(up.getMinutes()).padStart(2,'0');
+return `<div class="wxc wx-${k}" style="--g1:${g1};--g2:${g2}" onclick="wxLoad(true)" title="กดเพื่ออัปเดตข้อมูล"><div class="wx-h"><b>สภาพอากาศ</b><small>บ้านผาเยอ ต.กองก๋อย อ.สบเมย</small></div>
+<div class="wx-top">${wxScene(k)}<div class="wx-t"><b>${r(c.temperature_2m)}°<i>C</i></b><span>${WXD[c.weather_code]||'—'}</span><small>รู้สึกเหมือน ${r(c.apparent_temperature)}°</small></div></div>
+<div class="wx-hl"><span class="hi">▲ สูงสุด <b>${r(d.temperature_2m_max[0])}°</b></span><span class="lo">▼ ต่ำสุด <b>${r(d.temperature_2m_min[0])}°</b></span></div>
+<div class="wx-sn"><span>🌅 ขึ้น <b>${hm(d.sunrise[0])} น.</b></span><span>🌇 ตก <b>${hm(d.sunset[0])} น.</b></span></div>
+<div class="wx-pm" style="--pc:${pc.c}"><i></i><span>PM2.5 <b>${pm==null?'–':r(pm)}</b> µg/ลบ.ม.</span><em>${pc.t}</em></div>
+<div class="wx-ch"><span>💧 ชื้น ${r(c.relative_humidity_2m)}%</span><span>☔ ฝน ${r(d.precipitation_probability_max[0])}%</span><span>🌬 ลม ${r(c.wind_speed_10m)} กม./ชม.</span><span>☀ UV ${r(d.uv_index_max[0])}</span></div></div>`}
+function wxUpd(){const el=document.getElementById('wx_home');if(el&&me)el.innerHTML=wxHtml()}
 setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
