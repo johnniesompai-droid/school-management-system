@@ -195,13 +195,32 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .svhm-rg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
 .svhm-rg b{display:block;font-size:.95rem;color:#14532D;font-weight:600}
 .svhm-dots{display:flex;gap:4px;margin-top:9px;flex-wrap:wrap}.svhm-dots i{width:6px;height:6px;border-radius:50%;background:#B7E4CB}.svhm-dots i.on{background:#16A36A;width:16px;border-radius:4px}
-.anp{background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 6px 18px -10px rgba(40,60,120,.25);border:1px solid var(--line)}
-.anp-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.anp-h h3{margin:0;font-size:.92rem;font-weight:600}
-.anp-h a{font-size:.74rem;background:var(--blue);color:#fff;border-radius:999px;padding:4px 12px;cursor:pointer;font-weight:400}
-.an-sec{font-size:.68rem;color:var(--mute);margin:2px 0 4px;display:flex;align-items:center;gap:5px}
-.an-r{height:46px;border-radius:12px;margin-bottom:6px;overflow:hidden;background:#F5F7FC}
-.an-r.pin{background:linear-gradient(90deg,#FFF6D9,#FFFBEA);border:1px solid #F6DE93}
-.an-r.emp{background:transparent;border:1.5px dashed var(--line)}
+.anp{position:relative;overflow:hidden;border-radius:20px;padding:16px 18px;background:linear-gradient(135deg,#F3F0FF,#EAF3FF 55%,#E6F8F1);border:1px solid #D6DDF7;box-shadow:0 10px 22px -12px rgba(110,100,230,.45),inset 0 1px 0 rgba(255,255,255,.85)}
+.anp>*{position:relative;z-index:1}
+.anp-b{position:absolute!important;z-index:0!important;border-radius:50%;pointer-events:none;animation:anFloat 7s ease-in-out infinite}
+.anp-b.b1{width:120px;height:120px;right:-34px;top:-38px;background:rgba(167,139,250,.18)}
+.anp-b.b2{width:80px;height:80px;left:-26px;bottom:24px;background:rgba(56,189,248,.16);animation-delay:-2s;animation-duration:9s}
+.anp-b.b3{width:46px;height:46px;right:30px;bottom:-14px;background:rgba(52,211,153,.2);animation-delay:-4s;animation-duration:6s}
+.anp-sp{position:absolute!important;z-index:0!important;font-size:.9rem;color:#C4B5FD;pointer-events:none;animation:anTw 2.8s ease-in-out infinite}
+.anp-sp.s1{right:70px;top:14px}.anp-sp.s2{right:26px;top:52px;animation-delay:-1.2s;color:#7DD3FC}.anp-sp.s3{left:46%;bottom:10px;animation-delay:-2s;color:#6EE7B7}
+@keyframes anFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-8px,10px) scale(1.08)}}
+@keyframes anTw{0%,100%{opacity:.2;transform:scale(.7) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(25deg)}}
+@keyframes anWig{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(-14deg)}20%{transform:rotate(12deg)}30%{transform:rotate(-10deg)}40%{transform:rotate(8deg)}50%{transform:rotate(-4deg)}}
+@keyframes anIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes anPin{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(14deg) translateY(-1px)}}
+@keyframes anPulse{0%{box-shadow:0 0 0 0 rgba(229,72,77,.55)}80%,100%{box-shadow:0 0 0 7px rgba(229,72,77,0)}}
+@keyframes anShine{0%{transform:translateX(-120%)}60%,100%{transform:translateX(220%)}}
+.anp-h{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.anp-i{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#A78BFA,#6C8CFF);color:#fff;display:grid;place-items:center;box-shadow:0 7px 14px -6px rgba(108,140,255,.8);flex:none}
+.anp-i svg{width:22px;height:22px;transform-origin:30% 70%;animation:anWig 4.5s ease-in-out infinite}
+.anp-h h3{margin:0;font-size:.98rem;font-weight:600;color:#312E81}.anp-h h3+small{display:block;font-size:.7rem;color:#7C86B5;margin-top:1px}
+.anp-h a{margin-left:auto;font-size:.74rem;background:linear-gradient(135deg,#8B8DF5,#5E7CF2);color:#fff;border-radius:999px;padding:6px 13px;cursor:pointer;font-weight:500;position:relative;overflow:hidden;box-shadow:0 6px 12px -6px rgba(94,124,242,.9);white-space:nowrap;transition:transform .2s}
+.anp-h a:hover{transform:translateY(-1px) scale(1.04)}
+.anp-h a:after{content:"";position:absolute;top:0;bottom:0;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:anShine 3.6s ease-in-out infinite}
+.an-tag.ur{animation:anPulse 1.8s infinite}.an-sec{font-size:.68rem;color:#7C86B5;margin:2px 0 4px;display:flex;align-items:center;gap:5px}
+.an-r{height:46px;border-radius:13px;margin-bottom:7px;overflow:hidden;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);box-shadow:0 4px 10px -8px rgba(80,90,180,.5);transition:transform .2s,box-shadow .2s;animation:anIn .5s ease both}.an-r:hover{transform:translateY(-2px);box-shadow:0 10px 16px -10px rgba(80,90,180,.55)}.anp .an-r:nth-of-type(2){animation-delay:.05s}
+.an-r.pin{background:linear-gradient(90deg,#FFF3CC,#FFFAE8);border:1px solid #F6DE93}.an-r.pin .an-pn{display:inline-block;animation:anPin 2.2s ease-in-out infinite;transform-origin:50% 90%}
+.an-r.emp{background:rgba(255,255,255,.35);border:1.5px dashed #C9D0F0;box-shadow:none}
 .an-in{display:flex;align-items:center;gap:9px;height:100%;padding:0 12px;min-width:0}
 .an-r[data-r],.an-in[data-r]{cursor:pointer}
 .an-tag{flex:none;color:#fff;border-radius:999px;font-size:.66rem;padding:2px 9px;font-weight:500;white-space:nowrap}
@@ -486,6 +505,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .mf-i{width:38px;height:38px;border-radius:50%;background:#EEF0FB;color:#5B46C9;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:20px}.mf-i svg{width:19px;height:19px}
 .mf label{display:block;font-size:.84rem;font-weight:600;color:#2B2F7A;margin-bottom:5px}.mf label i{color:var(--red);font-style:normal}
 .mf .in{margin:0;width:100%;background:#fff;border-radius:10px}.mf textarea.in{resize:vertical;min-height:90px}
+@media(prefers-reduced-motion:reduce){.anp *{animation:none!important}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -514,7 +534,7 @@ const firebaseConfig={apiKey:"AIzaSyCetA8GzKLX805V9nEpPXjdoh8eGtVMqXY",authDomai
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 window.addEventListener('pageshow',()=>{window.scrollTo(0,0)});
 const $=q=>document.querySelector(q);
-const I={book:`<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/><path d="M9 7h6"/>`,refresh:`<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>`,print:`<path d="M7 9V3h10v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/>`,info:`<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>`,check:`<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>`,home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+const I={mega:`<path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 9a4 4 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/><path d="M7 14l1 5h2"/>`,book:`<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/><path d="M9 7h6"/>`,refresh:`<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>`,print:`<path d="M7 9V3h10v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/>`,info:`<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>`,check:`<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>`,home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
 users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.8 0 4.5 1.9 4.5 4.5"/>',
 grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
 doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/>',
@@ -1568,14 +1588,14 @@ if(me&&me.role=='founder'){const y=ttYDef(),miss=PP.filter(p=>!TT['t_'+p.id+'_'+
 const pe=U.filter(u=>u.st=='pending').length;if(pe)pool.push({key:'pend',tag:'สมาชิกใหม่',c:'#14B8A6',t:'มีสมาชิกใหม่รออนุมัติ '+pe+' คน',m:'อนุมัติ',r:'usr'})}
 return{pins:pins.map(a=>({...mk(a),pin:true})),pool}}
 function annRow(it,cls){if(!it)return `<div class="an-in an-e">ยังไม่มีข่าวสารในขณะนี้</div>`;
-return `<div class="an-in"${it.r?` data-r="${it.r}"`:''} title="${esc(it.t)}"><span class="an-tag" style="background:${it.c}">${it.pin?'📌 ':''}${esc(it.tag)}</span><span class="an-t">${esc(it.t)}</span>${it.m?`<em class="an-m">${esc(it.m)}</em>`:''}</div>`}
+return `<div class="an-in"${it.r?` data-r="${it.r}"`:''} title="${esc(it.t)}"><span class="an-tag${it.tag=='ข่าวด่วน'?' ur':''}" style="background:${it.c}">${it.pin?'<span class="an-pn">📌</span> ':''}${esc(it.tag)}</span><span class="an-t">${esc(it.t)}</span>${it.m?`<em class="an-m">${esc(it.m)}</em>`:''}</div>`}
 function annFill(pool){for(let i=0;i<3;i++){const cur=annSlots[i];if(cur&&pool.find(x=>x.key==cur))continue;annSlots[i]=annPick(pool,i)}}
 function annPick(pool,i){const used=new Set(annSlots.filter((k,j)=>j!=i&&k)),c=pool.filter(x=>!used.has(x.key)&&x.key!=annSlots[i]);if(!c.length)return annSlots[i]&&pool.find(x=>x.key==annSlots[i])?annSlots[i]:null;
 let f=c.filter(x=>!annSeen[x.key]);if(!f.length){annSeen={};f=c}const x=f[Math.floor(Math.random()*f.length)];annSeen[x.key]=1;return x.key}
 function annHtml(){if(!me)return '';const{pins,pool}=annItems();annFill(pool);
 const pr=[0,1].map(i=>pins[i]?`<div class="an-r pin">${annRow(pins[i])}</div>`:`<div class="an-r emp"><div class="an-in an-e" data-r="ann" style="cursor:pointer">ปักหมุดข้อความสำคัญได้ที่นี่ · กด “เพิ่มประกาศ”</div></div>`).join('');
 const sl=[0,1,2].map(i=>`<div class="an-r" id="an_s${i}">${annRow(pool.find(x=>x.key==annSlots[i]))}</div>`).join('');
-return `<div class="anp"><div class="anp-h"><h3>ข่าวประชาสัมพันธ์</h3><a data-r="ann">+ เพิ่มประกาศ / ข่าวด่วน</a></div><div class="an-sec">ข้อความปักหมุด</div>${pr}<div class="an-sec" style="margin-top:8px">ข่าวสารล่าสุด (สุ่มเปลี่ยนทุก 1 นาที)</div>${sl}</div>`}
+return `<div class="anp"><i class="anp-b b1"></i><i class="anp-b b2"></i><i class="anp-b b3"></i><span class="anp-sp s1">✦</span><span class="anp-sp s2">✦</span><span class="anp-sp s3">✦</span><div class="anp-h"><span class="anp-i">${ic('mega')}</span><div><h3>ข่าวประชาสัมพันธ์</h3><small>ประกาศ ข่าวด่วน และเรื่องน่ารู้ของโรงเรียน</small></div><a data-r="ann">+ เพิ่มประกาศ</a></div><div class="an-sec">ข้อความปักหมุด</div>${pr}<div class="an-sec" style="margin-top:8px">ข่าวสารล่าสุด (สุ่มเปลี่ยนทุก 1 นาที)</div>${sl}</div>`}
 function annHomeUpd(){const el=document.getElementById('an_home');if(el&&me)el.innerHTML=annHtml()}
 function annTick(){if(!me||!document.getElementById('an_s0'))return;const{pool}=annItems(),i=annTk++%3,cur=annSlots[i],k=annPick(pool,i);
 if(k&&k!=cur){annSlots[i]=k;hbSwap(document.getElementById('an_s'+i),annRow(pool.find(x=>x.key==k)))}}
