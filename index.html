@@ -329,8 +329,8 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .hw-note{margin-top:12px;font-size:.74rem;color:var(--mute);line-height:1.7}.hw-note b{color:#312E81}
 @media(max-width:900px){.hwts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* ทะเบียนเลขที่ */
-.rg-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}.rg-tabs button{border:1.5px solid #D5DBEE;background:#fff;border-radius:999px;padding:7px 16px;font:inherit;font-weight:600;cursor:pointer;color:#55607A;transition:transform .15s,background .2s}.rg-tabs button:hover{transform:translateY(-2px)}
-.rg-tabs button.on{background:var(--c);border-color:var(--c);color:#fff}.rg-tabs button i{font-style:normal;margin-left:8px;background:rgba(0,0,0,.12);border-radius:999px;padding:0 8px;font-size:.74rem}.rg-tabs button:not(.on) i{background:#EEF1F8}
+.rg-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}.rg-tabs>button{border:1.5px solid #D5DBEE;background:#fff;border-radius:999px;padding:7px 16px;font:inherit;font-weight:600;cursor:pointer;color:#55607A;transition:transform .15s,background .2s}.rg-tabs>button:hover{transform:translateY(-2px)}
+.rg-tabs>button.on{background:var(--c);border-color:var(--c);color:#fff}.rg-tabs>button i{font-style:normal;margin-left:8px;background:rgba(0,0,0,.12);border-radius:999px;padding:0 8px;font-size:.74rem}.rg-tabs>button:not(.on) i{background:#EEF1F8}
 .rg-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.rg-bar>b{color:#312E81}
 .rg-t td.rg-d,.rg-t th{text-align:left}.rg-t td{vertical-align:top}.rg-d small{display:block;color:var(--mute);font-size:.74rem}
 .rg-no{display:inline-block;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);border-radius:10px;padding:2px 10px}
@@ -338,10 +338,15 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .rg-cnt{margin-top:8px;color:var(--mute);font-size:.78rem}
 .rgm{position:fixed;inset:0;background:rgba(20,25,60,.45);backdrop-filter:blur(3px);z-index:3000;display:grid;place-items:center;padding:16px;animation:lvIn .2s both}
 .rgm-b{background:#fff;border-radius:20px;padding:22px;width:min(560px,100%);max-height:92vh;overflow:auto;box-shadow:0 24px 60px rgba(30,40,100,.35);display:grid;gap:12px}.rgm-b h3{margin:0;font-size:1.15rem;color:#312E81}
-.rgm-g{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rg-nr{display:flex;align-items:center;gap:8px}.rg-nr b{color:#312E81;white-space:nowrap}
+.rgm-g{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .rg-warn{font-size:.8rem;min-height:18px}.rg-warn.bad{color:#C0263F;background:#FFE1E5;border-radius:10px;padding:6px 10px}
 .rgm-f{display:flex;justify-content:flex-end;gap:10px}
 @media(max-width:560px){.rgm-g{grid-template-columns:1fr}}
+/* หนังสือเข้า-ออก */
+.lt-i.un{background:linear-gradient(90deg,#FFF8E6,transparent);border-radius:12px}.lt-tag{display:inline-block;color:#fff;border-radius:999px;padding:1px 9px;font-size:.68rem;font-weight:600;margin-right:4px;vertical-align:middle}
+.lt-f{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.lt-fn{color:var(--mute);font-size:.72rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lt-exp{margin-left:auto;color:var(--mute);font-size:.7rem}
+.lt-note{font-size:.78rem;color:var(--mute);margin:-4px 0 10px}.lt-to{display:flex;gap:6px;flex-wrap:wrap}
+.lt-pl{max-height:210px;overflow:auto;border:1.5px solid #E3E9FB;border-radius:12px;padding:6px;display:grid;gap:2px}.lt-p{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:8px;cursor:pointer;font-weight:400}.lt-p:hover{background:#F2F5FF}.lt-p small{display:block;color:var(--mute);font-size:.7rem}.lt-p input{width:16px;height:16px;margin:0}
 /* ปฏิทินการมาเรียน */
 .ac-flt{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0 12px}.ac-flt label{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;color:var(--mute)}.ac-flt select{width:auto;margin:0}
 .ac-x tr.grp td{position:sticky;left:0;background:#EEF1FF;color:#312E81;font-weight:600;text-align:left;padding:5px 10px}
@@ -829,7 +834,7 @@ bld:'<path d="M4 21V5l8-2 8 2v16M9 21v-5h6v5M8 9h2M14 9h2M8 13h2M14 13h2"/>',
 bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',chev:'<path d="M9 6l6 6-6 6"/>'};
 I.pen='<path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/>';
 const ic=(n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"${c?` class="${c}"`:''}>${I[n]}</svg>`;
-const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['saving','ออมเงิน','coin'],['att','การมาเรียน','cal'],['hw','น้ำหนัก ส่วนสูง','scale'],['tt','ตารางสอน & ตารางเรียน','cal','tt'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า','chat'],['rep','รายงาน & Dashboard','chart']];
+const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc'],['eval','ระบบประเมินบุคลากร','clip'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['saving','ออมเงิน','coin'],['att','การมาเรียน','cal'],['hw','น้ำหนัก ส่วนสูง','scale'],['tt','ตารางสอน & ตารางเรียน','cal','tt'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า & หนังสือออก','chat'],['rep','รายงาน & Dashboard','chart']];
 const SYS=[['staff','ทะเบียนบุคลากร','users'],['usr','ผู้ใช้งาน / สิทธิ์การใช้งาน','user'],['set','ตั้งค่าระบบ','gear'],['bak','สำรองข้อมูล','db'],['ie','Import / Export','ud'],['api','API & Integration','code']];
 const DIV=[['academic','กลุ่มบริหารงานวิชาการ','cap','#2F6BFF'],['budget','กลุ่มบริหารงานแผนงานและงบประมาณ','coin','#F5A524'],['personnel','กลุ่มบริหารงานบุคคล','users','#8B5CF6'],['general','กลุ่มบริหารงานทั่วไป','bld','#22B573']];
 const E=(t='ยังไม่มีข้อมูล',h)=>`<div class="empty"${h?` style="min-height:${h}px"`:''}>${t}</div>`;
@@ -957,8 +962,8 @@ const path=`memos/${id}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref
 await db.collection('memos').doc(id).set({title,no,date:date||'',note,deadline:'',assigneeSid:sid,assigneeName:dn(p),files,createdBy:me._id,createdByName:me.n,createdAt:new Date().toISOString(),ack:false,ackAt:null});
 $('#mm_title').value='';$('#mm_no').value='';$('#mm_note').value='';$('#mm_assignee').value='';mmFile=null;if($('#mm_filename'))$('#mm_filename').textContent='';$('#mm_msg').textContent='บันทึกและมอบหมายเรียบร้อย'}
 catch(e){$('#mm_msg').textContent='บันทึกไม่สำเร็จ: '+e.message}}
-function memoList(){if(!MM.length)return E('ยังไม่มีหนังสือที่เกษียน',60);const t=T0();
-return MM.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')).map(m=>{const dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
+function memoList(){const MMa=MM.filter(ltAliveItem);if(!MMa.length)return E('ยังไม่มีหนังสือที่เกษียน',60);const t=T0();
+return MMa.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')).map(m=>{const dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
 return `<div class="rw"><span><b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><small>มอบหมายให้ ${esc(m.assigneeName)}${m.date?' · เกษียนเมื่อ '+th(m.date):''}${m.deadline?' · ภายใน '+th(m.deadline):''}${m.note?' · '+esc(m.note):''}${(m.files&&m.files.length)?` · <a href="${m.files[0].url}" target="_blank" rel="noopener">เปิดไฟล์</a>`:''}</small></span><span style="text-align:right;flex-shrink:0"><em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'var(--mute)'}">${m.ack?'รับหนังสือแล้ว':overdue?'เลยกำหนดแล้ว':'ยังไม่รับ'}</em> <button type="button" class="btn r" data-mm="${m.id}">ลบ</button></span></div>`}).join('')}
 function memoSection(){return P('เกษียนหนังสือราชการ',canManageAdmin()?memoForm()+memoList():E('ดูหนังสือที่ได้รับมอบหมายได้ที่เมนู "หนังสือเข้า"',70))}
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-mm]');if(!a||!canManageAdmin())return;if(!confirm('ลบหนังสือฉบับนี้?'))return;
@@ -1071,7 +1076,7 @@ unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.da
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data()||{});render()},e=>{}));
 unsub.push(db.collection('budgetprojects').onSnapshot(qs=>{BP=qs.docs.map(d=>({id:d.id,...d.data()}));render()},e=>{}));
 unsub.push(db.collection('savingtx').onSnapshot(qs=>{HSV=qs.docs.map(d=>{const x=d.data();return{s:x.studentId,w:x.type=='withdraw'?-1:1,a:+x.amount||0,d:svDay(x.createdAt)}});HSVL=true;svHomeUpd()},e=>{}));
-attSub();wxLoad(true);unsub.push(db.collection('registers').onSnapshot(qs=>{RG=qs.docs.map(d=>({id:d.id,...d.data()}));rgUpd()},e=>{}));unsub.push(db.collection('growth').onSnapshot(qs=>{HW={};qs.docs.forEach(d=>HW[d.id]=d.data());hwRefresh();if(!hwInit){hwInit=true;setTimeout(hwRemindToast,3500)}},e=>{}));
+attSub();wxLoad(true);ltListen();unsub.push(db.collection('registers').onSnapshot(qs=>{RG=qs.docs.map(d=>({id:d.id,...d.data()}));rgUpd()},e=>{}));unsub.push(db.collection('growth').onSnapshot(qs=>{HW={};qs.docs.forEach(d=>HW[d.id]=d.data());hwRefresh();if(!hwInit){hwInit=true;setTimeout(hwRemindToast,3500)}},e=>{}));
 unsub.push(db.collection('announcements').onSnapshot(qs=>{AN=qs.docs.map(d=>{const x=d.data();return{id:d.id,t:x.t||'',k:x.k||'notice',pin:!!x.pin,exp:x.exp||'',by:x.createdByName||'',uid:x.createdBy||'',at:x.createdAt||''}});if(annInit){const t=annToday();AN.filter(a=>!annPrev.has(a.id)&&a.uid!=me._id&&(!a.exp||a.exp>=t)).slice(0,2).forEach(a=>ntfToast({title:a.k=='urgent'?'ข่าวด่วน':'ประกาศใหม่',text:a.t,route:'ann',c:a.k=='urgent'?'#E5484D':'#2F6BFF',id:'an:'+a.id}))}annPrev=new Set(AN.map(a=>a.id));annInit=true;annHomeUpd();updateBell();if(CUR=='ann')render()},e=>{}));
 unsub.push(db.collection('timetables').onSnapshot(qs=>{TT={};qs.docs.forEach(d=>TT[d.id]=d.data());render()},e=>{}));
 unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
@@ -1079,7 +1084,7 @@ unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,..
 unsub.push(db.collection('notifreads').doc(me._id).onSnapshot(d=>{NR=new Set((d.exists&&d.data().ids)||[]);updateBell()},e=>{}));
 unsub.push(db.collection('scoresheets').where('ownerUid','==',me._id).onSnapshot(qs=>{SC=qs.docs.map(d=>({id:d.id,...d.data()}));if(!(CUR.startsWith('score:')&&qs.metadata.hasPendingWrites))render()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();render()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];if(attUn){attUn();attUn=null}ATT={};HW={};RG=[];hwInit=false;attLoaded={};attMLoaded={};attSubDate='';annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];if(attUn){attUn();attUn=null}ATT={};HW={};RG=[];LT=[];LTA={};LTB={};ltInit=false;hwInit=false;attLoaded={};attMLoaded={};attSubDate='';annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home')}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -1127,12 +1132,78 @@ const i=PP.findIndex(x=>nm(x)==nm(c));if(i<0){c.id=uid();PP.push(c);a++;changed.
 persist(changed);imMsg=`นำเข้าสำเร็จ: เพิ่มใหม่ ${a} รายการ, อัปเดต ${u} รายการ`}catch(x){imMsg='อ่านไฟล์ไม่สำเร็จ กรุณาใช้ไฟล์ตามแบบฟอร์ม'}go('hr')};r.readAsArrayBuffer(f)}
 function tpl(){if(typeof XLSX=='undefined')return alert('โหลดตัวอ่าน Excel ไม่สำเร็จ');const wb=XLSX.utils.book_new();
 XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['คำนำหน้าชื่อ','ชื่อ','นามสกุล','วันเกิด','วันที่บรรจุ','ตำแหน่ง','เลขที่ตำแหน่ง','เบอร์โทร','ปริญญาตรีหรือเทียบเท่า','วิชาเอก/สาขา (ป.ตรี)','ปริญญาโท','วิชาเอก/สาขา (ป.โท)','ที่อยู่','วันหมดอายุใบประกอบวิชาชีพ','งานที่รับผิดชอบ (วิชาการ/แผนงานและงบประมาณ/บุคคล/ทั่วไป)']]),'บุคลากร');XLSX.writeFile(wb,'แบบฟอร์มบุคลากร.xlsx')}
-V.comm=()=>{const t=T0(),mine=MM.filter(m=>m.assigneeSid==me.sid).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
-return PT('หนังสือเข้า','หนังสือราชการที่ได้รับมอบหมายให้ดำเนินการ')+P(`รายการหนังสือ (${mine.length})`,mine.length?mine.map(m=>{const dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
-return `<div class="rw" style="flex-direction:column;align-items:stretch;gap:8px">
-<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><small>จาก ${esc(m.createdByName||'งานธุรการ')}${m.date?' · วันที่เกษียน '+th(m.date):''}${m.deadline?' · ดำเนินการภายใน '+th(m.deadline):''}</small>${m.note?`<small style="white-space:pre-wrap">${esc(m.note)}</small>`:''}</span>
+/* ===== หนังสือเข้า & หนังสือออก ===== */
+let LT=[],LTA={},LTB={},ltInit=false,ltPrev=new Set(),ltTab='in',ltFiles=[],ltPurging=false;
+const LT_DAYS=30;
+const ltAgeDays=x=>x&&x.createdAt?Math.floor((Date.now()-new Date(x.createdAt).getTime())/864e5):0;
+const ltAliveItem=x=>ltAgeDays(x)<LT_DAYS;
+const ltAlive=()=>LT.filter(ltAliveItem);
+const ltLeft=x=>Math.max(0,LT_DAYS-ltAgeDays(x));
+function ltMerge(){const m={};Object.values(LTA).forEach(x=>m[x.id]=x);Object.values(LTB).forEach(x=>m[x.id]=x);LT=Object.values(m)}
+function ltOnSnap(first){ltMerge();if(ltInit&&me&&me.sid)ltAlive().filter(l=>l.createdBy!=me._id&&(l.toSids||[]).includes(me.sid)&&!ltPrev.has(l.id)&&!(l.reads&&l.reads[me.sid])).slice(0,2).forEach(l=>ntfToast({title:'ได้รับไฟล์ใหม่',text:(l.fromName||'')+' · '+(l.title||''),route:'comm',c:'#F5A524',icon:'doc'}));
+ltPrev=new Set(LT.map(l=>l.id));if(!ltInit){ltInit=true;setTimeout(ltPurge,6000)}updateBell&&updateBell();if(CUR=='comm')ltUpd()}
+function ltListen(){if(!me)return;const col=db.collection('letters'),mk=(q,store)=>unsub.push(q.onSnapshot(qs=>{const o={};qs.docs.forEach(d=>o[d.id]={id:d.id,...d.data()});if(store=='A')LTA=o;else LTB=o;ltOnSnap()},e=>{}));
+if(me.role=='founder')mk(col,'A');else{mk(col.where('createdBy','==',me._id),'A');if(me.sid)mk(col.where('toSids','array-contains',me.sid),'B')}}
+/* ลบไฟล์/ข้อมูลที่เกิน 30 วัน (ทำโดยเจ้าของ / ผู้ก่อตั้ง / ครูธุรการ เมื่อเปิดเว็บ) */
+async function ltPurge(){if(!me||ltPurging)return;ltPurging=true;const rm=async(files)=>{for(const f of files||[])await storage.ref(f.path).delete().catch(()=>{})};
+try{for(const l of LT.filter(x=>!ltAliveItem(x)&&(x.createdBy==me._id||me.role=='founder'))){await rm(l.files);await db.collection('letters').doc(l.id).delete().catch(()=>{})}
+if(canManageAdmin())for(const m of MM.filter(x=>!ltAliveItem(x))){await rm(m.files);await db.collection('memos').doc(m.id).delete().catch(()=>{})}}catch(e){}ltPurging=false}
+setInterval(()=>{if(me&&ltInit)ltPurge()},36e5);
+async function ltRead(id){const l=LT.find(x=>x.id==id);if(!l||!me||!me.sid||l.createdBy==me._id||(l.reads&&l.reads[me.sid]))return;const t=new Date().toISOString();l.reads=Object.assign({},l.reads,{[me.sid]:t});updateBell&&updateBell();try{await db.collection('letters').doc(id).set({reads:{[me.sid]:t}},{merge:true})}catch(e){}}
+function ltSetTab(t){ltTab=t;ltUpd()}
+function ltUpd(){const w=document.getElementById('lt_wrap');if(w)w.innerHTML=ltBody()}
+function ltFilesHtml(files,id){return (files||[]).map(f=>`<a class="btn o" href="${f.url}" target="_blank" rel="noopener" onclick="${id?`ltRead('${id}')`:''}">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}" onclick="${id?`ltRead('${id}')`:''}" title="${esc(f.name)}">ดาวน์โหลด</a><small class="lt-fn">${esc(f.name)}</small>`).join('')}
+const ltExp=x=>`<small class="lt-exp">จะถูกลบอัตโนมัติใน ${ltLeft(x)} วัน</small>`;
+function ltIncoming(){const t=T0(),items=[];
+MM.filter(m=>m.assigneeSid==me.sid&&ltAliveItem(m)).forEach(m=>items.push({k:'mm',m,at:m.createdAt||''}));
+ltAlive().filter(l=>l.createdBy!=me._id&&(l.toSids||[]).includes(me.sid)).forEach(l=>items.push({k:'lt',l,at:l.createdAt||''}));
+items.sort((a,b)=>b.at.localeCompare(a.at));
+if(!items.length)return E('ยังไม่มีหนังสือหรือไฟล์ที่ส่งถึงคุณ',110);
+return items.map(it=>{if(it.k=='mm'){const m=it.m,dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
+return `<div class="rw lt-i${m.ack?'':' un'}" style="flex-direction:column;align-items:stretch;gap:8px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><span class="lt-tag" style="background:#F5A524">เกษียนหนังสือ</span> <b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><small>จาก ${esc(m.createdByName||'งานธุรการ')}${m.date?' · วันที่เกษียน '+th(m.date):''}${m.deadline?' · ดำเนินการภายใน '+th(m.deadline):''}</small>${m.note?`<small style="white-space:pre-wrap">${esc(m.note)}</small>`:''}</span>
 <em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'#F5A524'}">${m.ack?'รับแล้ว เมื่อ '+th(m.ackAt.slice(0,10)):overdue?'เลยกำหนดแล้ว':'รอดำเนินการ'}</em></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap">${(m.files||[]).map(f=>`<a class="btn o" href="${f.url}" target="_blank" rel="noopener">เปิดอ่าน</a> <a class="btn o" href="${f.url}" download="${esc(f.name)}">ดาวน์โหลด</a>`).join('')}${!m.ack?`<button type="button" class="btn g" data-ackmm="${m.id}">รับทราบ / กดรับหนังสือ</button>`:''}</div></div>`}).join(''):E('ยังไม่มีหนังสือที่ได้รับมอบหมาย'))};
+<div class="lt-f">${ltFilesHtml(m.files,'')}${!m.ack?`<button type="button" class="btn g" data-ackmm="${m.id}">รับทราบ / กดรับหนังสือ</button>`:''}${ltExp(m)}</div></div>`}
+const l=it.l,rd=!!(l.reads&&l.reads[me.sid]);
+return `<div class="rw lt-i${rd?'':' un'}" style="flex-direction:column;align-items:stretch;gap:8px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><span class="lt-tag" style="background:#2F6BFF">ไฟล์จากครู</span> <b>${esc(l.title||'')}</b><small>จาก ${esc(l.fromName||'')} · ${th((l.createdAt||'').slice(0,10))}${(l.toSids||[]).length>1?' · ส่งถึง '+(l.toSids||[]).length+' คน':''}</small>${l.note?`<small style="white-space:pre-wrap">${esc(l.note)}</small>`:''}</span>
+<em style="font-style:normal;font-size:.78rem;color:${rd?'#22B573':'#F5A524'}">${rd?'อ่านแล้ว':'ยังไม่ได้เปิดอ่าน'}</em></div>
+<div class="lt-f">${ltFilesHtml(l.files,l.id)}${!rd?`<button type="button" class="btn g" onclick="ltRead('${l.id}')">รับทราบ</button>`:''}${ltExp(l)}</div></div>`}).join('')}
+function ltOutgoing(){const items=[];ltAlive().filter(l=>l.createdBy==me._id).forEach(l=>items.push({k:'lt',l,at:l.createdAt||''}));
+MM.filter(m=>m.createdBy==me._id&&ltAliveItem(m)).forEach(m=>items.push({k:'mm',m,at:m.createdAt||''}));items.sort((a,b)=>b.at.localeCompare(a.at));
+if(!items.length)return E('ยังไม่มีหนังสือออก กดปุ่ม "ส่งไฟล์ถึงครู" เพื่อส่ง',110);
+return items.map(it=>{if(it.k=='mm'){const m=it.m;return `<div class="rw lt-i" style="flex-direction:column;align-items:stretch;gap:8px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><span class="lt-tag" style="background:#F5A524">เกษียนหนังสือ</span> <b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><small>ส่งถึง ${esc(m.assigneeName||'')} · ${th((m.createdAt||'').slice(0,10))}</small></span><em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':'#F5A524'}">${m.ack?'รับแล้ว':'ยังไม่รับ'}</em></div><div class="lt-f">${ltFilesHtml(m.files,'')}${ltExp(m)}</div></div>`}
+const l=it.l,rs=l.reads||{},names=(l.toNames||[]),sids=l.toSids||[],nr=sids.filter(x=>rs[x]).length;
+return `<div class="rw lt-i" style="flex-direction:column;align-items:stretch;gap:8px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span><span class="lt-tag" style="background:#2F6BFF">ไฟล์ถึงครู</span> <b>${esc(l.title||'')}</b><small>${th((l.createdAt||'').slice(0,10))}${l.note?' · '+esc(l.note):''}</small></span><em style="font-style:normal;font-size:.78rem;color:${nr==sids.length?'#22B573':'#F5A524'}">อ่านแล้ว ${nr}/${sids.length} คน</em></div>
+<div class="lt-to">${sids.map((x,i)=>`<span class="atc ${rs[x]?'p':'u'}" title="${rs[x]?'อ่านเมื่อ '+esc(ntfAgo(rs[x])):'ยังไม่อ่าน'}">${esc(names[i]||x)}${rs[x]?' ✓':''}</span>`).join('')}</div>
+<div class="lt-f">${ltFilesHtml(l.files,'')}<button type="button" class="btn r" onclick="ltDel('${l.id}')">ลบ</button>${ltExp(l)}</div></div>`}).join('')}
+function ltBody(){const un=MM.filter(m=>m.assigneeSid==me.sid&&!m.ack&&ltAliveItem(m)).length+ltAlive().filter(l=>l.createdBy!=me._id&&(l.toSids||[]).includes(me.sid)&&!(l.reads&&l.reads[me.sid])).length;
+return `<div class="rg-tabs"><button class="${ltTab=='in'?'on':''}" style="--c:#2F6BFF" onclick="ltSetTab('in')">หนังสือเข้า${un?`<i>${un}</i>`:''}</button><button class="${ltTab=='out'?'on':''}" style="--c:#8B5CF6" onclick="ltSetTab('out')">หนังสือออก</button><span style="margin-left:auto"><button class="btn" onclick="ltCompose()">+ ส่งไฟล์ถึงครู</button></span></div>
+<div class="card"><h3>${ltTab=='in'?'หนังสือเข้า':'หนังสือออก'}</h3><div class="lt-note">เก็บข้อมูลและไฟล์ไว้ ${LT_DAYS} วัน หลังจากนั้นระบบจะลบทิ้งอัตโนมัติ</div>${ltTab=='in'?ltIncoming():ltOutgoing()}</div>`}
+V.comm=()=>PT('หนังสือเข้า & หนังสือออก','รับหนังสือราชการที่ได้รับมอบหมาย และส่งไฟล์ถึงครูท่านอื่นได้ พร้อมแจ้งเตือนผู้รับ')+`<div id="lt_wrap">${ltBody()}</div>`;
+/* ส่งไฟล์ถึงครู */
+function ltCompose(){if(!me)return;if(!me.sid)return alert('บัญชีของคุณยังไม่ได้ผูกกับรายชื่อบุคลากร จึงยังส่งไฟล์ไม่ได้');ltFiles=[];
+const ppl=PP.filter(p=>p.id!=me.sid).sort((a,b)=>dn(a).localeCompare(dn(b),'th'));
+const o=document.createElement('div');o.className='rgm';o.id='lt_m';o.innerHTML=`<div class="rgm-b" role="dialog"><h3>ส่งไฟล์ถึงครู</h3>
+<label class="lb">เรื่อง <i style="color:#E5484D">*</i><input class="in" id="lt_title" placeholder="เช่น ส่งแผนการสอนหน่วยที่ 3"></label>
+<div class="lb">ส่งถึง <i style="color:#E5484D">*</i> <small id="lt_cnt" style="color:var(--mute)">(เลือกแล้ว 0 คน)</small><input class="in" id="lt_q" placeholder="ค้นหาชื่อครู" oninput="ltFilter()" style="margin:6px 0"><div class="lt-pl" id="lt_pl">${ppl.map(p=>`<label class="lt-p" data-n="${esc(dn(p)).toLowerCase()}"><input type="checkbox" value="${p.id}" onchange="ltCount()"><span>${esc(dn(p))}${p.po?`<small>${esc(p.po)}</small>`:''}</span></label>`).join('')}</div>
+<button class="btn o" style="margin-top:6px" onclick="ltAll()">เลือก/ยกเลิกทั้งหมด</button></div>
+<label class="lb">รายละเอียด (ถ้ามี)<textarea class="in" id="lt_note" rows="2"></textarea></label>
+<div class="lb">แนบไฟล์ (สูงสุด 5 ไฟล์ · ไฟล์ละไม่เกิน 10MB · PDF, Word, Excel, รูปภาพ)<input class="in" type="file" id="lt_file" multiple onchange="ltPickFiles(this)"><small id="lt_fl" style="color:var(--mute)"></small></div>
+<div id="lt_msg" class="rg-warn"></div><div class="rgm-f"><button class="btn o" onclick="document.getElementById('lt_m').remove()">ยกเลิก</button><button class="btn" id="lt_sv" onclick="ltSend()">ส่งไฟล์</button></div></div>`;
+o.addEventListener('mousedown',e=>{if(e.target==o)o.remove()});document.body.appendChild(o)}
+function ltFilter(){const q=document.getElementById('lt_q').value.trim().toLowerCase();document.querySelectorAll('#lt_pl .lt-p').forEach(l=>l.style.display=!q||l.dataset.n.includes(q)?'':'none')}
+function ltCount(){const n=document.querySelectorAll('#lt_pl input:checked').length;document.getElementById('lt_cnt').textContent='(เลือกแล้ว '+n+' คน)'}
+function ltAll(){const bs=[...document.querySelectorAll('#lt_pl .lt-p')].filter(l=>l.style.display!='none').map(l=>l.querySelector('input')),on=bs.some(b=>!b.checked);bs.forEach(b=>b.checked=on);ltCount()}
+function ltPickFiles(el){const fs=[...el.files],bad=fs.find(f=>!allowedFile(f)||f.size>10*1024*1024);if(bad){alert('ไฟล์ "'+bad.name+'" ไม่รองรับหรือใหญ่เกิน 10MB');el.value='';ltFiles=[];document.getElementById('lt_fl').textContent='';return}
+if(fs.length>5){alert('แนบได้สูงสุด 5 ไฟล์');el.value='';ltFiles=[];return}ltFiles=fs;document.getElementById('lt_fl').textContent=fs.map(f=>f.name).join(', ')}
+async function ltSend(){const title=document.getElementById('lt_title').value.trim(),sids=[...document.querySelectorAll('#lt_pl input:checked')].map(b=>b.value),note=document.getElementById('lt_note').value.trim(),msg=document.getElementById('lt_msg');
+if(!title)return alert('กรุณากรอกเรื่อง');if(!sids.length)return alert('กรุณาเลือกผู้รับอย่างน้อย 1 คน');if(!ltFiles.length&&!note&&!confirm('ยังไม่ได้แนบไฟล์และไม่มีรายละเอียด ต้องการส่งต่อหรือไม่?'))return;
+const b=document.getElementById('lt_sv');b.disabled=true;const id=uid(),files=[];
+try{for(let i=0;i<ltFiles.length;i++){const f=ltFiles[i];msg.textContent=`กำลังอัปโหลดไฟล์ ${i+1}/${ltFiles.length}...`;const path=`letters/${id}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);files.push({name:f.name,url:await ref.getDownloadURL(),path,size:f.size})}
+msg.textContent='กำลังส่ง...';const pp=sids.map(x=>PP.find(p=>p.id==x));
+await db.collection('letters').doc(id).set({title,note,files,toSids:sids,toNames:pp.map(p=>p?dn(p):''),fromSid:me.sid,fromName:me.n,createdBy:me._id,createdAt:new Date().toISOString(),reads:{}});
+document.getElementById('lt_m').remove();ltTab='out';ltUpd()}
+catch(e){b.disabled=false;msg.textContent='';alert('ส่งไม่สำเร็จ: '+e.message)}}
+async function ltDel(id){const l=LT.find(x=>x.id==id);if(!l||!confirm('ลบรายการนี้และไฟล์แนบ?'))return;try{for(const f of l.files||[])await storage.ref(f.path).delete().catch(()=>{});await db.collection('letters').doc(id).delete()}catch(e){alert('ลบไม่สำเร็จ: '+e.message)}}
 let SC=[],scTab='collect',scCurrentId=null,scSaveTimer=null;
 function classLabel(k){const ty=k[0],lv=+k.slice(1);return CT[ty]?CT[ty][0]+' · '+LV[lv]:''}
 function defaultExamCols(){return[{id:uid(),name:'สอบเก็บคะแนน',max:0},{id:uid(),name:'สอบกลางภาค',max:0},{id:uid(),name:'สอบปลายภาค',max:0}]}
@@ -1901,8 +1972,8 @@ else{if(!a.pin&&annActive().filter(x=>x.pin).length>=2)return alert('ปัก�
 function ntfAgo(iso){if(!iso)return '';const m=Math.floor((Date.now()-new Date(iso).getTime())/6e4);if(m<1)return 'เมื่อสักครู่';if(m<60)return m+' นาทีที่แล้ว';const h=Math.floor(m/60);if(h<24)return h+' ชั่วโมงที่แล้ว';const d=Math.floor(h/24);return d<30?d+' วันที่แล้ว':th(iso.slice(0,10))}
 function ntfList(){if(!me)return [];const t=annToday(),o=[];
 AN.forEach(a=>{if(a.uid==me._id||(a.exp&&a.exp<t))return;o.push({id:'an:'+a.id,aid:a.id,title:a.k=='urgent'?'ข่าวด่วน':'ประกาศใหม่',text:a.t,sub:a.by?'โดย '+a.by:'',at:a.at,route:'ann',c:a.k=='urgent'?'#E5484D':'#2F6BFF',icon:'mega',unread:!NR.has(a.id)})});
-if(me.sid)MM.forEach(m=>{if(m.assigneeSid!=me.sid)return;o.push({id:'mm:'+m.id,title:'หนังสือเข้า',text:m.title||'',sub:'',at:m.createdAt,route:'comm',c:'#F5A524',icon:'doc',unread:!m.ack})});
-hwReminders().forEach(r=>o.push(r));return o.sort((a,b)=>(b.at||'').localeCompare(a.at||'')).slice(0,30)}
+if(me.sid)MM.forEach(m=>{if(m.assigneeSid!=me.sid||!ltAliveItem(m))return;o.push({id:'mm:'+m.id,title:'หนังสือเข้า',text:m.title||'',sub:'',at:m.createdAt,route:'comm',c:'#F5A524',icon:'doc',unread:!m.ack})});
+ltAlive().forEach(l=>{if(!me.sid||l.createdBy==me._id||!(l.toSids||[]).includes(me.sid))return;o.push({id:'lt:'+l.id,title:'ได้รับไฟล์ใหม่',text:(l.fromName||'')+' · '+(l.title||''),sub:'',at:l.createdAt,route:'comm',c:'#F5A524',icon:'doc',unread:!(l.reads&&l.reads[me.sid])})});hwReminders().forEach(r=>o.push(r));return o.sort((a,b)=>(b.at||'').localeCompare(a.at||'')).slice(0,30)}
 function ntfRender(){const el=document.getElementById('ntf_pop');if(!el)return;const l=ntfList(),un=l.filter(x=>x.unread).length;
 el.innerHTML=`<div class="ntf-h"><b>การแจ้งเตือน${un?' ('+un+')':''}</b>${un?'<a onclick="ntfReadAll(event)">อ่านทั้งหมดแล้ว</a>':''}</div><div class="ntf-l">${l.length?l.map((x,i)=>`<div class="ntf-i${x.unread?' un':''}" onclick="ntfOpen(${i})"><span class="ntf-ic" style="background:${x.c}">${ic(x.icon)}</span><div class="ntf-b"><b>${esc(x.title)}</b><span>${esc(x.text)}</span><small>${esc(ntfAgo(x.at))}${x.sub?' · '+esc(x.sub):''}</small></div>${x.unread?'<i class="ntf-dot"></i>':''}</div>`).join(''):'<div class="ntf-e">ยังไม่มีการแจ้งเตือน</div>'}</div><div class="ntf-f"><a data-r="ann" onclick="ntfClose()">ดูประกาศทั้งหมด</a></div>`}
 function ntfToggle(){let el=document.getElementById('ntf_pop');if(!el){el=document.createElement('div');el.id='ntf_pop';el.className='ntf hid';document.body.appendChild(el)}
@@ -2032,10 +2103,10 @@ send:{n:'ทะเบียนเลขที่หนังสือนำส�
 const rgCan=()=>canManageAdmin();
 const rgBE=d=>d&&/^\d{4}/.test(d)?+d.slice(0,4)+543:+svDay(new Date()).slice(0,4)+543;
 const rgOf=t=>RG.filter(r=>r.type==t);
-function rgNext(t,yr,skip){let m=0;rgOf(t).forEach(r=>{if(r.yr==yr&&r.id!=skip&&r.no>m)m=r.no});return m+1}
-const rgFmt=r=>r.no+'/'+r.yr;
-function rgYears(){const y=new Set([+svDay(new Date()).slice(0,4)+543]);RG.forEach(r=>y.add(r.yr));return [...y].sort((a,b)=>b-a)}
-function rgRows(){const q=rgQ.trim().toLowerCase();return rgOf(rgTab).filter(r=>(!rgYr||r.yr==rgYr)&&(!q||[rgFmt(r),r.title,r.to,r.note,r.by,r.date&&th(r.date)].join(' ').toLowerCase().includes(q))).sort((a,b)=>b.yr-a.yr||b.no-a.no)}
+const rgFmt=r=>r.num||(r.no!=null?r.no+'/'+r.yr:'');
+const rgNorm=v=>String(v||'').replace(/\s+/g,'').toLowerCase();
+function rgYears(){const y=new Set([+svDay(new Date()).slice(0,4)+543]);RG.forEach(r=>y.add(rgBE(r.date)));return [...y].sort((a,b)=>b-a)}
+function rgRows(){const q=rgQ.trim().toLowerCase();return rgOf(rgTab).filter(r=>(!rgYr||rgBE(r.date)==rgYr)&&(!q||[rgFmt(r),r.title,r.to,r.note,r.by,r.date&&th(r.date)].join(' ').toLowerCase().includes(q))).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt||'').localeCompare(a.createdAt||''))}
 function rgList(){const T=RGT[rgTab],rows=rgRows(),can=rgCan();
 if(!rows.length)return E(RG.length||rgQ?'ไม่พบรายการที่ตรงกับตัวกรอง':'ยังไม่มี'+T.s+' กดปุ่ม "เพิ่ม'+T.s+'" เพื่อเริ่มบันทึก',110);
 return `<div class="ac-tw"><table class="ac-t rg-t"><thead><tr><th style="width:92px">เลขที่</th><th style="width:130px">ลงวันที่</th><th>${T.lab}</th><th>${T.to.replace(/ \(.*\)/,'')}</th><th>ผู้บันทึก</th>${can?'<th style="width:78px"></th>':''}</tr></thead><tbody>${rows.map(r=>`<tr><td><b class="rg-no" style="--c:${T.c}">${esc(rgFmt(r))}</b></td><td>${r.date?th(r.date):'–'}</td><td class="rg-d">${esc(r.title||'')}${r.note?`<small>${esc(r.note)}</small>`:''}</td><td class="rg-d">${esc(r.to||'')}</td><td class="rg-d"><small style="margin:0">${esc(r.by||'')}</small></td>${can?`<td class="rg-a"><button title="แก้ไข" onclick="rgOpen('${r.id}')">${ic('edit')}</button><button title="ลบ" onclick="rgDel('${r.id}')">${ic('trash')}</button></td>`:''}</tr>`).join('')}</tbody></table></div><div class="rg-cnt">ทั้งหมด ${rows.length} รายการ</div>`}
@@ -2048,10 +2119,10 @@ function rgUpd(){const w=document.getElementById('rg_wrap');if(w&&CUR=='admin'){
 function rgListUpd(){const l=document.getElementById('rg_list');if(l)l.innerHTML=rgList()}
 function rgSetTab(k){rgTab=k;rgQ='';const w=document.getElementById('rg_wrap');if(w)w.innerHTML=rgHtml()}
 /* pop-up เพิ่ม/แก้ไข */
-function rgOpen(id){if(!rgCan())return;const T=RGT[rgTab],r=id?RG.find(x=>x.id==id):null,d=r?r.date:svDay(new Date()),yr=rgBE(d),no=r?r.no:rgNext(rgTab,yr);
+function rgOpen(id){if(!rgCan())return;const T=RGT[rgTab],r=id?RG.find(x=>x.id==id):null,d=r?r.date:svDay(new Date()),num=r?rgFmt(r):'';
 const o=document.createElement('div');o.className='rgm';o.id='rg_m';o.dataset.id=id||'';o.dataset.t=rgTab;o.innerHTML=`<div class="rgm-b" role="dialog"><h3>${r?'แก้ไข':'เพิ่ม'}${T.s}</h3>
-<div class="rgm-g"><label class="lb">วันที่ (กดเพื่อเลือกจากปฏิทิน)<input class="in" type="date" id="rg_date" value="${d}" onclick="try{this.showPicker()}catch(e){}" onchange="rgDateCh()"></label>
-<label class="lb">เลขที่<span class="rg-nr"><input class="in" type="number" min="1" id="rg_no" value="${no}" oninput="this.dataset.u=1;rgChk()"><b id="rg_yr">/ ${yr}</b></span></label></div>
+<div class="rgm-g"><label class="lb">วันที่ (กดเลือกจากปฏิทิน)<input class="in" type="date" id="rg_date" value="${d}" onclick="try{this.showPicker()}catch(e){}" ></label>
+<label class="lb">เลขที่ (พิมพ์เอง)<input class="in" id="rg_no" value="${esc(num)}" placeholder="เช่น 12/2569 หรือ ศธ 04xxx/12" oninput="rgChk()" autocomplete="off"></label></div>
 <div id="rg_warn" class="rg-warn"></div>
 <label class="lb">${T.lab}<textarea class="in" id="rg_title" rows="3" placeholder="${esc(T.ph)}">${esc(r?r.title||'':'')}</textarea></label>
 <label class="lb">${T.to}<input class="in" id="rg_to" value="${esc(r?r.to||'':'')}"></label>
@@ -2059,18 +2130,17 @@ const o=document.createElement('div');o.className='rgm';o.id='rg_m';o.dataset.id
 <div class="rgm-f"><button class="btn o" onclick="rgClose()">ยกเลิก</button><button class="btn" id="rg_sv" onclick="rgSave()">บันทึก</button></div></div>`;
 o.addEventListener('mousedown',e=>{if(e.target==o)rgClose()});document.body.appendChild(o);rgChk();setTimeout(()=>{const t=document.getElementById('rg_title');t&&t.focus()},50)}
 function rgClose(){const m=document.getElementById('rg_m');if(m)m.remove()}
-function rgDateCh(){const m=document.getElementById('rg_m'),d=document.getElementById('rg_date').value,yr=rgBE(d),n=document.getElementById('rg_no');document.getElementById('rg_yr').textContent='/ '+yr;if(!n.dataset.u)n.value=rgNext(m.dataset.t,yr,m.dataset.id);rgChk()}
-function rgChk(){const m=document.getElementById('rg_m');if(!m)return;const t=m.dataset.t,yr=rgBE(document.getElementById('rg_date').value),no=+document.getElementById('rg_no').value,dup=RG.find(r=>r.type==t&&r.yr==yr&&r.no==no&&r.id!=m.dataset.id),w=document.getElementById('rg_warn');
-w.innerHTML=dup?`⚠ เลขที่ ${no}/${yr} มีอยู่แล้ว (${esc(dup.title||'')}) กรุณาตรวจสอบ`:`<span style="color:#14804A">✓ เลขถัดไปที่ว่าง: ${rgNext(t,yr,m.dataset.id)}/${yr}</span>`;w.className='rg-warn'+(dup?' bad':'')}
-async function rgSave(){if(!rgCan())return;const m=document.getElementById('rg_m'),t=m.dataset.t,id=m.dataset.id,date=document.getElementById('rg_date').value,no=parseInt(document.getElementById('rg_no').value),title=document.getElementById('rg_title').value.trim();
-if(!date)return alert('กรุณาเลือกวันที่');if(!(no>0))return alert('กรุณากรอกเลขที่');if(!title)return alert('กรุณากรอกรายละเอียด');
-const yr=rgBE(date);if(RG.some(r=>r.type==t&&r.yr==yr&&r.no==no&&r.id!=id)&&!confirm('เลขที่ '+no+'/'+yr+' มีอยู่แล้ว ต้องการบันทึกซ้ำหรือไม่?'))return;
-const data={type:t,no,yr,date,title,to:document.getElementById('rg_to').value.trim(),note:document.getElementById('rg_note').value.trim()};
+function rgChk(){const m=document.getElementById('rg_m');if(!m)return;const t=m.dataset.t,v=rgNorm(document.getElementById('rg_no').value),dup=v&&RG.find(r=>r.type==t&&rgNorm(rgFmt(r))==v&&r.id!=m.dataset.id),w=document.getElementById('rg_warn');
+w.innerHTML=dup?`⚠ เลขที่ ${esc(rgFmt(dup))} มีอยู่แล้ว (${esc(dup.title||'')}) กรุณาตรวจสอบ`:'';w.className='rg-warn'+(dup?' bad':'')}
+async function rgSave(){if(!rgCan())return;const m=document.getElementById('rg_m'),t=m.dataset.t,id=m.dataset.id,date=document.getElementById('rg_date').value,num=document.getElementById('rg_no').value.trim().replace(/\s+/g,' '),title=document.getElementById('rg_title').value.trim();
+if(!date)return alert('กรุณาเลือกวันที่');if(!num)return alert('กรุณากรอกเลขที่');if(!title)return alert('กรุณากรอกรายละเอียด');
+if(RG.some(r=>r.type==t&&rgNorm(rgFmt(r))==rgNorm(num)&&r.id!=id)&&!confirm('เลขที่ '+num+' มีอยู่แล้ว ต้องการบันทึกซ้ำหรือไม่?'))return;
+const data={type:t,num,date,title,to:document.getElementById('rg_to').value.trim(),note:document.getElementById('rg_note').value.trim()};
 const b=document.getElementById('rg_sv');b.disabled=true;b.textContent='กำลังบันทึก...';
 try{if(id)await db.collection('registers').doc(id).set({...data,updatedBy:me._id,updatedAt:new Date().toISOString()},{merge:true});else await db.collection('registers').doc(uid()).set({...data,by:me.n,createdBy:me._id,createdAt:new Date().toISOString()});rgClose()}
 catch(e){b.disabled=false;b.textContent='บันทึก';alert('บันทึกไม่สำเร็จ: '+e.message)}}
 async function rgDel(id){if(!rgCan())return;const r=RG.find(x=>x.id==id);if(!r||!confirm('ลบรายการเลขที่ '+rgFmt(r)+' ?'))return;try{await db.collection('registers').doc(id).delete()}catch(e){alert('ลบไม่สำเร็จ: '+e.message)}}
-function rgXls(){if(typeof XLSX=='undefined')return alert('โหลดตัวสร้าง Excel ไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');const T=RGT[rgTab],rows=rgRows().slice().sort((a,b)=>a.yr-b.yr||a.no-b.no);
+function rgXls(){if(typeof XLSX=='undefined')return alert('โหลดตัวสร้าง Excel ไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');const T=RGT[rgTab],rows=rgRows().slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')||(a.createdAt||'').localeCompare(b.createdAt||''));
 const ws=XLSX.utils.aoa_to_sheet([[T.n+(rgYr?' ปี '+rgYr:'')],[],['เลขที่','ลงวันที่',T.lab,T.to,'หมายเหตุ','ผู้บันทึก'],...rows.map(r=>[rgFmt(r),r.date?th(r.date):'',r.title||'',r.to||'',r.note||'',r.by||''])]);
 ws['!cols']=[{wch:10},{wch:16},{wch:60},{wch:30},{wch:24},{wch:18}];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,T.s);XLSX.writeFile(wb,`${T.n}${rgYr?'_'+rgYr:''}.xlsx`)}
 
