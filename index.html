@@ -364,6 +364,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .adbn .card{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);box-shadow:0 6px 16px -12px rgba(70,90,160,.5);backdrop-filter:blur(2px);margin-bottom:0}
 .adbn .card:hover{transform:none}
 @media(prefers-reduced-motion:reduce){.adbn,.adbn *{animation:none!important}}
+.mf .lt-p{display:flex;align-items:center;gap:10px;font-weight:400;margin:0;color:var(--text)}.mf .lt-p input{width:16px;height:16px;margin:0;flex:none}.mf .lt-p small{font-weight:400}.mf .lt-ph .in{flex:1;min-width:0}.mf .lt-ph .btn{flex:none;white-space:nowrap}
 /* แบนเนอร์เมนูย่อยงานธุรการ */
 .admn-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}@media(max-width:700px){.admn-row{grid-template-columns:1fr}}
 .admn{position:relative;overflow:hidden;display:flex;align-items:center;gap:16px;padding:20px 22px;border-radius:24px;cursor:pointer;border:1px solid rgba(150,165,205,.35);box-shadow:0 12px 26px -16px rgba(70,90,160,.55),inset 0 1px 0 rgba(255,255,255,.85);background-size:260% 260%;animation:lvIn .6s both,cbFlow 18s ease-in-out infinite;transition:transform .25s,box-shadow .25s;min-width:0}
@@ -380,7 +381,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .rgb>*{position:relative;z-index:1}.rgb .lbn-o,.rgb .lbn-sp{position:absolute;z-index:0}
 .rgb{--ac:var(--c)}.rgb .lbn-o{background:radial-gradient(circle,color-mix(in srgb,var(--c) 22%,transparent),transparent 70%)}.rgb .lbn-o.o2{background:radial-gradient(circle,color-mix(in srgb,var(--c2) 22%,transparent),transparent 70%)}.rgb .lbn-sp{color:var(--c)}
 .rgb .lbn-ic{background:linear-gradient(135deg,var(--c),var(--c2));box-shadow:0 8px 16px -8px var(--c)}
-.rgb .lbn-h{margin-bottom:0}.rgb-add{margin-left:auto;padding:6px 12px;font-size:.8rem;white-space:nowrap;flex:none;width:auto}.rgb .lbn-h>div{min-width:0}.rgb .lbn-h small{display:block}
+.rgb .lbn-h{margin-bottom:0}.rgb .lbn-h h3{font-size:.9rem;line-height:1.25;white-space:nowrap}.rgb .lbn-h{gap:9px}.rgb .lbn-ic{width:38px;height:38px;border-radius:12px}.rgb .lbn-ic svg{width:20px;height:20px}.rgb-add{margin-left:auto;padding:6px 12px;font-size:.8rem;white-space:nowrap;flex:none;width:auto}.rgb .lbn-h>div{min-width:0}.rgb .lbn-h small{display:block}
 .rgb-l{display:grid;gap:6px;flex:1;align-content:start}
 .rgb-r{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.8);border-radius:12px;padding:7px 10px;min-width:0;transition:transform .2s}.rgb-r:hover{transform:translateX(3px)}
 .rgb-r b{color:#fff;border-radius:8px;padding:1px 8px;font-size:.74rem;white-space:nowrap}.rgb-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem;color:#26304F}.rgb-r small{color:#7B879C;font-size:.68rem;white-space:nowrap}
@@ -1026,30 +1027,33 @@ if(f.size>10*1024*1024){alert('ไฟล์ใหญ่เกิน 10MB');retur
 mmFile=f;if($('#mm_filename'))$('#mm_filename').textContent=`เลือกไฟล์: ${f.name} (${fmtSize(f.size)})`}
 
 const mfRow=(ico,lab,inner,cls)=>`<div class="mf ${cls||''}"><span class="mf-i">${ic(ico)}</span><div class="mf-b"><label>${lab}</label>${inner}</div></div>`;
-function memoForm(){const left=`<div class="mf-h"><span class="upc-i">${ic('doc')}</span><b>ข้อมูลหนังสือราชการ</b></div>
-<div class="mf-g">${mfRow('doc','เลขที่หนังสือ','<input class="in" id="mm_no" placeholder="เช่น ศธ 04010/123">')}${mfRow('cal','วันที่เกษียนหนังสือ','<input class="in" id="mm_date" type="date" value="'+toISO(new Date())+'">')}</div>
-${mfRow('doc','เรื่อง <i>*</i>','<input class="in" id="mm_title" placeholder="ระบุเรื่องของหนังสือ">')}
-${mfRow('user','มอบหมายให้ <i>*</i>','<select class="in" id="mm_assignee"><option value="">-- เลือกบุคลากร --</option>'+PP.map(p=>`<option value="${p.id}">${esc(dn(p))}${p.po?' · '+esc(p.po):''}</option>`).join('')+'</select>')}
-${mfRow('doc','รายละเอียด / หมายเหตุ','<textarea class="in" id="mm_note" rows="4" placeholder="กรอกรายละเอียดของหนังสือราชการ..."></textarea>')}
+function memoForm(){const d=LD.m;const left=`<div class="mf-h"><span class="upc-i">${ic('doc')}</span><b>ข้อมูลหนังสือราชการ</b></div>
+<div class="mf-g">${mfRow('doc','เลขที่หนังสือ',`<input class="in" id="mm_no" value="${esc(d.no)}" oninput="LD.m.no=this.value" placeholder="เช่น ศธ 04010/123">`)}${mfRow('cal','วันที่เกษียนหนังสือ',`<input class="in" id="mm_date" type="date" value="${d.date||toISO(new Date())}" onclick="try{this.showPicker()}catch(e){}" oninput="LD.m.date=this.value">`)}</div>
+${mfRow('doc','เรื่อง <i>*</i>',`<input class="in" id="mm_title" value="${esc(d.title)}" oninput="LD.m.title=this.value" placeholder="ระบุเรื่องของหนังสือ">`)}
+${mfRow('cal','หมดเขตภายในวันที่ <small style="color:var(--mute);font-weight:400">(ไม่บังคับ · เว้นว่างได้ถ้าเป็นหนังสือประชาสัมพันธ์)</small>',`<input class="in" id="mm_dl" type="date" value="${d.dl}" onclick="try{this.showPicker()}catch(e){}" oninput="LD.m.dl=this.value">`)}
+${mfRow('user','มอบหมายให้ <i>*</i> <small id="m_cnt" style="color:var(--mute);font-weight:400">เลือกแล้ว '+d.sids.length+' คน (เลือกได้หลายคน)</small>',ltPicker('m'))}
+${mfRow('doc','รายละเอียด / หมายเหตุ',`<textarea class="in" id="mm_note" rows="4" oninput="LD.m.note=this.value" placeholder="กรอกรายละเอียดของหนังสือราชการ...">${esc(d.note)}</textarea>`)}
 <div style="margin-top:14px"><button type="button" class="btn" onclick="createMemo()">บันทึกและมอบหมาย</button></div>
 <div id="mm_msg" style="font-size:.78rem;color:var(--mute);margin-top:6px"></div>`;
-const right=upCard('แนบไฟล์เอกสาร (ไม่บังคับ)',`<div id="mm_dz">${dzBox('mmPick',[])}</div><div id="mm_filename" class="upc-m"></div>`);
+const right=upCard('แนบไฟล์เอกสาร (ไม่บังคับ)',`<div id="mm_dz">${dzBox('mmPick',[])}</div><div id="mm_filename" class="upc-m">${mmFile?`เลือกไฟล์: ${esc(mmFile.name)} (${fmtSize(mmFile.size)})`:''}</div>`);
 return docsSplit(left,right)+`<div style="border-top:1px solid var(--line);margin:18px 0"></div>`}
-async function createMemo(){const title=$('#mm_title').value.trim(),no=$('#mm_no').value.trim(),date=$('#mm_date').value,note=$('#mm_note').value.trim(),sid=$('#mm_assignee').value;
-if(!title)return alert('กรอกชื่อเรื่อง');if(!sid)return alert('เลือกผู้รับมอบหมาย');
-const p=PP.find(x=>x.id==sid),id=uid();let files=[];const f=mmFile;
-$('#mm_msg').textContent='กำลังบันทึก...';
+const mmGroups=flt=>{const g=new Map();MM.filter(flt).forEach(m=>{const k=m.gid||m.id;if(!g.has(k))g.set(k,{key:k,m,all:[]});g.get(k).all.push(m)});return [...g.values()]};
+async function createMemo(){const d=LD.m,title=d.title.trim(),no=d.no.trim(),date=d.date||toISO(new Date()),note=d.note.trim(),dl=d.dl||'',sids=d.sids.slice();
+if(!title)return alert('กรอกชื่อเรื่อง');if(!sids.length)return alert('เลือกผู้รับมอบหมายอย่างน้อย 1 คน');
+const gid=uid();let files=[];const f=mmFile,msg=t=>{const e=$('#mm_msg');if(e)e.textContent=t};
+msg('กำลังบันทึก...');
 try{if(f){if(!allowedFile(f))throw new Error('ไฟล์ชนิดนี้ไม่รองรับ (PDF, Word, Excel, รูปภาพ)');if(f.size>10*1024*1024)throw new Error('ไฟล์ใหญ่เกิน 10MB');
-const path=`memos/${id}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();files=[{name:f.name,url,path,size:f.size}]}
-await db.collection('memos').doc(id).set({title,no,date:date||'',note,deadline:'',assigneeSid:sid,assigneeName:dn(p),files,createdBy:me._id,createdByName:me.n,createdAt:new Date().toISOString(),ack:false,ackAt:null});
-$('#mm_title').value='';$('#mm_no').value='';$('#mm_note').value='';$('#mm_assignee').value='';mmFile=null;if($('#mm_filename'))$('#mm_filename').textContent='';$('#mm_msg').textContent='บันทึกและมอบหมายเรียบร้อย'}
-catch(e){$('#mm_msg').textContent='บันทึกไม่สำเร็จ: '+e.message}}
-function memoList(){const MMa=MM.filter(ltAliveItem);if(!MMa.length)return E('ยังไม่มีหนังสือที่เกษียน',60);const t=T0();
-return MMa.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')).map(m=>{const dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&!m.ack;
-return `<div class="rw"><span><b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><small>มอบหมายให้ ${esc(m.assigneeName)}${m.date?' · เกษียนเมื่อ '+th(m.date):''}${m.deadline?' · ภายใน '+th(m.deadline):''}${m.note?' · '+esc(m.note):''}${(m.files&&m.files.length)?` · <a href="${m.files[0].url}" target="_blank" rel="noopener">เปิดไฟล์</a>`:''}</small></span><span style="text-align:right;flex-shrink:0"><em style="font-style:normal;font-size:.78rem;color:${m.ack?'#22B573':overdue?'var(--red)':'var(--mute)'}">${m.ack?'รับหนังสือแล้ว':overdue?'เลยกำหนดแล้ว':'ยังไม่รับ'}</em> <button type="button" class="btn r" data-mm="${m.id}">ลบ</button></span></div>`}).join('')}
+const path=`memos/${gid}/${Date.now()}_${f.name}`,ref=storage.ref(path);await ref.put(f);const url=await ref.getDownloadURL();files=[{name:f.name,url,path,size:f.size}]}
+const now=new Date().toISOString();
+for(const sid of sids){const p=PP.find(x=>x.id==sid);await db.collection('memos').doc(uid()).set({gid,title,no,date,note,deadline:dl,assigneeSid:sid,assigneeName:p?dn(p):'',files,createdBy:me._id,createdByName:me.n,createdAt:now,ack:false,ackAt:null})}
+LD.m={...LDN(),no:'',date:''};mmFile=null;render();msg('บันทึกและมอบหมายให้ '+sids.length+' คน เรียบร้อย')}
+catch(e){msg('บันทึกไม่สำเร็จ: '+e.message)}}
+function memoList(){const G=mmGroups(ltAliveItem);if(!G.length)return E('ยังไม่มีหนังสือที่เกษียน',60);const t=T0();
+return G.sort((a,b)=>(b.m.createdAt||'').localeCompare(a.m.createdAt||'')).map(g=>{const m=g.m,n=g.all.length,ak=g.all.filter(x=>x.ack).length,dl=m.deadline?dt(m.deadline):null,overdue=dl&&dl<t&&ak<n;
+return `<div class="rw"><span><b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><small>${m.date?'เกษียนเมื่อ '+th(m.date):''}${m.deadline?' · หมดเขตภายใน '+th(m.deadline):''}${m.note?' · '+esc(m.note):''}${(m.files&&m.files.length)?` · <a href="${m.files[0].url}" target="_blank" rel="noopener">เปิดไฟล์</a>`:''}</small><span class="lt-to" style="margin-top:6px">${g.all.map(x=>`<span class="atc ${x.ack?'p':'u'}" title="${x.ack?'รับทราบแล้ว':'ยังไม่รับทราบ'}">${esc(x.assigneeName||'')}${x.ack?' ✓':''}</span>`).join('')}</span></span><span style="text-align:right;flex-shrink:0"><em style="font-style:normal;font-size:.78rem;color:${ak==n?'#22B573':overdue?'var(--red)':'var(--mute)'}">${ak==n?'รับทราบครบแล้ว':overdue?'เลยกำหนด · รับแล้ว '+ak+'/'+n:'รับแล้ว '+ak+'/'+n}</em> <button type="button" class="btn r" data-mm="${g.key}">ลบ</button></span></div>`}).join('')}
 function memoSection(){return P('เกษียนหนังสือราชการ',canManageAdmin()?memoForm()+memoList():E('ดูหนังสือที่ได้รับมอบหมายได้ที่เมนู "หนังสือเข้า"',70))}
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-mm]');if(!a||!canManageAdmin())return;if(!confirm('ลบหนังสือฉบับนี้?'))return;
-const m=MM.find(x=>x.id==a.dataset.mm);try{if(m&&m.files)for(const f of m.files)await storage.ref(f.path).delete().catch(()=>{});await db.collection('memos').doc(a.dataset.mm).delete()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
+const grp=MM.filter(x=>(x.gid||x.id)==a.dataset.mm);try{const m=grp[0];if(m&&m.files)for(const f of m.files)await storage.ref(f.path).delete().catch(()=>{});for(const x of grp)await db.collection('memos').doc(x.id).delete()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-ackmm]');if(!a||!me)return;
 try{await db.collection('memos').doc(a.dataset.ackmm).set({ack:true,ackAt:new Date().toISOString()},{merge:true})}catch(err){alert('ดำเนินการไม่สำเร็จ: '+err.message)}});
 let AD={};
@@ -1273,7 +1277,7 @@ if(canManageAdmin())for(const m of MM.filter(x=>!ltAliveItem(x))){await rm(m.fil
 setInterval(()=>{if(me&&ltInit)ltPurge()},36e5);
 async function ltRead(id){const l=LT.find(x=>x.id==id);if(!l||!me||!me.sid||l.createdBy==me._id||(l.reads&&l.reads[me.sid]))return;const t=new Date().toISOString();l.reads=Object.assign({},l.reads,{[me.sid]:t});updateBell&&updateBell();try{await db.collection('letters').doc(id).set({reads:{[me.sid]:t}},{merge:true})}catch(e){}}
 const LDN=()=>({title:'',sids:[],dl:'',note:'',q:'',files:[],busy:false,msg:''});
-let LD={c:LDN(),a:LDN()};
+let LD={c:LDN(),a:LDN(),m:{...LDN(),no:'',date:''}};
 function ltWhen(iso){if(!iso)return '–';try{const d=new Date(iso);return d.toLocaleDateString('th-TH',{timeZone:'Asia/Bangkok',day:'numeric',month:'short',year:'2-digit'})+' '+d.toLocaleTimeString('th-TH',{timeZone:'Asia/Bangkok',hour:'2-digit',minute:'2-digit'})+' น.'}catch(e){return iso.slice(0,10)}}
 function ltUpd(){const a=document.getElementById('lt_in'),b=document.getElementById('lt_out_list'),c=document.getElementById('lt_admin_list');if(a)a.innerHTML=ltInList();if(b)b.innerHTML=ltOutList(x=>x.via!='admin');if(c)c.innerHTML=ltOutList(x=>x.via=='admin')}
 function ltFilesHtml(files,id){const f=id?`ltRead('${id}')`:'';if(!(files||[]).length)return '';
@@ -1290,14 +1294,17 @@ return `<div class="lt-i${rd?'':' un'}" style="animation-delay:${Math.min(n,8)*.
 <div class="lt-mg">${ltMeta('วันที่หนังสือเข้า',ltWhen(x.createdAt))}${ltMeta('ผู้ส่ง',esc(from))}${ltMeta('หมดเขตภายใน',dl?th(dl):'ไม่ระบุ',od?'od':'')}${ltMeta('หมายเหตุ',x.note?esc(x.note):'–','nt')}</div>
 <div class="lt-f">${ltFilesHtml(x.files,isM?'':x.id)}${!rd?(isM?`<button type="button" class="btn g" data-ackmm="${x.id}">รับทราบ</button>`:`<button type="button" class="btn g" onclick="ltRead('${x.id}')">รับทราบ</button>`):''}${ltExp(x)}</div></div>`}).join('')}
 function ltOutList(flt){const items=[];ltAlive().filter(l=>l.createdBy==me._id&&flt(l)).forEach(l=>items.push({k:'lt',l,at:l.createdAt||''}));
-if(flt({via:'teacher'}))MM.filter(m=>m.createdBy==me._id&&ltAliveItem(m)).forEach(m=>items.push({k:'mm',m,at:m.createdAt||''}));items.sort((a,b)=>b.at.localeCompare(a.at));
+if(flt({via:'teacher'}))mmGroups(m=>m.createdBy==me._id&&ltAliveItem(m)).forEach(g=>items.push({k:'mm',m:g.m,g,at:g.m.createdAt||''}));items.sort((a,b)=>b.at.localeCompare(a.at));
 if(!items.length)return `<div class="lt-empty">ยังไม่มีรายการที่ส่ง</div>`;
-return items.map((it,n)=>{if(it.k=='mm'){const m=it.m;return `<div class="lt-i" style="animation-delay:${Math.min(n,8)*.06}s"><div class="lt-h"><span class="lt-tag" style="background:#F5A524">เกษียนหนังสือ</span><b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><em class="${m.ack?'ok':''}">${m.ack?'รับแล้ว':'ยังไม่รับ'}</em></div><div class="lt-mg">${ltMeta('ส่งเมื่อ',ltWhen(m.createdAt))}${ltMeta('ผู้รับ',esc(m.assigneeName||''))}</div><div class="lt-f">${ltFilesHtml(m.files,'')}${ltExp(m)}</div></div>`}
+return items.map((it,n)=>{if(it.k=='mm'){const m=it.m,gl=it.g.all;return `<div class="lt-i" style="animation-delay:${Math.min(n,8)*.06}s"><div class="lt-h"><span class="lt-tag" style="background:#F5A524">เกษียนหนังสือ</span><b>${m.no?esc(m.no)+' · ':''}${esc(m.title)}</b><em class="${gl.every(x=>x.ack)?'ok':''}">รับแล้ว ${gl.filter(x=>x.ack).length}/${gl.length}</em></div><div class="lt-mg">${ltMeta('ส่งเมื่อ',ltWhen(m.createdAt))}${ltMeta('หมดเขตภายใน',m.deadline?th(m.deadline):'ไม่ระบุ')}${ltMeta('ผู้รับ',esc(gl.map(x=>x.assigneeName).join(', ')),'nt')}</div><div class="lt-f">${ltFilesHtml(m.files,'')}${ltExp(m)}</div></div>`}
 const l=it.l,rs=l.reads||{},names=l.toNames||[],sids=l.toSids||[],nr=sids.filter(x=>rs[x]).length;
 return `<div class="lt-i" style="animation-delay:${Math.min(n,8)*.06}s"><div class="lt-h"><span class="lt-tag" style="background:#8B5CF6">หนังสือออก</span><b>${esc(l.title||'')}</b><em class="${nr==sids.length?'ok':''}">อ่านแล้ว ${nr}/${sids.length}</em></div>
 <div class="lt-mg">${ltMeta('ส่งเมื่อ',ltWhen(l.createdAt))}${ltMeta('หมดเขตภายใน',l.deadline?th(l.deadline):'ไม่ระบุ')}${ltMeta('หมายเหตุ',l.note?esc(l.note):'–','nt')}</div>
 <div class="lt-to">${sids.map((x,i)=>`<span class="atc ${rs[x]?'p':'u'}" title="${rs[x]?'อ่านเมื่อ '+esc(ntfAgo(rs[x])):'ยังไม่อ่าน'}">${esc(names[i]||x)}${rs[x]?' ✓':''}</span>`).join('')}</div>
 <div class="lt-f">${ltFilesHtml(l.files,'')}<button type="button" class="btn r" onclick="ltDel('${l.id}')">ลบ</button>${ltExp(l)}</div></div>`}).join('')}
+function ltPicker(p){const d=LD[p],ppl=PP.slice().sort((a,b)=>dn(a).localeCompare(dn(b),'th')),q=d.q.trim().toLowerCase();
+return `<div class="lt-ph"><input class="in" placeholder="ค้นหาชื่อบุคลากร" value="${esc(d.q)}" oninput="ltQ('${p}',this.value)" style="margin:0"><button type="button" class="btn o" onclick="ltAll('${p}')">เลือก/ยกเลิกทั้งหมด</button></div>
+<div class="lt-pl" id="${p}_pl">${ppl.map(x=>`<label class="lt-p" data-n="${esc(dn(x)).toLowerCase()}" style="${q&&!dn(x).toLowerCase().includes(q)?'display:none':''}"><input type="checkbox" ${d.sids.includes(x.id)?'checked':''} onchange="ltTog('${p}','${x.id}',this.checked)"><span>${esc(dn(x))}${x.po?`<small>${esc(x.po)}</small>`:''}</span></label>`).join('')}</div>`}
 /* ฟอร์มส่งหนังสือ (p='c' หน้าหนังสือเข้า-ออก · p='a' เมนูงานธุรการ) */
 function ltFormHtml(p){const d=LD[p],ppl=PP.filter(x=>x.id!=me.sid).sort((a,b)=>dn(a).localeCompare(dn(b),'th')),q=d.q.trim().toLowerCase();
 return `<div class="lt-fm"><label class="lb">ชื่อเรื่อง <i style="color:#E5484D">*</i><input class="in" value="${esc(d.title)}" placeholder="เช่น ขอเชิญประชุมครู / ส่งแผนการสอน" oninput="LD.${p}.title=this.value"></label>
@@ -2251,7 +2258,7 @@ return rows.length?rows.slice(0,5).map(r=>`<div class="rgb-r"><b style="backgrou
 function rgHtml(){const can=rgCan();
 return `<div class="rgb-row">${Object.keys(RGT).map((k,i)=>{const T=RGT[k],S=RGS[k],n=rgOf(k).length;
 return `<div class="rgb" style="--c:${T.c};--c2:${S.c2};background:${S.g};animation-delay:${i*.1}s"><i class="lbn-o o1"></i><i class="lbn-o o2"></i><i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i>
-<div class="lbn-h"><span class="lbn-ic">${ic(S.ic)}</span><div><h3>${T.s}</h3><small>ทะเบียนเลขที่${T.s} · ทั้งหมด ${n} รายการ</small></div>${can?`<button class="btn rgb-add" onclick="rgOpen('','${k}')">+ เพิ่ม</button>`:''}</div>
+<div class="lbn-h"><span class="lbn-ic">${ic(S.ic)}</span><div><h3>ทะเบียนเลขที่${T.s}</h3><small>ทั้งหมด ${n} รายการ</small></div>${can?`<button class="btn rgb-add" onclick="rgOpen('','${k}')">+ เพิ่ม</button>`:''}</div>
 <div class="rgb-l">${rgMini(k)}</div>
 <button class="btn o rgb-more" onclick="rgView('${k}')">ดูเพิ่มเติม${n>5?' ('+n+')':''}</button></div>`}).join('')}</div>${can?'':'<div class="rg-cnt">ดูได้อย่างเดียว · เฉพาะครูธุรการและผู้ก่อตั้งเพิ่ม/แก้ไขได้</div>'}`}
 function rgViewHtml(){const T=RGT[rgTab],can=rgCan();
