@@ -381,6 +381,8 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 /* ร่างหนังสือราชการ */
 .drt-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,300px));gap:14px}
 .drt{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:18px;cursor:pointer;background:linear-gradient(135deg,#F1EAFF,#EAF3FF 55%,#E6F8F3);border:1px solid rgba(150,165,205,.35);box-shadow:0 8px 18px -14px rgba(70,90,160,.6);transition:transform .2s;animation:lvIn .5s both}.drt:hover{transform:translateY(-3px)}
+.drt-o{background:linear-gradient(135deg,#E6F0FF,#EAF8FF 55%,#E4F7FB);animation-delay:0s}.drt.drt-o .lbn-ic{background:linear-gradient(135deg,#2F6BFF,#14B8D6)}.drt-o:before{background:radial-gradient(circle,rgba(47,107,255,.2),transparent 70%)}
+.drt-m{background:linear-gradient(135deg,#FFEAF1,#FFF3E6 55%,#FDF0FF);animation-delay:.1s}.drt-row .drt:last-child{animation-delay:.2s}.drt.drt-m .lbn-ic{background:linear-gradient(135deg,#EC4899,#F5A524)}.drt-m:before{background:radial-gradient(circle,rgba(236,72,153,.2),transparent 70%)}
 .drt .lbn-ic{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#8B5CF6,#3B82F6);flex:none}.drt b{display:block;color:#26304F}.drt small{color:#6B7794;font-size:.74rem}
 .drt:before{content:"";position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.22),transparent 70%);animation:lvDrift 8s ease-in-out infinite}
 .drm-b{background:#fff;border-radius:20px;width:min(1320px,100%);height:min(94vh,980px);display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(30,40,100,.35);overflow:hidden}
@@ -1135,7 +1137,8 @@ return `<div class="dr-a4"><img class="d-g" src="${DR_GARUDA}" alt="">
 <div class="d-sg">${T(d.salute)}${d.sig?`<div class="d-sp d-sig"><img src="${d.sig}" style="height:${d.sigH}mm" alt=""></div>`:'<div class="d-sp"></div>'}${T(d.signer)}<br>${T(d.pos)}</div>
 <div class="d-tl">${[d.org,d.tel,d.mail].filter(has).map(T).join('\n')}</div></div>`}
 function drEnsureCss(){if(!document.getElementById('dr_css')){const st=document.createElement('style');st.id='dr_css';st.textContent=DR_FONT+DR_CSS;document.head.appendChild(st)}}
-function drTiles(){return `<div class="drt-row"><div class="drt" onclick="drOpen('send')" role="button" tabindex="0"><span class="lbn-ic">${ic('doc')}</span><div><b>ร่างหนังสือนำส่ง</b><small>หนังสือภายนอก · ส่งเอกสารถึงเขต</small></div></div></div>`}
+function drTiles(){const soon=(n,c)=>`drFlash('${n}: รอรายละเอียดเพิ่มเติม ยังไม่เปิดใช้งาน','${c}')`;
+return `<div class="drt-row"><div class="drt drt-o" onclick="${soon('ร่างหนังสือคำสั่ง','#2F6BFF')}" role="button" tabindex="0"><span class="lbn-ic">${ic('doc')}</span><div><b>ร่างหนังสือคำสั่ง</b><small>คำสั่งโรงเรียน · เร็วๆ นี้</small></div></div><div class="drt drt-m" onclick="${soon('ร่างบันทึกข้อความ','#EC4899')}" role="button" tabindex="0"><span class="lbn-ic">${ic('pen')}</span><div><b>ร่างบันทึกข้อความ</b><small>บันทึกข้อความภายใน · เร็วๆ นี้</small></div></div><div class="drt" onclick="drOpen('send')" role="button" tabindex="0"><span class="lbn-ic">${ic('doc')}</span><div><b>ร่างหนังสือนำส่ง</b><small>หนังสือภายนอก · ส่งเอกสารถึงเขต</small></div></div></div>`}
 function drLast(){const r=RG.filter(x=>x.type=='send').sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt||'').localeCompare(a.createdAt||''))[0];if(!r)return null;const n=parseInt((rgFmt(r).match(/\d+/)||[])[0]);return isNaN(n)?{t:rgFmt(r)}:{t:rgFmt(r),n}}
 function drField(k,lab,type,extra){const d=DR,v=esc(d[k]);
 if(type=='ta')return `<label class="lb">${lab}<textarea class="in" rows="${extra||3}" oninput="DR.${k}=this.value;drPrev()">${v}</textarea></label>`;
@@ -2420,10 +2423,10 @@ out.forEach(o=>{const g=HW[o.sid]=HW[o.sid]||{};g.months=Object.assign({},g.mont
 catch(e){hwMsg='';alert('บันทึกไม่สำเร็จ: '+e.message);hwClassUpd()}}
 
 
-/* ===== ทะเบียนเลขที่ (คำสั่ง / หนังสือราชการ / หนังสือนำส่ง) ===== */
+/* ===== ทะเบียนเลขที่ (คำสั่ง / บันทึกข้อความ / หนังสือนำส่ง) ===== */
 let RG=[],rgTab='order',rgQ='',rgYr='';
 const RGT={order:{n:'ทะเบียนเลขที่คำสั่งโรงเรียน',s:'คำสั่ง',lab:'เรื่อง / รายละเอียดคำสั่ง',ph:'เช่น แต่งตั้งคณะกรรมการดำเนินงานโรงเรียน ปีการศึกษา 2569',to:'ผู้เกี่ยวข้อง / หน่วยงาน (ถ้ามี)',c:'#2F6BFF'},
-letter:{n:'ทะเบียนเลขที่หนังสือราชการ',s:'หนังสือราชการ',lab:'เรื่อง / รายละเอียดหนังสือ',ph:'เช่น ขอความอนุเคราะห์วิทยากรอบรม',to:'ถึง / เรียน',c:'#8B5CF6'},
+letter:{n:'ทะเบียนเลขที่บันทึกข้อความ',s:'บันทึกข้อความ',lab:'เรื่อง / รายละเอียดบันทึกข้อความ',ph:'เช่น ขอความอนุเคราะห์วิทยากรอบรม',to:'ถึง / เรียน',c:'#8B5CF6'},
 send:{n:'ทะเบียนเลขที่หนังสือนำส่ง',s:'หนังสือนำส่ง',lab:'เรื่อง / รายละเอียดสิ่งที่นำส่ง',ph:'เช่น ส่งรายงานผลการดำเนินงานประจำเดือน',to:'ส่งถึง',c:'#22B573'}};
 const rgCan=()=>canManageAdmin();
 const rgBE=d=>d&&/^\d{4}/.test(d)?+d.slice(0,4)+543:+svDay(new Date()).slice(0,4)+543;
