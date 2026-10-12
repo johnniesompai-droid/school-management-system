@@ -1151,7 +1151,7 @@ function drOrgSel(v){if(v=='__c'){DR.orgC=true}else{DR.orgC=false;DR.org=v}const
 function drTelField(){const ps=PP.filter(p=>String(p.ph||'').trim()).sort((a,b)=>dn(a).localeCompare(dn(b),'th'));
 return `<label class="lb">เลือกเบอร์โทรจากบุคลากร<select class="in" onchange="drPickTel(this.value)"><option value="">— เลือกครู —</option>${ps.map(p=>`<option value="${esc(p.id)}">${esc(dn(p))} · ${esc(DR_PH(p))}</option>`).join('')}</select></label><label class="lb">โทรศัพท์ (แก้ไขได้)<input class="in" id="dr_tel" value="${esc(DR.tel)}" oninput="DR.tel=this.value;drPrev()"></label>`}
 function drPickTel(id){const p=PP.find(x=>String(x.id)==String(id));if(!p)return;DR.tel='โทร. '+DR_PH(p);const i=document.getElementById('dr_tel');if(i)i.value=DR.tel;drPrev()}
-function drOpen(kind){if(!canManageAdmin())return;drEnsureCss();if(!DR)DR=drDef();drClose();const l=drLast();
+function drOpen(kind){if(!canManageAdmin())return;drEnsureCss();if(!DR)DR=drDef();DR.kind=kind||'send';drClose();const l=drLast();
 const o=document.createElement('div');o.className='rgm';o.id='dr_m';o.innerHTML=`<div class="drm-b" role="dialog"><div class="drm-h"><h3>ร่างหนังสือนำส่ง</h3>
 <label style="font-size:.8rem;display:inline-flex;align-items:center;gap:6px"><input type="checkbox" ${DR.arab?'checked':''} onchange="DR.arab=this.checked;drPrev()"> ใช้เลขอารบิก</label>
 <button class="btn o" type="button" onclick="drReset()">ค่าเริ่มต้น</button>
@@ -1244,19 +1244,23 @@ files.push({name:nm,url,path,size:blob.size,uploadedAt:new Date().toISOString(),
 await db.collection('admindocs').doc('forms').set({files},{merge:true});AD.forms=files;DR.arc=path;return ex}
 catch(e){drFlash('เก็บไฟล์ลงแบบฟอร์ม/เอกสารดาวน์โหลดไม่สำเร็จ: '+e.message,'#E11D48');return null}}
 const drArcMsg=ex=>drFlash('เก็บ PDF ไว้ที่แบบฟอร์ม / เอกสารดาวน์โหลดแล้ว (เก็บถึง '+ex.txt+')','#22B573');
+/* ประเภทที่เก็บลงแบบฟอร์ม/เอกสารดาวน์โหลดอัตโนมัติ — หนังสือนำส่งไม่เก็บ (ส่งถึงครูแล้ว ดูได้จากหนังสือเข้า) */
+const DR_ARCH={send:false,order:true,memo:true};
+const drShouldArc=()=>DR_ARCH[(DR&&DR.kind)||'send']!==false;
 let drSwept=0;
 async function drSweep(){if(!me||!canManageAdmin()||Date.now()-drSwept<60000)return;const now=new Date().toISOString(),files=AD.forms||[],old=files.filter(f=>f.draft&&f.expiresAt&&f.expiresAt<now);if(!old.length)return;drSwept=Date.now();
 try{for(const f of old){try{await storage.ref(f.path).delete()}catch(e){}}
 await db.collection('admindocs').doc('forms').set({files:files.filter(f=>!old.includes(f))},{merge:true})}catch(e){}}
 async function drSave(kind){document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'));drMsg('กำลังสร้างไฟล์...');
-try{const b=await drBlob(kind),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=drFname(kind);document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว · กำลังเก็บ PDF ลงแบบฟอร์ม/เอกสารดาวน์โหลด...');const ex=await drArchive(kind=='pdf'?b:await drPdf());drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว'+(ex?' · เก็บ PDF ลงแบบฟอร์ม/เอกสารดาวน์โหลดแล้ว':''));if(ex)drArcMsg(ex)}
+try{const b=await drBlob(kind),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=drFname(kind);document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);if(!drShouldArc()){drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว');return}
+drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว · กำลังเก็บ PDF ลงแบบฟอร์ม/เอกสารดาวน์โหลด...');const ex=await drArchive(kind=='pdf'?b:await drPdf());drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว'+(ex?' · เก็บ PDF ลงแบบฟอร์ม/เอกสารดาวน์โหลดแล้ว':''));if(ex)drArcMsg(ex)}
 catch(e){drMsg('');alert('สร้างไฟล์ไม่สำเร็จ: '+e.message)}}
 async function drSend(kind){document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'));drMsg('กำลังสร้างไฟล์...');
 try{const b=await drBlob(kind),nm=drFname(kind),f=new File([b],nm,{type:kind=='pdf'?'application/pdf':'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
 LD.a.files=LD.a.files.filter(x=>!x.fromDraft);LD.a.files.push({file:f,name:nm.replace(/\.[^.]+$/,''),fromDraft:true});if(!LD.a.title.trim())LD.a.title=(DR.subject||'').trim();
-const ex=await drArchive(kind=='pdf'?b:await drPdf());drClose();go('admin:send');if(ex)drArcMsg(ex)}
+const ex=drShouldArc()?await drArchive(kind=='pdf'?b:await drPdf()):null;drClose();go('admin:send');if(ex)drArcMsg(ex)}
 catch(e){drMsg('');alert('สร้างไฟล์ไม่สำเร็จ: '+e.message)}}
-function drPrint(){drEnsureCss();drPdf().then(b=>drArchive(b)).then(ex=>{if(ex)drArcMsg(ex)}).catch(e=>drFlash('สร้างไฟล์เก็บไม่สำเร็จ: '+e.message,'#E11D48'));const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(f);const w=f.contentWindow.document;w.open();
+function drPrint(){drEnsureCss();if(drShouldArc())drPdf().then(b=>drArchive(b)).then(ex=>{if(ex)drArcMsg(ex)}).catch(e=>drFlash('สร้างไฟล์เก็บไม่สำเร็จ: '+e.message,'#E11D48'));const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(f);const w=f.contentWindow.document;w.open();
 w.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(DR.subject||'หนังสือนำส่ง')}</title><style>${DR_FONT}@page{size:A4;margin:0}html,body{margin:0}${DR_CSS.replace('box-shadow:0 4px 18px rgba(30,40,100,.25)','box-shadow:none')}</style></head><body>${drDocHtml(DR)}</body></html>`);w.close();
 const go_=()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){alert('พิมพ์ไม่สำเร็จ')}setTimeout(()=>f.remove(),3000)};setTimeout(()=>{try{f.contentWindow.document.fonts.load('16pt THSarabunDR').then(()=>f.contentWindow.document.fonts.ready).then(go_,go_)}catch(e){go_()}},300)}
 function admMenu(){const can=canManageAdmin(),sent=LT.filter(l=>l.via=='admin'&&l.createdBy==(me&&me._id)).length,pend=mmGroups(m=>!m.ack&&ltAliveItem(m)).length,card=(r,cls,ico,t,d,st)=>`<div class="admn ${cls}" data-r="${r}" role="button" tabindex="0"><i class="lbn-o o1"></i><i class="lbn-o o2"></i><i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i><i class="lbn-sp s3">✦</i><div class="admn-hd"><span class="lbn-ic">${ic(ico)}</span><span class="admn-go">เปิด ›</span></div><div class="admn-t"><h3>${t}</h3><p>${d}</p></div>${st?`<em class="admn-st">${st}</em>`:''}</div>`;
