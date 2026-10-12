@@ -90,15 +90,15 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .rd{color:var(--red);font-weight:500}.lb{display:block;font-size:.75rem;color:var(--mute)}.lb .in{margin:4px 0 0}.wrap{overflow-x:auto}.hid{display:none}
 .pc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:.78rem;margin-top:8px;text-align:left}.pc small{display:block;color:var(--mute);font-size:.68rem}.pc.dp{background:var(--soft);border-color:var(--blue)}
 .lv{cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;font-size:.85rem}.lv:hover{border-color:var(--blue);background:var(--soft)}.lv b{display:block;color:var(--blue);font-size:1.1rem;margin-top:2px}.pt .bk{color:var(--blue);cursor:pointer}
-.hs{border:0;color:#fff;position:relative;overflow:hidden;padding:18px 18px;box-shadow:0 10px 20px -6px var(--hc),inset 0 1px 0 rgba(255,255,255,.35),inset 0 -3px 0 rgba(0,0,0,.12);transition:transform .15s,box-shadow .15s}
-.hs::after{content:"";position:absolute;right:-30px;top:-40px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none}
-.hs:hover{transform:translateY(-3px);box-shadow:0 14px 24px -6px var(--hc),inset 0 1px 0 rgba(255,255,255,.35),inset 0 -3px 0 rgba(0,0,0,.12)}
-.hs .bx{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 3px 8px rgba(0,0,0,.15);flex-shrink:0}.hs .bx svg{width:26px;height:26px}
-.hs small,.hs .sx,.hs .stat .sx.t,.hs .sx.t{color:rgba(255,255,255,.88)}.hs b,.hs .sx b,.stat.hs .sx b,.stat.hs .sx.t b{color:#fff}.hs>div{position:relative;z-index:1}
-.hs1{--hc:rgba(37,99,235,.55);background:linear-gradient(135deg,#4F8BFF,#1D4ED8)}
-.hs2{--hc:rgba(124,58,237,.55);background:linear-gradient(135deg,#A06BFF,#6D28D9)}
-.hs3{--hc:rgba(5,150,105,.5);background:linear-gradient(135deg,#34D399,#059669)}
-.hs4{--hc:rgba(234,88,12,.5);background:linear-gradient(135deg,#FFB347,#EA580C)}
+.hs{border:1px solid var(--hb);color:var(--hd);position:relative;overflow:hidden;padding:18px 18px;box-shadow:0 10px 20px -12px var(--hc),inset 0 1px 0 rgba(255,255,255,.85);transition:transform .15s,box-shadow .15s}
+.hs::after{content:"";position:absolute;right:-30px;top:-40px;width:120px;height:120px;border-radius:50%;background:var(--hl);pointer-events:none}
+.hs:hover{transform:translateY(-3px);box-shadow:0 14px 24px -10px var(--hc),inset 0 1px 0 rgba(255,255,255,.85)}
+.hs .bx{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--h1),var(--h2));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 4px 10px -3px var(--hc);flex-shrink:0}.hs .bx svg{width:26px;height:26px}
+.hs small,.hs .sx,.hs .stat .sx.t,.hs .sx.t{color:var(--hs)}.hs b,.hs .sx b,.stat.hs .sx b,.stat.hs .sx.t b{color:var(--hd)}.hs .sx.t{border-top-color:var(--hb)}.hs>div{position:relative;z-index:1}
+.hs1{--hc:rgba(79,139,255,.5);--hd:#27458F;--hs:#4C68A8;--hb:#CFE0FF;--hl:rgba(160,196,255,.35);--h1:#9CBEFF;--h2:#6F9CF5;background:linear-gradient(135deg,#F0F6FF,#DCE9FF 60%,#D3E3FF)}
+.hs2{--hc:rgba(139,92,246,.45);--hd:#52349A;--hs:#7458B0;--hb:#E0D4FF;--hl:rgba(196,170,255,.35);--h1:#BDA3FF;--h2:#9B7DF0;background:linear-gradient(135deg,#F6F0FF,#E8DCFF 60%,#E0D2FF)}
+.hs3{--hc:rgba(16,185,129,.42);--hd:#1C6F51;--hs:#3F8A6E;--hb:#C5EBD9;--hl:rgba(140,224,186,.35);--h1:#7BDDB2;--h2:#4CC394;background:linear-gradient(135deg,#EDFBF4,#D9F4E7 60%,#CEF0E0)}
+.hs4{--hc:rgba(245,158,11,.45);--hd:#9A5214;--hs:#B27434;--hb:#FFDDB5;--hl:rgba(255,205,140,.4);--h1:#FFC88A;--h2:#FFA85A;background:linear-gradient(135deg,#FFF6E9,#FFE8CC 60%,#FFE0BF)}
 
 /* ปฏิทินสไตล์โปสเตอร์ */
 .cb{position:relative;border-radius:22px;padding:14px 14px 14px;background:linear-gradient(180deg,#cfe4ff 0%,#e4defc 38%,#f3eefd 100%);box-shadow:var(--sh),inset 0 1px 0 rgba(255,255,255,.7);overflow:hidden;color:#2d1f5e}
@@ -211,7 +211,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .grid.g4>.hs{animation:lvIn .6s both}.grid.g4>.hs2{animation-delay:.08s}.grid.g4>.hs3{animation-delay:.16s}.grid.g4>.hs4{animation-delay:.24s}
 .hs .bx{animation:lvBob 3.6s ease-in-out infinite}.hs2 .bx{animation-delay:-.9s}.hs3 .bx{animation-delay:-1.8s}.hs4 .bx{animation-delay:-2.7s}
 .hs::after{animation:lvDrift 8s ease-in-out infinite}
-.hs::before{content:"";position:absolute;top:0;bottom:0;left:0;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);pointer-events:none;animation:lvShine 7s ease-in-out infinite}
+.hs::before{content:"";position:absolute;top:0;bottom:0;left:0;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);pointer-events:none;animation:lvShine 7s ease-in-out infinite}
 .hs2::before{animation-delay:1.2s}.hs3::before{animation-delay:2.4s}.hs4::before{animation-delay:3.6s}
 .grid.split>.grid>.grid.g2>.card{position:relative;overflow:hidden;border:1px solid #D9E2F8;background:linear-gradient(135deg,#F4F7FF,#EEF4FF 55%,#F6F1FF);box-shadow:0 10px 22px -14px rgba(90,110,220,.5);animation:lvIn .6s .1s both;transition:transform .25s,box-shadow .25s}
 .grid.split>.grid>.grid.g2>.card:nth-child(2){background:linear-gradient(135deg,#FFF6F9,#FFF3EC 55%,#FFFBEA);border-color:#F6DDE3;animation-delay:.2s}
@@ -324,10 +324,10 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .hrow>.atcd{contain:size;min-height:0}.hrow>.atcd .atcd-b{min-height:0;overflow:hidden;padding:10px 14px 12px}.hrow .atsvg{width:100%;height:100%;display:block}.hrow>.atcd .atcd-b{padding:0 14px 0}#an_home{align-self:start}
 @media(max-width:900px){.hrow>.atcd{contain:none;min-height:0;height:auto}.hrow>.atcd .atcd-b{display:block;overflow:visible;padding:10px 14px 14px;min-height:240px}.hrow .atsvg{height:auto}}
 .hs3 .bx{display:none}.hs3>div{width:100%}
-.atm{display:flex;align-items:center;gap:12px;margin-top:2px}.atm-d{width:92px;height:92px;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18))}
+.atm{display:flex;align-items:center;gap:12px;margin-top:2px}.atm-d{width:92px;height:92px;flex:none;filter:drop-shadow(0 4px 8px rgba(16,120,80,.2))}
 .atm-t{font-size:20px;font-weight:700;fill:#0F7A4A;font-family:inherit}
-.atm-l{display:grid;gap:2px;font-size:.74rem;color:#fff;min-width:0;flex:1}.atm-l>div{display:flex;align-items:center;gap:6px;white-space:nowrap}
-.atm-l i{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.7)}.atm-l em{font-style:normal;margin-left:auto;font-weight:700}.atm-l small{color:rgba(255,255,255,.85);font-size:.7rem}
+.atm-l{display:grid;gap:2px;font-size:.74rem;color:var(--hd,#fff);min-width:0;flex:1}.atm-l>div{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.atm-l i{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.7)}.atm-l em{font-style:normal;margin-left:auto;font-weight:700}.atm-l small{color:var(--hs,rgba(255,255,255,.85));font-size:.7rem}
 @media(prefers-reduced-motion:reduce){.atb,.atdn,.atcd{animation:none!important}}
 /* น้ำหนัก ส่วนสูง */
 .hwc{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:600;white-space:nowrap}
@@ -1423,14 +1423,14 @@ const drKL=()=>({order:'คำสั่ง',memo:'บันทึกข้อค
 const drAr=t=>String(t||'').replace(/\s+/g,'').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c));
 const DR_MEMO_CLOSE=['จึงเรียนมาเพื่อโปรดทราบ','จึงเรียนมาเพื่อโปรดพิจารณา','จึงเรียนมาเพื่อโปรดทราบและพิจารณาดำเนินการต่อไป','จึงเรียนมาเพื่อโปรดพิจารณาอนุมัติ','จึงเรียนมาเพื่อโปรดทราบ และเข้าร่วมประชุมโดยพร้อมเพรียงกัน'];
 const MEMO_M={lh:7.3,t1:15,t:35,b:20,l:30,r:20,w:160,sp:21.9};
-function memoDef(){const t=toISO(new Date()),p=me&&me.sid&&PP.find(x=>x.id==me.sid),d={kind:'memo',org:DR_SCH.name,tel:p?DR_PH(p):'',noN:'',noY:String(+t.slice(0,4)+543),date:t,subject:'',to:'ผู้อำนวยการ'+DR_SCH.name,p1:'',p2:'',close:DR_MEMO_CLOSE[0],signer:p?'('+dn(p)+')':'(                    )',pos:p?(p.po||''):'',arab:false};drSigInit(d);return d}
+function memoDef(){const t=toISO(new Date()),p=me&&me.sid&&PP.find(x=>x.id==me.sid),d={kind:'memo',org:DR_SCH.name,noN:'',noY:String(+t.slice(0,4)+543),date:t,subject:'',to:'ผู้อำนวยการ'+DR_SCH.name,p1:'',p2:'',close:DR_MEMO_CLOSE[0],signer:p?'('+dn(p)+')':'(                    )',pos:p?(p.po||''):'',arab:false};drSigInit(d);return d}
 /* เนื้อหาไหลต่อเนื่อง (ก่อนตัดหน้า) */
 function memoFlowHtml(d){const T=t=>esc(drTh(d,t)),J=t=>drJ(drTh(d,t)),has=ordHas;
 const dm=iso=>{if(!iso)return '';const a=iso.split('-');return (+a[2])+' '+TMF[+a[1]-1]+' '+(+a[0]+543)};
 const no=(has(d.noN)||has(d.noY))?String(d.noN||'').trim()+'/'+String(d.noY||'').trim():'';
 const sub=String(d.subject||'').replace(/^\s*เรื่อง\s*/,'');
 return `<div class="m-hd"><div class="m-tt">บันทึกข้อความ</div>
-<div class="m-r"><b class="m-lb">ส่วนราชการ</b><div class="m-v m-v1"><span class="m-o">${T(d.org)}</span><span class="m-tel">${has(d.tel)?T('โทร. '+String(d.tel).trim()):''}</span></div></div>
+<div class="m-r"><b class="m-lb">ส่วนราชการ</b><div class="m-v">${T(d.org)}</div></div>
 <div class="m-r m-r2"><div class="m-c"><b class="m-lb">ที่</b><div class="m-v">${T(no)}</div></div><div class="m-c"><b class="m-lb">วันที่</b><div class="m-v">${T(dm(d.date))}</div></div></div>
 <div class="m-r"><b class="m-lb">เรื่อง</b><div class="m-v">${T(sub)}</div></div></div>
 <div class="m-to">${J('เรียน  '+String(d.to||'').trim())}</div>${[d.p1,d.p2,d.close].filter(has).map(t=>`<p class="m-p">${J(String(t).trim())}</p>`).join('')}
@@ -1450,12 +1450,9 @@ pages.push([s,end]);s=next;cap=297-M.t-M.b-.5}
 pages.push([s,H]);
 return `<div class="dr-pgs">${pages.map((p,i)=>`<div class="dr-a4 d-memo${i?'':' p1'}">${i?`<div class="m-pn">${esc(drTh(d,'- '+(i+1)+' -'))}</div>`:`<img class="d-g" src="${DR_GARUDA}" alt="">`}<div class="m-win" style="height:${(p[1]-p[0]).toFixed(3)}mm"><div style="margin-top:-${p[0].toFixed(3)}mm">${flow}</div></div></div>`).join('')}</div>`}
 /* ===== ฟอร์ม ===== */
-function memoTelField(){const ps=PP.filter(p=>String(p.ph||'').trim()).sort((a,b)=>dn(a).localeCompare(dn(b),'th'));
-return `<label class="lb">เลือกเบอร์โทรจากบุคลากร<select class="in" onchange="memoPickTel(this.value)"><option value="">— เลือกครู —</option>${ps.map(p=>`<option value="${esc(p.id)}">${esc(dn(p))} · ${esc(DR_PH(p))}</option>`).join('')}</select></label><label class="lb">โทร. (แก้ไขได้)<input class="in" id="dr_tel" value="${esc(DR.tel)}" oninput="DR.tel=this.value;drPrev()"></label>`}
-function memoPickTel(id){const p=PP.find(x=>String(x.id)==String(id));if(!p)return;DR.tel=DR_PH(p);const i=document.getElementById('dr_tel');if(i)i.value=DR.tel;drPrev()}
 function memoPickSigner(id){const p=PP.find(x=>String(x.id)==String(id));if(!p)return;DR.signer='('+dn(p)+')';DR.pos=p.po||'';drFill()}
 function memoForm(){const d=DR,l=drLast(),ps=[...PP].sort((a,b)=>dn(a).localeCompare(dn(b),'th')),cur=ps.find(p=>'('+dn(p)+')'==d.signer);
-return `<h4>หัวบันทึกข้อความ</h4>${drField('org','ส่วนราชการ','in')}${memoTelField()}
+return `<h4>หัวบันทึกข้อความ</h4>${drField('org','ส่วนราชการ','in')}
 <div class="lb">ที่ (เลขที่ / ปี พ.ศ. เช่น 01/2569)<div class="drm-no dro-no"><input class="in" id="dr_ns" inputmode="numeric" placeholder="เลขที่" value="${esc(d.noN)}" oninput="DR.noN=this.value;drPrev()"><span style="text-align:center">/</span><input class="in" inputmode="numeric" value="${esc(d.noY)}" oninput="DR.noY=this.value;drPrev()"><div id="dr_dup" class="drm-dup"></div></div></div>
 ${l?`<div class="drm-hint">ทะเบียนบันทึกข้อความล่าสุด: <b>${esc(l.t)}</b>${l.n!=null?` · <a onclick="DR.noN='${String(l.n+1).padStart(2,'0')}';drFill()">ใช้เลข ${String(l.n+1).padStart(2,'0')}</a>`:''}</div>`:''}
 ${drField('date','วันที่ (กดเลือกจากปฏิทิน)','date')}${drField('subject','เรื่อง','ta',2)}${drField('to','เรียน','ta',2)}
@@ -1473,7 +1470,7 @@ const gb=Uint8Array.from(atob(DR_GARUDA.split(',')[1]),c=>c.charCodeAt(0));
 const gimg=new D.ImageRun({data:gb,type:'png',transformation:{width:51,height:57},floating:{horizontalPosition:{relative:D.HorizontalPositionRelativeFrom.MARGIN,offset:635},verticalPosition:{relative:D.VerticalPositionRelativeFrom.PARAGRAPH,offset:-95885},wrap:{type:D.TextWrappingType.NONE},behindDocument:true,allowOverlap:true}});
 body.push(P([gimg,R('บันทึกข้อความ',{bold:true,boldComplexScript:true,size:58,sizeComplexScript:58})],{alignment:D.AlignmentType.CENTER,spacing:{line:700,lineRule:D.LineRuleType.EXACT,before:0,after:0}}));
 const LT_=D.TabStopType.LEFT,RT_=D.TabStopType.RIGHT,tb=(...a)=>a.map(p=>({type:p[0],position:mm(p[1])}));
-body.push(P([L('ส่วนราชการ'),R('\t'),V(String(d.org||'').trim()),Vt(),V(has(d.tel)?'โทร. '+String(d.tel).trim():''),Vt()],{tabStops:tb([LT_,27],[LT_,120],[RT_,W]),spacing:{before:0,after:0}}));
+body.push(P([L('ส่วนราชการ'),R('\t'),V(String(d.org||'').trim()),Vt()],{tabStops:tb([LT_,27],[RT_,W]),spacing:{before:0,after:0}}));
 body.push(P([L('ที่'),R(' '),V(no),Vt(),L('วันที่'),R(' '),V(dm(d.date)),Vt()],{tabStops:tb([LT_,79],[RT_,W]),spacing:{before:0,after:0}}));
 body.push(P([L('เรื่อง'),R(' '),V(sub),Vt()],{tabStops:tb([RT_,W]),spacing:{before:0,after:0}}));
 body.push(P([R('เรียน  '+String(d.to||'').trim())],{spacing:{before:120,after:0}}));
