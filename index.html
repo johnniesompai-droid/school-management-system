@@ -1258,7 +1258,10 @@ function drNoIn(){const a=document.getElementById('dr_np'),b=document.getElement
 function drFlash(t,c){const o=document.createElement('div');o.className='drm-fl';o.style.background=c||'#22B573';o.textContent=t;document.body.appendChild(o);setTimeout(()=>{o.classList.add('out');setTimeout(()=>o.remove(),300)},3800)}
 function drNoField(){const n=String(DR.no||''),i=n.lastIndexOf('/'),P=i>=0?n.slice(0,i+1):'',S=i>=0?n.slice(i+1):n;
 return `<div class="lb">ที่ (รหัสส่วนราชการ / เลขท้ายหนังสือ)<div class="drm-no"><input class="in" id="dr_np" value="${esc(P)}" oninput="drNoIn()"><input class="in" id="dr_ns" value="${esc(S)}" oninput="drNoIn()" placeholder="เลขท้าย"><div id="dr_dup" class="drm-dup"></div></div></div>`}
-async function drRegWrite(q){const d=DR,num=d.kind!='send'?ordNumStr(d):String(d.no||'').trim().replace(/\s+/g,' ').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c)),title=String(d.subject||'').trim();
+function drRgSync(){/* ทะเบียนเปลี่ยน (เช่น ลบเลข) → ล้างเลขที่ผูกไว้ของร่างที่ถูกลบ และเช็กเลขซ้ำใหม่ทันที */
+try{Object.values(DRS).forEach(d=>{if(!d||!d.rgId)return;if(RG.some(r=>r.id==d.rgId))d.rgSeen=true;else if(d.rgSeen){d.rgId=null;d.rgSeen=false}});if(document.getElementById('dr_ns'))drNoChk()}catch(e){}}
+async function drRegWrite(q){if(DR._rgBusy)return DR._rgBusy;const d0=DR;return d0._rgBusy=drRegWrite2(q).finally(()=>{d0._rgBusy=null})}
+async function drRegWrite2(q){const d=DR,num=d.kind!='send'?ordNumStr(d):String(d.no||'').trim().replace(/\s+/g,' ').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c)),title=String(d.subject||'').trim();
 const data={type:drRegType(d),num,date:d.date,title,to:String(d.to||'').trim()};
 try{const mine=d.rgId&&(RG.find(r=>r.id==d.rgId)||{id:d.rgId});
 if(mine)await db.collection('registers').doc(mine.id).set({...data,updatedBy:me._id,updatedAt:new Date().toISOString()},{merge:true});
@@ -2736,7 +2739,7 @@ function rgViewHtml(){const T=RGT[rgTab],can=rgCan();
 return `<div class="rgm-b rgv" role="dialog"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><h3 style="margin:0">ทะเบียนเลขที่${T.s}</h3><span style="margin-left:auto;display:inline-flex;gap:8px;flex-wrap:wrap;align-items:center"><input class="in" id="rg_q" placeholder="ค้นหาเลขที่ / เรื่อง / วันที่" value="${esc(rgQ)}" oninput="rgQ=this.value;rgListUpd()" style="width:200px;margin:0"><select class="in" style="width:auto;margin:0" onchange="rgYr=this.value;rgListUpd()"><option value="">ทุกปี (พ.ศ.)</option>${rgYears().map(y=>`<option value="${y}"${String(y)==String(rgYr)?' selected':''}>${y}</option>`).join('')}</select><button class="btn o" onclick="rgXls()">ส่งออก Excel</button>${can?`<button class="btn" onclick="rgOpen('','${rgTab}')">+ เพิ่ม${T.s}</button>`:''}<button class="btn o" onclick="rgViewClose()">ปิด</button></span></div><div id="rg_list">${rgList()}</div></div>`}
 function rgView(k){rgTab=k;rgQ='';rgYr='';rgViewClose();const o=document.createElement('div');o.className='rgm';o.id='rg_vm';o.innerHTML=rgViewHtml();o.addEventListener('mousedown',e=>{if(e.target==o)rgViewClose()});document.body.appendChild(o)}
 function rgViewClose(){const m=document.getElementById('rg_vm');if(m)m.remove()}
-function rgUpd(){const w=document.getElementById('rg_wrap');if(w&&CUR=='admin')w.innerHTML=rgHtml();if(document.getElementById('rg_vm'))rgListUpd()}
+function rgUpd(){drRgSync();const w=document.getElementById('rg_wrap');if(w&&CUR=='admin')w.innerHTML=rgHtml();if(document.getElementById('rg_vm'))rgListUpd()}
 function rgListUpd(){const l=document.getElementById('rg_list');if(l)l.innerHTML=rgList()}
 /* pop-up เพิ่ม/แก้ไข */
 function rgOpen(id,k){if(!rgCan())return;if(k)rgTab=k;const r0=id?RG.find(x=>x.id==id):null;if(r0)rgTab=r0.type;const T=RGT[rgTab],r=r0,d=r?r.date:svDay(new Date()),num=r?rgFmt(r):'';
