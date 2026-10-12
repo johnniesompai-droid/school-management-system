@@ -388,7 +388,12 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .drm-bd{flex:1;min-height:0;display:grid;grid-template-columns:minmax(340px,42%) 1fr}
 .drm-f{overflow:auto;padding:14px 18px;display:grid;gap:10px;align-content:start}.drm-f h4{margin:8px 0 0;font-size:.9rem;color:#4B3FB8;border-bottom:1px dashed #D6DDF7;padding-bottom:4px}
 .drm-f .lb{margin:0;font-size:.78rem}.drm-f .in{margin-top:3px}.drm-f textarea.in{resize:vertical}.drm-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.drm-3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px}
-.drm-hint{font-size:.72rem;color:#7B879C;margin-top:3px}.drm-hint a{color:var(--blue);cursor:pointer;font-weight:600}
+.drm-hint{font-size:.72rem;color:#7B879C;margin-top:3px}
+.drm-sg{display:grid;gap:10px}.drm-up{display:grid;gap:3px;place-items:center;text-align:center;padding:16px;border:2px dashed #B9C4F5;border-radius:14px;background:#F7F9FF;cursor:pointer;color:#3B4A8C;transition:.2s}.drm-up:hover{background:#EEF2FF;transform:translateY(-1px)}.drm-up small{color:#7B879C}.drm-sgp{background:repeating-conic-gradient(#f1f3fb 0 25%,#fff 0 50%) 0 0/14px 14px;border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center}.drm-sgp img{max-height:90px;max-width:100%}.drm-ck{display:flex;gap:8px;align-items:center;font-size:.84rem}
+.drm-no{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;position:relative}.drm-no .in{margin:0}.drm-no .in.dup{color:#E11D48;font-weight:700;border-color:#F43F5E;background:#FFF1F3}
+.drm-dup{display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:8;background:#FFF1F3;border:1px solid #FDA4AF;color:#BE123C;border-radius:12px;padding:7px 11px;font-size:.78rem;line-height:1.45;box-shadow:0 10px 22px -10px rgba(190,18,60,.5)}.drm-dup.on{display:block;animation:drPop .28s cubic-bezier(.2,1.3,.4,1)}
+@keyframes drPop{from{opacity:0;transform:translateY(-6px) scale(.94)}to{opacity:1;transform:none}}
+.drm-fl{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:3300;color:#fff;padding:10px 18px;border-radius:14px;font-size:.88rem;box-shadow:0 14px 30px -10px rgba(30,40,100,.5);animation:drPop .3s both;max-width:calc(100vw - 32px)}.drm-fl.out{opacity:0;transition:opacity .3s}.drm-hint a{color:var(--blue);cursor:pointer;font-weight:600}
 .drm-pv{background:#E3E7F2;overflow:auto;padding:14px;position:relative}
 .drm-sc{transform-origin:top left;width:794px}
 .drm-w{position:absolute;left:14px;top:8px;background:#FFF1F2;color:#C0263F;border-radius:10px;padding:3px 10px;font-size:.74rem;z-index:3;display:none}
@@ -1091,11 +1096,12 @@ const DR_CSS=`.dr-a4{box-sizing:border-box;width:210mm;min-height:297mm;backgrou
 .dr-a4 .d-ln{margin-top:6.6mm;white-space:pre-line;overflow-wrap:anywhere}.dr-a4 .d-ln2{margin-top:0;white-space:pre-line;overflow-wrap:anywhere}
 .dr-a4 .d-rf{margin-top:4.4mm;white-space:pre-line;overflow-wrap:anywhere}.dr-a4 .d-en{margin-top:4.9mm;display:flex;justify-content:space-between;gap:4mm}.dr-a4 .d-en span+span{white-space:nowrap}
 .dr-a4 .d-bd{margin-top:4.3mm}.dr-a4 .d-z{font-size:0}.dr-a4 .d-p{margin:0;text-indent:25.4mm;text-align:justify;white-space:pre-line;overflow-wrap:anywhere}.dr-a4 .d-p.d-cl{margin-top:4.4mm}
-.dr-a4 .d-sg{width:67mm;margin:9.7mm 0 0 61mm;text-align:center}.dr-a4 .d-sg .d-sp{height:12.9mm}
+.dr-a4 .d-sg{width:67mm;margin:9.7mm 0 0 61mm;text-align:center}.dr-a4 .d-sg .d-sp{height:12.9mm}.dr-a4 .d-sg .d-sp.d-sig{height:auto;display:flex;justify-content:center;line-height:0}.dr-a4 .d-sig img{display:block}
 .dr-a4 .d-tl{margin-top:13mm;white-space:pre-line}`;
 const DR_SCH={name:'โรงเรียนบ้านผาเยอ',addr:'ตำบลกองก๋อย อำเภอสบเมย',prov:'จังหวัดแม่ฮ่องสอน 58110',pre:'ศธ 04116.136/',to:'ผู้อำนวยการสำนักงานเขตพื้นที่การศึกษาประถมศึกษาแม่ฮ่องสอน เขต 2',tel:'โทร. 065 - 254-1599',mail:'Email : banphayoe@gmail.com'};
 const DR_CLOSE=['จึงเรียนมาเพื่อโปรดทราบ','จึงเรียนมาเพื่อโปรดทราบ และพิจารณาดำเนินการต่อไป','จึงเรียนมาเพื่อโปรดพิจารณา','จึงเรียนมาเพื่อโปรดทราบและดำเนินการต่อไป'];
-function drDef(){const dir=PP.find(p=>/ผู้อำนวยการ/.test(p.po||'')&&!/รอง/.test(p.po||''));
+function drDef(){const d=drDef0();drSigInit(d);return d}
+function drDef0(){const dir=PP.find(p=>/ผู้อำนวยการ/.test(p.po||'')&&!/รอง/.test(p.po||''));
 return {no:DR_SCH.pre,name:DR_SCH.name,addr:DR_SCH.addr,prov:DR_SCH.prov,date:toISO(new Date()),subject:'ส่ง',to:DR_SCH.to,ref:'',encl:'',enN:'1',enU:'ชุด',p1:'ตามที่ ',p2:'บัดนี้ '+DR_SCH.name+' ',close:DR_CLOSE[1],salute:'ขอแสดงความนับถือ',signer:dir?'('+dn(dir)+')':'(                    )',pos:dir?((dir.po||'ผู้อำนวยการ')+(/โรงเรียน/.test(dir.po||'')?'':DR_SCH.name)):'ผู้อำนวยการ'+DR_SCH.name,org:DIV[1][1],tel:DR_SCH.tel,mail:DR_SCH.mail,arab:false}}
 let DR=null;
 const drTh=(d,t)=>d.arab?String(t):String(t).replace(/\d/g,c=>'๐๑๒๓๔๕๖๗๘๙'[c]);
@@ -1105,6 +1111,19 @@ function drJ(t){t=String(t);if(!DR_SEG)return esc(t);let o='',pw=false;for(const
 if(g.isWordLike){if(pw)o+='<span class="d-z"> </span>';o+=esc(x);pw=true}
 else if(x==' '){o+='<span class="d-s"> </span>';pw=false}
 else{o+=esc(x);pw=false}}return o}
+/* ลายเซ็น */
+const DR_SIGK='dr_sig_v1';
+function drSigInit(d){d.sigO='';d.sigT=true;d.sigH=14;d.sig='';d.sigAR=1;try{const j=JSON.parse(localStorage.getItem(DR_SIGK)||'null');if(j&&j.o){d.sigO=j.o;d.sigT=j.t!==false;d.sigH=+j.h||14;d.sig=j.p||j.o;d.sigAR=j.ar||1}}catch(e){}}
+function drSigSave(){try{DR.sigO?localStorage.setItem(DR_SIGK,JSON.stringify({o:DR.sigO,t:DR.sigT,h:DR.sigH,p:DR.sig,ar:DR.sigAR})):localStorage.removeItem(DR_SIGK)}catch(e){}}
+function drSigProc(){return new Promise(ok=>{if(!DR.sigO){DR.sig='';return ok()}const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=im.naturalWidth;c.height=im.naturalHeight;const x=c.getContext('2d');x.drawImage(im,0,0);DR.sigAR=c.width/c.height;
+if(DR.sigT){const id=x.getImageData(0,0,c.width,c.height),a=id.data;for(let i=0;i<a.length;i+=4){const l=.299*a[i]+.587*a[i+1]+.114*a[i+2];const al=l>238?0:l>170?Math.round((238-l)/68*255):255;a[i+3]=Math.min(a[i+3],al)}x.putImageData(id,0,0)}
+DR.sig=c.toDataURL('image/png');ok()};im.onerror=()=>{DR.sig='';ok()};im.src=DR.sigO})}
+function drSigLoad(f){if(!f)return;if(!/^image\//.test(f.type))return drFlash('กรุณาเลือกไฟล์รูปภาพ','#F5A524');if(f.size>8*1024*1024)return drFlash('ไฟล์ใหญ่เกิน 8MB','#F5A524');
+const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,700/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);DR.sigO=c.toDataURL('image/png');drSigProc().then(()=>{drSigSave();drFill()})};im.onerror=()=>drFlash('อ่านรูปไม่สำเร็จ','#E11D48');im.src=r.result};r.readAsDataURL(f)}
+function drSigOpt(){DR.sigT=document.getElementById('dr_sgt').checked;drSigProc().then(()=>{drSigSave();drFill()})}
+function drSigSize(v){DR.sigH=+v;const o=document.getElementById('dr_sgv');if(o)o.textContent=v+' มม.';drSigSave();drPrev()}
+function drSigDel(){DR.sigO='';DR.sig='';drSigSave();drFill()}
+function drSigField(){return `<h4>ลายเซ็น</h4><div class="drm-sg">${DR.sigO?`<div class="drm-sgp"><img src="${DR.sig||DR.sigO}" alt=""></div><label class="drm-ck"><input type="checkbox" id="dr_sgt" ${DR.sigT?'checked':''} onchange="drSigOpt()"> ลบพื้นหลังสีขาวอัตโนมัติ</label><label class="lb">ขนาดลายเซ็น (ความสูง) <b id="dr_sgv">${DR.sigH} มม.</b><input type="range" min="8" max="22" step="1" value="${DR.sigH}" oninput="drSigSize(this.value)" style="width:100%"></label><div style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn o" style="cursor:pointer">เปลี่ยนรูป<input type="file" accept="image/*" hidden onchange="drSigLoad(this.files[0])"></label><button class="btn o" type="button" onclick="drSigDel()">ลบลายเซ็น</button></div>`:`<label class="drm-up"><input type="file" accept="image/*" hidden onchange="drSigLoad(this.files[0])"><b>อัปโหลดรูปลายเซ็น</b><small>PNG / JPG · ลายเซ็นจะวางเหนือชื่อผู้ลงนามให้อัตโนมัติ</small></label>`}<div class="drm-hint">รูปลายเซ็นจะถูกจำไว้ในเครื่องนี้เท่านั้น ไม่ได้อัปโหลดขึ้นระบบ</div></div>`}
 function drDocHtml(d){const T=t=>esc(drTh(d,t)),has=t=>String(t||'').trim();
 const encl=has(d.encl)?`<div class="d-en"><span><span class="d-lb2">สิ่งที่ส่งมาด้วย</span>${T(d.encl)}</span>${has(d.enN)?`<span>จำนวน ${T(d.enN)} ${T(d.enU)}</span>`:''}</div>`:'';
 const ps=[d.p1,d.p2,d.close].filter(has);
@@ -1113,7 +1132,7 @@ return `<div class="dr-a4"><img class="d-g" src="${DR_GARUDA}" alt="">
 <div class="d-dt">${T(drDate(d.date))}</div>
 <div class="d-ln"><span class="d-lb">เรื่อง</span>${T(d.subject)}</div><div class="d-ln2"><span class="d-lb">เรียน</span>${T(d.to)}</div>${has(d.ref)?`<div class="d-rf"><span class="d-lb">อ้างถึง</span>${T(d.ref)}</div>`:''}${encl}
 <div class="d-bd">${ps.map((t,i)=>`<p class="d-p${t===d.close&&i>0?' d-cl':''}">${drJ(drTh(d,t))}</p>`).join('')}</div>
-<div class="d-sg">${T(d.salute)}<div class="d-sp"></div>${T(d.signer)}<br>${T(d.pos)}</div>
+<div class="d-sg">${T(d.salute)}${d.sig?`<div class="d-sp d-sig"><img src="${d.sig}" style="height:${d.sigH}mm" alt=""></div>`:'<div class="d-sp"></div>'}${T(d.signer)}<br>${T(d.pos)}</div>
 <div class="d-tl">${[d.org,d.tel,d.mail].filter(has).map(T).join('\n')}</div></div>`}
 function drEnsureCss(){if(!document.getElementById('dr_css')){const st=document.createElement('style');st.id='dr_css';st.textContent=DR_FONT+DR_CSS;document.head.appendChild(st)}}
 function drTiles(){return `<div class="drt-row"><div class="drt" onclick="drOpen('send')" role="button" tabindex="0"><span class="lbn-ic">${ic('doc')}</span><div><b>ร่างหนังสือนำส่ง</b><small>หนังสือภายนอก · ส่งเอกสารถึงเขต</small></div></div></div>`}
@@ -1132,12 +1151,13 @@ function drOpen(kind){if(!canManageAdmin())return;drEnsureCss();if(!DR)DR=drDef(
 const o=document.createElement('div');o.className='rgm';o.id='dr_m';o.innerHTML=`<div class="drm-b" role="dialog"><div class="drm-h"><h3>ร่างหนังสือนำส่ง</h3>
 <label style="font-size:.8rem;display:inline-flex;align-items:center;gap:6px"><input type="checkbox" ${DR.arab?'checked':''} onchange="DR.arab=this.checked;drPrev()"> ใช้เลขอารบิก</label>
 <button class="btn o" type="button" onclick="drReset()">ค่าเริ่มต้น</button>
+<button class="btn o" type="button" id="dr_br" onclick="drRegManual()" title="บันทึกเลขที่ วันที่ เรื่อง ลงทะเบียนเลขที่หนังสือนำส่ง">บันทึกเลขที่นำส่ง</button>
 <div class="drm-m"><button class="btn o" type="button" id="dr_bs" onclick="drMenu('save')">บันทึก ▾</button><div class="drm-menu" id="dr_ms"><button type="button" onclick="drSave('docx')">ไฟล์ Word (.docx)</button><button type="button" onclick="drSave('pdf')">ไฟล์ PDF (.pdf)</button></div></div>
 <button class="btn o" type="button" onclick="drPrint()">พิมพ์</button>
 <div class="drm-m"><button class="btn" type="button" id="dr_bn" onclick="drMenu('send')">ส่ง ▾</button><div class="drm-menu" id="dr_mn"><button type="button" onclick="drSend('docx')">ส่งเป็นไฟล์ Word (.docx)</button><button type="button" onclick="drSend('pdf')">ส่งเป็นไฟล์ PDF (.pdf)</button></div></div>
 <button class="btn o" type="button" onclick="drClose()">ปิด</button></div>
 <div class="drm-bd"><div class="drm-f" id="dr_f"><h4>หัวหนังสือ</h4>
-${drField('no','ที่ (พิมพ์เลขท้ายต่อจากรหัส)','in')}${l?`<div class="drm-hint">ทะเบียนหนังสือนำส่งล่าสุด: <b>${esc(l.t)}</b>${l.n!=null?` · <a onclick="DR.no=DR_SCH.pre+${l.n+1};drFill()">ใช้เลข ${l.n+1}</a>`:''}</div>`:''}
+${drNoField()}${l?`<div class="drm-hint">ทะเบียนหนังสือนำส่งล่าสุด: <b>${esc(l.t)}</b>${l.n!=null?` · <a onclick="DR.no=DR_SCH.pre+${l.n+1};drFill()">ใช้เลข ${l.n+1}</a>`:''}</div>`:''}
 ${drField('name','ส่วนราชการเจ้าของหนังสือ','in')}<div class="drm-2">${drField('addr','ตำบล / อำเภอ','in')}${drField('prov','จังหวัด / รหัสไปรษณีย์','in')}</div>
 ${drField('date','วันที่ (กดเลือกจากปฏิทิน)','date')}
 <h4>คำขึ้นต้น</h4>${drField('subject','เรื่อง','ta',2)}${drField('to','เรียน','ta',2)}${drField('ref','อ้างถึง (ถ้ามี)','ta',2)}
@@ -1145,14 +1165,14 @@ ${drField('date','วันที่ (กดเลือกจากปฏิท
 <h4>เนื้อหา</h4>${drField('p1','ย่อหน้าที่ 1 (ตามที่ …)','ta',4)}${drField('p2','ย่อหน้าที่ 2 (บัดนี้ …)','ta',5)}
 <label class="lb">ประโยคปิด<input class="in" list="dr_cl" value="${esc(DR.close)}" oninput="DR.close=this.value;drPrev()"><datalist id="dr_cl">${DR_CLOSE.map(x=>`<option value="${esc(x)}">`).join('')}</datalist></label>
 <h4>คำลงท้ายและผู้ลงนาม</h4>${drField('salute','คำลงท้าย','in')}${drField('signer','ชื่อผู้ลงนาม','in')}${drField('pos','ตำแหน่ง','in')}
-<h4>ท้ายหนังสือ</h4>${drOrgField()}${drTelField()}${drField('mail','อีเมล','in')}
+${drSigField()}<h4>ท้ายหนังสือ</h4>${drOrgField()}${drTelField()}${drField('mail','อีเมล','in')}
 <div id="dr_msg" class="drm-hint"></div></div>
 <div class="drm-pv" id="dr_pv"><div class="drm-w" id="dr_w">⚠ เนื้อหาเกิน 1 หน้ากระดาษ A4 กรุณาลดข้อความ</div><div class="drm-sc" id="dr_sc"></div></div></div></div>`;
 o.addEventListener('mousedown',e=>{if(e.target==o)drClose()});document.body.appendChild(o);drPrev();addEventListener('resize',drFit)}
 function drClose(){const m=document.getElementById('dr_m');if(m){m.remove();removeEventListener('resize',drFit)}}
 function drFill(){const f=document.getElementById('dr_f');if(!f)return;const sc=f.scrollTop;const o=document.getElementById('dr_m');const pv=o.querySelector('.drm-bd');const tmp=document.createElement('div');drClose();drOpen('send');const nf=document.getElementById('dr_f');if(nf)nf.scrollTop=sc}
 function drReset(){if(!confirm('ล้างข้อมูลที่กรอกและกลับเป็นค่าเริ่มต้น?'))return;DR=drDef();drClose();drOpen('send')}
-function drPrev(){const sc=document.getElementById('dr_sc');if(!sc)return;sc.innerHTML=drDocHtml(DR);drFit()}
+function drPrev(){const sc=document.getElementById('dr_sc');if(!sc)return;drNoChk();sc.innerHTML=drDocHtml(DR);drFit()}
 function drFit(){const pv=document.getElementById('dr_pv'),sc=document.getElementById('dr_sc');if(!pv||!sc)return;const k=Math.min(1,(pv.clientWidth-28)/794);sc.style.transform=`scale(${k})`;const a=sc.firstElementChild;sc.style.height=(a.offsetHeight*k)+'px';sc.style.width='794px';sc.parentElement.style.minHeight='0';
 const w=document.getElementById('dr_w');if(w){const l=a.lastElementChild,ch=l?(l.offsetTop+l.offsetHeight):0;w.style.display=ch>1094+4?'block':'none'}}
 function drMenu(w){const a=document.getElementById('dr_ms'),b=document.getElementById('dr_mn');const t=w=='save'?a:b,o=w=='save'?b:a;o.classList.remove('on');t.classList.toggle('on')}
@@ -1179,7 +1199,7 @@ if(has(d.ref))body.push(P([R('อ้างถึง'),R('\t'),R(d.ref)],{tabStop
 if(has(d.encl))body.push(P([R('สิ่งที่ส่งมาด้วย'),R('\t'),R(d.encl),...(has(d.enN)?[R('\t'),R('จำนวน '+d.enN+' '+d.enU)]:[])],{tabStops:[{type:LT_,position:mm(25.2)},{type:D.TabStopType.RIGHT,position:mm(W)}],spacing:S(4.9)}));
 [d.p1,d.p2,d.close].filter(has).forEach((t,i)=>body.push(P([R(t)],{indent:{firstLine:mm(25.4)},alignment:D.AlignmentType.THAI_DISTRIBUTE,spacing:S(i==0?4.3:(t===d.close?4.4:0))})));
 body.push(P([R(d.salute)],{...cen,spacing:S(9.7)}));
-body.push(P([R(d.signer)],{...cen,spacing:S(12.9)}));lines(d.pos).forEach(l=>body.push(P([R(l)],{...cen,spacing:S(0)})));
+if(d.sig){const sb=Uint8Array.from(atob(d.sig.split(',')[1]),c=>c.charCodeAt(0)),hp=d.sigH*3.7795;body.push(P([new D.ImageRun({data:sb,type:'png',transformation:{width:Math.round(hp*(d.sigAR||1)),height:Math.round(hp)}})],{...cen,spacing:{before:0,after:0}}));body.push(P([R(d.signer)],{...cen,spacing:S(0)}))}else body.push(P([R(d.signer)],{...cen,spacing:S(12.9)}));lines(d.pos).forEach(l=>body.push(P([R(l)],{...cen,spacing:S(0)})));
 let first=true;[d.org,d.tel,d.mail].filter(has).forEach(t=>{body.push(P([R(t)],{spacing:S(first?13:0)}));first=false});
 const doc=new D.Document({creator:'โรงเรียนบ้านผาเยอ',title:d.subject||'หนังสือนำส่ง',styles:{default:{document:{run:{font,size:32,sizeComplexScript:32}}}},sections:[{properties:{page:{size:{width:11906,height:16838},margin:{top:mm(15),bottom:mm(7.5),left:mm(31.7),right:mm(20),header:0,footer:0}}},children:body}]});
 return await D.Packer.toBlob(doc)}
@@ -1188,6 +1208,29 @@ drEnsureCss();const host=document.createElement('div');host.style.cssText='posit
 try{const el=host.firstElementChild;el.style.boxShadow='none';const cv=await window.html2canvas(el,{scale:3,backgroundColor:'#ffffff',useCORS:true}),pdf=new window.jspdf.jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
 pdf.addImage(cv.toDataURL('image/jpeg',0.93),'JPEG',0,0,210,297);return pdf.output('blob')}finally{host.remove()}}
 async function drBlob(kind){return kind=='docx'?await drDocx():await drPdf()}
+/* บันทึกเลขที่หนังสือนำส่งลงทะเบียน (กดปุ่มเอง) */
+const drNum=t=>{t=String(t||'').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c)).replace(/\s+/g,'');return /^\d+$/.test(t)?String(parseInt(t,10)):t.toLowerCase()};
+const drSfx=n=>{n=String(n||'');const i=n.lastIndexOf('/');return drNum(i>=0?n.slice(i+1):n)};
+function drDup(){const sf=drSfx(DR&&DR.no);if(!sf||!DR.date)return null;const y=rgBE(DR.date);return RG.find(r=>r.type=='send'&&r.id!=DR.rgId&&rgBE(r.date)==y&&drSfx(rgFmt(r))==sf)||null}
+function drNoChk(){const ns=document.getElementById('dr_ns'),b=document.getElementById('dr_dup');if(!ns||!b)return;const d=drDup();ns.classList.toggle('dup',!!d);
+if(d){b.innerHTML='⚠ ซ้ำกับเลขที่นำส่ง <b>'+esc(rgFmt(d))+'</b> เรื่อง '+esc(d.title||'-');if(!b.classList.contains('on')){b.classList.add('on')}}else{b.classList.remove('on');b.innerHTML=''}}
+function drNoIn(){const a=document.getElementById('dr_np'),b=document.getElementById('dr_ns');DR.no=(a?a.value:'')+(b?b.value:'');drPrev()}
+function drFlash(t,c){const o=document.createElement('div');o.className='drm-fl';o.style.background=c||'#22B573';o.textContent=t;document.body.appendChild(o);setTimeout(()=>{o.classList.add('out');setTimeout(()=>o.remove(),300)},3800)}
+function drNoField(){const n=String(DR.no||''),i=n.lastIndexOf('/'),P=i>=0?n.slice(0,i+1):'',S=i>=0?n.slice(i+1):n;
+return `<div class="lb">ที่ (รหัสส่วนราชการ / เลขท้ายหนังสือ)<div class="drm-no"><input class="in" id="dr_np" value="${esc(P)}" oninput="drNoIn()"><input class="in" id="dr_ns" value="${esc(S)}" oninput="drNoIn()" placeholder="เลขท้าย"><div id="dr_dup" class="drm-dup"></div></div></div>`}
+async function drRegWrite(){const d=DR,num=String(d.no||'').trim().replace(/\s+/g,' ').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c)),title=String(d.subject||'').trim();
+const data={type:'send',num,date:d.date,title,to:String(d.to||'').trim()};
+try{const mine=d.rgId&&RG.find(r=>r.id==d.rgId);
+if(mine)await db.collection('registers').doc(mine.id).set({...data,updatedBy:me._id,updatedAt:new Date().toISOString()},{merge:true});
+else{const id=uid();await db.collection('registers').doc(id).set({...data,note:'ร่างจากระบบร่างหนังสือ',by:me.n,createdBy:me._id,createdAt:new Date().toISOString()});d.rgId=id}
+drFlash(mine?'อัปเดตทะเบียนเลขที่นำส่งแล้ว':'บันทึกเลขที่ '+num+' ลงทะเบียนหนังสือนำส่งแล้ว','#22B573')}
+catch(e){drFlash('บันทึกเลขที่ไม่สำเร็จ: '+e.message,'#E11D48')}}
+function drRegManual(){if(!rgCan())return;const d=DR,num=String(d.no||'').trim().replace(/\s+/g,' ');
+if(!num||/[\/.\s]$/.test(num)||!/\d/.test(num.replace(/^ศธ\s*\d{5}(\.\d+)?\/?/,'')))return drFlash('กรุณากรอกเลขท้ายหนังสือก่อนบันทึกเลขที่','#F5A524');
+if(!d.date)return drFlash('กรุณาเลือกวันที่ของหนังสือ','#F5A524');if(!String(d.subject||'').trim())return drFlash('กรุณากรอกเรื่องของหนังสือ','#F5A524');
+const dup=drDup();if(!dup)return drRegWrite();
+const o=document.createElement('div');o.className='rgm';o.id='dr_cf';o.innerHTML=`<div class="rgm-b" role="dialog" style="max-width:440px"><h3 style="color:#BE123C">⚠ เลขที่ซ้ำ</h3><p style="margin:6px 0 14px;line-height:1.6">ซ้ำกับเลขที่นำส่ง <b>${esc(rgFmt(dup))}</b> เรื่อง ${esc(dup.title||'-')}<br><small style="color:#7B879C">ต้องการบันทึกเลขที่ ${esc(num)} ซ้ำหรือไม่?</small></p><div class="rgm-f"><button class="btn o" type="button" id="dr_cf_n">ยกเลิกการบันทึก</button><button class="btn" type="button" id="dr_cf_y" style="background:#E11D48">ยืนยันการบันทึก</button></div></div>`;
+document.body.appendChild(o);const cl=()=>o.remove();o.addEventListener('mousedown',e=>{if(e.target==o)cl()});o.querySelector('#dr_cf_n').onclick=cl;o.querySelector('#dr_cf_y').onclick=()=>{cl();drRegWrite()}}
 async function drSave(kind){document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'));drMsg('กำลังสร้างไฟล์...');
 try{const b=await drBlob(kind),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=drFname(kind);document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว')}
 catch(e){drMsg('');alert('สร้างไฟล์ไม่สำเร็จ: '+e.message)}}
