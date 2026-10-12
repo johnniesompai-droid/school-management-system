@@ -406,6 +406,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .dro-addm{border:1.5px dashed var(--ca)!important;background:color-mix(in srgb,var(--ca) 9%,#fff)!important;color:color-mix(in srgb,var(--ca) 75%,#000)!important}
 .dro-addc{background:linear-gradient(135deg,#7C6CFF,#EC4899)!important;color:#fff!important;border:0!important;font-weight:600}
 .drm-hint{font-size:.72rem;color:#7B879C;margin-top:3px}
+.msg-g{display:grid;grid-template-columns:1fr 1fr;gap:6px}.msg{display:grid;gap:2px;text-align:left;padding:8px 10px;height:auto;line-height:1.3}.msg small{font-weight:600}.msg span{font-size:.68rem;color:#7B879C}.msg.on{background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border-color:#A78BFA}
 .drm-pop{position:absolute;left:0;bottom:calc(100% + 6px);z-index:9;background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border:1px solid #CDBEFF;color:#5B3FB5;border-radius:12px;padding:6px 11px;font-size:.74rem;line-height:1.5;box-shadow:0 10px 22px -12px rgba(110,80,220,.55);opacity:0;transform:translateY(4px);pointer-events:none;transition:.18s;white-space:nowrap}.drm-pop a{color:#2F6BFF;font-weight:600;cursor:pointer;text-decoration:underline}.drm-pop:after{content:'';position:absolute;left:18px;top:100%;border:6px solid transparent;border-top-color:#CDBEFF}.drm-no:focus-within .drm-pop{opacity:1;transform:none;pointer-events:auto}
 .drm-sg{display:grid;gap:10px}.drm-up{display:grid;gap:3px;place-items:center;text-align:center;padding:16px;border:2px dashed #B9C4F5;border-radius:14px;background:#F7F9FF;cursor:pointer;color:#3B4A8C;transition:.2s}.drm-up:hover{background:#EEF2FF;transform:translateY(-1px)}.drm-up small{color:#7B879C}.drm-sgp{background:repeating-conic-gradient(#f1f3fb 0 25%,#fff 0 50%) 0 0/14px 14px;border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center}.drm-sgp img{max-height:90px;max-width:100%}.drm-ck{display:flex;gap:8px;align-items:center;font-size:.84rem}
 .drm-no{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;position:relative}.drm-no .in{margin:0}.drm-no .in.dup{color:#E11D48;font-weight:700;border-color:#F43F5E;background:#FFF1F3}
@@ -1125,7 +1126,7 @@ const DR_CSS=`.dr-a4{box-sizing:border-box;width:210mm;min-height:297mm;backgrou
 .dr-a4 .m-v{flex:1;min-width:0;line-height:7.3mm;white-space:pre-line;overflow-wrap:anywhere;min-height:7.3mm;border-bottom:.35mm dotted #000;padding-bottom:.3mm}
 .dr-a4 .m-v1{display:flex}.dr-a4 .m-o{flex:none;width:94mm;white-space:pre-line}.dr-a4 .m-tel{flex:1}
 .dr-a4 .m-to{margin-top:2.1mm;white-space:pre-line}.dr-a4 .m-p{margin:2.1mm 0 0;text-indent:25mm;text-align:justify;white-space:pre-line;overflow-wrap:anywhere}
-.dr-a4 .m-sg{width:110mm;margin-left:48mm;text-align:center;white-space:pre-line}.dr-a4 .m-sg .m-sp{height:21.9mm;display:flex;justify-content:center;align-items:flex-end;line-height:0}.dr-a4 .m-sp img{display:block}
+.dr-a4 .m-sg{width:110mm;margin-left:48mm;text-align:center;white-space:pre-line}.dr-a4 .m-sg .m-sp{height:21.9mm;display:flex;justify-content:center;align-items:flex-end;line-height:0}.dr-a4 .m-sp img{display:block}.dr-a4 .m-sp.ln{display:block;position:relative}.dr-a4 .m-sp.ln img{position:absolute;left:50%;bottom:2.8mm;transform:translateX(-50%)}.dr-a4 .m-ln{position:absolute;left:0;right:0;bottom:0;display:flex;line-height:7.3mm;height:7.3mm;white-space:nowrap;text-align:left}.dr-a4 .m-ln i{flex:1;margin:0 1mm;height:5.6mm;border-bottom:.35mm dotted #000}
 .dr-pgs{display:flex;flex-direction:column;gap:8mm;width:210mm}
 .dr-a4.d-ord{height:297mm;min-height:297mm;overflow:hidden;padding:25mm 20mm 20mm 30mm}.dr-a4.d-ord.p1{padding-top:15mm}.dr-a4.d-ord .d-g{left:96.75mm}
 .dr-a4 .o-t{text-align:center;font-weight:700;white-space:pre-line;overflow-wrap:anywhere}.dr-a4 .o-dl{border-top:.5mm dotted #000;margin:0 41mm;height:0}
@@ -1257,12 +1258,12 @@ function drNoIn(){const a=document.getElementById('dr_np'),b=document.getElement
 function drFlash(t,c){const o=document.createElement('div');o.className='drm-fl';o.style.background=c||'#22B573';o.textContent=t;document.body.appendChild(o);setTimeout(()=>{o.classList.add('out');setTimeout(()=>o.remove(),300)},3800)}
 function drNoField(){const n=String(DR.no||''),i=n.lastIndexOf('/'),P=i>=0?n.slice(0,i+1):'',S=i>=0?n.slice(i+1):n;
 return `<div class="lb">ที่ (รหัสส่วนราชการ / เลขท้ายหนังสือ)<div class="drm-no"><input class="in" id="dr_np" value="${esc(P)}" oninput="drNoIn()"><input class="in" id="dr_ns" value="${esc(S)}" oninput="drNoIn()" placeholder="เลขท้าย"><div id="dr_dup" class="drm-dup"></div></div></div>`}
-async function drRegWrite(){const d=DR,num=d.kind!='send'?ordNumStr(d):String(d.no||'').trim().replace(/\s+/g,' ').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c)),title=String(d.subject||'').trim();
+async function drRegWrite(q){const d=DR,num=d.kind!='send'?ordNumStr(d):String(d.no||'').trim().replace(/\s+/g,' ').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c)),title=String(d.subject||'').trim();
 const data={type:drRegType(d),num,date:d.date,title,to:String(d.to||'').trim()};
-try{const mine=d.rgId&&RG.find(r=>r.id==d.rgId);
+try{const mine=d.rgId&&(RG.find(r=>r.id==d.rgId)||{id:d.rgId});
 if(mine)await db.collection('registers').doc(mine.id).set({...data,updatedBy:me._id,updatedAt:new Date().toISOString()},{merge:true});
 else{const id=uid();await db.collection('registers').doc(id).set({...data,note:'ร่างจากระบบร่างหนังสือ',by:me.n,createdBy:me._id,createdAt:new Date().toISOString()});d.rgId=id}
-drFlash(mine?('อัปเดตทะเบียนเลขที่'+(d.kind=='send'?'นำส่ง':drKL())+'แล้ว'):'บันทึกเลขที่ '+num+' ลงทะเบียน'+(d.kind=='send'?'หนังสือนำส่ง':drKL())+'แล้ว','#22B573')}
+if(q&&!mine)drFlash('บันทึกเลขที่ '+num+' ลงทะเบียน'+drKL()+'อัตโนมัติแล้ว','#22B573');else if(!q)drFlash(mine?('อัปเดตทะเบียนเลขที่'+(d.kind=='send'?'นำส่ง':drKL())+'แล้ว'):'บันทึกเลขที่ '+num+' ลงทะเบียน'+(d.kind=='send'?'หนังสือนำส่ง':drKL())+'แล้ว','#22B573')}
 catch(e){drFlash('บันทึกเลขที่ไม่สำเร็จ: '+e.message,'#E11D48')}}
 function drRegManual(){if(!drRegOk())return;if(DR.kind!='send')return ordRegManual();const d=DR,num=String(d.no||'').trim().replace(/\s+/g,' ');
 if(!num||/[\/.\s]$/.test(num)||!/\d/.test(num.replace(/^ศธ\s*\d{5}(\.\d+)?\/?/,'')))return drFlash('กรุณากรอกเลขท้ายหนังสือก่อนบันทึกเลขที่','#F5A524');
@@ -1286,8 +1287,12 @@ let drSwept=0;
 async function drSweep(){if(!me||!canManageAdmin()||Date.now()-drSwept<60000)return;const now=new Date().toISOString(),files=AD.forms||[],old=files.filter(f=>f.draft&&f.expiresAt&&f.expiresAt<now);if(!old.length)return;drSwept=Date.now();
 try{for(const f of old){try{await storage.ref(f.path).delete()}catch(e){}}
 await db.collection('admindocs').doc('forms').set({files:files.filter(f=>!old.includes(f))},{merge:true})}catch(e){}}
+async function drAutoReg(){const d=DR;if(DR_SRC!='doc'||d.kind!='memo'||!me)return;
+if(!/^\d+$/.test(drNum(d.noN))||!/^\d{4}$/.test(drNum(d.noY))||!d.date||!String(d.subject||'').trim())return;
+if(!d.rgId&&ordDup())return drFlash('เลขที่ '+ordNumStr(d)+' ซ้ำกับทะเบียน จึงไม่บันทึกเลขอัตโนมัติ กรุณาตรวจเลขที่','#F5A524');
+await drRegWrite(true)}
 async function drSave(kind){document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'));drMsg('กำลังสร้างไฟล์...');
-try{const b=await drBlob(kind),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=drFname(kind);document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);if(!drShouldArc()){drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว');return}
+try{const b=await drBlob(kind),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=drFname(kind);document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);await drAutoReg();if(!drShouldArc()){drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว');return}
 drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว · กำลังเก็บ PDF ลงแบบฟอร์ม/เอกสารดาวน์โหลด...');const ex=await drArchive(kind=='pdf'?b:await drPdf());drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว'+(ex?' · เก็บ PDF ลงแบบฟอร์ม/เอกสารดาวน์โหลดแล้ว':''));if(ex)drArcMsg(ex)}
 catch(e){drMsg('');alert('สร้างไฟล์ไม่สำเร็จ: '+e.message)}}
 async function drSend(kind){if(!drPol().send)return;document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'));drMsg('กำลังสร้างไฟล์...');
@@ -1295,7 +1300,7 @@ try{const b=await drBlob(kind),nm=drFname(kind),f=new File([b],nm,{type:kind=='p
 LD.a.files=LD.a.files.filter(x=>!x.fromDraft);LD.a.files.push({file:f,name:nm.replace(/\.[^.]+$/,''),fromDraft:true});if(!LD.a.title.trim())LD.a.title=(DR.subject||'').trim();
 const ex=drShouldArc()?await drArchive(kind=='pdf'?b:await drPdf()):null;drClose();go('admin:send');if(ex)drArcMsg(ex)}
 catch(e){drMsg('');alert('สร้างไฟล์ไม่สำเร็จ: '+e.message)}}
-function drPrint(){drEnsureCss();if(drShouldArc())drPdf().then(b=>drArchive(b)).then(ex=>{if(ex)drArcMsg(ex)}).catch(e=>drFlash('สร้างไฟล์เก็บไม่สำเร็จ: '+e.message,'#E11D48'));const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(f);const w=f.contentWindow.document;w.open();
+function drPrint(){drEnsureCss();drAutoReg();if(drShouldArc())drPdf().then(b=>drArchive(b)).then(ex=>{if(ex)drArcMsg(ex)}).catch(e=>drFlash('สร้างไฟล์เก็บไม่สำเร็จ: '+e.message,'#E11D48'));const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(f);const w=f.contentWindow.document;w.open();
 w.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(DR.subject||'หนังสือนำส่ง')}</title><style>${DR_FONT}@page{size:A4;margin:0}html,body{margin:0}${DR_CSS.replace('box-shadow:0 4px 18px rgba(30,40,100,.25)','box-shadow:none')}@page{size:A4;margin:0}.dr-pgs{gap:0}.dr-a4.d-ord,.dr-a4.d-memo{break-after:page;page-break-after:always}.dr-a4.d-ord:last-child,.dr-a4.d-memo:last-child{break-after:auto;page-break-after:auto}</style></head><body>${drDocHtml(DR)}</body></html>`);w.close();
 const go_=()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){alert('พิมพ์ไม่สำเร็จ')}setTimeout(()=>f.remove(),3000)};setTimeout(()=>{try{f.contentWindow.document.fonts.load('16pt THSarabunDR').then(()=>f.contentWindow.document.fonts.ready).then(go_,go_)}catch(e){go_()}},300)}
 /* ===================== ร่างหนังสือคำสั่ง ===================== */
@@ -1431,9 +1436,10 @@ const drKL=()=>({order:'คำสั่ง',memo:'บันทึกข้อค
 const drAr=t=>String(t||'').replace(/\s+/g,'').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c));
 const DR_MEMO_CLOSE=['จึงเรียนมาเพื่อโปรดทราบ','จึงเรียนมาเพื่อโปรดพิจารณา','จึงเรียนมาเพื่อโปรดทราบและพิจารณาดำเนินการต่อไป','จึงเรียนมาเพื่อโปรดพิจารณาอนุมัติ','จึงเรียนมาเพื่อโปรดทราบ และเข้าร่วมประชุมโดยพร้อมเพรียงกัน'];
 const MEMO_M={lh:7.3,t1:15,t:35,b:20,l:30,r:20,w:160,sp:21.9};
-function memoDef(){const t=toISO(new Date()),p=me&&me.sid&&PP.find(x=>x.id==me.sid),d={kind:'memo',org:DR_SCH.name,noN:'',noY:String(+t.slice(0,4)+543),date:t,subject:'',to:'ผู้อำนวยการ'+DR_SCH.name,p1:'',p2:'',close:DR_MEMO_CLOSE[0],signer:p?'('+dn(p)+')':'(                    )',pos:p?(p.po||''):'',arab:false};drSigInit(d);return d}
+function memoDef(){const t=toISO(new Date()),p=me&&me.sid&&PP.find(x=>x.id==me.sid),d={kind:'memo',org:DR_SCH.name,noN:'',noY:String(+t.slice(0,4)+543),date:t,subject:'',to:'ผู้อำนวยการ'+DR_SCH.name,p1:'',p2:'',close:DR_MEMO_CLOSE[0],signer:p?'('+dn(p)+')':'(                    )',pos:p?(p.po||''):'',sgTail:'',sgPm:1,arab:false};drSigInit(d);return d}
 /* เนื้อหาไหลต่อเนื่อง (ก่อนตัดหน้า) */
-function memoFlowHtml(d){const T=t=>esc(drTh(d,t)),J=t=>drJ(drTh(d,t)),has=ordHas;
+const memoSg=d=>({line:true,tail:String(d.sgTail||'').trim(),pm:d.sgPm==null?1:+d.sgPm});
+function memoFlowHtml(d){const sg=memoSg(d);const T=t=>esc(drTh(d,t)),J=t=>drJ(drTh(d,t)),has=ordHas;
 const dm=iso=>{if(!iso)return '';const a=iso.split('-');return (+a[2])+' '+TMF[+a[1]-1]+' '+(+a[0]+543)};
 const no=(has(d.noN)||has(d.noY))?String(d.noN||'').trim()+'/'+String(d.noY||'').trim():'';
 const sub=String(d.subject||'').replace(/^\s*เรื่อง\s*/,'');
@@ -1442,7 +1448,7 @@ return `<div class="m-hd"><div class="m-tt">บันทึกข้อควา
 <div class="m-r m-r2"><div class="m-c"><b class="m-lb">ที่</b><div class="m-v">${T(no)}</div></div><div class="m-c"><b class="m-lb">วันที่</b><div class="m-v">${T(dm(d.date))}</div></div></div>
 <div class="m-r"><b class="m-lb">เรื่อง</b><div class="m-v">${T(sub)}</div></div></div>
 <div class="m-to">${J('เรียน  '+String(d.to||'').trim())}</div>${[d.p1,d.p2,d.close].filter(has).map(t=>`<p class="m-p">${J(String(t).trim())}</p>`).join('')}
-<div class="m-sg">${d.sig?`<div class="m-sp"><img src="${d.sig}" style="height:${d.sigH}mm" alt=""></div>`:'<div class="m-sp"></div>'}${T(d.signer)}<br>${T(d.pos)}</div>`}
+<div class="m-sg"><div class="m-sp${sg.line?' ln':''}">${sg.line?`<div class="m-ln"><span>ลงชื่อ</span><i></i><span>${T(sg.tail)}</span></div>`:''}${d.sig?`<img src="${d.sig}" style="height:${d.sigH}mm" alt="">`:''}</div>${T(d.signer)}${sg.pm&&has(d.pos)?'<br>'+T((sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim()):''}</div>`}
 /* ตัดหน้า: ตัดที่ขอบบรรทัด (ไม่ทิ้งบรรทัดเดียวไว้หัว/ท้ายหน้า) และไม่ให้ลายเซ็นอยู่หน้าเดียวโดดๆ */
 function memoDocHtml(d){const flow=memoFlowHtml(d),M=MEMO_M,lh=M.lh;
 const host=document.createElement('div');host.className='dr-a4 d-memo';host.style.cssText=`position:fixed;left:-10000px;top:0;height:auto;min-height:0;padding:0;width:${M.w}mm;box-shadow:none;overflow:visible`;host.innerHTML=flow;document.body.appendChild(host);
@@ -1458,6 +1464,14 @@ pages.push([s,end]);s=next;cap=297-M.t-M.b-.5}
 pages.push([s,H]);
 return `<div class="dr-pgs">${pages.map((p,i)=>`<div class="dr-a4 d-memo${i?'':' p1'}">${i?`<div class="m-pn">${esc(drTh(d,'- '+(i+1)+' -'))}</div>`:`<img class="d-g" src="${DR_GARUDA}" alt="">`}<div class="m-win" style="height:${(p[1]-p[0]).toFixed(3)}mm"><div style="margin-top:-${p[0].toFixed(3)}mm">${flow}</div></div></div>`).join('')}</div>`}
 /* ===== ฟอร์ม ===== */
+const MEMO_TAILS=['ผู้ขออนุมัติ','ผู้ขออนุญาต','ผู้อนุมัติโครงการ','ผู้รับผิดชอบโครงการ','ผู้เสนอ'];
+function memoSgSet(k,v){DR[k]=v;drPrev()}
+function memoSgPre(n){const d=DR,t=String(d.sgTail||'').trim()||'ผู้ขออนุมัติ';const P=[[true,'',1],[true,t,1],[true,t,2]][n];d.sgLine=P[0];d.sgTail=P[1];d.sgPm=P[2];drFill()}
+function memoSgForm(){const d=DR,g=memoSg(d),on=n=>[[true,0,1],[true,1,1],[true,1,2]][n].join()==[g.line,g.tail?1:0,g.pm].join()?' on':'';
+const B=(n,t,e)=>`<button type="button" class="btn o msg${on(n)}" onclick="memoSgPre(${n})"><small>${t}</small><span>${e}</span></button>`;
+return `<h4>รูปแบบการลงชื่อ</h4><div class="msg-g">${B(0,'แบบมาตรฐาน','ลงชื่อ…… / (ชื่อ) / ตำแหน่ง')}${B(1,'มีข้อความท้ายเส้นประ','ลงชื่อ……ผู้ขออนุมัติ')}${B(2,'ข้อความท้าย + “ตำแหน่ง”','… / ตำแหน่ง ครู')}</div>
+${`<label class="lb">ข้อความท้ายเส้นประ (เว้นว่างได้ · เลือกหรือพิมพ์เอง)<input class="in" list="dr_mtl" value="${esc(g.tail)}" placeholder="เช่น ผู้ขออนุมัติ" oninput="memoSgSet('sgTail',this.value)"><datalist id="dr_mtl">${MEMO_TAILS.map(x=>`<option value="${esc(x)}">`).join('')}</datalist></label>`}
+<label class="lb">บรรทัดตำแหน่ง<select class="in" onchange="DR.sgPm=+this.value;drFill()"><option value="1" ${g.pm==1?'selected':''}>แสดงตำแหน่ง</option><option value="2" ${g.pm==2?'selected':''}>แสดงโดยมีคำว่า “ตำแหน่ง” นำหน้า</option><option value="0" ${g.pm==0?'selected':''}>ไม่แสดงตำแหน่ง</option></select></label>`}
 function memoPickSigner(id){const p=PP.find(x=>String(x.id)==String(id));if(!p)return;DR.signer='('+dn(p)+')';DR.pos=p.po||'';drFill()}
 function memoLast(){const y=drNum(DR.noY),rows=RG.filter(x=>x.type=='letter').map(x=>{const t=rgFmt(x),m=String(t).match(/(\d+)\s*\/\s*(\d{4})/);return {t,n:m?+m[1]:null,w:m?m[1].length:2,y:m?m[2]:null}});
 return rows.filter(x=>x.n!=null&&x.y==y).sort((a,b)=>b.n-a.n)[0]||rows.filter(x=>x.n!=null).sort((a,b)=>(b.y||'').localeCompare(a.y||'')||b.n-a.n)[0]||null}
@@ -1474,7 +1488,7 @@ return `<h4>หัวบันทึกข้อความ</h4>${drField('org'
 ${drField('date','วันที่ (กดเลือกจากปฏิทิน)','date')}${drField('subject','เรื่อง','ta',2)}${drField('to','เรียน','ta',2)}
 <h4>เนื้อหา</h4>${drField('p1','ภาคเหตุ (ด้วย… / ตามที่…)','ta',5)}${drField('p2','ภาคความประสงค์ (เว้นว่างได้)','ta',5)}
 <label class="lb">ภาคสรุป<input class="in" list="dr_mcl" value="${esc(d.close)}" oninput="DR.close=this.value;drPrev()"><datalist id="dr_mcl">${DR_MEMO_CLOSE.map(x=>`<option value="${esc(x)}">`).join('')}</datalist></label>
-<h4>ผู้ลงนาม</h4><label class="lb">เลือกครูผู้ลงนาม (ตั้งต้นเป็นครูที่ล็อกอิน)<select class="in" onchange="memoPickSigner(this.value)"><option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>`<option value="${esc(p.id)}" ${cur&&cur.id==p.id?'selected':''}>${esc(dn(p))}</option>`).join('')}</select></label>${drField('signer','ชื่อผู้ลงนาม','in')}${drField('pos','ตำแหน่ง','in')}${drSigField()}`}
+<h4>ผู้ลงนาม</h4><label class="lb">เลือกครูผู้ลงนาม (ตั้งต้นเป็นครูที่ล็อกอิน)<select class="in" onchange="memoPickSigner(this.value)"><option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>`<option value="${esc(p.id)}" ${cur&&cur.id==p.id?'selected':''}>${esc(dn(p))}</option>`).join('')}</select></label>${drField('signer','ชื่อผู้ลงนาม','in')}${drField('pos','ตำแหน่ง','in')}${memoSgForm()}${drSigField()}`}
 /* ===== Word (.docx) ตามเทมเพลต: TH SarabunPSK 16 · ขอบ ซ้าย3 ขวา2 บน1.5 ล่าง2 · เลขหน้า "- ๒ -" ตั้งแต่หน้า 2 ===== */
 async function memoDocx(){await drLoad('docx');const D=window.docx,d=DR,T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunPSK',font={ascii:F,hAnsi:F,cs:F,eastAsia:F};
 const U={underline:{type:D.UnderlineType.DOTTED,color:'000000'}},R=(t,o)=>new D.TextRun({text:T(t),font,size:32,sizeComplexScript:32,...(o||{})}),L=t=>R(t,{bold:true,boldComplexScript:true,size:40,sizeComplexScript:40}),V=t=>R(t,U),Vt=()=>new D.TextRun({text:'\t',font,size:32,...U});
@@ -1492,9 +1506,11 @@ body.push(P([L('เรื่อง'),R(' '),V(sub),Vt()],{tabStops:tb([RT_,W]),s
 body.push(P([R('เรียน  '+String(d.to||'').trim())],{spacing:{before:120,after:0}}));
 {const ps=[d.p1,d.p2,d.close].filter(has);ps.forEach((t,i)=>body.push(P([R(String(t).trim())],{indent:{firstLine:1418},alignment:D.AlignmentType.THAI_DISTRIBUTE,spacing:{before:120,after:0},keepNext:i==ps.length-1,keepLines:i==ps.length-1})))}
 const cen={indent:{left:mm(48),right:mm(W-48-110)},alignment:D.AlignmentType.CENTER};
-if(d.sig){const sb=Uint8Array.from(atob(d.sig.split(',')[1]),c=>c.charCodeAt(0)),hp=d.sigH*3.7795;body.push(P([new D.ImageRun({data:sb,type:'png',transformation:{width:Math.round(hp*(d.sigAR||1)),height:Math.round(hp)}})],{...cen,spacing:{before:mm(Math.max(0,MEMO_M.sp-d.sigH)),after:0},keepNext:true}));body.push(P([R(d.signer)],{...cen,spacing:{before:0,after:0},keepNext:true}))}
-else body.push(P([R(d.signer)],{...cen,spacing:{before:mm(MEMO_M.sp),after:0},keepNext:true}));
-String(d.pos||'').split('\n').forEach((l,i,a)=>body.push(P([R(l)],{...cen,spacing:{before:0,after:0},keepNext:i<a.length-1})));
+{const sg=memoSg(d),lh=MEMO_M.lh,gap=sg.line?lh:0;
+if(d.sig){const sb=Uint8Array.from(atob(d.sig.split(',')[1]),c=>c.charCodeAt(0)),hp=d.sigH*3.7795;body.push(P([new D.ImageRun({data:sb,type:'png',transformation:{width:Math.round(hp*(d.sigAR||1)),height:Math.round(hp)}})],{...cen,spacing:{before:mm(Math.max(0,MEMO_M.sp-gap-d.sigH)),after:0},keepNext:true}))}
+if(sg.line)body.push(P([R('ลงชื่อ'),R('\t'),...(sg.tail?[R(sg.tail)]:[])],{indent:{left:mm(48)},tabStops:[{type:D.TabStopType.RIGHT,position:mm(48+110),leader:D.LeaderType.DOT}],spacing:{before:d.sig?0:mm(MEMO_M.sp-gap),after:0},keepNext:true}));
+body.push(P([R(d.signer)],{...cen,spacing:{before:(!sg.line&&!d.sig)?mm(MEMO_M.sp):0,after:0},keepNext:sg.pm&&String(d.pos||'').trim()?true:false}));
+if(sg.pm&&String(d.pos||'').trim()){const ls=(sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim();ls.split('\n').forEach((l,i,a)=>body.push(P([R(l)],{...cen,spacing:{before:0,after:0},keepNext:i<a.length-1})))}}
 const hdr=new D.Header({children:[P([R('- '),new D.TextRun({children:[D.PageNumber.CURRENT],font,size:32,sizeComplexScript:32}),R(' -')],{alignment:D.AlignmentType.CENTER})]});
 const doc=new D.Document({creator:'โรงเรียนบ้านผาเยอ',title:d.subject||'บันทึกข้อความ',styles:{default:{document:{run:{font,size:32,sizeComplexScript:32}}}},sections:[{properties:{titlePage:true,page:{size:{width:11906,height:16838},margin:{top:mm(MEMO_M.t1),bottom:mm(MEMO_M.b),left:mm(MEMO_M.l),right:mm(MEMO_M.r),header:mm(25),footer:mm(12.7)},...(d.arab?{}:{pageNumbers:{formatType:D.NumberFormat.THAI_NUMBERS}})}},headers:{default:hdr,first:new D.Header({children:[P([])]})},children:body}]});
 return await D.Packer.toBlob(doc)}
