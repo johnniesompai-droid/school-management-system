@@ -1183,7 +1183,7 @@ function drMenu(w){const a=document.getElementById('dr_ms'),b=document.getElemen
 document.addEventListener('click',e=>{if(!e.target.closest('.drm-m'))document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'))});
 const DR_LIB={docx:'https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js',h2c:'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',pdf:'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js'};
 const drLoad=k=>new Promise((ok,no)=>{const chk={docx:()=>window.docx,h2c:()=>window.html2canvas,pdf:()=>window.jspdf};if(chk[k]())return ok();const sc=document.createElement('script');sc.src=DR_LIB[k];sc.onload=()=>chk[k]()?ok():no(new Error('โหลดไลบรารีไม่สำเร็จ'));sc.onerror=()=>no(new Error('โหลดไลบรารีไม่สำเร็จ ตรวจสอบอินเทอร์เน็ต'));document.head.appendChild(sc)});
-const drFname=ext=>{const t=(DR.subject||'หนังสือนำส่ง').replace(/[\\/:*?"<>|\n\r]+/g,' ').trim().slice(0,40)||'หนังสือนำส่ง';return 'หนังสือนำส่ง_'+t+'.'+ext};
+const drFname=ext=>{let t=String(DR.subject||'').replace(/[\\/:*?"<>|\n\r]+/g,' ').replace(/\s+/g,' ').trim().replace(/^เรื่อง\s*/,'').slice(0,60);return 'หนังสือนำส่ง'+(t?'เรื่อง'+t:'')+'.'+ext};
 const drMsg=t=>{const m=document.getElementById('dr_msg');if(m)m.textContent=t||''};
 async function drDocx(){await drLoad('docx');const D=window.docx,d=DR,T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunIT๙',font={ascii:F,hAnsi:F,cs:F,eastAsia:F};
 const R=(t,o)=>new D.TextRun({text:T(t),font,size:32,sizeComplexScript:32,...(o||{})}),has=t=>String(t||'').trim();
@@ -1235,15 +1235,28 @@ if(!d.date)return drFlash('กรุณาเลือกวันที่ข�
 const dup=drDup();if(!dup)return drRegWrite();
 const o=document.createElement('div');o.className='rgm';o.id='dr_cf';o.innerHTML=`<div class="rgm-b" role="dialog" style="max-width:440px"><h3 style="color:#BE123C">⚠ เลขที่ซ้ำ</h3><p style="margin:6px 0 14px;line-height:1.6">ซ้ำกับเลขที่นำส่ง <b>${esc(rgFmt(dup))}</b> เรื่อง ${esc(dup.title||'-')}<br><small style="color:#7B879C">ต้องการบันทึกเลขที่ ${esc(num)} ซ้ำหรือไม่?</small></p><div class="rgm-f"><button class="btn o" type="button" id="dr_cf_n">ยกเลิกการบันทึก</button><button class="btn" type="button" id="dr_cf_y" style="background:#E11D48">ยืนยันการบันทึก</button></div></div>`;
 document.body.appendChild(o);const cl=()=>o.remove();o.addEventListener('mousedown',e=>{if(e.target==o)cl()});o.querySelector('#dr_cf_n').onclick=cl;o.querySelector('#dr_cf_y').onclick=()=>{cl();drRegWrite()}}
+/* เก็บฉบับที่เสร็จแล้ว (เฉพาะ PDF) ไว้ที่ แบบฟอร์ม / เอกสารดาวน์โหลด (งานธุรการ) — เฉพาะเมื่อ บันทึก / พิมพ์ / ส่ง · เก็บถึง 31 มี.ค. ของปีการศึกษา */
+function drExpiry(d){d=d||new Date();const y=d.getMonth()<=2?d.getFullYear():d.getFullYear()+1;return {iso:new Date(y,2,31,23,59,59).toISOString(),txt:'31 มีนาคม '+(y+543)}}
+async function drArchive(blob){const nm=drFname('pdf'),ex=drExpiry();
+try{const path=`admin/forms/${Date.now()}_${nm}`,ref=storage.ref(path);await ref.put(blob,{contentType:'application/pdf'});const url=await ref.getDownloadURL();
+let files=[...(AD.forms||[])];const prev=DR.arc;if(prev){files=files.filter(f=>f.path!=prev);try{await storage.ref(prev).delete()}catch(e){}}
+files.push({name:nm,url,path,size:blob.size,uploadedAt:new Date().toISOString(),draft:true,expiresAt:ex.iso});
+await db.collection('admindocs').doc('forms').set({files},{merge:true});AD.forms=files;DR.arc=path;return ex}
+catch(e){drFlash('เก็บไฟล์ลงแบบฟอร์ม/เอกสารดาวน์โหลดไม่สำเร็จ: '+e.message,'#E11D48');return null}}
+const drArcMsg=ex=>drFlash('เก็บ PDF ไว้ที่แบบฟอร์ม / เอกสารดาวน์โหลดแล้ว (เก็บถึง '+ex.txt+')','#22B573');
+let drSwept=0;
+async function drSweep(){if(!me||!canManageAdmin()||Date.now()-drSwept<60000)return;const now=new Date().toISOString(),files=AD.forms||[],old=files.filter(f=>f.draft&&f.expiresAt&&f.expiresAt<now);if(!old.length)return;drSwept=Date.now();
+try{for(const f of old){try{await storage.ref(f.path).delete()}catch(e){}}
+await db.collection('admindocs').doc('forms').set({files:files.filter(f=>!old.includes(f))},{merge:true})}catch(e){}}
 async function drSave(kind){document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'));drMsg('กำลังสร้างไฟล์...');
-try{const b=await drBlob(kind),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=drFname(kind);document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว')}
+try{const b=await drBlob(kind),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=drFname(kind);document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว · กำลังเก็บ PDF ลงแบบฟอร์ม/เอกสารดาวน์โหลด...');const ex=await drArchive(kind=='pdf'?b:await drPdf());drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว'+(ex?' · เก็บ PDF ลงแบบฟอร์ม/เอกสารดาวน์โหลดแล้ว':''));if(ex)drArcMsg(ex)}
 catch(e){drMsg('');alert('สร้างไฟล์ไม่สำเร็จ: '+e.message)}}
 async function drSend(kind){document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'));drMsg('กำลังสร้างไฟล์...');
 try{const b=await drBlob(kind),nm=drFname(kind),f=new File([b],nm,{type:kind=='pdf'?'application/pdf':'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
 LD.a.files=LD.a.files.filter(x=>!x.fromDraft);LD.a.files.push({file:f,name:nm.replace(/\.[^.]+$/,''),fromDraft:true});if(!LD.a.title.trim())LD.a.title=(DR.subject||'').trim();
-drClose();go('admin:send')}
+const ex=await drArchive(kind=='pdf'?b:await drPdf());drClose();go('admin:send');if(ex)drArcMsg(ex)}
 catch(e){drMsg('');alert('สร้างไฟล์ไม่สำเร็จ: '+e.message)}}
-function drPrint(){drEnsureCss();const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(f);const w=f.contentWindow.document;w.open();
+function drPrint(){drEnsureCss();drPdf().then(b=>drArchive(b)).then(ex=>{if(ex)drArcMsg(ex)}).catch(e=>drFlash('สร้างไฟล์เก็บไม่สำเร็จ: '+e.message,'#E11D48'));const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(f);const w=f.contentWindow.document;w.open();
 w.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(DR.subject||'หนังสือนำส่ง')}</title><style>${DR_FONT}@page{size:A4;margin:0}html,body{margin:0}${DR_CSS.replace('box-shadow:0 4px 18px rgba(30,40,100,.25)','box-shadow:none')}</style></head><body>${drDocHtml(DR)}</body></html>`);w.close();
 const go_=()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){alert('พิมพ์ไม่สำเร็จ')}setTimeout(()=>f.remove(),3000)};setTimeout(()=>{try{f.contentWindow.document.fonts.load('16pt THSarabunDR').then(()=>f.contentWindow.document.fonts.ready).then(go_,go_)}catch(e){go_()}},300)}
 function admMenu(){const can=canManageAdmin(),sent=LT.filter(l=>l.via=='admin'&&l.createdBy==(me&&me._id)).length,pend=mmGroups(m=>!m.ack&&ltAliveItem(m)).length,card=(r,cls,ico,t,d,st)=>`<div class="admn ${cls}" data-r="${r}" role="button" tabindex="0"><i class="lbn-o o1"></i><i class="lbn-o o2"></i><i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i><i class="lbn-sp s3">✦</i><div class="admn-hd"><span class="lbn-ic">${ic(ico)}</span><span class="admn-go">เปิด ›</span></div><div class="admn-t"><h3>${t}</h3><p>${d}</p></div>${st?`<em class="admn-st">${st}</em>`:''}</div>`;
@@ -1392,7 +1405,7 @@ unsub.push(db.collection('savingtx').onSnapshot(qs=>{HSV=qs.docs.map(d=>{const x
 attSub();wxLoad(true);ltListen();unsub.push(db.collection('registers').onSnapshot(qs=>{RG=qs.docs.map(d=>({id:d.id,...d.data()}));rgUpd()},e=>{}));unsub.push(db.collection('growth').onSnapshot(qs=>{HW={};qs.docs.forEach(d=>HW[d.id]=d.data());hwRefresh();if(!hwInit){hwInit=true;setTimeout(hwRemindToast,3500)}},e=>{}));
 unsub.push(db.collection('announcements').onSnapshot(qs=>{AN=qs.docs.map(d=>{const x=d.data();return{id:d.id,t:x.t||'',k:x.k||'notice',pin:!!x.pin,exp:x.exp||'',by:x.createdByName||'',uid:x.createdBy||'',at:x.createdAt||''}});if(annInit){const t=annToday();AN.filter(a=>!annPrev.has(a.id)&&a.uid!=me._id&&(!a.exp||a.exp>=t)).slice(0,2).forEach(a=>ntfToast({title:a.k=='urgent'?'ข่าวด่วน':'ประกาศใหม่',text:a.t,route:'ann',c:a.k=='urgent'?'#E5484D':'#2F6BFF',id:'an:'+a.id}))}annPrev=new Set(AN.map(a=>a.id));annInit=true;annHomeUpd();updateBell();if(CUR=='ann')render()},e=>{}));
 unsub.push(db.collection('timetables').onSnapshot(qs=>{TT={};qs.docs.forEach(d=>TT[d.id]=d.data());render()},e=>{}));
-unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render()},e=>{}));
+unsub.push(db.collection('admindocs').onSnapshot(qs=>{AD={};qs.docs.forEach(d=>AD[d.id]=d.data().files||[]);render();drSweep()},e=>{}));
 unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,...d.data()}));if(mmInit)MM.filter(m=>me.sid&&m.assigneeSid==me.sid&&!m.ack&&!mmPrev.has(m.id)).slice(0,2).forEach(m=>ntfToast({title:'หนังสือเข้าใหม่',text:m.title||'',route:'comm',c:'#F5A524'}));mmPrev=new Set(MM.map(m=>m.id));mmInit=true;updateBell();render()},e=>{}));
 unsub.push(db.collection('notifreads').doc(me._id).onSnapshot(d=>{NR=new Set((d.exists&&d.data().ids)||[]);updateBell()},e=>{}));
 unsub.push(db.collection('scoresheets').where('ownerUid','==',me._id).onSnapshot(qs=>{SC=qs.docs.map(d=>({id:d.id,...d.data()}));if(!(CUR.startsWith('score:')&&qs.metadata.hasPendingWrites))render()},e=>{}));
