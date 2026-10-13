@@ -413,6 +413,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .tp-docs{display:grid;gap:6px;margin:6px 0 10px}.tp-docs label{display:flex;gap:8px;align-items:flex-start;font-size:.85rem;padding:7px 10px;border:1px solid #D6DDF5;border-radius:10px;background:#F7F9FF}.tp-rd{display:flex;gap:14px;flex-wrap:wrap;margin-top:4px;font-size:.85rem}.tp-rd label{display:flex;gap:5px;align-items:center}.tp-h{display:flex;justify-content:space-between;align-items:center}.tp-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px}.tp-h .ln-x{padding:3px 10px}
 .ln-tabs{grid-template-columns:1fr!important}.ln-row{display:grid;grid-template-columns:22px 1fr 110px 34px;gap:6px;align-items:center;margin:5px 0}.ln-row .in{margin:0}.ln-n{font-size:.78rem;color:#7B879C;text-align:center}.ln-x{padding:4px 0;min-width:0}
 .drm-sc .m-rd,#dr_sc .m-rd{color:#E11D48}
+.rp-it{border:1px solid #D6DDF5;background:#FAFBFF;border-radius:14px;padding:10px;margin:8px 0}.rp-ih{display:grid;grid-template-columns:44px 1fr 34px;gap:6px;align-items:center}.rp-lys{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:4px 0 8px}.rp-ly{display:flex;flex-direction:column;align-items:center;gap:3px;border:1px solid #D6DDF5;background:#fff;border-radius:10px;padding:5px 2px;cursor:pointer;font-family:inherit}.rp-ly small{font-size:.62rem;color:#4B5880;line-height:1.1;text-align:center}.rp-ly.on{border-color:#6D5DF6;background:#EFEBFF;box-shadow:0 0 0 2px rgba(109,93,246,.18)}.rp-lb{position:relative;display:block;width:34px;height:46px;border:1px solid #B9C3E6;background:#fff;border-radius:3px}.rp-lb i{position:absolute;background:#9DB4FF;border-radius:1px}.rp-lb .rp-lt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.55rem;color:#4B5880;text-align:center;line-height:1.05}
 .rp-th{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}.rp-t{position:relative;border-radius:10px;overflow:hidden;border:1px solid #D6DDF5;background:#F7F9FF;aspect-ratio:4/3}.rp-t img{width:100%;height:100%;object-fit:cover;display:block}.rp-n{position:absolute;left:5px;top:4px;background:rgba(31,42,68,.7);color:#fff;border-radius:8px;padding:0 7px;font-size:.7rem}.rp-b{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around;background:rgba(255,255,255,.88);padding:2px}.rp-b button{border:0;background:none;cursor:pointer;font-size:.72rem;color:#3B4A8C;padding:2px 6px}
 .act-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 0 12px}.act-t{display:flex;gap:8px;align-items:center;text-align:left;padding:8px 10px;border:1px solid #D6DDF5;border-radius:12px;background:#F7F9FF;cursor:pointer;font-family:inherit;font-size:.8rem;color:#3B4A8C;transition:.2s}.act-t b{font-size:1rem}.act-t.on{background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border-color:#A78BFA;box-shadow:0 6px 14px -8px rgba(110,80,220,.6);font-weight:600}.act-h{background:#EEF2FF;color:#4338CA;border-radius:10px;padding:7px 11px;font-size:.8rem;font-weight:600;margin-bottom:6px}.act-nx{display:flex;justify-content:space-between;margin:16px 0 4px}.act-rs{font-size:.7rem;color:#2F6BFF;cursor:pointer;margin-left:6px;text-decoration:underline}.act-rem{margin:6px 0;padding:7px 11px;border-radius:10px;background:#EAFBF3;color:#0E7A5A;font-size:.85rem}.act-rem.neg{background:#FFF1F3;color:#BE123C}.act-sg{display:grid;gap:5px;padding:9px;border:1px solid #E1E6F7;border-radius:12px;margin:8px 0;background:#FAFBFF}.act-sg .in{margin:0}.msg-g{display:grid;grid-template-columns:1fr 1fr;gap:6px}.msg{display:grid;gap:2px;text-align:left;padding:8px 10px;height:auto;line-height:1.3}.msg small{font-weight:600}.msg span{font-size:.68rem;color:#7B879C}.msg.rec{grid-column:1/-1}.msg-rec{margin-left:8px;font-style:normal;font-size:.68rem;font-weight:700;color:#B45309;background:#FFF3C4;border:1px solid #F5D76E;border-radius:99px;padding:1px 8px;animation:drPop .6s both}.msg.on{background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border-color:#A78BFA}
 .drm-pop{position:absolute;left:0;bottom:calc(100% + 6px);z-index:9;background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border:1px solid #CDBEFF;color:#5B3FB5;border-radius:12px;padding:6px 11px;font-size:.74rem;line-height:1.5;box-shadow:0 10px 22px -12px rgba(110,80,220,.55);opacity:0;transform:translateY(4px);pointer-events:none;transition:.18s;white-space:nowrap}.drm-pop a{color:#2F6BFF;font-weight:600;cursor:pointer;text-decoration:underline}.drm-pop:after{content:'';position:absolute;left:18px;top:100%;border:6px solid transparent;border-top-color:#CDBEFF}.drm-no:focus-within .drm-pop{opacity:1;transform:none;pointer-events:auto}
@@ -1165,7 +1166,7 @@ const DR_CSS=`.dr-a4{box-sizing:border-box;width:210mm;min-height:297mm;backgrou
 .dr-a4 .l-tm p{margin:0;text-indent:10mm;text-align:justify;overflow-wrap:anywhere}
 .dr-a4 .l-sg{display:grid;grid-template-columns:auto 1fr auto auto 44mm;column-gap:1.5mm;align-items:baseline;margin-top:6mm}.dr-a4 .l-sg .l-v{display:block}.dr-a4 .l-sg em{grid-column:2;grid-row:2;text-align:center;font-style:normal}
 .dr-pgs.trip,.dr-pgs.rep{width:max-content;align-items:center}
-.dr-a4.d-rep{width:210mm;height:297mm;min-height:297mm;padding:10mm 12mm;overflow:hidden;display:flex;flex-direction:column}.dr-a4 .rp-cap{text-align:center;font-weight:700;font-size:18pt;line-height:8mm;min-height:16mm;display:flex;align-items:center;justify-content:center;flex:none}.dr-a4 .rp-gr{flex:1;display:grid;grid-template-columns:repeat(2,88mm);grid-template-rows:repeat(3,66mm);column-gap:6mm;row-gap:12mm;justify-content:center;align-content:center}.dr-a4 .rp-c{width:88mm;height:66mm;overflow:hidden}.dr-a4 .rp-c img{display:block;width:88mm;height:66mm}.dr-a4 .rp-c.e{border:.3mm dashed #b8bfd0}
+.dr-a4.d-rep{width:210mm;height:297mm;min-height:297mm;padding:10mm 12mm;overflow:hidden;display:flex;flex-direction:column}.dr-a4 .rp-cap{text-align:center;font-weight:700;font-size:16pt;line-height:7mm;min-height:22mm;display:flex;align-items:flex-start;justify-content:center;flex:none;overflow-wrap:anywhere}.dr-a4 .rp-ar{position:relative;width:186mm;height:250mm;flex:none}.dr-a4 .rp-s{position:absolute;display:flex;overflow:hidden}.dr-a4 .rp-s img{display:block;flex:none}.dr-a4 .rp-s.e{border:.3mm dashed #b8bfd0}
 /* โหมดอัดให้พอดีหน้าเดียว (rep): cp1-cp3 */
 .dr-a4.d-memo.cp1{line-height:6.9mm}.dr-a4.d-memo.cp1 .m-p,.dr-a4.d-memo.cp1 .m-to{margin-top:1.6mm}.dr-a4.d-memo.cp1 .m-dl{height:6.9mm}.dr-a4.d-memo.cp1 .m-ck,.dr-a4.d-memo.cp1 .m-as{line-height:6.9mm}
 .dr-a4.d-memo.cp2,.dr-a4.d-memo.cp3{line-height:6.35mm}.dr-a4.d-memo.cp2 .m-p,.dr-a4.d-memo.cp2 .m-to{margin-top:1.2mm}.dr-a4.d-memo.cp3 .m-p,.dr-a4.d-memo.cp3 .m-to{margin-top:1mm}.dr-a4.d-memo.cp2 .m-dl,.dr-a4.d-memo.cp3 .m-dl{height:6.35mm}.dr-a4.d-memo.cp2 .m-ck,.dr-a4.d-memo.cp2 .m-as,.dr-a4.d-memo.cp3 .m-ck,.dr-a4.d-memo.cp3 .m-as{line-height:6.35mm}
@@ -2081,20 +2082,28 @@ return await D.Packer.toBlob(doc)}
 
 /* ===== ร่างบันทึกข้อความรายงานผลการไปอบรม/ไปราชการ (rep) ===== */
 const REP_EXK=['refNo','refDate','title','place','dFrom','dTo','budget','summary','subject','apply','docs'];
-const REP_PW=88,REP_PH=66,REP_PER=6;
+const REP_AW=186,REP_AH=250;
+const REP_LY={'1c':{n:1,t:'1 รูป กลาง',s:[[0,0,186,180,'c','t']]},'1l':{n:1,t:'1 รูป ชิดซ้าย',s:[[0,0,125,150,'l','t']]},'1r':{n:1,t:'1 รูป ชิดขวา',s:[[61,0,125,150,'r','t']]},
+'2v':{n:2,t:'2 รูป เรียงลง',s:[[0,0,186,120,'c','m'],[0,128,186,120,'c','m']]},'2h':{n:2,t:'2 รูป เคียงกัน',s:[[0,0,91,120,'c','t'],[95,0,91,120,'c','t']]},'2z':{n:2,t:'2 รูป ซ้ายแล้วขวา',s:[[0,0,125,100,'l','t'],[61,110,125,100,'r','t']]},
+'3v':{n:3,t:'3 รูป เรียงลง',s:[[0,0,186,80,'c','m'],[0,85,186,80,'c','m'],[0,170,186,80,'c','m']]},'3t':{n:3,t:'3 รูป บน 1 ล่าง 2',s:[[0,0,186,115,'c','m'],[0,123,91,115,'c','m'],[95,123,91,115,'c','m']]},
+'4g':{n:4,t:'4 รูป 2×2',s:[[0,0,91,120,'c','m'],[95,0,91,120,'c','m'],[0,128,91,120,'c','m'],[95,128,91,120,'c','m']]},
+'6g':{n:6,t:'6 รูป 2×3',s:[[0,0,91,80,'c','m'],[95,0,91,80,'c','m'],[0,85,91,80,'c','m'],[95,85,91,80,'c','m'],[0,170,91,80,'c','m'],[95,170,91,80,'c','m']]}};
+const REP_LYK=['auto','1c','1l','1r','2v','2h','2z','3v','3t','4g','6g','none'];
+const repLyAuto=n=>['1c','2v','3t','4g','6g','6g'][Math.max(1,Math.min(6,n))-1];
+const repNewAtt=()=>({t:'',ly:'none',cap:'',photos:[]});
 MEMO_TAILS.includes('ผู้รายงาน')||MEMO_TAILS.unshift('ผู้รายงาน');
 function repDef(){const t=toISO(new Date()),p=me&&me.sid&&PP.find(x=>x.id==me.sid),y=+t.slice(0,4)+543;
 const d={kind:'rep',org:DR_SCH.name,noN:'',noY:String(y),date:t,subject:'รายงานผลการไปอบรมเชิงปฏิบัติการพัฒนาองค์ความรู้ด้านการอ่านและการเขียนภาษาไทย',subjAuto:false,to:'ผู้อำนวยการ'+DR_SCH.name,refNo:'ศธ 04010/ว1220',refDate:'2024-04-26',title:'อบรมเชิงปฏิบัติการพัฒนาองค์ความรู้เพื่อเสริมสร้างศักยภาพการจัดการเรียนการสอนด้านการอ่านและการเขียนภาษาไทย สำหรับครูผู้สอนภาษาไทยชั้นประถมศึกษาปีที่ 5-6',place:'โรงแรมเชียงใหม่คุ้มภูคำ',dFrom:'2024-05-03',dTo:'2024-05-06',days:'',daysAuto:true,budget:'1340',withs:'',
 p1:null,p2:null,ap0:null,dc0:null,summary:'อบรมสัมมนาการพัฒนาครูและบุคลากรทางการศึกษา เรื่อง ทักษะการอ่านและการเขียนภาษาไทย และเทคนิคการสอนภาษาไทยให้แก่นักเรียนชั้นประถมศึกษาปีที่ 5 - 6',apply:['ให้ความรู้ที่ถูกต้องด้านภาษาไทยแก่นักเรียน และเผยแพร่ข้อมูลด้านการอ่านการเขียนภาษาไทยให้แก่คุณครูที่เกี่ยวข้อง'],docs:[{t:'เอกสารการพัฒนาองค์ความรู้เพื่อเสริมสร้างศักยภาพการจัดการเรียนการสอนด้านการอ่านและการเขียนภาษาไทย สำหรับครูผู้สอนภาษาไทยชั้นประถมศึกษาปีที่ 5-6',n:'1',u:'ชุด'}],close:'จึงเรียนมาเพื่อโปรดทราบและพิจารณาดำเนินการต่อไป',
 signer:p?'('+dn(p)+')':'(                    )',pos:posDef(p),sgLine:false,sgTail:'ผู้รายงาน',sgPm:1,showOp:true,sg:{dir:{n:null,t:null}},
-pPhoto:true,photoLbl:'รูปถ่ายการเข้ารับการฝึกอบรม',att:[''],photos:[],caps:[],_tab:0,arab:false,ok:{}};d.ex=JSON.parse(JSON.stringify(REP_EXK.reduce((o,k)=>(o[k]=d[k],o),{})));drSigInit(d);return d}
+att:[{t:null,ly:'auto',cap:'',photos:[]}],_tab:0,arab:false,ok:{}};d.ex=JSON.parse(JSON.stringify(REP_EXK.reduce((o,k)=>(o[k]=d[k],o),{})));drSigInit(d);return d}
 const repRd=(d,k)=>!!(d.ex&&!(d.ok||{})[k]&&JSON.stringify(d[k])===JSON.stringify(d.ex[k]));
 const repRdI=(d,k,i)=>!!(d.ex&&!(d.ok||{})[k]&&d.ex[k]&&JSON.stringify(d[k][i])===JSON.stringify(d.ex[k][i]));
 const repMk=(on,t)=>on&&String(t)!==''?'\uE000'+t+'\uE001':t;
 const repRedN=d=>['refNo','refDate','title','place','dFrom','dTo','budget','summary','apply','docs'].filter(k=>repRd(d,k)).length+(!d.subjAuto&&repRd(d,'subject')?1:0);
 function repOk(k){DR.ok[k]=true;drFill()}
 const repOkL=k=>repRd(DR,k)?` <a class="act-rs" onclick="repOk('${k}')">ใช้ตามตัวอย่างนี้</a>`:'';
-function repGate(){if(DR.kind!='rep')return true;const n=repRedN(DR);return !n||confirm('ยังมี '+n+' จุดที่เป็นข้อความตัวอย่าง (ตัวอักษรสีแดงในพรีวิว) ที่ยังไม่ได้แก้\nต้องการดำเนินการต่อหรือไม่?')}
+function repGate(){if(DR.kind!='rep')return true;const n=repRedN(DR),em=DR.att.map((a,i)=>a.ly!='none'&&!a.photos.length?i+1:0).filter(Boolean);const m=[];if(n)m.push('ยังมี '+n+' จุดที่เป็นข้อความตัวอย่าง (ตัวอักษรสีแดงในพรีวิว) ที่ยังไม่ได้แก้');if(em.length)m.push('สิ่งที่แนบข้อ '+em.join(', ')+' ยังไม่มีรูป (จะพิมพ์เป็นหน้าว่าง)');return !m.length||confirm(m.join('\n')+'\nต้องการดำเนินการต่อหรือไม่?')}
 function repClear(){if(!confirm('ล้างข้อความตัวอย่างทั้งหมดให้เป็นช่องว่าง?'))return;Object.assign(DR,{refNo:'',refDate:'',title:'',place:'',dFrom:'',dTo:'',budget:'',summary:'',apply:[''],docs:[{t:'',n:'',u:'ชุด'}],subject:'',subjAuto:true});drFill()}
 const repNm=s=>String(s==null?'':s).replace(/[()]/g,'').trim();
 const repDm=iso=>{if(!iso)return '';const a=String(iso).split('-');return (+a[2])+' '+TMF[+a[1]-1]+' '+(+a[0]+543)};
@@ -2118,9 +2127,14 @@ const repDc0=d=>'เอกสารที่ได้รับจากการ
 const repV=(d,k,f)=>d[k]!=null?d[k]:f(d);
 const repApply=d=>(d.apply||[]).map(x=>String(x||'').trim()).filter(Boolean);
 const repDocs=d=>(d.docs||[]).filter(x=>String(x.t||'').trim()).map(x=>String(x.t).trim()+(String(x.n||'').trim()?' จำนวน '+String(x.n).trim()+(String(x.u||'').trim()?' '+String(x.u).trim():''):''));
-const repAtt=d=>[...(d.pPhoto?[String(d.photoLbl||'').trim()||'รูปถ่ายการเข้ารับการฝึกอบรม']:[]),...(d.att||[]).map(x=>String(x||'').trim()).filter(Boolean)];
-const repCap=(d,i)=>{const c=(d.caps||[])[i];return c!=null&&String(c).trim()!==''?c:'ภาพการ'+(String(d.title||'').trim().replace(/^เข้ารับ/,'')||'เข้ารับการฝึกอบรม')};
-const repNPg=d=>Math.max(1,Math.ceil((d.photos||[]).length/REP_PER));
+const repAttT=(d,i)=>{const a=d.att[i];if(a.t!=null)return String(a.t);if(i)return '';const t=String(d.title||'').trim();return t?(/^อบรม/.test(t)?'รูปถ่ายการเข้ารับการฝึก'+t:'รูปถ่ายการ'+t):'รูปถ่ายการเข้ารับการฝึกอบรม'};
+const repAttL=d=>d.att.map((a,i)=>({i,t:repAttT(d,i).trim(),red:i==0&&a.t==null&&repRd(d,'title')})).filter(x=>x.t);
+const repAtt=d=>repAttL(d).map(x=>x.t);
+/* แบ่งรูปของแต่ละข้อเป็นหน้า: [{a,i,lk,ph}] */
+function repAttPages(d){const o=[];d.att.forEach((a,i)=>{if(a.ly=='none')return;const ph=a.photos||[];if(!ph.length){o.push({a,i,lk:a.ly=='auto'?'6g':a.ly,ph:[]});return}
+const cap=a.ly=='auto'?6:REP_LY[a.ly].n;for(let k=0;k<ph.length;k+=cap){const c=ph.slice(k,k+cap);o.push({a,i,lk:a.ly=='auto'?repLyAuto(c.length):a.ly,ph:c})}});return o}
+const repCap=(d,a,i)=>String(a.cap||'').trim()?a.cap:(repAttT(d,i).trim()||'รูปถ่าย');
+
 /* ----- เนื้อหาไหลต่อเนื่อง ----- */
 function repFlow(d){repSync(d);const T=t=>esc(drTh(d,t)),J=t=>drJ(drTh(d,t)),has=ordHas,sg=memoSg(d);
 const no=(has(d.noN)||has(d.noY))?String(d.noN||'').trim()+'/'+String(d.noY||'').trim():'';
@@ -2139,12 +2153,15 @@ const dcr=(d.docs||[]).map((x,i)=>[x,repRdI(d,'docs',i)]).filter(x=>String(x[0].
 h+=P(d.close);
 h+=`<div class="m-sg"><div class="m-sp${sg.line?' ln':''}">${sg.line?`<div class="m-ln"><span>ลงชื่อ</span><i></i><span>${T(sg.tail)}</span></div>`:''}${d.sig?`<img src="${d.sig}" style="height:${d.sigH}mm" alt="">`:''}</div>${T(d.signer)}${sg.pm&&has(d.pos)?'<br>'+T((sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim()):''}</div>`;
 if(d.showOp)h+=`<div class="m-bk m-op"><b>ความคิดเห็นของหัวหน้าหน่วยงาน</b><div class="m-dl"></div><div class="m-dl"></div><div class="m-dl"></div>${actAsg(d,'dir','c')}</div>`;
-const at=repAtt(d);if(at.length)h+=`<div class="m-bk m-nt"><div><b>หมายเหตุ</b>  สิ่งที่แนบมาด้วย</div>${at.map((x,i)=>`<div class="m-li2"><span class="m-no">${T((i+1)+'.')}</span>${J(x)}</div>`).join('')}</div>`;
+const at=repAttL(d);if(at.length)h+=`<div class="m-bk m-nt"><div><b>หมายเหตุ</b>  สิ่งที่แนบมาด้วย</div>${at.map((x,i)=>`<div class="m-li2"><span class="m-no">${T((i+1)+'.')}</span>${J(repMk(x.red,x.t))}</div>`).join('')}</div>`;
 return h.replace(/\uE000/g,'<span class="m-rd">').replace(/\uE001/g,'</span>')}
 /* ----- หน้ารูปถ่าย (แนวนอน 6 รูปต่อหน้า) ----- */
-function repPhotoPages(d){if(!d.pPhoto)return '';const T=t=>esc(drTh(d,t)),ph=d.photos||[],n=repNPg(d);let o='';
-for(let i=0;i<n;i++){let c='';for(let j=0;j<REP_PER;j++){const x=ph[i*REP_PER+j];c+=`<div class="rp-c${x?'':(ph.length?' z':' e')}">${x?`<img src="${x.src}" alt="">`:''}</div>`}
-o+=`<div class="dr-a4 d-rep"><div class="rp-cap">${T(repCap(d,i))}</div><div class="rp-gr">${c}</div></div>`}return o}
+function repPhotoPages(d){const T=t=>esc(drTh(d,t));let o='';
+repAttPages(d).forEach(pg=>{const L=REP_LY[pg.lk];let c='';
+L.s.forEach((sl,j)=>{const x=pg.ph[j],[sx,sy,sw,sh,ha,va]=sl;let inner='';
+if(x){const k=Math.min(sw/x.w,sh/x.h);inner=`<img src="${x.src}" style="width:${(x.w*k).toFixed(2)}mm;height:${(x.h*k).toFixed(2)}mm" alt="">`}
+c+=`<div class="rp-s${pg.ph.length?'':' e'}" style="left:${sx}mm;top:${sy}mm;width:${sw}mm;height:${sh}mm;justify-content:${ha=='l'?'flex-start':ha=='r'?'flex-end':'center'};align-items:${va=='t'?'flex-start':'center'}">${inner}</div>`});
+o+=`<div class="dr-a4 d-rep"><div class="rp-cap">${T(repCap(d,pg.a,pg.i))}</div><div class="rp-ar">${c}</div></div>`});return o}
 const REP_LV=[{cls:'',lh:7.3,m:2.1,sp:21.9,as:14,b:20},{cls:'cp1',lh:6.9,m:1.6,sp:21.9,as:14,b:20},{cls:'cp2',lh:6.35,m:1.2,sp:21.9,as:14,b:20},{cls:'cp3',lh:6.35,m:1,sp:17,as:11,b:15}];
 function repFits(flow,lv){const L=REP_LV[lv],host=document.createElement('div');host.className='dr-a4 d-memo '+L.cls;host.style.cssText=`position:fixed;left:-10000px;top:0;height:auto;min-height:0;padding:0;width:${MEMO_M.w}mm;box-shadow:none;overflow:visible`;host.innerHTML=flow;document.body.appendChild(host);
 const K=25.4/96,r0=host.getBoundingClientRect();let m=0;host.querySelectorAll('.m-hd,.m-to,.m-p,.m-sg,.m-bk:not(.m-nt)').forEach(e=>{m=Math.max(m,(e.getBoundingClientRect().bottom-r0.top)*K)});host.remove();return m<=297-MEMO_M.t1-L.b-.5}
@@ -2167,20 +2184,27 @@ function repLS(k,i,v){DR[k][i]=v;drPrev()}
 function repDA(){DR.docs.push({t:'',n:'',u:'ชุด'});drFill()}
 function repDD(i){DR.docs.splice(i,1);if(!DR.docs.length)DR.docs.push({t:'',n:'',u:'ชุด'});drFill()}
 function repDS(i,f,v){DR.docs[i][f]=v;drPrev()}
-function repCapS(i,v){DR.caps[i]=v;drPrev()}
-function repPhCk(v){DR.pPhoto=v;drFill()}
 function repDirSet(k,v){DR.sg.dir[k]=v;drPrev()}
 function repDirPick(id){const p=PP.find(x=>String(x.id)==String(id));DR.sg.dir.n=p?'('+dn(p)+')':'';drFill()}
-function repLoadImg(f){return new Promise((ok,no)=>{const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{try{const W=1200,H=900,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H);
-const r=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*r,h=im.naturalHeight*r;x.drawImage(im,(W-w)/2,(H-h)/2,w,h);URL.revokeObjectURL(u);ok(cv.toDataURL('image/jpeg',.82))}catch(e){no(e)}};im.onerror=()=>{URL.revokeObjectURL(u);no(new Error('อ่านรูปไม่ได้'))};im.src=u})}
-async function repPhAdd(files){const fs=[...files].filter(f=>/^image\//.test(f.type));if(!fs.length)return;drMsg('กำลังย่อรูป '+fs.length+' รูป...');
-for(const f of fs){try{DR.photos.push({src:await repLoadImg(f)})}catch(e){drFlash('เพิ่มรูป '+f.name+' ไม่สำเร็จ','#E11D48')}}
-drMsg('');const sc=document.getElementById('dr_f');drFill()}
-function repPhDel(i){DR.photos.splice(i,1);drFill()}
-function repPhMv(i,k){const a=DR.photos,j=i+k;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];drFill()}
+function repLoadImg(f){return new Promise((ok,no)=>{const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{try{const M=1600,k=Math.min(1,M/Math.max(im.naturalWidth,im.naturalHeight)),W=Math.max(1,Math.round(im.naturalWidth*k)),H=Math.max(1,Math.round(im.naturalHeight*k)),cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H);x.drawImage(im,0,0,W,H);URL.revokeObjectURL(u);ok({src:cv.toDataURL('image/jpeg',.82),w:W,h:H})}catch(e){no(e)}};im.onerror=()=>{URL.revokeObjectURL(u);no(new Error('อ่านรูปไม่ได้'))};im.src=u})}
+async function repPhAdd(i,files){const fs=[...files].filter(f=>/^image\//.test(f.type));if(!fs.length)return;drMsg('กำลังย่อรูป '+fs.length+' รูป...');const a=DR.att[i];
+for(const f of fs){try{a.photos.push(await repLoadImg(f))}catch(e){drFlash('เพิ่มรูป '+f.name+' ไม่สำเร็จ','#E11D48')}}
+if(a.ly=='none')a.ly='auto';drMsg('');drFill()}
+function repPhDel(i,j){DR.att[i].photos.splice(j,1);drFill()}
+function repPhMv(i,j,k){const a=DR.att[i].photos,m=j+k;if(m<0||m>=a.length)return;[a[j],a[m]]=[a[m],a[j]];drFill()}
+function repAtS(i,k,v){DR.att[i][k]=v;drPrev()}
+function repAtAuto(i){DR.att[i].t=null;drFill()}
+function repAtAdd(){DR.att.push(repNewAtt());drFill()}
+function repAtDel(i){if(DR.att[i].photos.length&&!confirm('ลบข้อนี้พร้อมรูปทั้งหมดในข้อนี้?'))return;DR.att.splice(i,1);drFill()}
+function repLySet(i,k){DR.att[i].ly=k;drFill()}
+const repLyIcon=k=>{if(k=='auto')return '<b class="rp-lt">อัตโนมัติ</b>';if(k=='none')return '<b class="rp-lt">ไม่มีรูป</b>';return REP_LY[k].s.map(x=>`<i style="left:${x[0]*.18}px;top:${x[1]*.18}px;width:${x[2]*.18}px;height:${x[3]*.18}px"></i>`).join('')};
+function repAttForm(){const d=DR;return d.att.map((a,i)=>{const n=a.photos.length,ph=a.photos.map((x,j)=>`<div class="rp-t"><img src="${x.src}" alt=""><span class="rp-n">${j+1}</span><div class="rp-b"><button type="button" onclick="repPhMv(${i},${j},-1)" title="เลื่อนก่อน">◀</button><button type="button" onclick="repPhMv(${i},${j},1)" title="เลื่อนหลัง">▶</button><button type="button" onclick="repPhDel(${i},${j})" title="ลบรูป">✕</button></div></div>`).join('');
+return `<div class="rp-it"><div class="rp-ih"><span class="ln-n">ข้อ ${i+1}</span><input class="in" value="${esc(repAttT(d,i))}" placeholder="ชื่อสิ่งที่แนบ เช่น สำเนาเกียรติบัตร" oninput="repAtS(${i},'t',this.value)"><button class="btn o ln-x" type="button" onclick="repAtDel(${i})" title="ลบข้อนี้">✕</button></div>${i==0&&a.t!=null?`<a class="act-rs" onclick="repAtAuto(0)">ใช้ชื่อตามชื่อโครงการ</a>`:''}
+<div class="lb" style="margin-top:6px">การจัดวางรูปในหน้า A4 (แล้วเลือกรูปด้านล่าง)</div><div class="rp-lys">${REP_LYK.map(k=>`<button type="button" class="rp-ly${a.ly==k?' on':''}" onclick="repLySet(${i},'${k}')" title="${esc(k=='auto'?'จัดให้อัตโนมัติตามจำนวนรูป':k=='none'?'ไม่มีหน้ารูป แสดงเฉพาะรายการ':REP_LY[k].t)}"><span class="rp-lb">${repLyIcon(k)}</span><small>${k=='auto'?'อัตโนมัติ':k=='none'?'ไม่มีรูป':REP_LY[k].t.replace('รูป','')}</small></button>`).join('')}</div>
+${a.ly!='none'?`<label class="drm-up"><input type="file" accept="image/*" multiple hidden onchange="repPhAdd(${i},this.files);this.value=''"><b>เพิ่มรูปของข้อนี้ (เลือกได้หลายรูป)</b><small>รูปถูกย่อและเก็บในเครื่องนี้เท่านั้น ไม่อัปโหลดขึ้นระบบ</small></label>${n?`<div class="rp-th">${ph}</div><div class="drm-hint">${n} รูป · ${repAttPages(d).filter(x=>x.i==i).length} หน้า</div>`:''}<label class="lb">ข้อความหัวหน้ารูป (เว้นว่าง = ใช้ชื่อข้อนี้)<input class="in" value="${esc(a.cap)}" oninput="repAtS(${i},'cap',this.value)"></label>`:''}</div>`}).join('')+`<button class="btn o" type="button" onclick="repAtAdd()">+ เพิ่มข้อ</button>`}
 function repLst(k,ph){return `${DR[k].map((x,i)=>`<div class="ln-row" style="grid-template-columns:22px 1fr 34px"><span class="ln-n">${i+1}</span><input class="in" value="${esc(x)}" placeholder="${ph}" oninput="repLS('${k}',${i},this.value)"><button class="btn o ln-x" type="button" onclick="repLD('${k}',${i})" title="ลบ">✕</button></div>`).join('')}<button class="btn o" type="button" onclick="repLA('${k}')">+ เพิ่มข้อ</button>`}
 function repForm(){const d=repSync(DR),t=d._tab||0,ps=[...PP].sort((a,b)=>dn(a).localeCompare(dn(b),'th')),cur=ps.find(p=>'('+dn(p)+')'==d.signer);
-const tabs=[['①','ข้อมูลการไปราชการ'],['②','สาระที่ได้รับ'],['③','ผู้ลงนาม'],['④','หน้าแนบรูปถ่าย / สิ่งที่แนบ']];
+const tabs=[['①','ข้อมูลการไปราชการ'],['②','สาระที่ได้รับ'],['③','ผู้ลงนาม'],['④','สิ่งที่แนบมาด้วย / รูปถ่าย']];
 const tb=`<div class="act-tabs">${tabs.map((x,i)=>`<button type="button" class="act-t${t==i?' on':''}" onclick="repTab(${i})"><b>${x[0]}</b><span>${x[1]}</span></button>`).join('')}</div>`;
 const nx=`<div class="act-nx">${t>0?`<button class="btn o" type="button" onclick="repTab(${t-1})">‹ ย้อนกลับ</button>`:'<span></span>'}${t<3?`<button class="btn" type="button" onclick="repTab(${t+1})">ถัดไป ›</button>`:''}</div>`;
 let b='';
@@ -2203,13 +2227,7 @@ else if(t==1)b=`<h4>สรุปสาระที่ได้รับ</h4><lab
 else if(t==2)b=`<h4>ผู้รายงาน</h4><label class="lb">เลือกครูผู้รายงาน (ตั้งต้นเป็นครูที่ล็อกอิน)<select class="in" onchange="memoPickSigner(this.value)"><option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>`<option value="${esc(p.id)}" ${cur&&cur.id==p.id?'selected':''}>${esc(dn(p))}</option>`).join('')}</select></label>${drField('signer','ชื่อผู้รายงาน','in')}${memoPosSel('pos')}${drField('pos','ตำแหน่ง','in')}${memoSgForm()}${drSigField()}
 <h4>ความคิดเห็นของหัวหน้าหน่วยงาน</h4><label class="drm-ck"><input type="checkbox" ${d.showOp?'checked':''} onchange="repSet('showOp',this.checked);drFill()"> แสดงช่องความคิดเห็น (เส้นประเว้นว่างให้ผู้อำนวยการเขียน)</label>
 ${d.showOp?(()=>{const s=d.sg.dir,nm=s.n!=null?s.n:actAuto('dir'),sel=ps.find(p=>'('+dn(p)+')'==nm);return `<label class="lb">ผู้อำนวยการ (ดึงจากข้อมูลบุคลากรตามตำแหน่ง · แก้ได้)<select class="in" onchange="repDirPick(this.value)"><option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>`<option value="${esc(p.id)}" ${sel&&sel.id==p.id?'selected':''}>${esc(dn(p))}</option>`).join('')}</select></label><label class="lb">ชื่อ<input class="in" value="${esc(nm)}" oninput="repDirSet('n',this.value)"></label><label class="lb">ตำแหน่ง<input class="in" value="${esc(actTt(d,'dir'))}" oninput="repDirSet('t',this.value)"></label>`})():''}`;
-else b=`<h4>หน้าแนบรูปถ่าย</h4><label class="drm-ck"><input type="checkbox" ${d.pPhoto?'checked':''} onchange="repPhCk(this.checked)"> มีหน้ารูปถ่าย (A4 แนวตั้ง · ${REP_PER} รูปต่อหน้า แถวละ 2 รูป) — ติ๊กแล้วจะเพิ่มในรายการ “สิ่งที่แนบมาด้วย” ให้อัตโนมัติ</label>
-${d.pPhoto?`<label class="lb">ชื่อที่ขึ้นในรายการสิ่งที่แนบ<input class="in" value="${esc(d.photoLbl)}" oninput="DR.photoLbl=this.value;drPrev()"></label>
-<label class="drm-up"><input type="file" accept="image/*" multiple hidden onchange="repPhAdd(this.files);this.value=''"><b>เพิ่มรูปถ่าย (เลือกได้หลายรูป)</b><small>รูปถูกย่อและเก็บในเครื่องนี้เท่านั้น ไม่อัปโหลดขึ้นระบบ · จัดเป็นภาพแนวนอนขนาดเท่ากัน</small></label>
-<div class="rp-th">${d.photos.map((x,i)=>`<div class="rp-t"><img src="${x.src}" alt=""><span class="rp-n">${i+1}</span><div class="rp-b"><button type="button" onclick="repPhMv(${i},-1)" title="เลื่อนก่อน">◀</button><button type="button" onclick="repPhMv(${i},1)" title="เลื่อนหลัง">▶</button><button type="button" onclick="repPhDel(${i})" title="ลบรูป">✕</button></div></div>`).join('')}</div>
-<div class="drm-hint">ทั้งหมด ${d.photos.length} รูป · ${repNPg(d)} หน้า</div>
-${Array.from({length:repNPg(d)},(_,i)=>`<label class="lb">คำบรรยายใต้หัวหน้าที่ ${i+1}<input class="in" value="${esc((d.caps||[])[i]!=null?d.caps[i]:'')}" placeholder="${esc(repCap(d,i))}" oninput="repCapS(${i},this.value)"></label>`).join('')}`:''}
-<h4>สิ่งที่แนบมาด้วยอื่นๆ</h4>${repLst('att','เช่น สำเนาเกียรติบัตร')}<div class="drm-hint">รายการแนบทั้งหมดจะขึ้นท้ายบันทึกในช่อง “หมายเหตุ สิ่งที่แนบมาด้วย”</div>`;
+else b=`<h4>สิ่งที่แนบมาด้วย</h4><div class="drm-hint">ข้อ 1 ตั้งต้นตามชื่อการอบรม แก้ไขได้ · แต่ละข้อเลือกรูปแบบการวางรูปได้ ข้อที่ไม่มีรูปให้เลือก “ไม่มีรูป”</div>${repAttForm()}`;
 return tb+b+nx}
 /* ----- Word ----- */
 async function repDocx(){await drLoad('docx');repSync(DR);const D=window.docx,d=DR,T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunPSK',font={ascii:F,hAnsi:F,cs:F,eastAsia:F},W=MEMO_M.w,has=ordHas;
@@ -2244,14 +2262,16 @@ body.push(P([R(actNm(d,'dir'))],{...cen,spacing:{before:sg.line?0:mm(LV.as+1),af
 const at=repAtt(d);if(at.length){body.push(P([R('หมายเหตุ',{bold:true,boldComplexScript:true}),R('  สิ่งที่แนบมาด้วย')],{spacing:{before:mm(6),after:0},keepNext:true}));at.forEach((x,i)=>body.push(P([R((i+1)+'.'),R('\t'),R(x)],{indent:{left:mm(8),hanging:mm(8)},tabStops:tb([LT_,8]),spacing:{before:0,after:0}})))}
 const hdr=new D.Header({children:[Ph([R('- '),new D.TextRun({children:[D.PageNumber.CURRENT],font,size:32,sizeComplexScript:32}),R(' -')],{alignment:D.AlignmentType.CENTER,spacing:{before:mm(20),after:0}})]});
 const secs=[{properties:{titlePage:true,page:{size:{width:11906,height:16838},margin:{top:mm(MEMO_M.t1),bottom:mm(LV.b),left:mm(MEMO_M.l),right:mm(MEMO_M.r),header:mm(5),footer:mm(12.7)},...(d.arab?{}:{pageNumbers:{formatType:D.NumberFormat.THAI_NUMBERS}})}},headers:{default:hdr,first:new D.Header({children:[Ph([],{spacing:{line:20,lineRule:D.LineRuleType.EXACT,before:0,after:0}})]})},children:body}];
-if(d.pPhoto){const ph=d.photos||[],n=repNPg(d),ch=[],NB={style:D.BorderStyle.NONE,size:0,color:'FFFFFF'},GB={style:D.BorderStyle.SINGLE,size:4,color:'BBBBBB'},bd=ph.length?{top:NB,bottom:NB,left:NB,right:NB}:{top:GB,bottom:GB,left:GB,right:GB};
-const cw=mm(93),px=v=>Math.round(v*3.7795);
-for(let i=0;i<n;i++){ch.push(P([R(repCap(d,i),{bold:true,boldComplexScript:true})],{alignment:D.AlignmentType.CENTER,pageBreakBefore:i>0,spacing:{before:0,after:mm(4)}}));
-const rows=[0,1,2].map(r=>new D.TableRow({height:{value:mm(REP_PH+9),rule:D.HeightRule.ATLEAST},cantSplit:true,children:[0,1].map(c=>{const x=ph[i*REP_PER+r*2+c];let kids;
-if(x){const bytes=Uint8Array.from(atob(x.src.split(',')[1]),k=>k.charCodeAt(0));kids=[P([new D.ImageRun({data:bytes,type:'jpg',transformation:{width:px(REP_PW),height:px(REP_PH)}})],{alignment:D.AlignmentType.CENTER,spacing:{before:0,after:mm(6)}})]}else kids=[P([],{spacing:{before:0,after:0}})];
-return new D.TableCell({children:kids,width:{size:cw,type:D.WidthType.DXA},borders:bd,verticalAlign:D.VerticalAlign.CENTER,margins:{top:0,bottom:0,left:0,right:0}})})}));
-ch.push(new D.Table({width:{size:cw*2,type:D.WidthType.DXA},columnWidths:[cw,cw],borders:{top:NB,bottom:NB,left:NB,right:NB,insideVertical:NB,insideHorizontal:NB},rows}))}
-secs.push({properties:{page:{size:{width:11906,height:16838},margin:{top:mm(10),bottom:mm(8),left:mm(12),right:mm(12),header:0,footer:0}}},headers:{default:new D.Header({children:[P([])]})},children:ch})}
+{const pgs=repAttPages(d);if(pgs.length){const ch=[],NB={style:D.BorderStyle.NONE,size:0,color:'FFFFFF'},GB={style:D.BorderStyle.SINGLE,size:4,color:'BBBBBB'},px=v=>Math.round(v*3.7795),tw=v=>Math.round(v*56.6929);
+pgs.forEach((pg,pi)=>{const L=REP_LY[pg.lk],bd=pg.ph.length?{top:NB,bottom:NB,left:NB,right:NB}:{top:GB,bottom:GB,left:GB,right:GB};
+ch.push(Ph([R(repCap(d,pg.a,pg.i),{bold:true,boldComplexScript:true})],{alignment:D.AlignmentType.CENTER,pageBreakBefore:pi>0,spacing:{before:0,after:mm(3)}}));
+const rows=[];L.s.forEach((sl,j)=>{let r=rows.find(r=>Math.abs(r.y-sl[1])<1);if(!r)rows.push(r={y:sl[1],h:sl[3],it:[]});r.it.push({sl,j})});rows.sort((a,b)=>a.y-b.y);let prev=0;
+rows.forEach(r=>{r.it.sort((a,b)=>a.sl[0]-b.sl[0]);const gap=r.y-prev;ch.push(Ph([],{spacing:{line:gap>1?tw(gap):20,lineRule:D.LineRuleType.EXACT,before:0,after:0}}));prev=r.y+r.h;const k=r.it.length,cw=tw(REP_AW/k);
+const cells=r.it.map(it=>{const [sx,sy,sw,sh,ha,va]=it.sl,x=pg.ph[it.j];let kid;if(x){const kk=Math.min(sw/x.w,sh/x.h),by=Uint8Array.from(atob(x.src.split(',')[1]),c=>c.charCodeAt(0));kid=Ph([new D.ImageRun({data:by,type:'jpg',transformation:{width:px(x.w*kk),height:px(x.h*kk)}})],{alignment:k==1?(ha=='l'?D.AlignmentType.LEFT:ha=='r'?D.AlignmentType.RIGHT:D.AlignmentType.CENTER):D.AlignmentType.CENTER,spacing:{before:0,after:0}})}else kid=Ph([],{spacing:{before:0,after:0}});
+return new D.TableCell({children:[kid],width:{size:cw,type:D.WidthType.DXA},borders:bd,verticalAlign:va=='t'?D.VerticalAlign.TOP:D.VerticalAlign.CENTER,margins:{top:0,bottom:0,left:0,right:0}})});
+ch.push(new D.Table({width:{size:cw*k,type:D.WidthType.DXA},columnWidths:Array(k).fill(cw),borders:{top:NB,bottom:NB,left:NB,right:NB,insideVertical:NB,insideHorizontal:NB},rows:[new D.TableRow({height:{value:tw(r.h),rule:D.HeightRule.ATLEAST},cantSplit:true,children:cells})]}))});
+ch.push(Ph([],{spacing:{line:20,lineRule:D.LineRuleType.EXACT,before:0,after:0}}))});
+secs.push({properties:{page:{size:{width:11906,height:16838},margin:{top:mm(10),bottom:mm(5),left:mm(12),right:mm(12),header:0,footer:0}}},headers:{default:new D.Header({children:[Ph([])]})},children:ch})}}
 const doc=new D.Document({creator:'โรงเรียนบ้านผาเยอ',title:d.subject||'รายงานผลการไปราชการ',styles:{default:{document:{run:{font,size:32,sizeComplexScript:32}}}},sections:secs});
 return await D.Packer.toBlob(doc)}
 function admMenu(){const can=canManageAdmin(),sent=LT.filter(l=>l.via=='admin'&&l.createdBy==(me&&me._id)).length,pend=mmGroups(m=>!m.ack&&ltAliveItem(m)).length,card=(r,cls,ico,t,d,st)=>`<div class="admn ${cls}" data-r="${r}" role="button" tabindex="0"><i class="lbn-o o1"></i><i class="lbn-o o2"></i><i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i><i class="lbn-sp s3">✦</i><div class="admn-hd"><span class="lbn-ic">${ic(ico)}</span><span class="admn-go">เปิด ›</span></div><div class="admn-t"><h3>${t}</h3><p>${d}</p></div>${st?`<em class="admn-st">${st}</em>`:''}</div>`;
