@@ -1172,7 +1172,7 @@ const DR_CSS=`.dr-a4{box-sizing:border-box;width:210mm;min-height:297mm;backgrou
 .dr-a4.d-memo.cp1{line-height:6.9mm}.dr-a4.d-memo.cp1 .m-p,.dr-a4.d-memo.cp1 .m-to{margin-top:1.6mm}.dr-a4.d-memo.cp1 .m-dl{height:6.9mm}.dr-a4.d-memo.cp1 .m-ck,.dr-a4.d-memo.cp1 .m-as{line-height:6.9mm}
 .dr-a4.d-memo.cp2,.dr-a4.d-memo.cp3{line-height:6.35mm}.dr-a4.d-memo.cp2 .m-p,.dr-a4.d-memo.cp2 .m-to{margin-top:1.2mm}.dr-a4.d-memo.cp3 .m-p,.dr-a4.d-memo.cp3 .m-to{margin-top:1mm}.dr-a4.d-memo.cp2 .m-dl,.dr-a4.d-memo.cp3 .m-dl{height:6.35mm}.dr-a4.d-memo.cp2 .m-ck,.dr-a4.d-memo.cp2 .m-as,.dr-a4.d-memo.cp3 .m-ck,.dr-a4.d-memo.cp3 .m-as{line-height:6.35mm}
 .dr-a4.d-memo.cp3 .m-sg .m-sp{height:17mm}.dr-a4.d-memo.cp3 .m-as .m-sp{height:11mm}.dr-a4.d-memo.cp3 .m-op{margin-top:3mm}.dr-a4.d-memo.cp2 .m-op{margin-top:3.5mm}
-.dr-a4 .m-li{text-indent:-8mm;padding-left:33mm}.dr-a4 .m-no{display:inline-block;width:8mm;text-indent:0}.dr-a4 .m-nt{margin-top:5mm}.dr-a4 .m-cb i{position:absolute;left:.5mm;top:.5mm;width:1.8mm;height:1.8mm;border-radius:50%;background:#000}.dr-a4 .m-ci{margin-left:3mm;white-space:nowrap}.dr-a4 .m-ci:first-child{margin-left:0}.dr-a4 .m-ro{margin-top:2mm}.dr-a4 .m-ri{padding-left:5.4mm;text-indent:-5.4mm}.dr-a4 .m-2c{display:grid;grid-template-columns:1fr 1fr;column-gap:4mm;margin-top:4mm}.dr-a4 .m-cc{text-align:left}.dr-a4 .m-cc .m-as{margin-top:0}.dr-a4 .m-u{text-decoration:underline}.dr-a4 .m-li2{padding-left:8mm;text-indent:-8mm;white-space:pre-line}
+.dr-a4 .m-li{text-indent:-8mm;padding-left:33mm}.dr-a4 .m-no{display:inline-block;width:8mm;text-indent:0}.dr-a4 .m-nt{margin-top:5mm}.dr-a4 .m-cb i{position:absolute;left:.5mm;top:.5mm;width:1.8mm;height:1.8mm;border-radius:50%;background:#000}.dr-a4 .m-ci{margin-left:3mm;white-space:nowrap}.dr-a4 .m-ci:first-child{margin-left:0}.dr-a4 .m-ro{margin-top:2mm}.dr-a4 .m-ri{padding-left:24.4mm;text-indent:-5.4mm}.dr-a4 .m-r0{padding-left:0;text-indent:0}.dr-a4 .m-h0{display:inline-block;width:19mm;text-indent:0}.dr-a4 .m-nw{white-space:nowrap}.dr-a4 .m-nw .m-ci{margin-left:2mm}.dr-a4 .m-r0 .m-ci{margin-left:0}.dr-a4 .m-2c{display:grid;grid-template-columns:1fr 1fr;column-gap:4mm;margin-top:4mm}.dr-a4 .m-cc{text-align:left}.dr-a4 .m-cc .m-as{margin-top:0}.dr-a4 .m-u{text-decoration:underline}.dr-a4 .m-li2{padding-left:8mm;text-indent:-8mm;white-space:pre-line}
 .dr-a4.d-trip{height:297mm;min-height:297mm;overflow:hidden;padding:12mm 14mm;font-size:15pt;line-height:6.9mm}.dr-a4.d-trip.ls{width:297mm;height:210mm;min-height:210mm;padding:10mm 12mm;font-size:14pt;line-height:6.2mm}
 .dr-a4 .t-u{text-decoration:underline dotted;text-decoration-thickness:.3mm;text-underline-offset:1.3mm;overflow-wrap:anywhere}
 .dr-a4 .t-v{display:block;font-style:normal;min-width:8mm;border-bottom:.35mm dotted #000;text-align:center;min-height:6.2mm;line-height:6mm;padding:0 1mm;overflow-wrap:anywhere}
@@ -2304,10 +2304,10 @@ let h=`<div class="m-hd"><div class="m-tt">บันทึกข้อควา�
 <div class="m-to">${J('เรียน  '+String(d.to||'').trim())}</div>`;
 h+=P(d.p1!=null?d.p1:levP1(d,true));
 const it=(on,t)=>`<span class="m-ci">${C(on)}${T(t)}</span>`;
-h+=`<div class="m-bk m-ro"><div>${T('โดยข้าพเจ้า')} ${it(d.cost=='none','ไม่ขอเบิกค่าใช้จ่าย')}</div>
+h+=`<div class="m-bk m-ro"><div class="m-ri m-r0"><span class="m-h0">${T('โดยข้าพเจ้า')}</span>${it(d.cost=='none','ไม่ขอเบิกค่าใช้จ่าย')}</div>
 <div class="m-ri">${C(d.cost=='rights')}${J('ขอเบิกค่าใช้จ่ายตามสิทธิจากเงินงบประมาณหรือเงินนอกงบประมาณของสถานศึกษา (ค่าพาหนะเดินทาง, ค่าเบี้ยเลี้ยง, ค่าที่พัก) ตามระเบียบกระทรวงการคลังว่าด้วยค่าใช้จ่ายในการเดินทางไปราชการ')}</div>
-<div class="m-ri">${C(d.cost=='only')}${T('ขอเบิกเฉพาะค่าใช้จ่าย')} ${it(d.o1,'ค่าพาหนะเดินทาง')}${it(d.o2,'ค่าน้ำมัน')}${it(d.o3,'ค่าเบี้ยเลี้ยง')}${it(d.o4,'ค่าที่พัก')}</div>
-<div class="m-ri">${C(d.vGov||d.vOwn)}${T('ไปราชการด้วย')} ${it(d.vGov,'รถยนต์ราชการ')}${it(d.vOwn,'รถยนต์ส่วนตัว')}</div>
+<div class="m-ri m-nw">${C(d.cost=='only')}${T('ขอเบิกเฉพาะค่าใช้จ่าย')} ${it(d.o1,'ค่าพาหนะเดินทาง')}${it(d.o2,'ค่าน้ำมัน')}${it(d.o3,'ค่าเบี้ยเลี้ยง')}${it(d.o4,'ค่าที่พัก')}</div>
+<div class="m-ri m-nw">${C(d.vGov||d.vOwn)}${T('ไปราชการด้วย')} ${it(d.vGov,'รถยนต์ราชการ')}${it(d.vOwn,'รถยนต์ส่วนตัว')}</div>
 <div class="m-ri">${C(d.oth)}${T('อื่น ๆ')} <span class="m-vv" style="min-width:110mm;text-align:left">${has(d.othT)?T(d.othT):'&nbsp;'}</span></div></div>`;
 h+=P(d.close);
 h+=`<div class="m-sg"><div class="m-sp${sg.line?' ln':''}">${sg.line?`<div class="m-ln"><span>ลงชื่อ</span><i></i><span>${T(sg.tail)}</span></div>`:''}${d.sig?`<img src="${d.sig}" style="height:${d.sigH}mm" alt="">`:''}</div>${T(d.signer)}${sg.pm&&has(d.pos)?'<br>'+T((sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim()):''}</div>`;
@@ -2367,11 +2367,11 @@ const para=(t,o)=>body.push(P([R(String(t).trim())],{indent:{firstLine:1418},ali
 const A=D.AlignmentType;
 para(d.p1!=null?d.p1:levP1(d,false));
 const ln=(ch,o)=>body.push(P(ch,{spacing:{before:0,after:0},...(o||{})}));
-body.push(P([R('โดยข้าพเจ้า '),CB(d.cost=='none'),R('ไม่ขอเบิกค่าใช้จ่าย')],{spacing:{before:mm(LV.m),after:0},keepNext:true}));
-ln([CB(d.cost=='rights'),R('ขอเบิกค่าใช้จ่ายตามสิทธิจากเงินงบประมาณหรือเงินนอกงบประมาณของสถานศึกษา (ค่าพาหนะเดินทาง, ค่าเบี้ยเลี้ยง, ค่าที่พัก) ตามระเบียบกระทรวงการคลังว่าด้วยค่าใช้จ่ายในการเดินทางไปราชการ')],{indent:{left:mm(5.4),hanging:mm(5.4)},alignment:A.THAI_DISTRIBUTE,keepNext:true});
-ln([CB(d.cost=='only'),R('ขอเบิกเฉพาะค่าใช้จ่าย '),CB(d.o1),R('ค่าพาหนะเดินทาง '),CB(d.o2),R('ค่าน้ำมัน '),CB(d.o3),R('ค่าเบี้ยเลี้ยง '),CB(d.o4),R('ค่าที่พัก')],{indent:{left:mm(5.4),hanging:mm(5.4)},keepNext:true});
-ln([CB(d.vGov||d.vOwn),R('ไปราชการด้วย '),CB(d.vGov),R('รถยนต์ราชการ '),CB(d.vOwn),R('รถยนต์ส่วนตัว')],{indent:{left:mm(5.4),hanging:mm(5.4)},keepNext:true});
-ln([CB(d.oth),R('อื่น ๆ '+(has(d.othT)?String(d.othT).trim():'………………………………………………'))],{indent:{left:mm(5.4),hanging:mm(5.4)},keepNext:true});
+body.push(P([R('โดยข้าพเจ้า'),R('\t'),CB(d.cost=='none'),R('ไม่ขอเบิกค่าใช้จ่าย')],{tabStops:tb([LT_,19]),spacing:{before:mm(LV.m),after:0},keepNext:true}));
+ln([CB(d.cost=='rights'),R('ขอเบิกค่าใช้จ่ายตามสิทธิจากเงินงบประมาณหรือเงินนอกงบประมาณของสถานศึกษา (ค่าพาหนะเดินทาง, ค่าเบี้ยเลี้ยง, ค่าที่พัก) ตามระเบียบกระทรวงการคลังว่าด้วยค่าใช้จ่ายในการเดินทางไปราชการ')],{indent:{left:mm(24.4),hanging:mm(5.4)},alignment:A.THAI_DISTRIBUTE,keepNext:true});
+ln([CB(d.cost=='only'),R('ขอเบิกเฉพาะค่าใช้จ่าย '),CB(d.o1),R('ค่าพาหนะเดินทาง '),CB(d.o2),R('ค่าน้ำมัน '),CB(d.o3),R('ค่าเบี้ยเลี้ยง '),CB(d.o4),R('ค่าที่พัก')],{indent:{left:mm(24.4),hanging:mm(5.4)},keepNext:true});
+ln([CB(d.vGov||d.vOwn),R('ไปราชการด้วย '),CB(d.vGov),R('รถยนต์ราชการ '),CB(d.vOwn),R('รถยนต์ส่วนตัว')],{indent:{left:mm(24.4),hanging:mm(5.4)},keepNext:true});
+ln([CB(d.oth),R('อื่น ๆ '+(has(d.othT)?String(d.othT).trim():'………………………………………………'))],{indent:{left:mm(24.4),hanging:mm(5.4)},keepNext:true});
 if(has(d.close))para(d.close,{keepNext:true,keepLines:true});
 {const sg=memoSg(d),lh=LV.lh,gap=sg.line?lh:0;
 if(d.sig){const sb=Uint8Array.from(atob(d.sig.split(',')[1]),c=>c.charCodeAt(0)),hp=d.sigH*3.7795;body.push(P([new D.ImageRun({data:sb,type:'png',transformation:{width:Math.round(hp*(d.sigAR||1)),height:Math.round(hp)}})],{...cen,spacing:{before:mm(Math.max(0,LV.sp-gap-d.sigH)),after:0},keepNext:true}))}
