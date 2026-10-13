@@ -1853,11 +1853,13 @@ const U=(v,n)=>{v=String(v==null?'':v).trim();n=n||6;if(!v)return `<i class="t-i
 const Bx=(v,c)=>`<i class="t-v${c?' '+c:''}">${T(v)}</i>`;
 const CB=on=>`<i class="t-cb${on?' on':''}"></i>`;
 const DF=(iso,pre)=>{const p=dp(iso);return `${pre===false?'':'วันที่ '}${U(p[0],3)} เดือน ${U(p[1],9)} พ.ศ. ${U(p[2],5)}`};
-return {T,dp,dm,U,Bx,CB,DF}}
-function tripUnits1(d){const {T,U,Bx,CB,DF,dm}=tripCtx(d),dur=tripDur(d),tot=tripTot(d),nm=String(d.name||'').trim(),pt=iso=>iso?'':'';
+const nmS=s=>String(s==null?'':s).replace(/[()]/g,'').trim();
+const SG=(label,name,pos,iso)=>{const n=nmS(name),pp=String(pos||'').trim();return `<div class="t-sg"><div class="t-sl"><span>ลงชื่อ</span><i class="t-dl"></i>${label?`<span>${label}</span>`:''}</div><div class="t-sc">${n?'('+T(n)+')':'('+U('',24)+')'}</div>${pos===null?'':`<div class="t-sc">${pp?'ตำแหน่ง '+T(pp):'ตำแหน่ง'+U('',24)}</div>`}${iso===undefined?'':`<div class="t-sc">${iso?'วันที่ '+T(dm(iso)):DF('')}</div>`}</div>`};
+return {T,dp,dm,U,Bx,CB,DF,SG,nmS}}
+function tripUnits1(d){const {T,U,Bx,CB,DF,dm,SG}=tripCtx(d),dur=tripDur(d),tot=tripTot(d),nm=String(d.name||'').trim(),pt=iso=>iso?'':'';
 const tm=t=>t?String(t).replace(':','.'):'';
 const loanBy=d.loanBy!=null?d.loanBy:nm,K=[];
-const sgl=(label,name,pos,iso)=>`<div class="t-sg"><div class="t-sl"><span>ลงชื่อ</span><i class="t-dl"></i><span>${label}</span></div><div class="t-sc">(${U(name,22)})</div><div class="t-sl"><span>ตำแหน่ง</span>${Bx(pos)}</div>${iso===undefined?'':`<div class="t-sd">${DF(iso)}</div>`}</div>`;
+const sgl=SG;
 K.push({u:[`<div class="t-b t-top"><div class="t-tl"><div>สัญญาเงินยืมเลขที่${U(d.loanNo,10)} ${DF(d.loanDate)}</div><div>ชื่อผู้ยืม${U(loanBy,20)} จำนวนเงิน${U(loanAmtS(d.loanAmt),12)} บาท</div></div><div class="t-tr2"><div>ส่วนที่ ๑</div><div>แบบ ๘๗๐๘</div></div></div>`]});
 K.push({u:[`<div class="t-b t-tt">ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ</div>`,`<div class="t-b t-rt"><div>ที่ทำการ${U(d.org,28)}</div><div>${DF(d.date)}</div></div>`]});
 K.push({u:[`<div class="t-b t-rr"><div>เรื่อง&nbsp; ขออนุมัติเบิกค่าใช้จ่ายในการเดินทางไปราชการ</div><div>เรียน&nbsp; ${U(d.to,40)}</div></div>`]});
@@ -1887,16 +1889,16 @@ const rmk=String(d.remark||'').trim(),rl=rmk?rmk.split('\n'):[];while(rl.length<
 K.push({u:[`<div class="t-b t-bx t-bd"><div class="t-rm">${rl.map((x,i)=>`<div class="t-rl">${i?'':'หมายเหตุ'}${T(x)}</div>`).join('')}</div></div>`]});
 K.push({u:[`<div class="t-b t-ex2"><b>คำชี้แจง</b> ${TRIP_EXP.split('|').map((x,i)=>`<div class="${i?'t-in':''}">${T(x)}</div>`).join('')}</div>`]});
 return K}
-function tripUnits2(d){const {T,U,Bx,DF,dm}=tripCtx(d),rs=tripRows(d),n=Math.max(TRIP_MINROWS,rs.length),tot={a:tripSum(rs.map(r=>r.a)),l:tripSum(rs.map(r=>r.l)),v:tripSum(rs.map(r=>r.v)),o:tripSum(rs.map(r=>r.o))};tot.t=tripSum(rs.map(r=>r.t));
+function tripUnits2(d,nr){const {T,U,Bx,DF,dm,SG}=tripCtx(d),rs=tripRows(d),n=nr==null?Math.max(TRIP_MINROWS,rs.length):nr,tot={a:tripSum(rs.map(r=>r.a)),l:tripSum(rs.map(r=>r.l)),v:tripSum(rs.map(r=>r.v)),o:tripSum(rs.map(r=>r.o))};tot.t=tripSum(rs.map(r=>r.t));
 const th=`<div class="t-b t-gh"><div class="t-gr"><b class="t-r2">ลำดับที่</b><b class="t-r2">ชื่อ – สกุล</b><b class="t-r2">ตำแหน่ง</b><b class="t-c4">ค่าใช้จ่าย</b><b class="t-r2">รวม</b><b class="t-r2">ลายมือชื่อ<br>ผู้รับเงิน</b><b class="t-r2">วัน เดือน ปี<br>ที่รับเงิน</b><b class="t-r2">หมายเหตุ</b><b>ค่าเบี้ยเลี้ยง</b><b>ค่าเช่าที่พัก</b><b>ค่าพาหนะ</b><b>ค่าใช้จ่ายอื่นๆ</b></div></div>`;
 const head=`<div class="t-b t-h2"><div class="t-h2r"><div>ส่วนที่ ๒</div><div>แบบ ๘๗๐๘</div></div><div class="t-tt">หลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ</div><div class="t-ct">ชื่อส่วนราชการ${U(d.org,40)}</div><div>ประกอบใบเบิกค่าใช้จ่ายในการเดินทางไปราชการของ${U(String(d.name||'').trim()+(d.tv.length||d.who=='group'?' และคณะ':''),50)} ลงวันที่${U(dm(d.date),20)}</div></div>`;
 const A=v=>v==null?'':loanAmtS(v);
 const rows=Array.from({length:n},(_,i)=>{const r=rs[i]||{};return {row:1,h:`<div class="t-b t-gh"><div class="t-gr t-rw"><span class="c">${T(String(i+1))}</span><span>${T(String(r.n||'').trim())}</span><span>${T(String(r.p||'').trim())}</span><span class="a">${T(A(r.a))}</span><span class="a">${T(A(r.l))}</span><span class="a">${T(A(r.v))}</span><span class="a">${T(A(r.o))}</span><span class="a">${T(A(r.t))}</span><span></span><span></span><span>${T(String(r.note||'').trim())}</span></div></div>`}});
 const foot=`<div class="t-b t-gh"><div class="t-gr t-rw t-sm"><span class="t-s3 a"><b>รวมเงิน</b></span><span class="a">${T(A(tot.a))}</span><span class="a">${T(A(tot.l))}</span><span class="a">${T(A(tot.v))}</span><span class="a">${T(A(tot.o))}</span><span class="a">${T(A(tot.t))}</span><span class="t-s3b">ตามสัญญายืมเงินเลขที่${T(String(d.loanNo||'').trim()||'……/……')} วันที่${T(dm(d.loanDate)||'……………')}</span></div></div>`;
 const payN=tripNm(d,'payN');
-const tail=`<div class="t-b t-tl2"><div class="t-ex"><span>จำนวนเงินรวมทั้งสิ้น (ตัวอักษร)</span>${Bx(loanWords(tot.t),'t-f1')}</div><div class="t-ft"><div class="t-ex2s">${TRIP_EXP2.split('|').map(x=>`<div>${T(x)}</div>`).join('')}</div><div class="t-sg t-sg2"><div class="t-sl"><span>ลงชื่อ</span><i class="t-dl"></i><span>ผู้จ่ายเงิน</span></div><div class="t-sc">(${U(payN.replace(/^\(|\)$/g,''),22)})</div><div class="t-sl"><span>ตำแหน่ง</span>${Bx(d.payP)}</div><div class="t-sd">วันที่${Bx(dm(d.payD)||'')}</div></div></div></div>`;
+const tail=`<div class="t-b t-tl2"><div class="t-ex"><span>จำนวนเงินรวมทั้งสิ้น (ตัวอักษร)</span>${Bx(loanWords(tot.t),'t-f1')}</div><div class="t-ft"><div class="t-ex2s">${TRIP_EXP2.split('|').map(x=>`<div>${T(x)}</div>`).join('')}</div>${SG('ผู้จ่ายเงิน',payN,d.payP,d.payD||'')}</div></div>`;
 return {head,th,rows,foot,tail}}
-function tripUnits3(d){const {T,U,Bx,dm}=tripCtx(d),nm=String(d.name||'').trim(),dur=tripDur(d),tm=t=>t?String(t).replace(':','.'):'',aa=tripAA(d),ad=tripDays(d);
+function tripUnits3(d){const {T,U,Bx,dm,SG}=tripCtx(d),nm=String(d.name||'').trim(),dur=tripDur(d),tm=t=>t?String(t).replace(':','.'):'',aa=tripAA(d),ad=tripDays(d);
 const top=`<div class="t-b t-bd t-top3"><div>ชื่อ – สกุล${U(nm,40)} ตำแหน่ง${U(d.pos,30)}</div><div>ออกจากบ้านพัก วันที่${U(dm(d.dDep),30)} เวลา${U(tm(d.tDep),12)} น.</div><div>กลับถึงบ้านพัก วันที่${U(dm(d.dRet),30)} เวลา${U(tm(d.tRet),12)} น.</div><div>รวมค่าเบี้ยเลี้ยงเดินทาง${U(ad==null?'':String(ad),10)} วัน วันละ${U(actN(d.ar)==null?'':loanAmtS(d.ar),10)} บาท รวมเป็นเงิน${U(tripF(aa),14)} บาท</div></div>`;
 const tt=`<div class="t-b"><div class="t-rgt2">แบบ บก.๔๒๓๑</div><div class="t-tt">ใบรับรองแทนใบเสร็จรับเงิน</div><div class="t-ct t-bold">สำนักงาน${T(DR_SCH.name)}</div></div>`;
 const th=`<div class="t-b t-rc"><div class="t-rr3 t-rh"><b>วัน เดือน ปี</b><b>รายละเอียดรายจ่าย</b><b>จำนวนเงิน</b><b>หมายเหตุ</b></div></div>`;
@@ -1904,9 +1906,9 @@ const items=d.rc.map((r,i)=>({row:1,h:`<div class="t-b t-rc"><div class="t-rr3">
 const rt=tripRcTot(d),sum=`<div class="t-b t-rc"><div class="t-rr3 t-rs"><b class="t-s2">รวมทั้งสิ้น</b><span class="a">${T(rt==null?'':loanFmt(rt))}</span><span></span></div></div>`;
 const bot=`<div class="t-b t-bd"><div class="t-ex"><span>รวมทั้งสิ้น (ตัวอักษร)</span>${Bx(loanWords(rt),'t-f1')}</div>
 <div class="t-in t-gap">ข้าพเจ้า${U(nm,30)} ตำแหน่ง${U(d.pos,24)}</div><div>หน่วยงาน${U(DR_SCH.name,28)}ขอรับรองว่ารายจ่ายข้างต้นนี้ไม่อาจเรียกเก็บใบเสร็จรับเงินจากผู้รับได้ และข้าพเจ้าได้จ่ายไปในงานของราชการโดยแท้</div>
-<div class="t-rgt"><div class="t-sg"><div class="t-sl"><span>(ลงชื่อ)</span><i class="t-dl"></i></div><div class="t-sc">(${U(nm,24)})</div><div class="t-sd">วันที่${U('',16)}</div></div></div>
+<div class="t-rgt">${SG('',nm,null,'')}</div>
 <div class="t-gap"><b><i>หมายเหตุ</i></b>&nbsp; ขออนุญาตโดยสารรถรับจ้าง เนื่องจาก${U(d.rcR,50)}</div>
-<div class="t-rgt"><div class="t-sg"><div class="t-sl"><span>(ลงชื่อ)</span><i class="t-dl"></i></div><div class="t-sc">(${U((d.rcAuth!=null?d.rcAuth:loanAuto('dir')).replace(/^\(|\)$/g,''),24)})</div></div></div></div>`;
+<div class="t-rgt">${SG('',d.rcAuth!=null?d.rcAuth:loanAuto('dir'),null)}</div></div>`;
 const P3=h=>h.replace(/class="t-b/,'class="t-b t-p3');return {top:P3(top),tt:P3(tt),th:P3(th),items:items.map(o=>({...o,h:P3(o.h)})),sum:P3(sum),bot:P3(bot)}}
 /* จัดหน้า (จัดกลุ่มบล็อก ตัดตามความสูงจริง) */
 function tripPack(groups,ls){const W=ls?273:182,H=ls?190:273,host=document.createElement('div');host.className='dr-a4 d-trip'+(ls?' ls':'');host.style.cssText=`position:fixed;left:-10000px;top:0;height:auto;min-height:0;padding:0;box-shadow:none;overflow:visible;width:${W}mm`;
@@ -1918,11 +1920,12 @@ groups.forEach(g=>{const gh=g.u.reduce((s,u)=>s+hh[u.i],0);
 if(cur.length&&(g.brk||y+gh>H-1)){pages.push(cur);cur=[];y=0}
 if(!cur.length&&pages.length&&g.row&&g.thh){cur.push(g.thh);y+=hh.th||0}
 g.u.forEach(u=>cur.push(u.h));y+=gh});
-pages.push(cur);return pages.map(p=>`<div class="dr-a4 d-trip${ls?' ls':''}">${p.join('')}</div>`).join('')}
+pages.push(cur);return pages.map(p=>`<div class="dr-a4 d-trip${ls?' ls':''}">${p.join('')}</div>`)}
 function tripDocHtml(d){const out=[];
-const g1=tripUnits1(d);out.push(tripPack(g1.map(g=>({u:g.u.map(h=>({h})),brk:g.brk})),false));
-if(d.p2){const u=tripUnits2(d),th={h:u.th};const gs=[{u:[{h:u.head},th]},...u.rows.map(r=>({u:[r],row:1,th:u.th,thh:u.th})),{u:[{h:u.foot},{h:u.tail}]}];out.push(tripPack(gs,true))}
-if(d.p3){const u=tripUnits3(d),th={h:u.th};const gs=[{u:[{h:u.top},{h:u.tt},th]},...u.items.map(r=>({u:[r],row:1,th:u.th,thh:u.th})),{u:[{h:u.sum}]},{u:[{h:u.bot}]}];out.push(tripPack(gs,false))}
+const g1=tripUnits1(d);out.push(...tripPack(g1.map(g=>({u:g.u.map(h=>({h})),brk:g.brk})),false));
+if(d.p2){const mk=nr=>{const u=tripUnits2(d,nr),th={h:u.th};return tripPack([{u:[{h:u.head},th]},...u.rows.map(r=>({u:[r],row:1,th:u.th,thh:u.th})),{u:[{h:u.foot},{h:u.tail}]}],true)};
+const filled=tripRows(d).length,pad=Math.max(TRIP_MINROWS,filled);let best=mk(pad);if(best.length>1&&pad>filled){const min=mk(filled).length;if(min<best.length){for(let k=pad-1;k>=filled;k--){const t=mk(k);if(t.length<=min||k==filled){best=t;break}}}}out.push(...best)}
+if(d.p3){const u=tripUnits3(d),th={h:u.th};const gs=[{u:[{h:u.top},{h:u.tt},th]},...u.items.map(r=>({u:[r],row:1,th:u.th,thh:u.th})),{u:[{h:u.sum}]},{u:[{h:u.bot}]}];out.push(...tripPack(gs,false))}
 return `<div class="dr-pgs trip">${out.join('')}</div>`}
 /* ----- ฟอร์ม ----- */
 function tripTab(i){DR._tab=i;drFill()}
@@ -1979,7 +1982,7 @@ function tripTv(k,i,r,lb,sel){const f=(x,ph)=>`<input class="in" inputmode="deci
 return `<div class="act-sg"><div class="tp-h"><b>${lb}</b>${k=='tv'?`<button type="button" class="btn o ln-x" onclick="tripDelT(${i})">ลบแถว</button>`:''}</div>${sel(k=='tv'?'v'+i:'t1',r.n)}<input class="in" placeholder="ชื่อ-สกุล" value="${esc(r.n)}" oninput="tripRow('${k}',${i},'n',this.value)"><input class="in" placeholder="ตำแหน่ง" value="${esc(r.p)}" oninput="tripRow('${k}',${i},'p',this.value)"><div class="tp-4">${f('a','เบี้ยเลี้ยง')}${f('l','ที่พัก')}${f('v','พาหนะ')}${f('o','อื่นๆ')}</div><input class="in" placeholder="หมายเหตุ (เช่น อัตรา/จำนวนวัน)" value="${esc(r.note)}" oninput="tripRow('${k}',${i},'note',this.value)"></div>`}
 /* ----- Word ----- */
 async function tripDocx(){await drLoad('docx');const D=window.docx,d=DR,T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunPSK',font={ascii:F,hAnsi:F,cs:F,eastAsia:F};
-const {dm}=tripCtx(d);let SZ=30;
+const {dm,nmS}=tripCtx(d);let SZ=30;
 const R=(t,o)=>new D.TextRun({text:T(t),font,size:SZ,sizeComplexScript:SZ,...(o||{})}),P=(ch,o)=>new D.Paragraph({children:ch,spacing:{before:0,after:0},...(o||{})});
 const UL={underline:{type:D.UnderlineType.DOTTED,color:'000000'}},V=(t,n)=>{t=String(t==null?'':t).trim();return R(t?' '+t+' ':' '.repeat(n||6),UL)},Vt=()=>new D.TextRun({text:'\t',font,size:SZ,...UL}),B=t=>R(t,{bold:true,boldComplexScript:true});
 const RT=D.TabStopType.RIGHT,LT=D.TabStopType.LEFT,CT=D.TabStopType.CENTER,rt=(p,l)=>({type:RT,position:mm(p),...(l===false?{}:{leader:D.LeaderType.DOT})}),lt=p=>({type:LT,position:mm(p)}),ct=p=>({type:CT,position:mm(p)});
@@ -1990,7 +1993,9 @@ const cell=(ch,w,o)=>new D.TableCell({children:ch,width:{size:mm(w),type:D.Width
 const CBx=on=>R(on?'● ':'○ ',{font:{ascii:'Segoe UI Symbol',hAnsi:'Segoe UI Symbol',cs:'Segoe UI Symbol',eastAsia:'MS Gothic'}});
 const sec=(ch,ls)=>({properties:{page:{size:{width:11906,height:16838,orientation:ls?D.PageOrientation.LANDSCAPE:D.PageOrientation.PORTRAIT},margin:{top:mm(ls?10:12),bottom:mm(ls?10:12),left:mm(ls?12:14),right:mm(ls?12:14)}}},children:ch});
 /* ส่วนที่ 1 */
-const sgl=(label,name,pos,iso,ind,wd)=>{const w=wd||80,o=ind==null?0:ind;return [P([R('ลงชื่อ'),Vt(),R(label)],{indent:{left:mm(o)},tabStops:[rt(o+w-18)],spacing:{before:mm(8),after:0}}),P([R('('+String(name||'').replace(/^\(|\)$/g,'').trim()+')')],{indent:{left:mm(o),right:mm(W-o-w+6)},alignment:D.AlignmentType.CENTER}),P([R('ตำแหน่ง'),V(pos),Vt()],{indent:{left:mm(o)},tabStops:[rt(o+w)]}),...(iso===undefined?[]:[P([...dfull(iso)],{indent:{left:mm(o)}})])]};
+const SGW=(label,name,pos,iso,tabW,indL,indR,gap)=>{const n=nmS(name),pp=String(pos||'').trim(),ci={alignment:D.AlignmentType.CENTER,indent:{left:mm(indL),right:mm(indR)}};
+return [P([R('ลงชื่อ'),Vt(),R(label)],{indent:{left:mm(indL)},tabStops:[rt(tabW)],spacing:{before:mm(gap||8),after:0}}),P(n?[R('('+n+')')]:[R('('),V('',24),R(')')],ci),...(pos===null?[]:[P(pp?[R('ตำแหน่ง '+pp)]:[R('ตำแหน่ง'),V('',24)],ci)]),...(iso===undefined?[]:[P(iso?[R('วันที่ '+dm(iso))]:dfull(''),ci)])]};
+const sgl=(label,name,pos,iso,ind,wd)=>{const w=wd||80,o=ind==null?0:ind;return SGW(label,name,pos,iso,o+w-18,o,W-o-w+6)};
 const pl=k=>[CBx(d[k]=='home'),R('บ้านพัก  '),CBx(d[k]=='office'),R('สำนักงาน  '),CBx(d[k]=='th'),R('ประเทศไทย')];
 const ex=(lb,det,days,amt)=>P([R(lb),R('\t'),V(det),Vt(),...(days===null?[]:[R(' จำนวน'),V(days),Vt(),R(' วัน')]),R(' รวม'),V(amt),Vt(),R(' บาท')],{tabStops:days===null?[lt(40),rt(138),rt(168)]:[lt(40),rt(105),rt(136),rt(168)],spacing:{before:mm(1),after:0}});
 const ad=tripDays(d),rate=r=>actN(r)==null?String(r||'').trim():'อัตราวันละ '+loanAmtS(r)+' บาท',lrate=actN(d.lr)==null?'':'คืนละ '+loanAmtS(d.lr)+' บาท';
@@ -2018,9 +2023,9 @@ P([R('จำนวน'),V(d.cnt,8),R(' ฉบับ รวมทั้งจำ�
 /* หน้า 2 */
 const payN=tripNm(d,'payN'),chkN=tripNm(d,'chkN'),apvN=tripNm(d,'apvN');
 const half=(txt,nmx,pos,iso)=>[...(txt?txt.split('\n').map(x=>P([R(x)])):[]),...sgl('',nmx,pos,iso,0,80).map(p=>p)];
-const colC=(lines,nmx,pos,iso)=>[...lines.map(x=>P([R(x)])),P([R('(ลงชื่อ)'),Vt()],{tabStops:[rt(78)],spacing:{before:mm(8),after:0}}),P([R('('+String(nmx).replace(/^\(|\)$/g,'')+')')],{alignment:D.AlignmentType.CENTER}),P([R('ตำแหน่ง'),V(pos),Vt()],{tabStops:[rt(84)]}),P(dfull(iso))];
+const colC=(lines,nmx,pos,iso)=>[...lines.map(x=>P([R(x)])),...SGW('',nmx,pos,iso,84,0,0)];
 const bx2=new D.Table({width:{size:mm(W),type:D.WidthType.DXA},columnWidths:[mm(91),mm(91)],rows:[new D.TableRow({cantSplit:true,children:[cell(colC(['ได้ตรวจสอบหลักฐานการเบิกจ่ายเงินที่แนบ','ถูกต้องแล้วเห็นควรอนุมัติให้เบิกจ่ายได้'],chkN,d.chkP,d.chkD),91),cell(colC(['อนุมัติให้จ่ายได้',''],apvN,d.apvP,d.apvD),91)]})]});
-const s2n=(lb,nmx,pos,iso)=>[P([R('ลงชื่อ'),Vt(),R(lb)],{tabStops:[rt(60)],spacing:{before:mm(8),after:0}}),P([R('('+String(nmx).replace(/^\(|\)$/g,'')+')')],{alignment:D.AlignmentType.CENTER,indent:{right:mm(25)}}),P([R('ตำแหน่ง'),V(pos),Vt()],{tabStops:[rt(78)]}),P(dfull(iso))];
+const s2n=(lb,nmx,pos,iso)=>SGW(lb,nmx,pos,iso,72,0,16);
 const rcvL=s2n('ผู้รับเงิน',tripPn(nm),d.pos,d.rcvD),payL=s2n('ผู้จ่ายเงิน',payN,d.payP,d.payD);
 const rcvBox=new D.Table({width:{size:mm(W),type:D.WidthType.DXA},columnWidths:[mm(W)],rows:[new D.TableRow({cantSplit:true,children:[cell([P([R('ได้รับเงินค่าใช้จ่ายในการเดินทางไปราชการจำนวน'),V(tripF(tot),14),R(' บาท')],{indent:IN,spacing:{before:mm(2),after:0}}),P([R('('),V(tripWd(d),50),R(') ไว้เป็นการถูกต้องแล้ว')]),
 new D.Table({width:{size:mm(W-6),type:D.WidthType.DXA},columnWidths:[mm((W-6)/2),mm((W-6)/2)],borders:{top:N0,bottom:N0,left:N0,right:N0,insideVertical:N0,insideHorizontal:N0},rows:[new D.TableRow({children:[new D.TableCell({children:rcvL,borders:nb,width:{size:mm((W-6)/2),type:D.WidthType.DXA}}),new D.TableCell({children:payL,borders:nb,width:{size:mm((W-6)/2),type:D.WidthType.DXA}})]})]}),
@@ -2031,8 +2036,8 @@ SZ=28;const expl=[P([B('คำชี้แจง ')],{spacing:{before:mm(4),afte
 const spc=P([],{spacing:{before:mm(3),after:0}});
 const sections=[sec([...c1,new D.Paragraph({children:[new D.PageBreak()]}),bx2,spc,rcvBox,spc,rmBox,...expl])];
 /* ส่วนที่ 2 (แนวนอน) */
-if(d.p2){SZ=28;const rs=tripRows(d),n=Math.max(TRIP_MINROWS,rs.length),A=v=>v==null?'':loanAmtS(v),tt={a:tripSum(rs.map(r=>r.a)),l:tripSum(rs.map(r=>r.l)),v:tripSum(rs.map(r=>r.v)),o:tripSum(rs.map(r=>r.o)),t:tripSum(rs.map(r=>r.t))};
-const CW=[11,42,38,20,20,20,21,24,29,26,22],WT=CW.reduce((s,x)=>s+x,0),cp=(txt,w,o,al)=>cell([P([R(txt,(o&&o.b)?{bold:true,boldComplexScript:true}:{})],{alignment:al||D.AlignmentType.LEFT})],w,{verticalAlign:D.VerticalAlign.CENTER,...(o&&o.s||{})});
+if(d.p2){SZ=28;const rs=tripRows(d),extra=rs.reduce((sm,r)=>sm+Math.max(0,Math.ceil(String(r.note||'').length/11)-1),0),n=Math.max(rs.length,Math.max(TRIP_MINROWS,rs.length)-Math.ceil(extra*6.5/7)),A=v=>v==null?'':loanAmtS(v),tt={a:tripSum(rs.map(r=>r.a)),l:tripSum(rs.map(r=>r.l)),v:tripSum(rs.map(r=>r.v)),o:tripSum(rs.map(r=>r.o)),t:tripSum(rs.map(r=>r.t))};
+const CW=[11,42,38,20,20,20,21,24,24,22,31],WT=CW.reduce((s,x)=>s+x,0),cp=(txt,w,o,al)=>cell([P([R(txt,(o&&o.b)?{bold:true,boldComplexScript:true}:{})],{alignment:al||D.AlignmentType.LEFT})],w,{verticalAlign:D.VerticalAlign.CENTER,...(o&&o.s||{})});
 const C=D.AlignmentType.CENTER,Rr=D.AlignmentType.RIGHT;
 const h1=new D.TableRow({cantSplit:true,tableHeader:true,children:[cp('ลำดับที่',CW[0],{b:1,s:{rowSpan:2}},C),cp('ชื่อ – สกุล',CW[1],{b:1,s:{rowSpan:2}},C),cp('ตำแหน่ง',CW[2],{b:1,s:{rowSpan:2}},C),cp('ค่าใช้จ่าย',CW[3]+CW[4]+CW[5]+CW[6],{b:1,s:{columnSpan:4}},C),cp('รวม',CW[7],{b:1,s:{rowSpan:2}},C),cp('ลายมือชื่อผู้รับเงิน',CW[8],{b:1,s:{rowSpan:2}},C),cp('วัน เดือน ปี ที่รับเงิน',CW[9],{b:1,s:{rowSpan:2}},C),cp('หมายเหตุ',CW[10],{b:1,s:{rowSpan:2}},C)]});
 const h2=new D.TableRow({cantSplit:true,tableHeader:true,children:['ค่าเบี้ยเลี้ยง','ค่าเช่าที่พัก','ค่าพาหนะ','ค่าใช้จ่ายอื่นๆ'].map((x,i)=>cp(x,CW[3+i],{b:1},C))});
@@ -2044,7 +2049,7 @@ P([R('ประกอบใบเบิกค่าใช้จ่ายใน�
 P([R('จำนวนเงินรวมทั้งสิ้น (ตัวอักษร)'),V(loanWords(tt.t),30),Vt()],{tabStops:[rt(WT)],spacing:{before:mm(4),after:0}}),
 new D.Table({width:{size:mm(WT),type:D.WidthType.DXA},columnWidths:[mm(170),mm(103)],borders:{top:N0,bottom:N0,left:N0,right:N0,insideVertical:N0,insideHorizontal:N0},rows:[new D.TableRow({cantSplit:true,children:[
 new D.TableCell({borders:nb,width:{size:mm(170),type:D.WidthType.DXA},verticalAlign:D.VerticalAlign.BOTTOM,children:TRIP_EXP2.split('|').map(x=>P([R(x,{size:22,sizeComplexScript:22})]))}),
-new D.TableCell({borders:nb,width:{size:mm(103),type:D.WidthType.DXA},children:[P([R('ลงชื่อ'),Vt(),R('ผู้จ่ายเงิน')],{tabStops:[rt(85)],spacing:{before:mm(3),after:0}}),P([R('('+String(payN).replace(/^\(|\)$/g,'')+')')],{alignment:C,indent:{right:mm(18)}}),P([R('ตำแหน่ง'),V(d.payP),Vt()],{tabStops:[rt(95)]}),P([R('วันที่'),V(dm(d.payD),10)])]})]})]})],true));SZ=30}
+new D.TableCell({borders:nb,width:{size:mm(103),type:D.WidthType.DXA},children:[...SGW('ผู้จ่ายเงิน',payN,d.payP,d.payD||'',85,0,18,3)]})]})]})],true));SZ=30}
 /* ใบรับรองแทนใบเสร็จ */
 if(d.p3){SZ=28;const aa=tripAA(d),adx=tripDays(d),rt3=tripRcTot(d),CW=[26,100,30,26];
 const cp=(ch,w,o)=>cell(ch,w,o);
@@ -2055,7 +2060,7 @@ cp(i?[P([R((i+1)+'. จาก'),V(r.f,16),R(' ถึง'),V(r.t,18)]),P([R('โ�
 cp([P([R(r.a===''?'':loanAmtS(r.a))],{alignment:D.AlignmentType.RIGHT,spacing:{before:mm(5),after:0}})],CW[2],{borders:nbx(false,i==d.rc.length-1)}),cp([P([])],CW[3],{borders:nbx(false,i==d.rc.length-1)})]}));
 const sm=new D.TableRow({cantSplit:true,children:[cp([P([B('รวมทั้งสิ้น')],{alignment:D.AlignmentType.CENTER})],CW[0]+CW[1],{columnSpan:2}),cp([P([R(rt3==null?'':loanFmt(rt3))],{alignment:D.AlignmentType.RIGHT})],CW[2]),cp([P([])],CW[3])]});
 const tb3=new D.Table({width:{size:mm(182),type:D.WidthType.DXA},columnWidths:CW.map(mm),rows:[hr,...items,sm]});
-const dir=String(d.rcAuth!=null?d.rcAuth:loanAuto('dir')).replace(/^\(|\)$/g,''),rg=(lb,n2,dt)=>[P([R('(ลงชื่อ)'),Vt()],{indent:{left:mm(95)},tabStops:[rt(170)],spacing:{before:mm(7),after:0}}),P([R('('+n2+')')],{indent:{left:mm(95)},alignment:D.AlignmentType.CENTER}),...(dt?[P([R('วันที่'),V('',12)],{indent:{left:mm(120)}})]:[])];
+const dir=String(d.rcAuth!=null?d.rcAuth:loanAuto('dir')).replace(/^\(|\)$/g,''),rg=(lb,n2,dt)=>SGW('',n2,null,dt?'':undefined,170,95,12,7);
 sections.push(sec([P([R('ชื่อ – สกุล'),V(nm,40),R(' ตำแหน่ง'),V(d.pos,30)]),P([R('ออกจากบ้านพัก วันที่'),V(dm(d.dDep),30),R(' เวลา'),V(tm(d.tDep),12),R(' น.')]),P([R('กลับถึงบ้านพัก วันที่'),V(dm(d.dRet),30),R(' เวลา'),V(tm(d.tDep)?tm(d.tRet):'',12),R(' น.')]),
 P([R('รวมค่าเบี้ยเลี้ยงเดินทาง'),V(adx==null?'':String(adx),10),R(' วัน วันละ'),V(actN(d.ar)==null?'':loanAmtS(d.ar),10),R(' บาท รวมเป็นเงิน'),V(tripF(aa),14),R(' บาท')]),
 P([R('แบบ บก.๔๒๓๑')],{alignment:D.AlignmentType.RIGHT,spacing:{before:mm(4),after:0}}),P([B('ใบรับรองแทนใบเสร็จรับเงิน')],{alignment:D.AlignmentType.CENTER,run:{size:34}}),P([B('สำนักงาน'+DR_SCH.name)],{alignment:D.AlignmentType.CENTER,spacing:{before:0,after:mm(2)}}),tb3,
