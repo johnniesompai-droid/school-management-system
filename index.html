@@ -99,6 +99,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .hs2{--hc:rgba(139,92,246,.45);--hd:#52349A;--hs:#7458B0;--hb:#E0D4FF;--hl:rgba(196,170,255,.35);--h1:#BDA3FF;--h2:#9B7DF0;background:linear-gradient(135deg,#F6F0FF,#E8DCFF 60%,#E0D2FF)}
 .hs3{--hc:rgba(16,185,129,.42);--hd:#1C6F51;--hs:#3F8A6E;--hb:#C5EBD9;--hl:rgba(140,224,186,.35);--h1:#7BDDB2;--h2:#4CC394;background:linear-gradient(135deg,#EDFBF4,#D9F4E7 60%,#CEF0E0)}
 .hs5{--hc:rgba(236,72,153,.4);--hd:#9D2A64;--hs:#B5527F;--hb:#FFD3E6;--hl:rgba(255,170,205,.35);--h1:#FFA8CF;--h2:#F77FB5;background:linear-gradient(135deg,#FFF3F8,#FFE2EF 60%,#FFD7E9)}
+.hs6{--hc:rgba(16,185,129,.4);--hd:#0E7A5A;--hs:#3E9C80;--hb:#C9F5E4;--hl:rgba(150,235,205,.35);--h1:#9AE6C8;--h2:#5FD3A8;background:linear-gradient(135deg,#F0FFF8,#DDF9EC 60%,#D0F5E6)}
 .hs4{--hc:rgba(245,158,11,.45);--hd:#9A5214;--hs:#B27434;--hb:#FFDDB5;--hl:rgba(255,205,140,.4);--h1:#FFC88A;--h2:#FFA85A;background:linear-gradient(135deg,#FFF6E9,#FFE8CC 60%,#FFE0BF)}
 
 /* ปฏิทินสไตล์โปสเตอร์ */
@@ -406,7 +407,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .dro-addm{border:1.5px dashed var(--ca)!important;background:color-mix(in srgb,var(--ca) 9%,#fff)!important;color:color-mix(in srgb,var(--ca) 75%,#000)!important}
 .dro-addc{background:linear-gradient(135deg,#7C6CFF,#EC4899)!important;color:#fff!important;border:0!important;font-weight:600}
 .drm-hint{font-size:.72rem;color:#7B879C;margin-top:3px}
-.msg-g{display:grid;grid-template-columns:1fr 1fr;gap:6px}.msg{display:grid;gap:2px;text-align:left;padding:8px 10px;height:auto;line-height:1.3}.msg small{font-weight:600}.msg span{font-size:.68rem;color:#7B879C}.msg.rec{grid-column:1/-1}.msg-rec{margin-left:8px;font-style:normal;font-size:.68rem;font-weight:700;color:#B45309;background:#FFF3C4;border:1px solid #F5D76E;border-radius:99px;padding:1px 8px;animation:drPop .6s both}.msg.on{background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border-color:#A78BFA}
+.act-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 0 12px}.act-t{display:flex;gap:8px;align-items:center;text-align:left;padding:8px 10px;border:1px solid #D6DDF5;border-radius:12px;background:#F7F9FF;cursor:pointer;font-family:inherit;font-size:.8rem;color:#3B4A8C;transition:.2s}.act-t b{font-size:1rem}.act-t.on{background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border-color:#A78BFA;box-shadow:0 6px 14px -8px rgba(110,80,220,.6);font-weight:600}.act-h{background:#EEF2FF;color:#4338CA;border-radius:10px;padding:7px 11px;font-size:.8rem;font-weight:600;margin-bottom:6px}.act-nx{display:flex;justify-content:space-between;margin:16px 0 4px}.act-rs{font-size:.7rem;color:#2F6BFF;cursor:pointer;margin-left:6px;text-decoration:underline}.act-rem{margin:6px 0;padding:7px 11px;border-radius:10px;background:#EAFBF3;color:#0E7A5A;font-size:.85rem}.act-rem.neg{background:#FFF1F3;color:#BE123C}.act-sg{display:grid;gap:5px;padding:9px;border:1px solid #E1E6F7;border-radius:12px;margin:8px 0;background:#FAFBFF}.act-sg .in{margin:0}.msg-g{display:grid;grid-template-columns:1fr 1fr;gap:6px}.msg{display:grid;gap:2px;text-align:left;padding:8px 10px;height:auto;line-height:1.3}.msg small{font-weight:600}.msg span{font-size:.68rem;color:#7B879C}.msg.rec{grid-column:1/-1}.msg-rec{margin-left:8px;font-style:normal;font-size:.68rem;font-weight:700;color:#B45309;background:#FFF3C4;border:1px solid #F5D76E;border-radius:99px;padding:1px 8px;animation:drPop .6s both}.msg.on{background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border-color:#A78BFA}
 .drm-pop{position:absolute;left:0;bottom:calc(100% + 6px);z-index:9;background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border:1px solid #CDBEFF;color:#5B3FB5;border-radius:12px;padding:6px 11px;font-size:.74rem;line-height:1.5;box-shadow:0 10px 22px -12px rgba(110,80,220,.55);opacity:0;transform:translateY(4px);pointer-events:none;transition:.18s;white-space:nowrap}.drm-pop a{color:#2F6BFF;font-weight:600;cursor:pointer;text-decoration:underline}.drm-pop:after{content:'';position:absolute;left:18px;top:100%;border:6px solid transparent;border-top-color:#CDBEFF}.drm-no:focus-within .drm-pop{opacity:1;transform:none;pointer-events:auto}
 .drm-sg{display:grid;gap:10px}.drm-up{display:grid;gap:3px;place-items:center;text-align:center;padding:16px;border:2px dashed #B9C4F5;border-radius:14px;background:#F7F9FF;cursor:pointer;color:#3B4A8C;transition:.2s}.drm-up:hover{background:#EEF2FF;transform:translateY(-1px)}.drm-up small{color:#7B879C}.drm-sgp{background:repeating-conic-gradient(#f1f3fb 0 25%,#fff 0 50%) 0 0/14px 14px;border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center}.drm-sgp img{max-height:90px;max-width:100%}.drm-ck{display:flex;gap:8px;align-items:center;font-size:.84rem}
 .drm-no{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;position:relative}.drm-no .in{margin:0}.drm-no .in.dup{color:#E11D48;font-weight:700;border-color:#F43F5E;background:#FFF1F3}
@@ -1126,7 +1127,15 @@ const DR_CSS=`.dr-a4{box-sizing:border-box;width:210mm;min-height:297mm;backgrou
 .dr-a4 .m-v{flex:1;min-width:0;line-height:7.3mm;white-space:pre-line;overflow-wrap:anywhere;min-height:7.3mm;border-bottom:.35mm dotted #000;padding-bottom:.3mm}
 .dr-a4 .m-v1{display:flex}.dr-a4 .m-o{flex:none;width:94mm;white-space:pre-line}.dr-a4 .m-tel{flex:1}
 .dr-a4 .m-to{margin-top:2.1mm;white-space:pre-line}.dr-a4 .m-p{margin:2.1mm 0 0;text-indent:25mm;text-align:justify;white-space:pre-line;overflow-wrap:anywhere}
-.dr-a4 .m-sg{width:110mm;margin-left:25mm;text-align:center;white-space:pre-line}.dr-a4 .m-sg .m-sp{height:21.9mm;display:flex;justify-content:center;align-items:flex-end;line-height:0}.dr-a4 .m-sp img{display:block}.dr-a4 .m-sp.ln{display:block;position:relative}.dr-a4 .m-sp.ln img{position:absolute;left:50%;bottom:2.8mm;transform:translateX(-50%)}.dr-a4 .m-ln{position:absolute;left:0;right:0;bottom:0;display:flex;line-height:7.3mm;height:7.3mm;white-space:nowrap;text-align:left}.dr-a4 .m-ln i{flex:1;margin:0 1mm;height:5.6mm;border-bottom:.35mm dotted #000}
+.dr-a4 .m-sg{width:110mm;margin-left:25mm;text-align:center;white-space:pre-line}.dr-a4 .m-sg .m-sp{height:21.9mm;display:flex;justify-content:center;align-items:flex-end;line-height:0}.dr-a4 .m-sp img{display:block}
+.dr-a4 .m-bk{margin-top:3mm}.dr-a4 .m-op{margin-top:4mm}.dr-a4 .m-op>b{display:block;font-weight:700}.dr-a4 .m-ct{text-align:center}.dr-a4 .m-ck{line-height:7.3mm}
+.dr-a4 .m-cb{display:inline-block;width:3.8mm;height:3.8mm;border:.3mm solid #000;vertical-align:middle;margin:0 2mm 0 0;position:relative;top:-.3mm}.dr-a4 .m-cr{display:block;line-height:6.6mm}.dr-a4 .m-ck .m-cr{display:inline-block;margin-right:12mm}
+.dr-a4 .m-dl{height:7.3mm;border-bottom:.35mm dotted #000}.dr-a4 .m-dl.s{height:6.4mm}
+.dr-a4 .m-as{text-align:center;white-space:pre-line;line-height:7.3mm}.dr-a4 .m-as.c{width:110mm;margin-left:25mm}.dr-a4 .m-as .m-sp{height:14mm;display:block}
+.dr-a4 .m-as.sm{font-size:14pt;line-height:6.4mm}.dr-a4 .m-as.sm .m-sp{height:12mm}.dr-a4 .m-as.sm .m-ln{line-height:6.4mm;height:6.4mm}.dr-a4 .m-as.sm .m-ln i{height:4.7mm}
+.dr-a4 .m-p2{line-height:7.3mm;text-indent:25mm}.dr-a4 .m-vu{border-bottom:.35mm dotted #000;padding:0 1mm}
+.dr-a4 .m-g2{display:grid;grid-template-columns:1fr 1fr;column-gap:3mm;line-height:7mm;margin-top:1mm;font-size:14pt}.dr-a4 .m-vv{display:inline-block;min-width:20mm;border-bottom:.35mm dotted #000;text-align:center;line-height:6mm;padding:0 1mm}
+.dr-a4 .m-g3{display:grid;grid-template-columns:1fr 1fr 1fr;border:.3mm solid #000;margin-top:5mm}.dr-a4 .m-c3{padding:2mm;font-size:14pt;border-right:.3mm solid #000}.dr-a4 .m-c3:last-child{border-right:0}.dr-a4 .m-c3 .m-cr{line-height:6.4mm}.dr-a4 .m-c3 .m-cb{width:3.4mm;height:3.4mm}.dr-a4 .m-c3 .m-vv{min-width:12mm}.dr-a4 .m-c3 .m-vv.w{min-width:22mm}.dr-a4 .m-ck .m-vv.w2{min-width:60mm}.dr-a4 .m-sp.ln{display:block;position:relative}.dr-a4 .m-sp.ln img{position:absolute;left:50%;bottom:2.8mm;transform:translateX(-50%)}.dr-a4 .m-ln{position:absolute;left:0;right:0;bottom:0;display:flex;line-height:7.3mm;height:7.3mm;white-space:nowrap;text-align:left}.dr-a4 .m-ln i{flex:1;margin:0 1mm;height:5.6mm;border-bottom:.35mm dotted #000}
 .dr-pgs{display:flex;flex-direction:column;gap:8mm;width:210mm}
 .dr-a4.d-ord{height:297mm;min-height:297mm;overflow:hidden;padding:25mm 20mm 20mm 30mm}.dr-a4.d-ord.p1{padding-top:15mm}.dr-a4.d-ord .d-g{left:96.75mm}
 .dr-a4 .o-t{text-align:center;font-weight:700;white-space:pre-line;overflow-wrap:anywhere}.dr-a4 .o-dl{border-top:.5mm dotted #000;margin:0 41mm;height:0}
@@ -1159,7 +1168,7 @@ function drSigOpt(){DR.sigT=document.getElementById('dr_sgt').checked;drSigProc(
 function drSigSize(v){DR.sigH=+v;const o=document.getElementById('dr_sgv');if(o)o.textContent=v+' มม.';drSigSave();drPrev()}
 function drSigDel(){DR.sigO='';DR.sig='';drSigSave();drFill()}
 function drSigField(){return `<h4>ลายเซ็น</h4><div class="drm-sg">${DR.sigO?`<div class="drm-sgp"><img src="${DR.sig||DR.sigO}" alt=""></div><label class="drm-ck"><input type="checkbox" id="dr_sgt" ${DR.sigT?'checked':''} onchange="drSigOpt()"> ลบพื้นหลังสีขาวอัตโนมัติ</label><label class="lb">ขนาดลายเซ็น (ความสูง) <b id="dr_sgv">${DR.sigH} มม.</b><input type="range" min="8" max="22" step="1" value="${DR.sigH}" oninput="drSigSize(this.value)" style="width:100%"></label><div style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn o" style="cursor:pointer">เปลี่ยนรูป<input type="file" accept="image/*" hidden onchange="drSigLoad(this.files[0])"></label><button class="btn o" type="button" onclick="drSigDel()">ลบลายเซ็น</button></div>`:`<label class="drm-up"><input type="file" accept="image/*" hidden onchange="drSigLoad(this.files[0])"><b>อัปโหลดรูปลายเซ็น</b><small>PNG / JPG · ลายเซ็นจะวางเหนือชื่อผู้ลงนามให้อัตโนมัติ</small></label>`}<div class="drm-hint">รูปลายเซ็นจะถูกจำไว้ในเครื่องนี้เท่านั้น ไม่ได้อัปโหลดขึ้นระบบ</div></div>`}
-function drDocHtml(d){if(d.kind=='order')return ordDocHtml(d);if(d.kind=='memo')return memoDocHtml(d);const T=t=>esc(drTh(d,t)),has=t=>String(t||'').trim();
+function drDocHtml(d){if(d.kind=='act')return actDocHtml(d);if(d.kind=='order')return ordDocHtml(d);if(d.kind=='memo')return memoDocHtml(d);const T=t=>esc(drTh(d,t)),has=t=>String(t||'').trim();
 const encl=has(d.encl)?`<div class="d-en"><span><span class="d-lb2">สิ่งที่ส่งมาด้วย</span>${T(d.encl)}</span>${has(d.enN)?`<span>จำนวน ${T(d.enN)} ${T(d.enU)}</span>`:''}</div>`:'';
 const ps=[d.p1,d.p2,d.close].filter(has);
 return `<div class="dr-a4"><img class="d-g" src="${DR_GARUDA}" alt="">
@@ -1187,15 +1196,15 @@ function drTelField(){const ps=PP.filter(p=>String(p.ph||'').trim()).sort((a,b)=
 return `<label class="lb">เลือกเบอร์โทรจากบุคลากร<select class="in" onchange="drPickTel(this.value)"><option value="">— เลือกครู —</option>${ps.map(p=>`<option value="${esc(p.id)}">${esc(dn(p))} · ${esc(DR_PH(p))}</option>`).join('')}</select></label><label class="lb">โทรศัพท์ (แก้ไขได้)<input class="in" id="dr_tel" value="${esc(DR.tel)}" oninput="DR.tel=this.value;drPrev()"></label>`}
 function drPickTel(id){const p=PP.find(x=>String(x.id)==String(id));if(!p)return;DR.tel='โทร. '+DR_PH(p);const i=document.getElementById('dr_tel');if(i)i.value=DR.tel;drPrev()}
 function drOpen(kind,src){DR_SRC=src=='doc'?'doc':'admin';if(DR_SRC=='admin'&&!canManageAdmin())return;if(DR_SRC=='doc'&&!me)return;drEnsureCss();kind=kind||'send';DR=DRS[kind]||(DRS[kind]=drNew(kind));DR.kind=kind;drClose();const l=drLast();
-const o=document.createElement('div');o.className='rgm';o.id='dr_m';o.innerHTML=`<div class="drm-b" role="dialog"><div class="drm-h"><h3>${({order:'ร่างหนังสือคำสั่ง',memo:'ร่างบันทึกข้อความ'})[kind]||'ร่างหนังสือนำส่ง'}</h3>
+const o=document.createElement('div');o.className='rgm';o.id='dr_m';o.innerHTML=`<div class="drm-b" role="dialog"><div class="drm-h"><h3>${({order:'ร่างหนังสือคำสั่ง',memo:'ร่างบันทึกข้อความ',act:'ร่างขออนุมัติดำเนินกิจกรรม/โครงการ'})[kind]||'ร่างหนังสือนำส่ง'}</h3>
 <label style="font-size:.8rem;display:inline-flex;align-items:center;gap:6px"><input type="checkbox" ${DR.arab?'checked':''} onchange="DR.arab=this.checked;drPrev()"> ใช้เลขอารบิก</label>
 <button class="btn o" type="button" onclick="drReset()">ค่าเริ่มต้น</button>
-${drRegOk()?`<button class="btn o" type="button" id="dr_br" onclick="drRegManual()" title="บันทึกเลขที่ วันที่ เรื่อง ลงทะเบียน">บันทึกเลขที่${({order:'คำสั่ง',memo:'บันทึกข้อความ'})[kind]||'นำส่ง'}</button>`:''}
+${drRegOk()?`<button class="btn o" type="button" id="dr_br" onclick="drRegManual()" title="บันทึกเลขที่ วันที่ เรื่อง ลงทะเบียน">บันทึกเลขที่${({order:'คำสั่ง',memo:'บันทึกข้อความ',act:'บันทึกข้อความ'})[kind]||'นำส่ง'}</button>`:''}
 <div class="drm-m"><button class="btn o" type="button" id="dr_bs" onclick="drMenu('save')">${drPol().arc?'บันทึก':'ดาวน์โหลด'} ▾</button><div class="drm-menu" id="dr_ms"><button type="button" onclick="drSave('docx')">ไฟล์ Word (.docx)</button><button type="button" onclick="drSave('pdf')">ไฟล์ PDF (.pdf)</button></div></div>
 <button class="btn o" type="button" onclick="drPrint()">พิมพ์</button>
 ${drPol().send?`<div class="drm-m"><button class="btn" type="button" id="dr_bn" onclick="drMenu('send')">ส่ง ▾</button><div class="drm-menu" id="dr_mn"><button type="button" onclick="drSend('docx')">ส่งเป็นไฟล์ Word (.docx)</button><button type="button" onclick="drSend('pdf')">ส่งเป็นไฟล์ PDF (.pdf)</button></div></div>`:''}
 <button class="btn o" type="button" onclick="drClose()">ปิด</button></div>
-<div class="drm-bd"><div class="drm-f" id="dr_f">${kind=='order'?ordForm():kind=='memo'?memoForm():`<h4>หัวหนังสือ</h4>
+<div class="drm-bd"><div class="drm-f" id="dr_f">${kind=='order'?ordForm():kind=='memo'?memoForm():kind=='act'?actForm():`<h4>หัวหนังสือ</h4>
 ${drNoField()}${l?`<div class="drm-hint">ทะเบียนหนังสือนำส่งล่าสุด: <b>${esc(l.t)}</b>${l.n!=null?` · <a onclick="DR.no=DR_SCH.pre+${l.n+1};drFill()">ใช้เลข ${l.n+1}</a>`:''}</div>`:''}
 ${drField('name','ส่วนราชการเจ้าของหนังสือ','in')}<div class="drm-2">${drField('addr','ตำบล / อำเภอ','in')}${drField('prov','จังหวัด / รหัสไปรษณีย์','in')}</div>
 ${drField('date','วันที่ (กดเลือกจากปฏิทิน)','date')}
@@ -1218,9 +1227,9 @@ function drMenu(w){const a=document.getElementById('dr_ms'),b=document.getElemen
 document.addEventListener('click',e=>{if(!e.target.closest('.drm-m'))document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'))});
 const DR_LIB={docx:'https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js',h2c:'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',pdf:'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js'};
 const drLoad=k=>new Promise((ok,no)=>{const chk={docx:()=>window.docx,h2c:()=>window.html2canvas,pdf:()=>window.jspdf};if(chk[k]())return ok();const sc=document.createElement('script');sc.src=DR_LIB[k];sc.onload=()=>chk[k]()?ok():no(new Error('โหลดไลบรารีไม่สำเร็จ'));sc.onerror=()=>no(new Error('โหลดไลบรารีไม่สำเร็จ ตรวจสอบอินเทอร์เน็ต'));document.head.appendChild(sc)});
-const drFname=ext=>{let t=String(DR.subject||'').replace(/[\\/:*?"<>|\n\r]+/g,' ').replace(/\s+/g,' ').trim().replace(/^เรื่อง\s*/,'').slice(0,60);return (DR.kind=='send'?'หนังสือนำส่ง':drKL())+(t?'เรื่อง'+t:'')+'.'+ext};
+const drFname=ext=>{let t=String(DR.kind=='act'?'ขออนุมัติกิจกรรมตามโครงการ'+(DR.proj||''):DR.subject||'').replace(/[\\/:*?"<>|\n\r]+/g,' ').replace(/\s+/g,' ').trim().replace(/^เรื่อง\s*/,'').slice(0,60);return (DR.kind=='send'?'หนังสือนำส่ง':drKL())+(t?'เรื่อง'+t:'')+'.'+ext};
 const drMsg=t=>{const m=document.getElementById('dr_msg');if(m)m.textContent=t||''};
-async function drDocx(){if(DR.kind=='order')return ordDocx();if(DR.kind=='memo')return memoDocx();await drLoad('docx');const D=window.docx,d=DR,T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunIT๙',font={ascii:F,hAnsi:F,cs:F,eastAsia:F};
+async function drDocx(){if(DR.kind=='act')return actDocx();if(DR.kind=='order')return ordDocx();if(DR.kind=='memo')return memoDocx();await drLoad('docx');const D=window.docx,d=DR,T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunIT๙',font={ascii:F,hAnsi:F,cs:F,eastAsia:F};
 const R=(t,o)=>new D.TextRun({text:T(t),font,size:32,sizeComplexScript:32,...(o||{})}),has=t=>String(t||'').trim();
 const P=(ch,o)=>new D.Paragraph({children:ch,...(o||{})});
 const lines=t=>String(t).split('\n');
@@ -1259,7 +1268,7 @@ function drFlash(t,c){const o=document.createElement('div');o.className='drm-fl'
 function drNoField(){const n=String(DR.no||''),i=n.lastIndexOf('/'),P=i>=0?n.slice(0,i+1):'',S=i>=0?n.slice(i+1):n;
 return `<div class="lb">ที่ (รหัสส่วนราชการ / เลขท้ายหนังสือ)<div class="drm-no"><input class="in" id="dr_np" value="${esc(P)}" oninput="drNoIn()"><input class="in" id="dr_ns" value="${esc(S)}" oninput="drNoIn()" placeholder="เลขท้าย"><div id="dr_dup" class="drm-dup"></div></div></div>`}
 function drRgSync(){/* ทะเบียนเปลี่ยน (เช่น ลบเลข) → ล้างเลขที่ผูกไว้ของร่างที่ถูกลบ และเช็กเลขซ้ำใหม่ทันที */
-try{Object.values(DRS).forEach(d=>{if(!d||!d.rgId)return;if(RG.some(r=>r.id==d.rgId))d.rgSeen=true;else if(d.rgSeen){d.rgId=null;d.rgSeen=false}});if(document.getElementById('dr_ns'))drNoChk()}catch(e){}}
+try{Object.values(DRS).forEach(d=>{if(!d)return;[['rgId','rgSeen'],['rgId2','rgSeen2']].forEach(([k,sk])=>{if(!d[k])return;if(RG.some(r=>r.id==d[k]))d[sk]=true;else if(d[sk]){d[k]=null;d[sk]=false}})});if(document.getElementById('dr_ns'))drNoChk()}catch(e){}}
 async function drRegWrite(q){if(DR._rgBusy)return DR._rgBusy;const d0=DR;return d0._rgBusy=drRegWrite2(q).finally(()=>{d0._rgBusy=null})}
 async function drRegWrite2(q){const d=DR,num=d.kind!='send'?ordNumStr(d):String(d.no||'').trim().replace(/\s+/g,' ').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c)),title=String(d.subject||'').trim();
 const data={type:drRegType(d),num,date:d.date,title,to:String(d.to||'').trim()};
@@ -1268,7 +1277,7 @@ if(mine)await db.collection('registers').doc(mine.id).set({...data,updatedBy:me.
 else{const id=uid();await db.collection('registers').doc(id).set({...data,note:'ร่างจากระบบร่างหนังสือ',by:me.n,createdBy:me._id,createdAt:new Date().toISOString()});d.rgId=id}
 if(q&&!mine)drFlash('บันทึกเลขที่ '+num+' ลงทะเบียน'+drKL()+'อัตโนมัติแล้ว','#22B573');else if(!q)drFlash(mine?('อัปเดตทะเบียนเลขที่'+(d.kind=='send'?'นำส่ง':drKL())+'แล้ว'):'บันทึกเลขที่ '+num+' ลงทะเบียน'+(d.kind=='send'?'หนังสือนำส่ง':drKL())+'แล้ว','#22B573')}
 catch(e){drFlash('บันทึกเลขที่ไม่สำเร็จ: '+e.message,'#E11D48')}}
-function drRegManual(){if(!drRegOk())return;if(DR.kind!='send')return ordRegManual();const d=DR,num=String(d.no||'').trim().replace(/\s+/g,' ');
+function drRegManual(){if(!drRegOk())return;if(DR.kind=='act')return actRegManual();if(DR.kind!='send')return ordRegManual();const d=DR,num=String(d.no||'').trim().replace(/\s+/g,' ');
 if(!num||/[\/.\s]$/.test(num)||!/\d/.test(num.replace(/^ศธ\s*\d{5}(\.\d+)?\/?/,'')))return drFlash('กรุณากรอกเลขท้ายหนังสือก่อนบันทึกเลขที่','#F5A524');
 if(!d.date)return drFlash('กรุณาเลือกวันที่ของหนังสือ','#F5A524');if(!String(d.subject||'').trim())return drFlash('กรุณากรอกเรื่องของหนังสือ','#F5A524');
 const dup=drDup();if(!dup)return drRegWrite();
@@ -1290,7 +1299,7 @@ let drSwept=0;
 async function drSweep(){if(!me||!canManageAdmin()||Date.now()-drSwept<60000)return;const now=new Date().toISOString(),files=AD.forms||[],old=files.filter(f=>f.draft&&f.expiresAt&&f.expiresAt<now);if(!old.length)return;drSwept=Date.now();
 try{for(const f of old){try{await storage.ref(f.path).delete()}catch(e){}}
 await db.collection('admindocs').doc('forms').set({files:files.filter(f=>!old.includes(f))},{merge:true})}catch(e){}}
-async function drAutoReg(){const d=DR;if(DR_SRC!='doc'||d.kind!='memo'||!me)return;
+async function drAutoReg(){const d=DR;if(DR_SRC!='doc'||!me)return;if(d.kind=='act')return actAutoReg();if(d.kind!='memo')return;
 if(!/^\d+$/.test(drNum(d.noN))||!/^\d{4}$/.test(drNum(d.noY))||!d.date||!String(d.subject||'').trim())return;
 if(!d.rgId&&ordDup())return drFlash('เลขที่ '+ordNumStr(d)+' ซ้ำกับทะเบียน จึงไม่บันทึกเลขอัตโนมัติ กรุณาตรวจเลขที่','#F5A524');
 await drRegWrite(true)}
@@ -1385,7 +1394,7 @@ function ordMemMv(ci,mi,k){const a=DR.coms[ci].mem,j=mi+k;if(j<0||j>=a.length)re
 function ordPick(ci,mi,id){const m=DR.coms[ci].mem[mi],p=PP.find(x=>String(x.id)==String(id));if(!p){m.pid='';return}m.pid=p.id;m.name=dn(p);m.pos=p.po||'';drFill()}
 function ordMem(ci,mi,k,v){const m=DR.coms[ci].mem[mi];m[k]=v;if(k=='name')m.pid='';ordRoles();drPrev()}
 /* ===== เลขที่คำสั่ง / ทะเบียน ===== */
-const ordNumStr=d=>d.kind=='memo'?drAr(d.noN)+'/'+drAr(d.noY):drNum(d.noN)+'/'+drNum(d.noY);
+const ordNumStr=d=>d.kind=='memo'||d.kind=='act'?drAr(d.noN)+'/'+drAr(d.noY):drNum(d.noN)+'/'+drNum(d.noY);
 const ordParse=s=>{const m=String(s||'').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c)).match(/(\d+)\s*\/\s*(\d{4})\s*$/);return m?{n:String(parseInt(m[1],10)),y:m[2]}:null};
 function ordDup(){const n=drNum(DR.noN),y=drNum(DR.noY);if(!/^\d+$/.test(n)||!/^\d{4}$/.test(y))return null;return RG.find(r=>{if(r.type!=drRegType(DR)||r.id==DR.rgId)return false;const p=ordParse(rgFmt(r));return p&&p.n==n&&p.y==y})||null}
 function ordRegManual(){if(!drRegOk())return;const d=DR;
@@ -1432,10 +1441,10 @@ return await D.Packer.toBlob(doc)}
 let DR_SRC='admin';
 const DR_POL={admin:{send:true,arc:true},doc:{send:false,arc:false}};
 const drPol=()=>DR_POL[DR_SRC]||DR_POL.doc;
-const DRAFT_DOCS=[{k:'memo',t:'ร่างบันทึกข้อความ',s:'หนังสือภายใน',d:'ดาวน์โหลด · พิมพ์',ic:'pen',c:'hs5'}];
-const drNew=k=>k=='order'?ordDef():k=='memo'?memoDef():drDef();
-const drRegType=d=>d&&d.kind=='order'?'order':d&&d.kind=='memo'?'letter':'send';
-const drKL=()=>({order:'คำสั่ง',memo:'บันทึกข้อความ'})[DR&&DR.kind]||'นำส่ง';
+const DRAFT_DOCS=[{k:'memo',t:'ร่างบันทึกข้อความ',s:'หนังสือภายใน',d:'ดาวน์โหลด · พิมพ์',ic:'pen',c:'hs5'},{k:'act',t:'ขออนุมัติดำเนินกิจกรรม/โครงการ',s:'บันทึกข้อความ 2 ฉบับ',d:'ดาวน์โหลด · พิมพ์',ic:'doc',c:'hs6'}];
+const drNew=k=>k=='order'?ordDef():k=='memo'?memoDef():k=='act'?actDef():drDef();
+const drRegType=d=>d&&d.kind=='order'?'order':d&&(d.kind=='memo'||d.kind=='act')?'letter':'send';
+const drKL=()=>({order:'คำสั่ง',memo:'บันทึกข้อความ',act:'บันทึกข้อความ'})[DR&&DR.kind]||'นำส่ง';
 const drAr=t=>String(t||'').replace(/\s+/g,'').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c));
 const DR_MEMO_CLOSE=['จึงเรียนมาเพื่อโปรดทราบ','จึงเรียนมาเพื่อโปรดพิจารณา','จึงเรียนมาเพื่อโปรดทราบและพิจารณาดำเนินการต่อไป','จึงเรียนมาเพื่อโปรดพิจารณาอนุมัติ','จึงเรียนมาเพื่อโปรดทราบ และเข้าร่วมประชุมโดยพร้อมเพรียงกัน'];
 const MEMO_M={lh:7.3,t1:15,t:35,b:20,l:30,r:20,w:160,sp:21.9};
@@ -1453,22 +1462,23 @@ return `<div class="m-hd"><div class="m-tt">บันทึกข้อควา
 <div class="m-to">${J('เรียน  '+String(d.to||'').trim())}</div>${[d.p1,d.p2,d.close].filter(has).map(t=>`<p class="m-p">${J(String(t).trim())}</p>`).join('')}
 <div class="m-sg"><div class="m-sp${sg.line?' ln':''}">${sg.line?`<div class="m-ln"><span>ลงชื่อ</span><i></i><span>${T(sg.tail)}</span></div>`:''}${d.sig?`<img src="${d.sig}" style="height:${d.sigH}mm" alt="">`:''}</div>${T(d.signer)}${sg.pm&&has(d.pos)?'<br>'+T((sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim()):''}</div>`}
 /* ตัดหน้า: ตัดที่ขอบบรรทัด (ไม่ทิ้งบรรทัดเดียวไว้หัว/ท้ายหน้า) และไม่ให้ลายเซ็นอยู่หน้าเดียวโดดๆ */
-function memoDocHtml(d){const flow=memoFlowHtml(d),M=MEMO_M,lh=M.lh;
+function memoDocHtml(d){return `<div class="dr-pgs">${memoPages(memoFlowHtml(d),d,false,0)}</div>`}
+function memoPages(flow,d,act,part){const M=MEMO_M,lh=M.lh;
 const host=document.createElement('div');host.className='dr-a4 d-memo';host.style.cssText=`position:fixed;left:-10000px;top:0;height:auto;min-height:0;padding:0;width:${M.w}mm;box-shadow:none;overflow:visible`;host.innerHTML=flow;document.body.appendChild(host);
 const K=25.4/96,r0=host.getBoundingClientRect(),H=r0.height*K;
-const bl=[...host.querySelectorAll('.m-hd,.m-to,.m-p,.m-sg')].map(e=>{const r=e.getBoundingClientRect();return {p:e.classList.contains('m-p'),sg:e.classList.contains('m-sg'),t:(r.top-r0.top)*K,b:(r.bottom-r0.top)*K}});host.remove();
+const bl=[...host.querySelectorAll('.m-hd,.m-to,.m-p,.m-sg,.m-bk')].map(e=>{const r=e.getBoundingClientRect();return {p:e.classList.contains('m-p'),sg:e.classList.contains('m-sg'),t:(r.top-r0.top)*K,b:(r.bottom-r0.top)*K}});host.remove();
 const pages=[];let s=0,cap=297-M.t1-M.b-.5;
 while(H-s>cap+.01){const e=s+cap;let end,next;const st=bl.find(x=>x.t<e&&x.b>e);
-if(st){end=next=st.p?(()=>{const n=Math.floor((e-st.t)/lh+1e-6),tot=Math.round((st.b-st.t)/lh);return (n>=2&&tot-n>=2)?st.t+n*lh:st.t})():st.t}
+if(st){next=st.p?(()=>{const n=Math.floor((e-st.t)/lh+1e-6),tot=Math.round((st.b-st.t)/lh);return (n>=2&&tot-n>=2)?st.t+n*lh:st.t})():st.t;end=st.p?next:next-.6}
 else{end=e;const nx=bl.filter(x=>x.t>=e-1e-6).sort((a,b)=>a.t-b.t)[0];next=nx?nx.t:e}
 const sgi=bl.findIndex(x=>x.sg),capN=297-M.t-M.b-.5;
-if(sgi>0&&bl[sgi].t>=next-1e-6&&H-next<=capN+.01&&Math.round((bl[sgi].t-next)/lh)<2){/* ระเบียบสารบรรณ: หน้าสุดท้ายห้ามมีแต่ลายเซ็น ต้องมีเนื้อความอย่างน้อย 2 บรรทัด */
+if(sgi>0&&(act?Math.abs(next-bl[sgi].t)<1e-6:(bl[sgi].t>=next-1e-6&&H-next<=capN+.01&&Math.round((bl[sgi].t-next)/lh)<2))){/* ระเบียบสารบรรณ: หน้าสุดท้ายห้ามมีแต่ลายเซ็น ต้องมีเนื้อความอย่างน้อย 2 บรรทัด */
 let need=2,st0=bl[sgi].t;for(let j=sgi-1;j>=0&&need>0&&bl[j].p;j--){const tot=Math.round((bl[j].b-bl[j].t)/lh);if(tot>=need+2){st0=bl[j].b-need*lh;need=0}else{st0=bl[j].t;need-=tot}}
 if(need<=0&&st0<next-1e-6&&st0>s+lh)end=next=st0}
 if(end<=s+lh){end=e;next=e}
 pages.push([s,end]);s=next;cap=297-M.t-M.b-.5}
 pages.push([s,H]);
-return `<div class="dr-pgs">${pages.map((p,i)=>`<div class="dr-a4 d-memo${i?'':' p1'}">${i?`<div class="m-pn">${esc(drTh(d,'- '+(i+1)+' -'))}</div>`:`<img class="d-g" src="${DR_GARUDA}" alt="">`}<div class="m-win" style="height:${(p[1]-p[0]).toFixed(3)}mm"><div style="margin-top:-${p[0].toFixed(3)}mm">${flow}</div></div></div>`).join('')}</div>`}
+return pages.map((p,i)=>`<div class="dr-a4 d-memo${i?'':' p1'}"${act?` data-part="${part}"`:''}>${i?`<div class="m-pn">${esc(drTh(d,'- '+(i+1)+' -'))}</div>`:`<img class="d-g" src="${DR_GARUDA}" alt="">`}<div class="m-win" style="height:${(p[1]-p[0]).toFixed(3)}mm"><div style="margin-top:-${p[0].toFixed(3)}mm">${flow}</div></div></div>`).join('')}
 /* ===== ฟอร์ม ===== */
 const MEMO_TAILS=['ผู้ขออนุมัติ','ผู้ขออนุญาต','ผู้อนุมัติโครงการ','ผู้รับผิดชอบโครงการ','ผู้เสนอ'];
 function memoSgSet(k,v){DR[k]=v;drPrev()}
@@ -1478,16 +1488,18 @@ const B=(n,t,e,rec)=>`<button type="button" class="btn o msg${on(n)}${rec?' rec'
 return `<h4>รูปแบบการลงชื่อ</h4><div class="msg-g">${B(0,'ชื่อ + ตำแหน่ง','(ชื่อ สกุล) / ตำแหน่ง · ไม่มีเส้นประ ไม่มีคำต่อท้าย',1)}${B(1,'ลงชื่อ…… (เส้นประ)','ลงชื่อ…… / (ชื่อ) / ตำแหน่ง')}${B(2,'เส้นประ + ข้อความท้าย','ลงชื่อ……ผู้ขออนุมัติ')}${B(3,'ข้อความท้าย + “ตำแหน่ง”','… / ตำแหน่ง ครู')}</div>
 ${g.line?`<label class="lb">ข้อความท้ายเส้นประ (เว้นว่างได้ · เลือกหรือพิมพ์เอง)<input class="in" list="dr_mtl" value="${esc(g.tail)}" placeholder="เช่น ผู้ขออนุมัติ" oninput="memoSgSet('sgTail',this.value)"><datalist id="dr_mtl">${MEMO_TAILS.map(x=>`<option value="${esc(x)}">`).join('')}</datalist></label>`:''}
 <label class="lb">บรรทัดตำแหน่ง<select class="in" onchange="DR.sgPm=+this.value;drFill()"><option value="1" ${g.pm==1?'selected':''}>แสดงตำแหน่ง</option><option value="2" ${g.pm==2?'selected':''}>แสดงโดยมีคำว่า “ตำแหน่ง” นำหน้า</option><option value="0" ${g.pm==0?'selected':''}>ไม่แสดงตำแหน่ง</option></select></label>`}
-function memoPickSigner(id){const p=PP.find(x=>String(x.id)==String(id));if(!p)return;DR.signer='('+dn(p)+')';DR.pos=p.po||'';drFill()}
+function memoPickSigner(id){const p=PP.find(x=>String(x.id)==String(id));if(!p)return;DR.signer='('+dn(p)+')';if(DR.kind=='act')DR.rpos=p.po||'';else DR.pos=p.po||'';drFill()}
 function memoLast(){const y=drNum(DR.noY),rows=RG.filter(x=>x.type=='letter').map(x=>{const t=rgFmt(x),m=String(t).match(/(\d+)\s*\/\s*(\d{4})/);return {t,n:m?+m[1]:null,w:m?m[1].length:2,y:m?m[2]:null}});
 return rows.filter(x=>x.n!=null&&x.y==y).sort((a,b)=>b.n-a.n)[0]||rows.filter(x=>x.n!=null).sort((a,b)=>(b.y||'').localeCompare(a.y||'')||b.n-a.n)[0]||null}
-function memoPop(){const l=memoLast(),y=drNum(DR.noY),u=n=>'<a onmousedown="event.preventDefault();memoUseNo(\''+n+'\')">'+n+'/'+esc(y)+'</a>';let h;
-if(!l)h='<b>ยังไม่มีเลขในทะเบียน</b><br>เริ่มที่ '+u('01');
+function memoPop(i){i=i||0;const l=memoLast(),y=drNum(DR.noY),u=n=>'<a onmousedown="event.preventDefault();memoUseNo(\''+n+'\','+i+')">'+n+'/'+esc(y)+'</a>';let h,id=i?'dr_pop2':'dr_pop';
+const c1=parseInt(drNum(DR.noN));
+if(i&&DR.kind=='act'&&!isNaN(c1)&&(!l||l.y!=y||c1>=l.n))h='ฉบับที่ 1 ใช้เลข <b>'+esc(DR.noN)+'/'+esc(y)+'</b><br>เลขถัดไป '+u(String(c1+1).padStart(2,'0'))+' · กดเพื่อใช้';
+else if(!l)h='<b>ยังไม่มีเลขในทะเบียน</b><br>เริ่มที่ '+u('01');
 else if(l.y==y)h='เลขล่าสุดที่ใช้ <b>'+esc(l.t)+'</b><br>เลขถัดไป '+u(String(l.n+1).padStart(Math.max(2,l.w),'0'))+' · กดเพื่อใช้';
 else h='เลขล่าสุด <b>'+esc(l.t)+'</b> (คนละปี)<br>ปี '+esc(y)+' เริ่มที่ '+u('01');
-return '<div class="drm-pop" id="dr_pop">'+h+'</div>'}
-function memoPopUpd(){const e=document.getElementById('dr_pop');if(e)e.outerHTML=memoPop()}
-function memoUseNo(n){DR.noN=n;const i=document.getElementById('dr_ns');if(i)i.value=n;drPrev()}
+return '<div class="drm-pop" id="'+id+'">'+h+'</div>'}
+function memoPopUpd(){[0,1].forEach(i=>{const e=document.getElementById(i?'dr_pop2':'dr_pop');if(e)e.outerHTML=memoPop(i)})}
+function memoUseNo(n,i){const k=i?'noN2':'noN';DR[k]=n;const e=document.getElementById(i?'dr_ns2':'dr_ns');if(e)e.value=n;drPrev();memoPopUpd()}
 function memoForm(){const d=DR,ps=[...PP].sort((a,b)=>dn(a).localeCompare(dn(b),'th')),cur=ps.find(p=>'('+dn(p)+')'==d.signer);
 return `<h4>หัวบันทึกข้อความ</h4>${drField('org','ส่วนราชการ','in')}
 <div class="lb">ที่ (เลขที่ / ปี พ.ศ. เช่น 01/2569)<div class="drm-no dro-no"><input class="in" id="dr_ns" inputmode="numeric" placeholder="เลขที่" value="${esc(d.noN)}" oninput="DR.noN=this.value;drPrev()"><span style="text-align:center">/</span><input class="in" inputmode="numeric" value="${esc(d.noY)}" oninput="DR.noY=this.value;drPrev();memoPopUpd()"><div id="dr_dup" class="drm-dup"></div>${memoPop()}</div></div>
@@ -1520,6 +1532,129 @@ if(sg.pm&&String(d.pos||'').trim()){const ls=(sg.pm==2?'ตำแหน่ง ':
 const hdr=new D.Header({children:[P([R('- '),new D.TextRun({children:[D.PageNumber.CURRENT],font,size:32,sizeComplexScript:32}),R(' -')],{alignment:D.AlignmentType.CENTER})]});
 const doc=new D.Document({creator:'โรงเรียนบ้านผาเยอ',title:d.subject||'บันทึกข้อความ',styles:{default:{document:{run:{font,size:32,sizeComplexScript:32}}}},sections:[{properties:{titlePage:true,page:{size:{width:11906,height:16838},margin:{top:mm(MEMO_M.t1),bottom:mm(MEMO_M.b),left:mm(MEMO_M.l),right:mm(MEMO_M.r),header:mm(25),footer:mm(12.7)},...(d.arab?{}:{pageNumbers:{formatType:D.NumberFormat.THAI_NUMBERS}})}},headers:{default:hdr,first:new D.Header({children:[P([])]})},children:body}]});
 return await D.Packer.toBlob(doc)}
+/* ===== ขออนุมัติดำเนินกิจกรรม/โครงการ (บันทึกข้อความ 2 ฉบับในชุดเดียว) ===== */
+const ACT_ROLES={dir:{t:()=>'ผู้อำนวยการ'+DR_SCH.name,k:p=>/ผู้อำนวยการ/.test(p)&&!/รอง/.test(p),n:'ผู้อำนวยการ'},plan:{t:()=>'หัวหน้ากลุ่มงานแผนงานโรงเรียน',k:p=>/แผน/.test(p),n:'หัวหน้างานแผน'},acad:{t:()=>'หัวหน้ากลุ่มงานบริหารวิชาการ',k:p=>/วิชาการ/.test(p),n:'หัวหน้างานวิชาการ'},sup:{t:()=>'หัวหน้าเจ้าหน้าที่พัสดุ',k:p=>/พัสดุ/.test(p),n:'หัวหน้าเจ้าหน้าที่พัสดุ'}};
+const actAuto=r=>{const f=PP.find(p=>ACT_ROLES[r].k(String(p.po||'')));return f?'('+dn(f)+')':''};
+const actNm=(d,r)=>{const s=(d.sg&&d.sg[r])||{};const v=s.n!=null?s.n:actAuto(r);return String(v||'').trim()||'(                    )'};
+const actTt=(d,r)=>{const s=(d.sg&&d.sg[r])||{};return s.t!=null?s.t:ACT_ROLES[r].t()};
+function actDef(){const t=toISO(new Date()),p=me&&me.sid&&PP.find(x=>x.id==me.sid),y=+t.slice(0,4)+543,fy=+t.slice(5,7)>=10?y+1:y;
+const d={kind:'act',org:DR_SCH.name,noN:'',noN2:'',noY:String(y),date:t,to:'ผู้อำนวยการ'+DR_SCH.name,proj:'',act:'',fy:String(fy),unit:'',planPg:'',budget:'',paid:'',use:'',dFrom:'',dTo:'',signer:p?'('+dn(p)+')':'(                    )',rpos:p?(p.po||''):'',pos:'ผู้รับผิดชอบโครงการ',sgLine:false,sgTail:'',sgPm:1,s1:null,s2:null,b1:null,c1:'จึงเรียนมาเพื่อโปรดทราบและพิจารณาอนุมัติ',b2:null,b2b:'ดังรายละเอียดที่แนบมาพร้อมนี้',c2:'จึงเรียนมาเพื่อโปรดทราบและพิจารณาอนุมัติ',sg:{dir:{n:null,t:null},plan:{n:null,t:null},acad:{n:null,t:null},sup:{n:null,t:null}},_tab:0,arab:false};drSigInit(d);return d}
+const actN=v=>{const s=String(v==null?'':v).replace(/[,\s]/g,'').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c));return s===''||isNaN(+s)?null:+s};
+const actM=v=>{const n=actN(v);return n==null?String(v||'').trim():n.toLocaleString('en-US',{maximumFractionDigits:2,minimumFractionDigits:n%1?2:0})};
+const actRem=d=>{const b=actN(d.budget);return b==null?'':b-(actN(d.paid)||0)-(actN(d.use)||0)};
+const actB=(v,n)=>String(v||'').trim()||'…'.repeat(n||6);
+const actDt=iso=>{if(!iso)return null;const a=iso.split('-');return{d:+a[2],m:TMF[+a[1]-1],y:+a[0]+543}};
+function actRange(d){const a=actDt(d.dFrom),b=actDt(d.dTo);if(!a&&!b)return 'ระหว่างวันที่ …… ถึง ……';if(a&&b&&d.dFrom==d.dTo||a&&!b)return 'ในวันที่ '+a.d+' '+a.m+' พ.ศ. '+a.y;if(!a)return 'ในวันที่ '+b.d+' '+b.m+' พ.ศ. '+b.y;return 'ระหว่างวันที่ '+a.d+' '+a.m+(a.y!=b.y?' พ.ศ. '+a.y:'')+' ถึง '+b.d+' '+b.m+' พ.ศ. '+b.y}
+const actWho=d=>String(d.signer||'').replace(/[()]/g,'').trim()||'……………………';
+const actProj=d=>'โครงการ'+actB(d.proj,6)+(String(d.act||'').trim()?' กิจกรรม'+String(d.act).trim():'');
+const actSub=(d,i)=>{const o=i?d.s2:d.s1;if(o!=null)return o;return i?'ขออนุมัติดำเนินการและเบิก-จ่ายเงินตามโครงการ/กิจกรรม':'ขออนุมัติดำเนินการจัดกิจกรรมตามโครงการ'+actB(d.proj,6)};
+const actBody1=d=>d.b1!=null?d.b1:`ด้วยข้าพเจ้า ${actWho(d)} ตำแหน่ง ${actB(d.rpos,4)} ขอดำเนินการจัดกิจกรรมตาม${actProj(d)} ตามที่ได้รับอนุมัติในแผนปฏิบัติการประจำปีงบประมาณ พ.ศ. ${actB(d.fy,4)} โดยใช้เงินงบประมาณทั้งสิ้น ${actB(actM(d.use||d.budget),5)} บาท และจะดำเนินการจัด${actRange(d)} รายละเอียดดังแนบท้ายนี้`;
+const actBody2=d=>d.b2!=null?d.b2:`เนื่องด้วยข้าพเจ้า ${actWho(d)} ตำแหน่ง ${actB(d.rpos,4)} รับผิดชอบ${actB(d.unit,6)} มีความประสงค์ที่จะดำเนินการจัดกิจกรรมตาม${actProj(d)} โดยกิจกรรมนี้ได้รับจัดสรรงบประมาณตามแผนปฏิบัติการ จำนวนเงินงบประมาณที่ได้รับจัดสรร ${actB(actM(d.budget),5)} บาท เพื่อดำเนินการและพัฒนาในส่วนที่งานรับผิดชอบ จึงมีความประสงค์ขอเบิกใช้เงินจำนวน ${actB(actM(d.use),5)} บาท`;
+/* ----- พรีวิว/พิมพ์ ----- */
+function actHead(d,i){const T=t=>esc(drTh(d,t)),has=ordHas,nn=i?d.noN2:d.noN,no=(has(nn)||has(d.noY))?String(nn||'').trim()+'/'+String(d.noY||'').trim():'';
+const dm=iso=>{if(!iso)return '';const a=iso.split('-');return (+a[2])+' '+TMF[+a[1]-1]+' '+(+a[0]+543)};
+return `<div class="m-hd"><div class="m-tt">บันทึกข้อความ</div>
+<div class="m-r"><b class="m-lb">ส่วนราชการ</b><div class="m-v">${T(d.org)}</div></div>
+<div class="m-r m-r2"><div class="m-c"><b class="m-lb">ที่</b><div class="m-v">${T(no)}</div></div><div class="m-c"><b class="m-lb">วันที่</b><div class="m-v">${T(dm(d.date))}</div></div></div>
+<div class="m-r"><b class="m-lb">เรื่อง</b><div class="m-v">${T(String(actSub(d,i)).replace(/^\s*เรื่อง\s*/,''))}</div></div></div>
+<div class="m-to">${drJ(drTh(d,'เรียน  '+String(d.to||'').trim()))}</div>`}
+function actReqSg(d){const sg=memoSg(d),T=t=>esc(drTh(d,t));return `<div class="m-sg"><div class="m-sp${sg.line?' ln':''}">${sg.line?`<div class="m-ln"><span>ลงชื่อ</span><i></i><span>${T(sg.tail)}</span></div>`:''}${d.sig?`<img src="${d.sig}" style="height:${d.sigH}mm" alt="">`:''}</div>${T(d.signer)}${sg.pm&&ordHas(d.pos)?'<br>'+T((sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim()):''}</div>`}
+function actAsg(d,r,cls){const T=t=>esc(drTh(d,t));return `<div class="m-as ${cls||''}"><div class="m-sp ln"><div class="m-ln"><span>ลงชื่อ</span><i></i></div></div>${T(actNm(d,r))}<br>${T(actTt(d,r))}</div>`}
+const actCb=t=>`<div class="m-cr"><span class="m-cb"></span>${t}</div>`;
+function actFlow(d,i){const T=t=>esc(drTh(d,t)),J=t=>drJ(drTh(d,t)),has=ordHas,P=t=>has(t)?`<p class="m-p">${J(String(t).trim())}</p>`:'';
+const vu=t=>`<span class="m-vu">${T(t)}</span>`,vv=t=>`<span class="m-vv">${T(t)}</span>`;
+if(!i)return actHead(d,0)+P(actBody1(d))+P(d.c1)+actReqSg(d)+
+`<div class="m-bk m-op"><b>ความเห็นผู้บริหารโรงเรียน</b><div class="m-ck">${actCb('อนุมัติ')}${actCb('ไม่อนุมัติ')}</div><div class="m-dl"></div><div class="m-dl"></div><div class="m-dl"></div>${actAsg(d,'dir','c')}</div>`;
+const rem=actRem(d);
+return actHead(d,1)+P(actBody2(d))+P(d.b2b)+P(d.c2)+actReqSg(d)+
+`<div class="m-bk m-bg"><div class="m-p2">ตามที่ฝ่ายงาน/งาน/กลุ่มสาระฯ ${vu(actB(d.unit,12))} ได้ขออนุมัติดำเนินงานตาม${T('โครงการ')}${vu(actB(d.proj,12))} แผนปฏิบัติการประจำปี ${vu(actB(d.fy,5))} หน้า ${vu(actB(d.planPg,4))} มีรายละเอียดดังนี้</div>
+<div class="m-g2"><div>1. ได้รับจัดสรรงบประมาณ จำนวนเงิน ${vv(actM(d.budget))} บาท</div><div>3. เบิกจ่ายครั้งนี้ จำนวนเงิน ${vv(actM(d.use))} บาท</div><div>2. ได้เบิกจ่ายไปแล้ว จำนวนเงิน ${vv(actM(d.paid))} บาท</div><div>4. คงเหลือ จำนวนเงิน ${vv(rem===''?'':actM(rem))} บาท</div></div>${actAsg(d,'plan','c')}</div>`+
+`<div class="m-bk m-g3"><div class="m-c3">${actCb('มีในแผน/ทำตามแผน')}${actCb('ไม่มีในแผน')}${actCb('เสนอเพิ่มเติม')}${actCb('มีเงินงบประมาณที่สามารถเบิกจ่ายได้จำนวน <span class="m-vv w">&nbsp;</span> บาท')}${actAsg(d,'plan','sm')}</div>
+<div class="m-c3">${actCb('เห็นสมควรอนุมัติ')}${actCb('ไม่สมควรอนุมัติ')}<div class="m-cr">เพราะ<span class="m-vv w">&nbsp;</span></div><div class="m-dl s"></div>${actAsg(d,'acad','sm')}</div>
+<div class="m-c3">${actCb('เห็นสมควรอนุมัติ')}${actCb('ไม่สมควรอนุมัติ')}<div class="m-cr">เพราะ<span class="m-vv w">&nbsp;</span></div><div class="m-dl s"></div>${actAsg(d,'sup','sm')}</div></div>`+
+`<div class="m-bk m-op"><b class="m-ct">คำสั่งผู้อำนวยการ</b><div class="m-ck">${actCb('อนุมัติ')}${actCb('ไม่อนุมัติ')}<span class="m-cr">เพราะ<span class="m-vv w2">&nbsp;</span></span></div>${actAsg(d,'dir','c')}</div>`}
+function actDocHtml(d){return `<div class="dr-pgs">${memoPages(actFlow(d,0),d,true,0)}${memoPages(actFlow(d,1),d,true,1)}</div>`}
+/* ----- ลงทะเบียนเลข (ใช้ทะเบียนเดียวกับบันทึกข้อความ) ----- */
+function actView(i){const o=DR,p={...o,kind:'act'};p.subject=actSub(o,i);if(i){p.noN=o.noN2;p.rgId=o.rgId2}return p}
+async function actRegPart(i,q){const o=DR,p=actView(i);DR=p;let pr;try{pr=drRegWrite(q)}finally{DR=o}try{await pr}finally{o[i?'rgId2':'rgId']=p.rgId}}
+const actOk=(o,p)=>/^\d+$/.test(drNum(p.noN))&&/^\d{4}$/.test(drNum(o.noY))&&!!o.date&&!!String(p.subject||'').trim();
+const actDupOf=p=>{const o=DR;DR=p;try{return ordDup()}finally{DR=o}};
+function actAutoReg(){const o=DR;if(o._arA)return o._arA;return o._arA=(async()=>{for(const i of [0,1]){const p=actView(i);if(!actOk(o,p))continue;if(!p.rgId&&actDupOf(p)){drFlash('เลขที่ '+ordNumStr(p)+' ซ้ำกับทะเบียน จึงไม่บันทึกอัตโนมัติ กรุณาตรวจเลขที่','#F5A524');continue}await actRegPart(i,true)}})().finally(()=>{o._arA=null})}
+async function actRegManual(){const o=DR;if(!drRegOk())return;const ps=[0,1].map(i=>actView(i)).filter(p=>/^\d+$/.test(drNum(p.noN)));
+if(!ps.length)return drFlash('กรุณากรอกเลขที่ของฉบับที่ 1 หรือฉบับที่ 2 ก่อนบันทึกเลขที่','#F5A524');
+if(!/^\d{4}$/.test(drNum(o.noY)))return drFlash('กรุณากรอกปี พ.ศ. ให้ครบ 4 หลัก','#F5A524');if(!o.date)return drFlash('กรุณาเลือกวันที่','#F5A524');
+if(ps.length==2&&drNum(ps[0].noN)==drNum(ps[1].noN))return drFlash('เลขที่ฉบับที่ 1 และฉบับที่ 2 ต้องไม่ซ้ำกัน','#F5A524');
+for(const p of ps){const du=p.rgId?null:actDupOf(p);if(du&&!confirm('เลขที่ '+ordNumStr(p)+' ซ้ำกับเลขที่ '+rgFmt(du)+' เรื่อง '+(du.title||'-')+'\nต้องการบันทึกซ้ำหรือไม่?'))continue;await actRegPart(p===ps[0]&&drNum(p.noN)==drNum(o.noN)?0:1,false)}}
+/* ----- ฟอร์ม (แยกเป็น 4 หน้า) ----- */
+function actTab(i){DR._tab=i;drFill();const e=document.querySelector(`#dr_sc [data-part="${i==2?1:0}"]`);if(e&&(i==1||i==2))e.scrollIntoView({block:'start'})}
+function actAu(k,lb,fn,rows){const d=DR,v=d[k]!=null?d[k]:fn(d);return `<label class="lb">${lb} <a class="act-rs" onclick="DR.${k}=null;drFill()">ใช้ข้อความอัตโนมัติ</a><textarea class="in" rows="${rows||4}" oninput="DR.${k}=this.value;drPrev()">${esc(v)}</textarea></label>`}
+const actNo=i=>{const d=DR,k=i?'noN2':'noN';return `<div class="lb">ที่ (เลขที่ / ปี พ.ศ.) ${i?'ของฉบับที่ 2':'ของฉบับที่ 1'} เช่น 01/2569<div class="drm-no dro-no"><input class="in" id="${i?'dr_ns2':'dr_ns'}" inputmode="numeric" placeholder="เลขที่ (เว้นว่างได้)" value="${esc(d[k])}" oninput="DR.${k}=this.value;drPrev()"><span style="text-align:center">/</span><input class="in" inputmode="numeric" value="${esc(d.noY)}" oninput="DR.noY=this.value;drPrev();memoPopUpd()">${i?'':'<div id="dr_dup" class="drm-dup"></div>'}${memoPop(i)}</div></div>`};
+function actForm(){const d=DR,t=d._tab||0,ps=[...PP].sort((a,b)=>dn(a).localeCompare(dn(b),'th')),cur=ps.find(p=>'('+dn(p)+')'==d.signer),rem=actRem(d);
+const tabs=[['①','ข้อมูลโครงการ'],['②','ฉบับที่ 1 ขอจัดกิจกรรม'],['③','ฉบับที่ 2 ขอเบิกเงิน'],['④','ผู้ลงนาม']].map((x,i)=>`<button type="button" class="act-t${t==i?' on':''}" onclick="actTab(${i})"><b>${x[0]}</b><span>${x[1]}</span></button>`).join('');
+const nx=`<div class="act-nx">${t>0?`<button class="btn o" type="button" onclick="actTab(${t-1})">‹ ย้อนกลับ</button>`:'<span></span>'}${t<3?`<button class="btn" type="button" onclick="actTab(${t+1})">ถัดไป ›</button>`:''}</div>`;
+let b='';
+if(t==0)b=`<div class="act-h">ข้อมูลที่ใช้ร่วมกันทั้ง 2 ฉบับ — กรอกครั้งเดียว</div><h4>หัวบันทึกข้อความ</h4>${drField('org','ส่วนราชการ','in')}${drField('date','วันที่ (กดเลือกจากปฏิทิน)','date')}${drField('to','เรียน','ta',2)}
+<h4>โครงการ / กิจกรรม</h4>${drField('proj','ชื่อโครงการ','ta',2)}${drField('act','ชื่อกิจกรรม (ไม่บังคับ)','in')}${drField('fy','ปีงบประมาณ (พ.ศ.)','in')}${drField('unit','ฝ่ายงาน / งาน / กลุ่มสาระฯ ที่รับผิดชอบ','in')}${drField('dFrom','วันที่เริ่มกิจกรรม','date')}${drField('dTo','วันที่สิ้นสุดกิจกรรม (ถ้าวันเดียวให้เลือกวันเดียวกัน)','date')}
+<h4>ผู้ขออนุมัติ</h4><label class="lb">เลือกครูผู้ขอ (ตั้งต้นเป็นครูที่ล็อกอิน)<select class="in" onchange="memoPickSigner(this.value)"><option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>`<option value="${esc(p.id)}" ${cur&&cur.id==p.id?'selected':''}>${esc(dn(p))}</option>`).join('')}</select></label>${drField('signer','ชื่อผู้ขอ (ใช้ในเนื้อความและใต้ลายเซ็น)','in')}${drField('rpos','ตำแหน่ง (ใช้ในเนื้อความ เช่น ครู)','in')}`;
+else if(t==1)b=`<div class="act-h">ฉบับที่ 1 — ขออนุมัติดำเนินการจัดกิจกรรม</div>${actNo(0)}${actAu('s1','เรื่อง',d=>actSub({...d,s1:null},0),2)}${actAu('b1','เนื้อความ',actBody1,7)}${drField('c1','ภาคสรุป','in')}<div class="drm-hint">ช่อง “ความเห็นผู้บริหารโรงเรียน” ในกระดาษ เว้นไว้ให้ผู้บริหารเขียนเอง</div>`;
+else if(t==2)b=`<div class="act-h">ฉบับที่ 2 — ขออนุมัติดำเนินการและเบิก-จ่ายเงิน</div>${actNo(1)}${actAu('s2','เรื่อง',d=>actSub({...d,s2:null},1),2)}
+<h4>งบประมาณ (บาท)</h4>${drField('planPg','แผนปฏิบัติการประจำปี — หน้าที่','in')}${drField('budget','1. ได้รับจัดสรรงบประมาณ','in')}${drField('paid','2. ได้เบิกจ่ายไปแล้ว','in')}${drField('use','3. เบิกจ่ายครั้งนี้','in')}
+<div class="act-rem${rem!==''&&rem<0?' neg':''}">4. คงเหลือ (คำนวณให้อัตโนมัติ): <b>${rem===''?'—':esc(actM(rem))+' บาท'}</b>${rem!==''&&rem<0?'<br>⚠ เบิกเกินงบที่ได้รับจัดสรร':''}</div>
+<h4>เนื้อความ</h4>${actAu('b2','ข้อความหลัก',actBody2,8)}${drField('b2b','ข้อความต่อ','in')}${drField('c2','ภาคสรุป','in')}<div class="drm-hint">ช่องความเห็นงานแผน/วิชาการ/พัสดุ และคำสั่งผู้อำนวยการ เว้นไว้ให้เขียนเอง</div>`;
+else b=`<div class="act-h">ผู้ลงนาม</div><h4>ผู้ขอ (${esc(String(d.signer||'').trim())})</h4>${drField('pos','คำใต้ชื่อ (เช่น ผู้รับผิดชอบโครงการ)','in')}${memoSgForm()}${drSigField()}
+<h4>ผู้ลงนามประจำตำแหน่ง</h4><div class="drm-hint">ระบบเลือกชื่อให้เองเมื่อมีตำแหน่งนั้นในข้อมูลบุคลากร ถ้ายังไม่มีจะเว้นว่างไว้ให้เลือกหรือพิมพ์เอง</div>`+
+Object.keys(ACT_ROLES).map(r=>{const s=d.sg[r],nm=s.n!=null?s.n:actAuto(r),sel=ps.find(p=>'('+dn(p)+')'==nm);return `<div class="act-sg"><b>${ACT_ROLES[r].n}</b><select class="in" onchange="actSgPick('${r}',this.value)"><option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>`<option value="${esc(p.id)}" ${sel&&sel.id==p.id?'selected':''}>${esc(dn(p))}</option>`).join('')}</select><input class="in" placeholder="ชื่อ (พิมพ์เองได้)" value="${esc(nm)}" oninput="actSgSet('${r}','n',this.value)"><input class="in" placeholder="ตำแหน่ง" value="${esc(actTt(d,r))}" oninput="actSgSet('${r}','t',this.value)"></div>`}).join('');
+return `<div class="act-tabs">${tabs}</div>${b}${nx}`}
+function actSgPick(r,id){const p=PP.find(x=>String(x.id)==String(id));DR.sg[r].n=p?'('+dn(p)+')':'';drFill()}
+function actSgSet(r,k,v){DR.sg[r][k]=v;drPrev()}
+/* ----- Word ----- */
+async function actDocx(){await drLoad('docx');const D=window.docx,d=DR,T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunPSK',font={ascii:F,hAnsi:F,cs:F,eastAsia:F},W=MEMO_M.w,has=ordHas;
+const R=(t,o)=>new D.TextRun({text:T(t),font,size:32,sizeComplexScript:32,...(o||{})}),P=(ch,o)=>new D.Paragraph({children:ch,...(o||{})});
+const U={underline:{type:D.UnderlineType.DOTTED,color:'000000'}},L=t=>R(t,{bold:true,boldComplexScript:true,size:40,sizeComplexScript:40}),V=(t,o)=>R(t,{...U,...(o||{})}),Vt=()=>new D.TextRun({text:'\t',font,size:32,...U});
+const SYM={ascii:'Segoe UI Symbol',hAnsi:'Segoe UI Symbol',cs:'Segoe UI Symbol',eastAsia:'MS Gothic'},CB=sz=>new D.TextRun({text:'☐ ',font:SYM,size:sz||32,sizeComplexScript:sz||32});
+const LT_=D.TabStopType.LEFT,RT_=D.TabStopType.RIGHT,tb=(...a)=>a.map(p=>({type:p[0],position:mm(p[1])}));
+const dm=iso=>{if(!iso)return '';const a=iso.split('-');return (+a[2])+' '+TMF[+a[1]-1]+' '+(+a[0]+543)};
+const gb=Uint8Array.from(atob(DR_GARUDA.split(',')[1]),c=>c.charCodeAt(0));
+const cen={indent:{left:mm(25),right:mm(W-25-110)},alignment:D.AlignmentType.CENTER};
+const head=i=>{const nn=i?d.noN2:d.noN,no=(has(nn)||has(d.noY))?String(nn||'').trim()+'/'+String(d.noY||'').trim():'',sub=String(actSub(d,i)).replace(/^\s*เรื่อง\s*/,'');
+const gimg=new D.ImageRun({data:gb,type:'png',transformation:{width:51,height:57},floating:{horizontalPosition:{relative:D.HorizontalPositionRelativeFrom.MARGIN,offset:635},verticalPosition:{relative:D.VerticalPositionRelativeFrom.PARAGRAPH,offset:-95885},wrap:{type:D.TextWrappingType.NONE},behindDocument:true,allowOverlap:true}});
+return [P([gimg,R('บันทึกข้อความ',{bold:true,boldComplexScript:true,size:58,sizeComplexScript:58})],{alignment:D.AlignmentType.CENTER,spacing:{line:700,lineRule:D.LineRuleType.EXACT,before:0,after:0}}),
+P([L('ส่วนราชการ'),R('\t'),V(String(d.org||'').trim()),Vt()],{tabStops:tb([LT_,27],[RT_,W]),spacing:{before:0,after:0}}),
+P([L('ที่'),R(' '),V(no),Vt(),L('วันที่'),R(' '),V(dm(d.date)),Vt()],{tabStops:tb([LT_,79],[RT_,W]),spacing:{before:0,after:0}}),
+P([L('เรื่อง'),R(' '),V(sub),Vt()],{tabStops:tb([RT_,W]),spacing:{before:0,after:0}}),
+P([R('เรียน  '+String(d.to||'').trim())],{spacing:{before:120,after:0}})]};
+const paras=(list,keepLast)=>{const ps=list.filter(has);return ps.map((t,k)=>P([R(String(t).trim())],{indent:{firstLine:1418},alignment:D.AlignmentType.THAI_DISTRIBUTE,spacing:{before:120,after:0},keepNext:keepLast&&k>=ps.length-2,keepLines:keepLast&&k==ps.length-1}))};
+const reqSig=()=>{const out=[],sg=memoSg(d),lh=MEMO_M.lh,gap=sg.line?lh:0;
+if(d.sig){const sb=Uint8Array.from(atob(d.sig.split(',')[1]),c=>c.charCodeAt(0)),hp=d.sigH*3.7795;out.push(P([new D.ImageRun({data:sb,type:'png',transformation:{width:Math.round(hp*(d.sigAR||1)),height:Math.round(hp)}})],{...cen,spacing:{before:mm(Math.max(0,MEMO_M.sp-gap-d.sigH)),after:0},keepNext:true}))}
+if(sg.line)out.push(P([R('ลงชื่อ'),R('\t'),...(sg.tail?[R(sg.tail)]:[])],{indent:{left:mm(25)},tabStops:[{type:RT_,position:mm(135),leader:D.LeaderType.DOT}],spacing:{before:d.sig?0:mm(MEMO_M.sp-gap),after:0},keepNext:true}));
+out.push(P([R(d.signer)],{...cen,spacing:{before:(!sg.line&&!d.sig)?mm(MEMO_M.sp):0,after:0},keepNext:!!(sg.pm&&has(d.pos))}));
+if(sg.pm&&has(d.pos)){((sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim()).split('\n').forEach((l,i,a)=>out.push(P([R(l)],{...cen,spacing:{before:0,after:0},keepNext:i<a.length-1})))}return out};
+/* ผู้ลงนามประจำตำแหน่ง: opt.c = จัดกลางแบบกว้าง 110 มม. · opt.w = ความกว้างในช่อง (มม.) · opt.sz = ขนาดตัวอักษร */
+const asg=(r,o)=>{const sz=o.sz||32,ind=o.c?{indent:{left:mm(25),right:mm(W-25-110)}}:{},tp=o.c?mm(135):mm(o.w);const S=(t,x)=>R(t,{size:sz,sizeComplexScript:sz,...(x||{})});
+return [P([S('ลงชื่อ'),S('\t')],{...(o.c?{indent:{left:mm(25)}}:{}),tabStops:[{type:RT_,position:tp,leader:D.LeaderType.DOT}],spacing:{before:mm(o.c?10:9),after:0},keepNext:true}),
+P([S(actNm(d,r))],{...ind,alignment:D.AlignmentType.CENTER,spacing:{before:0,after:0},keepNext:true}),P([S(actTt(d,r))],{...ind,alignment:D.AlignmentType.CENTER,spacing:{before:0,after:0}})]};
+const cbl=(t,sz,x)=>P([CB(sz),R(t,{size:sz,sizeComplexScript:sz})],{spacing:{before:0,after:0},...(x||{})});
+const dl=()=>P([R('\t')],{tabStops:[{type:RT_,position:mm(W),leader:D.LeaderType.DOT}],spacing:{before:0,after:0}});
+const NB={style:D.BorderStyle.NONE,size:0,color:'FFFFFF'},noB={top:NB,bottom:NB,left:NB,right:NB};
+const op1=()=>[P([R('ความเห็นผู้บริหารโรงเรียน',{bold:true,boldComplexScript:true})],{spacing:{before:mm(8),after:0},keepNext:true}),P([CB(),R('อนุมัติ'),R('        '),CB(),R('ไม่อนุมัติ')],{spacing:{before:0,after:0},keepNext:true}),dl(),dl(),dl(),...asg('dir',{c:true})];
+const sec=ch=>({properties:{titlePage:true,page:{size:{width:11906,height:16838},margin:{top:mm(MEMO_M.t1),bottom:mm(MEMO_M.b),left:mm(MEMO_M.l),right:mm(MEMO_M.r),header:mm(25),footer:mm(12.7)},pageNumbers:{start:1,...(d.arab?{}:{formatType:D.NumberFormat.THAI_NUMBERS})}}},headers:{default:new D.Header({children:[P([R('- '),new D.TextRun({children:[D.PageNumber.CURRENT],font,size:32,sizeComplexScript:32}),R(' -')],{alignment:D.AlignmentType.CENTER})]}),first:new D.Header({children:[P([])]})},children:ch});
+const s1=[...head(0),...paras([actBody1(d),d.c1],true),...reqSig(),...op1()];
+/* ฉบับ 2 */
+const rem=actRem(d),cell=(ch,w,b)=>new D.TableCell({children:ch,width:{size:mm(w),type:D.WidthType.DXA},borders:b||undefined,margins:{top:60,bottom:60,left:90,right:90}});
+const amt=(n,lb,v)=>{const z={size:28,sizeComplexScript:28};return P([R(n+'. '+lb+' จำนวนเงิน ',z),V((v||'\u00a0'.repeat(9)),z),R(' บาท',z)],{spacing:{before:0,after:0}})};
+const bg=[P([R('ตามที่ฝ่ายงาน/งาน/กลุ่มสาระฯ '),V(actB(d.unit,12)),R(' ได้ขออนุมัติดำเนินงานตามโครงการ'),V(actB(d.proj,12)),R(' แผนปฏิบัติการประจำปี '),V(actB(d.fy,5)),R(' หน้า '),V(actB(d.planPg,4)),R(' มีรายละเอียดดังนี้')],{spacing:{before:mm(6),after:0},indent:{firstLine:1418},keepNext:true}),
+new D.Table({width:{size:mm(W),type:D.WidthType.DXA},columnWidths:[mm(80),mm(80)],borders:{...noB,insideHorizontal:NB,insideVertical:NB},rows:[new D.TableRow({cantSplit:true,children:[cell([amt(1,'ได้รับจัดสรรงบประมาณ',actM(d.budget)),amt(2,'ได้เบิกจ่ายไปแล้ว',actM(d.paid))],80,noB),cell([amt(3,'เบิกจ่ายครั้งนี้',actM(d.use)),amt(4,'คงเหลือ',rem===''?'':actM(rem))],80,noB)]})]}),...asg('plan',{c:true})];
+const W3=W/3,cp=(ch)=>cell(ch,W3),S=28,cbS=t=>cbl(t,S);
+const because=()=>[P([CB(S),R('เพราะ',{size:S,sizeComplexScript:S}),R('\t',{...U,size:S})],{tabStops:[{type:RT_,position:mm(W3-4),leader:D.LeaderType.DOT}],spacing:{before:0,after:0}}),P([R('\t',{size:S})],{tabStops:[{type:RT_,position:mm(W3-4),leader:D.LeaderType.DOT}],spacing:{before:0,after:0}})];
+const g3=new D.Table({width:{size:mm(W),type:D.WidthType.DXA},columnWidths:[mm(W3),mm(W3),mm(W3)],rows:[new D.TableRow({cantSplit:true,children:[
+cp([cbS('มีในแผน/ทำตามแผน'),cbS('ไม่มีในแผน'),cbS('เสนอเพิ่มเติม'),cbS('มีเงินงบประมาณที่สามารถเบิกจ่ายได้จำนวน'),P([R('\t',{size:S}),R(' บาท',{size:S,sizeComplexScript:S})],{tabStops:[{type:RT_,position:mm(W3-14),leader:D.LeaderType.DOT}],spacing:{before:0,after:0}}),...asg('plan',{w:W3-4,sz:S})]),
+cp([cbS('เห็นสมควรอนุมัติ'),...(()=>{const b=because();return [cbl('ไม่สมควรอนุมัติ',S),...b]})(),...asg('acad',{w:W3-4,sz:S})]),
+cp([cbS('เห็นสมควรอนุมัติ'),cbl('ไม่สมควรอนุมัติ',S),...because(),...asg('sup',{w:W3-4,sz:S})])]})]});
+const ord=[P([R('คำสั่งผู้อำนวยการ',{bold:true,boldComplexScript:true})],{alignment:D.AlignmentType.CENTER,spacing:{before:mm(6),after:0},keepNext:true}),P([CB(),R('อนุมัติ'),R('    '),CB(),R('ไม่อนุมัติ'),R('    เพราะ'),R('\t',U)],{tabStops:[{type:RT_,position:mm(W),leader:D.LeaderType.DOT}],spacing:{before:0,after:0},keepNext:true}),...asg('dir',{c:true})];
+const s2=[...head(1),...paras([actBody2(d),d.b2b,d.c2],true),...reqSig(),...bg,P([],{spacing:{before:mm(3),after:0}}),g3,...ord];
+const doc=new D.Document({creator:'โรงเรียนบ้านผาเยอ',title:'ขออนุมัติโครงการ'+(d.proj||''),styles:{default:{document:{run:{font,size:32,sizeComplexScript:32}}}},sections:[sec(s1),sec(s2)]});
+return await D.Packer.toBlob(doc)}
+
 function admMenu(){const can=canManageAdmin(),sent=LT.filter(l=>l.via=='admin'&&l.createdBy==(me&&me._id)).length,pend=mmGroups(m=>!m.ack&&ltAliveItem(m)).length,card=(r,cls,ico,t,d,st)=>`<div class="admn ${cls}" data-r="${r}" role="button" tabindex="0"><i class="lbn-o o1"></i><i class="lbn-o o2"></i><i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i><i class="lbn-sp s3">✦</i><div class="admn-hd"><span class="lbn-ic">${ic(ico)}</span><span class="admn-go">เปิด ›</span></div><div class="admn-t"><h3>${t}</h3><p>${d}</p></div>${st?`<em class="admn-st">${st}</em>`:''}</div>`;
 return `<div class="admn-row">${card('admin:send','admn-s','cloudup','ส่งหนังสือราชการ','ส่งหนังสือ/ไฟล์ถึงครูหลายคน ระบุวันหมดเขต',can?`ส่งแล้ว ${sent} ฉบับ`:'ดูได้เฉพาะครูธุรการ')}${card('admin:memo','admn-m','doc','เกษียนหนังสือราชการ','บันทึกหนังสือ มอบหมายให้บุคลากรรับทราบ',`ยังไม่รับทราบ ${pend} รายการ`)}${card('admin:draft','admn-d','pen','ร่างหนังสือราชการ','ร่างหนังสือนำส่ง ดูตัวอย่างทันที บันทึก Word/PDF พิมพ์ หรือส่งต่อ',can?'หนังสือนำส่ง':'ดูได้เฉพาะครูธุรการ')}</div>`}
 const adSp=()=>'<i class="lbn-o o1"></i><i class="lbn-o o2"></i><i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i><i class="lbn-sp s3">✦</i>';
@@ -2716,7 +2851,7 @@ const RGT={order:{n:'ทะเบียนเลขที่คำสั่ง�
 letter:{n:'ทะเบียนเลขที่บันทึกข้อความ',s:'บันทึกข้อความ',lab:'เรื่อง / รายละเอียดบันทึกข้อความ',ph:'เช่น ขอความอนุเคราะห์วิทยากรอบรม',to:'ถึง / เรียน',c:'#8B5CF6'},
 send:{n:'ทะเบียนเลขที่หนังสือนำส่ง',s:'หนังสือนำส่ง',lab:'เรื่อง / รายละเอียดสิ่งที่นำส่ง',ph:'เช่น ส่งรายงานผลการดำเนินงานประจำเดือน',to:'ส่งถึง',c:'#22B573'}};
 const rgCan=()=>canManageAdmin();
-const drRegOk=()=>DR_SRC=='doc'?!!(me&&DR&&DR.kind=='memo'):rgCan();
+const drRegOk=()=>DR_SRC=='doc'?!!(me&&DR&&(DR.kind=='memo'||DR.kind=='act')):rgCan();
 const rgBE=d=>d&&/^\d{4}/.test(d)?+d.slice(0,4)+543:+svDay(new Date()).slice(0,4)+543;
 const rgOf=t=>RG.filter(r=>r.type==t);
 const rgFmt=r=>r.num||(r.no!=null?r.no+'/'+r.yr:'');
