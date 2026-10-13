@@ -412,6 +412,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .drm-hint{font-size:.72rem;color:#7B879C;margin-top:3px}
 .tp-docs{display:grid;gap:6px;margin:6px 0 10px}.tp-docs label{display:flex;gap:8px;align-items:flex-start;font-size:.85rem;padding:7px 10px;border:1px solid #D6DDF5;border-radius:10px;background:#F7F9FF}.tp-rd{display:flex;gap:14px;flex-wrap:wrap;margin-top:4px;font-size:.85rem}.tp-rd label{display:flex;gap:5px;align-items:center}.tp-h{display:flex;justify-content:space-between;align-items:center}.tp-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px}.tp-h .ln-x{padding:3px 10px}
 .ln-tabs{grid-template-columns:1fr!important}.ln-row{display:grid;grid-template-columns:22px 1fr 110px 34px;gap:6px;align-items:center;margin:5px 0}.ln-row .in{margin:0}.ln-n{font-size:.78rem;color:#7B879C;text-align:center}.ln-x{padding:4px 0;min-width:0}
+.drm-sc .m-rd,#dr_sc .m-rd{color:#E11D48}
 .rp-th{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}.rp-t{position:relative;border-radius:10px;overflow:hidden;border:1px solid #D6DDF5;background:#F7F9FF;aspect-ratio:4/3}.rp-t img{width:100%;height:100%;object-fit:cover;display:block}.rp-n{position:absolute;left:5px;top:4px;background:rgba(31,42,68,.7);color:#fff;border-radius:8px;padding:0 7px;font-size:.7rem}.rp-b{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around;background:rgba(255,255,255,.88);padding:2px}.rp-b button{border:0;background:none;cursor:pointer;font-size:.72rem;color:#3B4A8C;padding:2px 6px}
 .act-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 0 12px}.act-t{display:flex;gap:8px;align-items:center;text-align:left;padding:8px 10px;border:1px solid #D6DDF5;border-radius:12px;background:#F7F9FF;cursor:pointer;font-family:inherit;font-size:.8rem;color:#3B4A8C;transition:.2s}.act-t b{font-size:1rem}.act-t.on{background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border-color:#A78BFA;box-shadow:0 6px 14px -8px rgba(110,80,220,.6);font-weight:600}.act-h{background:#EEF2FF;color:#4338CA;border-radius:10px;padding:7px 11px;font-size:.8rem;font-weight:600;margin-bottom:6px}.act-nx{display:flex;justify-content:space-between;margin:16px 0 4px}.act-rs{font-size:.7rem;color:#2F6BFF;cursor:pointer;margin-left:6px;text-decoration:underline}.act-rem{margin:6px 0;padding:7px 11px;border-radius:10px;background:#EAFBF3;color:#0E7A5A;font-size:.85rem}.act-rem.neg{background:#FFF1F3;color:#BE123C}.act-sg{display:grid;gap:5px;padding:9px;border:1px solid #E1E6F7;border-radius:12px;margin:8px 0;background:#FAFBFF}.act-sg .in{margin:0}.msg-g{display:grid;grid-template-columns:1fr 1fr;gap:6px}.msg{display:grid;gap:2px;text-align:left;padding:8px 10px;height:auto;line-height:1.3}.msg small{font-weight:600}.msg span{font-size:.68rem;color:#7B879C}.msg.rec{grid-column:1/-1}.msg-rec{margin-left:8px;font-style:normal;font-size:.68rem;font-weight:700;color:#B45309;background:#FFF3C4;border:1px solid #F5D76E;border-radius:99px;padding:1px 8px;animation:drPop .6s both}.msg.on{background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border-color:#A78BFA}
 .drm-pop{position:absolute;left:0;bottom:calc(100% + 6px);z-index:9;background:linear-gradient(135deg,#F3EEFF,#E8F0FF);border:1px solid #CDBEFF;color:#5B3FB5;border-radius:12px;padding:6px 11px;font-size:.74rem;line-height:1.5;box-shadow:0 10px 22px -12px rgba(110,80,220,.55);opacity:0;transform:translateY(4px);pointer-events:none;transition:.18s;white-space:nowrap}.drm-pop a{color:#2F6BFF;font-weight:600;cursor:pointer;text-decoration:underline}.drm-pop:after{content:'';position:absolute;left:18px;top:100%;border:6px solid transparent;border-top-color:#CDBEFF}.drm-no:focus-within .drm-pop{opacity:1;transform:none;pointer-events:auto}
@@ -1164,7 +1165,7 @@ const DR_CSS=`.dr-a4{box-sizing:border-box;width:210mm;min-height:297mm;backgrou
 .dr-a4 .l-tm p{margin:0;text-indent:10mm;text-align:justify;overflow-wrap:anywhere}
 .dr-a4 .l-sg{display:grid;grid-template-columns:auto 1fr auto auto 44mm;column-gap:1.5mm;align-items:baseline;margin-top:6mm}.dr-a4 .l-sg .l-v{display:block}.dr-a4 .l-sg em{grid-column:2;grid-row:2;text-align:center;font-style:normal}
 .dr-pgs.trip,.dr-pgs.rep{width:max-content;align-items:center}
-.dr-a4.d-rep{width:297mm;height:210mm;min-height:210mm;padding:10mm 12mm;overflow:hidden;display:flex;flex-direction:column}.dr-a4 .rp-cap{text-align:center;font-weight:700;font-size:18pt;line-height:8mm;min-height:16mm;display:flex;align-items:center;justify-content:center;flex:none}.dr-a4 .rp-gr{flex:1;display:grid;grid-template-columns:repeat(3,88mm);grid-template-rows:repeat(2,66mm);column-gap:4.5mm;row-gap:12mm;justify-content:center;align-content:center}.dr-a4 .rp-c{width:88mm;height:66mm;overflow:hidden}.dr-a4 .rp-c img{display:block;width:88mm;height:66mm}.dr-a4 .rp-c.e{border:.3mm dashed #b8bfd0}
+.dr-a4.d-rep{width:210mm;height:297mm;min-height:297mm;padding:10mm 12mm;overflow:hidden;display:flex;flex-direction:column}.dr-a4 .rp-cap{text-align:center;font-weight:700;font-size:18pt;line-height:8mm;min-height:16mm;display:flex;align-items:center;justify-content:center;flex:none}.dr-a4 .rp-gr{flex:1;display:grid;grid-template-columns:repeat(2,88mm);grid-template-rows:repeat(3,66mm);column-gap:6mm;row-gap:12mm;justify-content:center;align-content:center}.dr-a4 .rp-c{width:88mm;height:66mm;overflow:hidden}.dr-a4 .rp-c img{display:block;width:88mm;height:66mm}.dr-a4 .rp-c.e{border:.3mm dashed #b8bfd0}
 .dr-a4 .m-li{text-indent:-8mm;padding-left:33mm}.dr-a4 .m-no{display:inline-block;width:8mm;text-indent:0}.dr-a4 .m-nt{margin-top:5mm}.dr-a4 .m-li2{padding-left:8mm;text-indent:-8mm;white-space:pre-line}
 .dr-a4.d-trip{height:297mm;min-height:297mm;overflow:hidden;padding:12mm 14mm;font-size:15pt;line-height:6.9mm}.dr-a4.d-trip.ls{width:297mm;height:210mm;min-height:210mm;padding:10mm 12mm;font-size:14pt;line-height:6.2mm}
 .dr-a4 .t-u{text-decoration:underline dotted;text-decoration-thickness:.3mm;text-underline-offset:1.3mm;overflow-wrap:anywhere}
@@ -1353,7 +1354,7 @@ async function drAutoReg(){const d=DR;if(DR_SRC!='doc'||!me)return;if(d.kind=='a
 if(!/^\d+$/.test(drNum(d.noN))||!/^\d{4}$/.test(drNum(d.noY))||!d.date||!String(d.subject||'').trim())return;
 if(!d.rgId&&ordDup())return drFlash('เลขที่ '+ordNumStr(d)+' ซ้ำกับทะเบียน จึงไม่บันทึกเลขอัตโนมัติ กรุณาตรวจเลขที่','#F5A524');
 await drRegWrite(true)}
-async function drSave(kind){document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'));drMsg('กำลังสร้างไฟล์...');
+async function drSave(kind){if(!repGate())return;document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'));drMsg('กำลังสร้างไฟล์...');
 try{const b=await drBlob(kind),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=drFname(kind);document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);await drAutoReg();if(!drShouldArc()){drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว');return}
 drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว · กำลังเก็บ PDF ลงแบบฟอร์ม/เอกสารดาวน์โหลด...');const ex=await drArchive(kind=='pdf'?b:await drPdf());drMsg('บันทึกไฟล์ '+drFname(kind)+' แล้ว'+(ex?' · เก็บ PDF ลงแบบฟอร์ม/เอกสารดาวน์โหลดแล้ว':''));if(ex)drArcMsg(ex)}
 catch(e){drMsg('');alert('สร้างไฟล์ไม่สำเร็จ: '+e.message)}}
@@ -1362,7 +1363,7 @@ try{const b=await drBlob(kind),nm=drFname(kind),f=new File([b],nm,{type:kind=='p
 LD.a.files=LD.a.files.filter(x=>!x.fromDraft);LD.a.files.push({file:f,name:nm.replace(/\.[^.]+$/,''),fromDraft:true});if(!LD.a.title.trim())LD.a.title=(DR.subject||'').trim();
 const ex=drShouldArc()?await drArchive(kind=='pdf'?b:await drPdf()):null;drClose();go('admin:send');if(ex)drArcMsg(ex)}
 catch(e){drMsg('');alert('สร้างไฟล์ไม่สำเร็จ: '+e.message)}}
-function drPrint(){drEnsureCss();drAutoReg();if(drShouldArc())drPdf().then(b=>drArchive(b)).then(ex=>{if(ex)drArcMsg(ex)}).catch(e=>drFlash('สร้างไฟล์เก็บไม่สำเร็จ: '+e.message,'#E11D48'));const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(f);const w=f.contentWindow.document;w.open();
+function drPrint(){if(!repGate())return;drEnsureCss();drAutoReg();if(drShouldArc())drPdf().then(b=>drArchive(b)).then(ex=>{if(ex)drArcMsg(ex)}).catch(e=>drFlash('สร้างไฟล์เก็บไม่สำเร็จ: '+e.message,'#E11D48'));const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(f);const w=f.contentWindow.document;w.open();
 w.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(DR.subject||'หนังสือนำส่ง')}</title><style>${DR_FONT}@page{size:A4;margin:0}html,body{margin:0}${DR_CSS.replace('box-shadow:0 4px 18px rgba(30,40,100,.25)','box-shadow:none')}@page{size:A4;margin:0}.dr-pgs{gap:0}.dr-a4.d-ord,.dr-a4.d-memo,.dr-a4.d-loan{break-after:page;page-break-after:always}.dr-a4.d-ord:last-child,.dr-a4.d-memo:last-child,.dr-a4.d-loan:last-child{break-after:auto;page-break-after:auto}@page ls{size:A4 landscape;margin:0}.dr-a4.d-trip{break-after:page;page-break-after:always}.dr-a4.d-trip.ls{page:ls}.dr-a4.d-trip:last-child{break-after:auto;page-break-after:auto}.dr-a4.d-rep{break-after:page;page-break-after:always}.dr-a4.d-rep.ls{page:ls}.dr-a4.d-rep:last-child{break-after:auto;page-break-after:auto}</style></head><body>${drDocHtml(DR)}</body></html>`);w.close();
 const go_=()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){alert('พิมพ์ไม่สำเร็จ')}setTimeout(()=>f.remove(),3000)};setTimeout(()=>{try{f.contentWindow.document.fonts.load('16pt THSarabunDR').then(()=>f.contentWindow.document.fonts.ready).then(go_,go_)}catch(e){go_()}},300)}
 /* ===================== ร่างหนังสือคำสั่ง ===================== */
@@ -2075,13 +2076,22 @@ const doc=new D.Document({creator:'โรงเรียนบ้านผาเ
 return await D.Packer.toBlob(doc)}
 
 /* ===== ร่างบันทึกข้อความรายงานผลการไปอบรม/ไปราชการ (rep) ===== */
+const REP_EXK=['refNo','refDate','title','place','dFrom','dTo','budget','summary','subject','apply','docs'];
 const REP_PW=88,REP_PH=66,REP_PER=6;
 MEMO_TAILS.includes('ผู้รายงาน')||MEMO_TAILS.unshift('ผู้รายงาน');
 function repDef(){const t=toISO(new Date()),p=me&&me.sid&&PP.find(x=>x.id==me.sid),y=+t.slice(0,4)+543;
-const d={kind:'rep',org:DR_SCH.name,noN:'',noY:String(y),date:t,subject:'',subjAuto:true,to:'ผู้อำนวยการ'+DR_SCH.name,refNo:'',refDate:'',title:'',place:'',dFrom:'',dTo:'',days:'',daysAuto:true,budget:'',withs:'',
-p1:null,p2:null,ap0:null,dc0:null,summary:'',apply:[''],docs:[{t:'',n:'',u:'ชุด'}],close:'จึงเรียนมาเพื่อโปรดทราบและพิจารณาดำเนินการต่อไป',
+const d={kind:'rep',org:DR_SCH.name,noN:'',noY:String(y),date:t,subject:'รายงานผลการไปอบรมเชิงปฏิบัติการพัฒนาองค์ความรู้ด้านการอ่านและการเขียนภาษาไทย',subjAuto:false,to:'ผู้อำนวยการ'+DR_SCH.name,refNo:'ศธ 04010/ว1220',refDate:'2024-04-26',title:'อบรมเชิงปฏิบัติการพัฒนาองค์ความรู้เพื่อเสริมสร้างศักยภาพการจัดการเรียนการสอนด้านการอ่านและการเขียนภาษาไทย สำหรับครูผู้สอนภาษาไทยชั้นประถมศึกษาปีที่ 5-6',place:'โรงแรมเชียงใหม่คุ้มภูคำ',dFrom:'2024-05-03',dTo:'2024-05-06',days:'',daysAuto:true,budget:'1340',withs:'',
+p1:null,p2:null,ap0:null,dc0:null,summary:'อบรมสัมมนาการพัฒนาครูและบุคลากรทางการศึกษา เรื่อง ทักษะการอ่านและการเขียนภาษาไทย และเทคนิคการสอนภาษาไทยให้แก่นักเรียนชั้นประถมศึกษาปีที่ 5 - 6',apply:['ให้ความรู้ที่ถูกต้องด้านภาษาไทยแก่นักเรียน และเผยแพร่ข้อมูลด้านการอ่านการเขียนภาษาไทยให้แก่คุณครูที่เกี่ยวข้อง'],docs:[{t:'เอกสารการพัฒนาองค์ความรู้เพื่อเสริมสร้างศักยภาพการจัดการเรียนการสอนด้านการอ่านและการเขียนภาษาไทย สำหรับครูผู้สอนภาษาไทยชั้นประถมศึกษาปีที่ 5-6',n:'1',u:'ชุด'}],close:'จึงเรียนมาเพื่อโปรดทราบและพิจารณาดำเนินการต่อไป',
 signer:p?'('+dn(p)+')':'(                    )',pos:posDef(p),sgLine:false,sgTail:'ผู้รายงาน',sgPm:1,showOp:true,sg:{dir:{n:null,t:null}},
-pPhoto:true,photoLbl:'รูปถ่ายการเข้ารับการฝึกอบรม',att:[''],photos:[],caps:[],_tab:0,arab:false};drSigInit(d);return d}
+pPhoto:true,photoLbl:'รูปถ่ายการเข้ารับการฝึกอบรม',att:[''],photos:[],caps:[],_tab:0,arab:false,ok:{}};d.ex=JSON.parse(JSON.stringify(REP_EXK.reduce((o,k)=>(o[k]=d[k],o),{})));drSigInit(d);return d}
+const repRd=(d,k)=>!!(d.ex&&!(d.ok||{})[k]&&JSON.stringify(d[k])===JSON.stringify(d.ex[k]));
+const repRdI=(d,k,i)=>!!(d.ex&&!(d.ok||{})[k]&&d.ex[k]&&JSON.stringify(d[k][i])===JSON.stringify(d.ex[k][i]));
+const repMk=(on,t)=>on&&String(t)!==''?'\uE000'+t+'\uE001':t;
+const repRedN=d=>['refNo','refDate','title','place','dFrom','dTo','budget','summary','apply','docs'].filter(k=>repRd(d,k)).length+(!d.subjAuto&&repRd(d,'subject')?1:0);
+function repOk(k){DR.ok[k]=true;drFill()}
+const repOkL=k=>repRd(DR,k)?` <a class="act-rs" onclick="repOk('${k}')">ใช้ตามตัวอย่างนี้</a>`:'';
+function repGate(){if(DR.kind!='rep')return true;const n=repRedN(DR);return !n||confirm('ยังมี '+n+' จุดที่เป็นข้อความตัวอย่าง (ตัวอักษรสีแดงในพรีวิว) ที่ยังไม่ได้แก้\nต้องการดำเนินการต่อหรือไม่?')}
+function repClear(){if(!confirm('ล้างข้อความตัวอย่างทั้งหมดให้เป็นช่องว่าง?'))return;Object.assign(DR,{refNo:'',refDate:'',title:'',place:'',dFrom:'',dTo:'',budget:'',summary:'',apply:[''],docs:[{t:'',n:'',u:'ชุด'}],subject:'',subjAuto:true});drFill()}
 const repNm=s=>String(s==null?'':s).replace(/[()]/g,'').trim();
 const repDm=iso=>{if(!iso)return '';const a=String(iso).split('-');return (+a[2])+' '+TMF[+a[1]-1]+' '+(+a[0]+543)};
 function repRange(d){if(!d.dFrom)return '';const a=d.dFrom.split('-').map(Number),b=(d.dTo||d.dFrom).split('-').map(Number);
@@ -2093,13 +2103,14 @@ function repDaysCalc(d){if(!d.dFrom)return '';const a=Date.UTC(...d.dFrom.split(
 const repSub=d=>'รายงานผลการไป'+(String(d.title||'').trim()||'ราชการ');
 function repSync(d){if(d.subjAuto)d.subject=repSub(d);if(d.daysAuto)d.days=repDaysCalc(d);return d}
 const repWho=d=>(String(d.withs||'').trim()?'และคณะ':'');
-function repP1(d){const t=String(d.title||'').trim(),pl=String(d.place||'').trim(),rg=repRange(d),dy=String(d.days||'').trim(),bd=String(d.budget||'').trim(),w=String(d.withs||'').trim(),rf=String(d.refNo||'').trim().replace(/^ที่\s*/,'');
-let s='ตามหนังสือ'+(rf?'ที่ '+rf:'')+(d.refDate?' ลงวันที่ '+repDm(d.refDate):'')+' ให้ข้าพเจ้า'+repNm(d.signer)+(String(d.pos||'').trim()?' ตำแหน่ง'+String(d.pos).trim():'')+(w?' พร้อมด้วย '+w:'')+' เดินทางไป'+(t||'ราชการ')+(pl?' ณ '+pl:'')+(rg?' '+rg:'')+(dy?' รวมเป็นเวลา '+dy+' วัน':'');
-if(bd){const wd=loanWords(bd);s+=' และอนุมัติให้ใช้งบประมาณเป็นค่าใช้จ่ายในการเดินทางไปราชการครั้งนี้ จำนวน '+actM(bd)+' บาท'+(wd?' ('+wd+')':'')}
-return s+' นั้น'}
-const repP2=d=>'บัดนี้ การปฏิบัติหน้าที่ราชการดังกล่าวเสร็จเรียบร้อยแล้ว ข้าพเจ้า'+repWho(d)+'ขอรายงานผลการไป'+(String(d.title||'').trim()||'ราชการ')+' ดังนี้';
-const repAp0=d=>'ข้าพเจ้า'+repWho(d)+'จะนำความรู้ที่ได้รับจากการเดินทางไปราชการครั้งนี้มาเพื่อพัฒนางานของหน่วยงาน ดังนี้';
-const repDc0=d=>'เอกสารที่ได้รับจากการเดินทางไปราชการครั้งนี้ มีดังต่อไปนี้ คือ';
+function repP1(d,mk){const t=String(d.title||'').trim(),pl=String(d.place||'').trim(),rg=repRange(d),dy=String(d.days||'').trim(),bd=String(d.budget||'').trim(),w=String(d.withs||'').trim(),rf=String(d.refNo||'').trim().replace(/^ที่\s*/,'');
+const M=(k,x)=>mk?repMk(repRd(d,k),x):x,MD=x=>mk?repMk(repRd(d,'dFrom')||repRd(d,'dTo'),x):x;
+let s='ตามหนังสือ'+(rf?'ที่ '+M('refNo',rf):'')+(d.refDate?' ลงวันที่ '+M('refDate',repDm(d.refDate)):'')+' ให้ข้าพเจ้า'+repNm(d.signer)+(String(d.pos||'').trim()?' ตำแหน่ง'+String(d.pos).trim():'')+(w?' พร้อมด้วย '+w:'')+' เดินทางไป'+(t?M('title',t):'ราชการ')+(pl?' ณ '+M('place',pl):'')+(rg?' '+MD(rg):'')+(dy?' รวมเป็นเวลา '+MD(dy)+' วัน':'');
+if(bd){const wd=loanWords(bd);s+=' และอนุมัติให้ใช้งบประมาณเป็นค่าใช้จ่ายในการเดินทางไปราชการครั้งนี้ จำนวน '+M('budget',actM(bd)+' บาท'+(wd?' ('+wd+')':''))}
+return s}
+const repP2=(d,mk)=>'บัดนี้ การปฏิบัติหน้าที่ราชการที่ได้รับมอบหมายได้เสร็จเรียบร้อยแล้ว ข้าพเจ้า'+repWho(d)+'ขอรายงานผลการไป'+(String(d.title||'').trim()?(mk?repMk(repRd(d,'title'),String(d.title).trim()):String(d.title).trim()):'ราชการ')+' ดังต่อไปนี้';
+const repAp0=d=>'ข้าพเจ้า'+repWho(d)+'จะนำความรู้ ความสามารถ ประสบการณ์ ทักษะ หรืออื่น ๆ ที่ได้รับในการอบรมในครั้งนี้ มาเพื่อพัฒนางานของหน่วยงาน ดังนี้';
+const repDc0=d=>'เอกสารที่ได้รับจากการไปอบรม มีดังต่อไปนี้ คือ';
 const repV=(d,k,f)=>d[k]!=null?d[k]:f(d);
 const repApply=d=>(d.apply||[]).map(x=>String(x||'').trim()).filter(Boolean);
 const repDocs=d=>(d.docs||[]).filter(x=>String(x.t||'').trim()).map(x=>String(x.t).trim()+(String(x.n||'').trim()?' จำนวน '+String(x.n).trim()+(String(x.u||'').trim()?' '+String(x.u).trim():''):''));
@@ -2109,27 +2120,27 @@ const repNPg=d=>Math.max(1,Math.ceil((d.photos||[]).length/REP_PER));
 /* ----- เนื้อหาไหลต่อเนื่อง ----- */
 function repFlow(d){repSync(d);const T=t=>esc(drTh(d,t)),J=t=>drJ(drTh(d,t)),has=ordHas,sg=memoSg(d);
 const no=(has(d.noN)||has(d.noY))?String(d.noN||'').trim()+'/'+String(d.noY||'').trim():'';
-const sub=String(d.subject||'').replace(/^\s*เรื่อง\s*/,'');
+const sub=repMk(d.subjAuto?repRd(d,'title'):repRd(d,'subject'),String(d.subject||'').replace(/^\s*เรื่อง\s*/,''));
 const P=t=>has(t)?`<p class="m-p">${J(String(t).trim())}</p>`:'';
-const LI=(l,tx)=>l.map((x,i)=>`<p class="m-p m-li"><span class="m-no">${T((i+1)+'.')}</span>${J(x)}</p>`).join('');
+const LI=(l,k,src)=>l.map((x,i)=>`<p class="m-p m-li"><span class="m-no">${T((i+1)+'.')}</span>${J(repMk(src[i],x))}</p>`).join('');
 let h=`<div class="m-hd"><div class="m-tt">บันทึกข้อความ</div>
 <div class="m-r"><b class="m-lb">ส่วนราชการ</b><div class="m-v">${T(d.org)}</div></div>
 <div class="m-r m-r2"><div class="m-c"><b class="m-lb">ที่</b><div class="m-v">${T(no)}</div></div><div class="m-c"><b class="m-lb">วันที่</b><div class="m-v">${T(repDm(d.date))}</div></div></div>
 <div class="m-r"><b class="m-lb">เรื่อง</b><div class="m-v">${T(sub)}</div></div></div>
 <div class="m-to">${J('เรียน  '+String(d.to||'').trim())}</div>`;
-h+=P(repV(d,'p1',repP1))+P(repV(d,'p2',repP2));
-String(d.summary||'').split('\n').filter(has).forEach(t=>h+=P(t));
-const ap=repApply(d);if(ap.length)h+=P(repV(d,'ap0',repAp0))+LI(ap);
-const dc=repDocs(d);if(dc.length)h+=P(repV(d,'dc0',repDc0))+LI(dc);
+h+=P(d.p1!=null?d.p1:repP1(d,true))+P(d.p2!=null?d.p2:repP2(d,true));
+String(d.summary||'').split('\n').filter(has).forEach(t=>h+=P(repMk(repRd(d,'summary'),t)));
+const apr=(d.apply||[]).map((x,i)=>[String(x||'').trim(),repRdI(d,'apply',i)]).filter(x=>x[0]),ap=apr.map(x=>x[0]);if(ap.length)h+=P(repV(d,'ap0',repAp0))+LI(ap,'apply',apr.map(x=>x[1]));
+const dcr=(d.docs||[]).map((x,i)=>[x,repRdI(d,'docs',i)]).filter(x=>String(x[0].t||'').trim()),dc=repDocs(d);if(dc.length)h+=P(repV(d,'dc0',repDc0))+LI(dc,'docs',dcr.map(x=>x[1]));
 h+=P(d.close);
 h+=`<div class="m-sg"><div class="m-sp${sg.line?' ln':''}">${sg.line?`<div class="m-ln"><span>ลงชื่อ</span><i></i><span>${T(sg.tail)}</span></div>`:''}${d.sig?`<img src="${d.sig}" style="height:${d.sigH}mm" alt="">`:''}</div>${T(d.signer)}${sg.pm&&has(d.pos)?'<br>'+T((sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim()):''}</div>`;
 if(d.showOp)h+=`<div class="m-bk m-op"><b>ความคิดเห็นของหัวหน้าหน่วยงาน</b><div class="m-dl"></div><div class="m-dl"></div><div class="m-dl"></div>${actAsg(d,'dir','c')}</div>`;
 const at=repAtt(d);if(at.length)h+=`<div class="m-bk m-nt"><div><b>หมายเหตุ</b>  สิ่งที่แนบมาด้วย</div>${at.map((x,i)=>`<div class="m-li2"><span class="m-no">${T((i+1)+'.')}</span>${J(x)}</div>`).join('')}</div>`;
-return h}
+return h.replace(/\uE000/g,'<span class="m-rd">').replace(/\uE001/g,'</span>')}
 /* ----- หน้ารูปถ่าย (แนวนอน 6 รูปต่อหน้า) ----- */
 function repPhotoPages(d){if(!d.pPhoto)return '';const T=t=>esc(drTh(d,t)),ph=d.photos||[],n=repNPg(d);let o='';
 for(let i=0;i<n;i++){let c='';for(let j=0;j<REP_PER;j++){const x=ph[i*REP_PER+j];c+=`<div class="rp-c${x?'':(ph.length?' z':' e')}">${x?`<img src="${x.src}" alt="">`:''}</div>`}
-o+=`<div class="dr-a4 d-rep ls"><div class="rp-cap">${T(repCap(d,i))}</div><div class="rp-gr">${c}</div></div>`}return o}
+o+=`<div class="dr-a4 d-rep"><div class="rp-cap">${T(repCap(d,i))}</div><div class="rp-gr">${c}</div></div>`}return o}
 function repDocHtml(d){return `<div class="dr-pgs rep">${memoPages(repFlow(d),d,true,0)}${repPhotoPages(d)}</div>`}
 /* ----- ฟอร์ม ----- */
 function repTab(i){DR._tab=i;drFill()}
@@ -2167,23 +2178,23 @@ let b='';
 if(t==0)b=`<h4>หัวบันทึกข้อความ</h4>${drField('org','ส่วนราชการ','in')}
 <div class="lb">ที่ (เลขที่ / ปี พ.ศ. เช่น 01/2569)<div class="drm-no dro-no"><input class="in" id="dr_ns" inputmode="numeric" placeholder="เลขที่" value="${esc(d.noN)}" oninput="DR.noN=this.value;drPrev()"><span style="text-align:center">/</span><input class="in" inputmode="numeric" value="${esc(d.noY)}" oninput="DR.noY=this.value;drPrev();memoPopUpd()"><div id="dr_dup" class="drm-dup"></div>${memoPop()}</div></div>
 ${drField('date','วันที่ของบันทึก (ตั้งต้นเป็นวันนี้)','date')}
-<label class="lb">เรื่อง ${d.subjAuto?'':'<a class="act-rs" onclick="repSubAuto()">ใช้ข้อความอัตโนมัติ</a>'}<textarea class="in" id="rp_sub" rows="2" oninput="repSubIn(this.value)">${esc(d.subject)}</textarea></label>${drField('to','เรียน','ta',2)}
-<h4>หนังสือสั่งการ</h4><div class="drm-2">${drField('refNo','หนังสือที่ (เช่น ศธ 04116/123)','in')}${drField('refDate','ลงวันที่','date')}</div>
-<h4>การเดินทางไปราชการ</h4><label class="lb">เดินทางไป… (พิมพ์ต่อจากคำว่า “เดินทางไป”)<textarea class="in" rows="3" placeholder="เช่น อบรมเชิงปฏิบัติการ…" oninput="repTitleIn(this.value)">${esc(d.title)}</textarea></label>${drField('place','สถานที่ (ณ …)','in')}
-<div class="drm-2">${drField('dFrom','ตั้งแต่วันที่','date').replace(/DR\.dFrom=this\.value;/,"repDateIn('dFrom',this.value);")}${drField('dTo','ถึงวันที่','date').replace(/DR\.dTo=this\.value;/,"repDateIn('dTo',this.value);")}</div>
+<label class="lb">เรื่อง ${d.subjAuto?'':'<a class="act-rs" onclick="repSubAuto()">สร้างจากชื่อการอบรมอัตโนมัติ</a>'}${d.subjAuto?'':repOkL('subject')}<textarea class="in" id="rp_sub" rows="2" oninput="repSubIn(this.value)">${esc(d.subject)}</textarea></label>${drField('to','เรียน','ta',2)}
+<h4>หนังสือสั่งการ</h4><div class="drm-2">${drField('refNo','หนังสือที่ (เช่น ศธ 04116/123)'+repOkL('refNo'),'in')}${drField('refDate','ลงวันที่'+repOkL('refDate'),'date')}</div>
+<h4>การเดินทางไปราชการ</h4><label class="lb">เดินทางไป… (พิมพ์ต่อจากคำว่า “เดินทางไป”)${repOkL('title')}<textarea class="in" rows="3" placeholder="เช่น อบรมเชิงปฏิบัติการ…" oninput="repTitleIn(this.value)">${esc(d.title)}</textarea></label>${drField('place','สถานที่ (ณ …)'+repOkL('place'),'in')}
+<div class="drm-2">${drField('dFrom','ตั้งแต่วันที่'+repOkL('dFrom'),'date').replace(/DR\.dFrom=this\.value;/,"repDateIn('dFrom',this.value);")}${drField('dTo','ถึงวันที่'+repOkL('dTo'),'date').replace(/DR\.dTo=this\.value;/,"repDateIn('dTo',this.value);")}</div>
 <label class="lb">รวมเป็นเวลา (วัน) ${d.daysAuto?'<em style="font-size:.72rem;color:#7B879C">คำนวณอัตโนมัติ</em>':'<a class="act-rs" onclick="repDaysAuto()">คำนวณอัตโนมัติ</a>'}<input class="in" id="rp_dy" inputmode="numeric" value="${esc(d.days)}" oninput="repDaysIn(this.value)"></label>
-${drField('budget','งบประมาณที่ได้รับอนุมัติ (บาท · เว้นว่างได้)','in','inputmode="decimal"')}${ordHas(d.budget)&&loanWords(d.budget)?`<div class="drm-hint">ตัวอักษร: ${esc(loanWords(d.budget))}</div>`:''}
+${drField('budget','งบประมาณที่ได้รับอนุมัติ (บาท · เว้นว่างได้)'+repOkL('budget'),'in','inputmode="decimal"')}${ordHas(d.budget)&&loanWords(d.budget)?`<div class="drm-hint">ตัวอักษร: ${esc(loanWords(d.budget))}</div>`:''}
 <h4>ไปพร้อมกับผู้อื่น (ถ้ามี)</h4><label class="lb">พร้อมด้วย (เว้นว่าง = ไปคนเดียว)<textarea class="in" rows="3" oninput="DR.withs=this.value;drPrev()">${esc(d.withs)}</textarea></label>
 <label class="lb">เพิ่มชื่อจากบุคลากร<select class="in" onchange="repAddWith(this.value)"><option value="">— เลือกครู —</option>${ps.map(p=>`<option value="${esc(p.id)}">${esc(dn(p))}</option>`).join('')}</select></label>
-<h4>ข้อความอัตโนมัติ (แก้ไขได้)</h4>${actAu('p1','ย่อหน้าที่ 1 (ตามหนังสือ…)',repP1,7)}${actAu('p2','ย่อหน้าที่ 2 (บัดนี้…)',repP2,4)}`;
-else if(t==1)b=`<h4>สรุปสาระที่ได้รับ</h4><label class="lb">พิมพ์สรุปสาระที่ได้รับจากการไปราชการ (ขึ้นบรรทัดใหม่ = ขึ้นย่อหน้าใหม่)<textarea class="in" rows="12" oninput="DR.summary=this.value;drPrev()">${esc(d.summary)}</textarea></label>
-<h4>จะนำความรู้ไปพัฒนางานอย่างไร</h4>${actAu('ap0','ข้อความนำ',repAp0,3)}${repLst('apply','พิมพ์ข้อที่จะนำไปพัฒนางาน')}
-<h4>เอกสารที่ได้รับจากการไปราชการ</h4>${actAu('dc0','ข้อความนำ',repDc0,2)}${d.docs.map((x,i)=>`<div class="ln-row" style="grid-template-columns:22px 1fr 56px 56px 34px"><span class="ln-n">${i+1}</span><input class="in" value="${esc(x.t)}" placeholder="ชื่อเอกสาร" oninput="repDS(${i},'t',this.value)"><input class="in" value="${esc(x.n)}" placeholder="จำนวน" inputmode="numeric" oninput="repDS(${i},'n',this.value)"><input class="in" value="${esc(x.u)}" placeholder="หน่วย" oninput="repDS(${i},'u',this.value)"><button class="btn o ln-x" type="button" onclick="repDD(${i})" title="ลบ">✕</button></div>`).join('')}<button class="btn o" type="button" onclick="repDA()">+ เพิ่มเอกสาร</button>
+<h4>ข้อความอัตโนมัติ (แก้ไขได้)</h4>${actAu('p1','ย่อหน้าที่ 1 (ตามหนังสือ…)',repP1,7)}${actAu('p2','ย่อหน้าที่ 2 (บัดนี้…)',repP2,4)}<h4>เริ่มจากฟอร์มเปล่า</h4><button class="btn o" type="button" onclick="repClear()">ล้างข้อความตัวอย่างทั้งหมด</button><div class="drm-hint">ข้อความสีแดงในพรีวิวคือข้อความตัวอย่างที่ยังไม่ได้แก้ เมื่อแก้แล้วจะเปลี่ยนเป็นสีดำ</div>`;
+else if(t==1)b=`<h4>สรุปสาระที่ได้รับ</h4><label class="lb">พิมพ์สรุปสาระที่ได้รับจากการไปราชการ (ขึ้นบรรทัดใหม่ = ขึ้นย่อหน้าใหม่)${repOkL('summary')}<textarea class="in" rows="12" oninput="DR.summary=this.value;drPrev()">${esc(d.summary)}</textarea></label>
+<h4>จะนำความรู้ไปพัฒนางานอย่างไร${repOkL('apply')}</h4>${actAu('ap0','ข้อความนำ',repAp0,3)}${repLst('apply','พิมพ์ข้อที่จะนำไปพัฒนางาน')}
+<h4>เอกสารที่ได้รับจากการไปอบรม${repOkL('docs')}</h4>${actAu('dc0','ข้อความนำ',repDc0,2)}${d.docs.map((x,i)=>`<div class="ln-row" style="grid-template-columns:22px 1fr 56px 56px 34px"><span class="ln-n">${i+1}</span><input class="in" value="${esc(x.t)}" placeholder="ชื่อเอกสาร" oninput="repDS(${i},'t',this.value)"><input class="in" value="${esc(x.n)}" placeholder="จำนวน" inputmode="numeric" oninput="repDS(${i},'n',this.value)"><input class="in" value="${esc(x.u)}" placeholder="หน่วย" oninput="repDS(${i},'u',this.value)"><button class="btn o ln-x" type="button" onclick="repDD(${i})" title="ลบ">✕</button></div>`).join('')}<button class="btn o" type="button" onclick="repDA()">+ เพิ่มเอกสาร</button>
 <h4>ประโยคปิด</h4><label class="lb"><input class="in" list="dr_mcl" value="${esc(d.close)}" oninput="DR.close=this.value;drPrev()"><datalist id="dr_mcl">${DR_MEMO_CLOSE.map(x=>`<option value="${esc(x)}">`).join('')}</datalist></label>`;
 else if(t==2)b=`<h4>ผู้รายงาน</h4><label class="lb">เลือกครูผู้รายงาน (ตั้งต้นเป็นครูที่ล็อกอิน)<select class="in" onchange="memoPickSigner(this.value)"><option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>`<option value="${esc(p.id)}" ${cur&&cur.id==p.id?'selected':''}>${esc(dn(p))}</option>`).join('')}</select></label>${drField('signer','ชื่อผู้รายงาน','in')}${memoPosSel('pos')}${drField('pos','ตำแหน่ง','in')}${memoSgForm()}${drSigField()}
 <h4>ความคิดเห็นของหัวหน้าหน่วยงาน</h4><label class="drm-ck"><input type="checkbox" ${d.showOp?'checked':''} onchange="repSet('showOp',this.checked);drFill()"> แสดงช่องความคิดเห็น (เส้นประเว้นว่างให้ผู้อำนวยการเขียน)</label>
 ${d.showOp?(()=>{const s=d.sg.dir,nm=s.n!=null?s.n:actAuto('dir'),sel=ps.find(p=>'('+dn(p)+')'==nm);return `<label class="lb">ผู้อำนวยการ (ดึงจากข้อมูลบุคลากรตามตำแหน่ง · แก้ได้)<select class="in" onchange="repDirPick(this.value)"><option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>`<option value="${esc(p.id)}" ${sel&&sel.id==p.id?'selected':''}>${esc(dn(p))}</option>`).join('')}</select></label><label class="lb">ชื่อ<input class="in" value="${esc(nm)}" oninput="repDirSet('n',this.value)"></label><label class="lb">ตำแหน่ง<input class="in" value="${esc(actTt(d,'dir'))}" oninput="repDirSet('t',this.value)"></label>`})():''}`;
-else b=`<h4>หน้าแนบรูปถ่าย</h4><label class="drm-ck"><input type="checkbox" ${d.pPhoto?'checked':''} onchange="repPhCk(this.checked)"> มีหน้ารูปถ่าย (แนวนอน · ${REP_PER} รูปต่อหน้า) — ติ๊กแล้วจะเพิ่มในรายการ “สิ่งที่แนบมาด้วย” ให้อัตโนมัติ</label>
+else b=`<h4>หน้าแนบรูปถ่าย</h4><label class="drm-ck"><input type="checkbox" ${d.pPhoto?'checked':''} onchange="repPhCk(this.checked)"> มีหน้ารูปถ่าย (A4 แนวตั้ง · ${REP_PER} รูปต่อหน้า แถวละ 2 รูป) — ติ๊กแล้วจะเพิ่มในรายการ “สิ่งที่แนบมาด้วย” ให้อัตโนมัติ</label>
 ${d.pPhoto?`<label class="lb">ชื่อที่ขึ้นในรายการสิ่งที่แนบ<input class="in" value="${esc(d.photoLbl)}" oninput="DR.photoLbl=this.value;drPrev()"></label>
 <label class="drm-up"><input type="file" accept="image/*" multiple hidden onchange="repPhAdd(this.files);this.value=''"><b>เพิ่มรูปถ่าย (เลือกได้หลายรูป)</b><small>รูปถูกย่อและเก็บในเครื่องนี้เท่านั้น ไม่อัปโหลดขึ้นระบบ · จัดเป็นภาพแนวนอนขนาดเท่ากัน</small></label>
 <div class="rp-th">${d.photos.map((x,i)=>`<div class="rp-t"><img src="${x.src}" alt=""><span class="rp-n">${i+1}</span><div class="rp-b"><button type="button" onclick="repPhMv(${i},-1)" title="เลื่อนก่อน">◀</button><button type="button" onclick="repPhMv(${i},1)" title="เลื่อนหลัง">▶</button><button type="button" onclick="repPhDel(${i})" title="ลบรูป">✕</button></div></div>`).join('')}</div>
@@ -2224,13 +2235,13 @@ const at=repAtt(d);if(at.length){body.push(P([R('หมายเหตุ',{bold
 const hdr=new D.Header({children:[P([R('- '),new D.TextRun({children:[D.PageNumber.CURRENT],font,size:32,sizeComplexScript:32}),R(' -')],{alignment:D.AlignmentType.CENTER})]});
 const secs=[{properties:{titlePage:true,page:{size:{width:11906,height:16838},margin:{top:mm(MEMO_M.t1),bottom:mm(MEMO_M.b),left:mm(MEMO_M.l),right:mm(MEMO_M.r),header:mm(25),footer:mm(12.7)},...(d.arab?{}:{pageNumbers:{formatType:D.NumberFormat.THAI_NUMBERS}})}},headers:{default:hdr,first:new D.Header({children:[P([])]})},children:body}];
 if(d.pPhoto){const ph=d.photos||[],n=repNPg(d),ch=[],NB={style:D.BorderStyle.NONE,size:0,color:'FFFFFF'},GB={style:D.BorderStyle.SINGLE,size:4,color:'BBBBBB'},bd=ph.length?{top:NB,bottom:NB,left:NB,right:NB}:{top:GB,bottom:GB,left:GB,right:GB};
-const cw=mm(91),px=v=>Math.round(v*3.7795);
+const cw=mm(93),px=v=>Math.round(v*3.7795);
 for(let i=0;i<n;i++){ch.push(P([R(repCap(d,i),{bold:true,boldComplexScript:true})],{alignment:D.AlignmentType.CENTER,pageBreakBefore:i>0,spacing:{before:0,after:mm(4)}}));
-const rows=[0,1].map(r=>new D.TableRow({height:{value:mm(REP_PH+9),rule:D.HeightRule.ATLEAST},cantSplit:true,children:[0,1,2].map(c=>{const x=ph[i*REP_PER+r*3+c];let kids;
+const rows=[0,1,2].map(r=>new D.TableRow({height:{value:mm(REP_PH+9),rule:D.HeightRule.ATLEAST},cantSplit:true,children:[0,1].map(c=>{const x=ph[i*REP_PER+r*2+c];let kids;
 if(x){const bytes=Uint8Array.from(atob(x.src.split(',')[1]),k=>k.charCodeAt(0));kids=[P([new D.ImageRun({data:bytes,type:'jpg',transformation:{width:px(REP_PW),height:px(REP_PH)}})],{alignment:D.AlignmentType.CENTER,spacing:{before:0,after:mm(6)}})]}else kids=[P([],{spacing:{before:0,after:0}})];
 return new D.TableCell({children:kids,width:{size:cw,type:D.WidthType.DXA},borders:bd,verticalAlign:D.VerticalAlign.CENTER,margins:{top:0,bottom:0,left:0,right:0}})})}));
-ch.push(new D.Table({width:{size:cw*3,type:D.WidthType.DXA},columnWidths:[cw,cw,cw],borders:{top:NB,bottom:NB,left:NB,right:NB,insideVertical:NB,insideHorizontal:NB},rows}))}
-secs.push({properties:{page:{size:{width:11906,height:16838,orientation:D.PageOrientation.LANDSCAPE},margin:{top:mm(10),bottom:mm(8),left:mm(12),right:mm(12),header:0,footer:0}}},headers:{default:new D.Header({children:[P([])]})},children:ch})}
+ch.push(new D.Table({width:{size:cw*2,type:D.WidthType.DXA},columnWidths:[cw,cw],borders:{top:NB,bottom:NB,left:NB,right:NB,insideVertical:NB,insideHorizontal:NB},rows}))}
+secs.push({properties:{page:{size:{width:11906,height:16838},margin:{top:mm(10),bottom:mm(8),left:mm(12),right:mm(12),header:0,footer:0}}},headers:{default:new D.Header({children:[P([])]})},children:ch})}
 const doc=new D.Document({creator:'โรงเรียนบ้านผาเยอ',title:d.subject||'รายงานผลการไปราชการ',styles:{default:{document:{run:{font,size:32,sizeComplexScript:32}}}},sections:secs});
 return await D.Packer.toBlob(doc)}
 function admMenu(){const can=canManageAdmin(),sent=LT.filter(l=>l.via=='admin'&&l.createdBy==(me&&me._id)).length,pend=mmGroups(m=>!m.ack&&ltAliveItem(m)).length,card=(r,cls,ico,t,d,st)=>`<div class="admn ${cls}" data-r="${r}" role="button" tabindex="0"><i class="lbn-o o1"></i><i class="lbn-o o2"></i><i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i><i class="lbn-sp s3">✦</i><div class="admn-hd"><span class="lbn-ic">${ic(ico)}</span><span class="admn-go">เปิด ›</span></div><div class="admn-t"><h3>${t}</h3><p>${d}</p></div>${st?`<em class="admn-st">${st}</em>`:''}</div>`;
