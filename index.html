@@ -1166,6 +1166,10 @@ const DR_CSS=`.dr-a4{box-sizing:border-box;width:210mm;min-height:297mm;backgrou
 .dr-a4 .l-sg{display:grid;grid-template-columns:auto 1fr auto auto 44mm;column-gap:1.5mm;align-items:baseline;margin-top:6mm}.dr-a4 .l-sg .l-v{display:block}.dr-a4 .l-sg em{grid-column:2;grid-row:2;text-align:center;font-style:normal}
 .dr-pgs.trip,.dr-pgs.rep{width:max-content;align-items:center}
 .dr-a4.d-rep{width:210mm;height:297mm;min-height:297mm;padding:10mm 12mm;overflow:hidden;display:flex;flex-direction:column}.dr-a4 .rp-cap{text-align:center;font-weight:700;font-size:18pt;line-height:8mm;min-height:16mm;display:flex;align-items:center;justify-content:center;flex:none}.dr-a4 .rp-gr{flex:1;display:grid;grid-template-columns:repeat(2,88mm);grid-template-rows:repeat(3,66mm);column-gap:6mm;row-gap:12mm;justify-content:center;align-content:center}.dr-a4 .rp-c{width:88mm;height:66mm;overflow:hidden}.dr-a4 .rp-c img{display:block;width:88mm;height:66mm}.dr-a4 .rp-c.e{border:.3mm dashed #b8bfd0}
+/* โหมดอัดให้พอดีหน้าเดียว (rep): cp1-cp3 */
+.dr-a4.d-memo.cp1{line-height:6.9mm}.dr-a4.d-memo.cp1 .m-p,.dr-a4.d-memo.cp1 .m-to{margin-top:1.6mm}.dr-a4.d-memo.cp1 .m-dl{height:6.9mm}.dr-a4.d-memo.cp1 .m-ck,.dr-a4.d-memo.cp1 .m-as{line-height:6.9mm}
+.dr-a4.d-memo.cp2,.dr-a4.d-memo.cp3{line-height:6.35mm}.dr-a4.d-memo.cp2 .m-p,.dr-a4.d-memo.cp2 .m-to{margin-top:1.2mm}.dr-a4.d-memo.cp3 .m-p,.dr-a4.d-memo.cp3 .m-to{margin-top:1mm}.dr-a4.d-memo.cp2 .m-dl,.dr-a4.d-memo.cp3 .m-dl{height:6.35mm}.dr-a4.d-memo.cp2 .m-ck,.dr-a4.d-memo.cp2 .m-as,.dr-a4.d-memo.cp3 .m-ck,.dr-a4.d-memo.cp3 .m-as{line-height:6.35mm}
+.dr-a4.d-memo.cp3 .m-sg .m-sp{height:17mm}.dr-a4.d-memo.cp3 .m-as .m-sp{height:11mm}.dr-a4.d-memo.cp3 .m-op{margin-top:3mm}.dr-a4.d-memo.cp2 .m-op{margin-top:3.5mm}
 .dr-a4 .m-li{text-indent:-8mm;padding-left:33mm}.dr-a4 .m-no{display:inline-block;width:8mm;text-indent:0}.dr-a4 .m-nt{margin-top:5mm}.dr-a4 .m-li2{padding-left:8mm;text-indent:-8mm;white-space:pre-line}
 .dr-a4.d-trip{height:297mm;min-height:297mm;overflow:hidden;padding:12mm 14mm;font-size:15pt;line-height:6.9mm}.dr-a4.d-trip.ls{width:297mm;height:210mm;min-height:210mm;padding:10mm 12mm;font-size:14pt;line-height:6.2mm}
 .dr-a4 .t-u{text-decoration:underline dotted;text-decoration-thickness:.3mm;text-underline-offset:1.3mm;overflow-wrap:anywhere}
@@ -1514,8 +1518,8 @@ return `<div class="m-hd"><div class="m-tt">บันทึกข้อควา
 <div class="m-sg"><div class="m-sp${sg.line?' ln':''}">${sg.line?`<div class="m-ln"><span>ลงชื่อ</span><i></i><span>${T(sg.tail)}</span></div>`:''}${d.sig?`<img src="${d.sig}" style="height:${d.sigH}mm" alt="">`:''}</div>${T(d.signer)}${sg.pm&&has(d.pos)?'<br>'+T((sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim()):''}</div>`}
 /* ตัดหน้า: ตัดที่ขอบบรรทัด (ไม่ทิ้งบรรทัดเดียวไว้หัว/ท้ายหน้า) และไม่ให้ลายเซ็นอยู่หน้าเดียวโดดๆ */
 function memoDocHtml(d){return `<div class="dr-pgs">${memoPages(memoFlowHtml(d),d,false,0)}</div>`}
-function memoPages(flow,d,act,part){const M=MEMO_M,lh=M.lh;
-const host=document.createElement('div');host.className='dr-a4 d-memo';host.style.cssText=`position:fixed;left:-10000px;top:0;height:auto;min-height:0;padding:0;width:${M.w}mm;box-shadow:none;overflow:visible`;host.innerHTML=flow;document.body.appendChild(host);
+function memoPages(flow,d,act,part,o){const M=Object.assign({},MEMO_M,o||{}),lh=M.lh,cx=(o&&o.cls)||'';
+const host=document.createElement('div');host.className='dr-a4 d-memo '+cx;host.style.cssText=`position:fixed;left:-10000px;top:0;height:auto;min-height:0;padding:0;width:${M.w}mm;box-shadow:none;overflow:visible`;host.innerHTML=flow;document.body.appendChild(host);
 const K=25.4/96,r0=host.getBoundingClientRect(),H=r0.height*K;
 const bl=[...host.querySelectorAll('.m-hd,.m-to,.m-p,.m-sg,.m-bk')].map(e=>{const r=e.getBoundingClientRect();return {p:e.classList.contains('m-p'),sg:e.classList.contains('m-sg'),t:(r.top-r0.top)*K,b:(r.bottom-r0.top)*K}});host.remove();
 const pages=[];let s=0,cap=297-M.t1-M.b-.5;
@@ -1529,7 +1533,7 @@ if(need<=0&&st0<next-1e-6&&st0>s+lh)end=next=st0}
 if(end<=s+lh){end=e;next=e}
 pages.push([s,end]);s=next;cap=297-M.t-M.b-.5}
 pages.push([s,H]);
-return pages.map((p,i)=>`<div class="dr-a4 d-memo${i?'':' p1'}"${act?` data-part="${part}"`:''}>${i?`<div class="m-pn">${esc(drTh(d,'- '+(i+1)+' -'))}</div>`:`<img class="d-g" src="${DR_GARUDA}" alt="">`}<div class="m-win" style="height:${(p[1]-p[0]).toFixed(3)}mm"><div style="margin-top:-${p[0].toFixed(3)}mm">${flow}</div></div></div>`).join('')}
+return pages.map((p,i)=>`<div class="dr-a4 d-memo${i?'':' p1'}${cx?' '+cx:''}"${act?` data-part="${part}"`:''}>${i?`<div class="m-pn">${esc(drTh(d,'- '+(i+1)+' -'))}</div>`:`<img class="d-g" src="${DR_GARUDA}" alt="">`}<div class="m-win" style="height:${(p[1]-p[0]).toFixed(3)}mm"><div style="margin-top:-${p[0].toFixed(3)}mm">${flow}</div></div></div>`).join('')}
 /* ===== ฟอร์ม ===== */
 const MEMO_TAILS=['ผู้ขออนุมัติ','ผู้ขออนุญาต','ผู้อนุมัติโครงการ','ผู้รับผิดชอบโครงการ','ผู้เสนอ'];
 function memoSgSet(k,v){DR[k]=v;drPrev()}
@@ -2141,7 +2145,12 @@ return h.replace(/\uE000/g,'<span class="m-rd">').replace(/\uE001/g,'</span>')}
 function repPhotoPages(d){if(!d.pPhoto)return '';const T=t=>esc(drTh(d,t)),ph=d.photos||[],n=repNPg(d);let o='';
 for(let i=0;i<n;i++){let c='';for(let j=0;j<REP_PER;j++){const x=ph[i*REP_PER+j];c+=`<div class="rp-c${x?'':(ph.length?' z':' e')}">${x?`<img src="${x.src}" alt="">`:''}</div>`}
 o+=`<div class="dr-a4 d-rep"><div class="rp-cap">${T(repCap(d,i))}</div><div class="rp-gr">${c}</div></div>`}return o}
-function repDocHtml(d){return `<div class="dr-pgs rep">${memoPages(repFlow(d),d,true,0)}${repPhotoPages(d)}</div>`}
+const REP_LV=[{cls:'',lh:7.3,m:2.1,sp:21.9,as:14,b:20},{cls:'cp1',lh:6.9,m:1.6,sp:21.9,as:14,b:20},{cls:'cp2',lh:6.35,m:1.2,sp:21.9,as:14,b:20},{cls:'cp3',lh:6.35,m:1,sp:17,as:11,b:15}];
+function repFits(flow,lv){const L=REP_LV[lv],host=document.createElement('div');host.className='dr-a4 d-memo '+L.cls;host.style.cssText=`position:fixed;left:-10000px;top:0;height:auto;min-height:0;padding:0;width:${MEMO_M.w}mm;box-shadow:none;overflow:visible`;host.innerHTML=flow;document.body.appendChild(host);
+const K=25.4/96,r0=host.getBoundingClientRect();let m=0;host.querySelectorAll('.m-hd,.m-to,.m-p,.m-sg,.m-bk:not(.m-nt)').forEach(e=>{m=Math.max(m,(e.getBoundingClientRect().bottom-r0.top)*K)});host.remove();return m<=297-MEMO_M.t1-L.b-.5}
+/* เลือกระดับอัด: ลองจากหลวมไปแน่น เอาระดับแรกที่ตัวบันทึก (ถึงลายเซ็นผู้อำนวยการ) อยู่หน้าเดียว ถ้าไม่พอทุกระดับใช้ระดับปกติ */
+function repLevel(d){const fl=repFlow(d);for(let i=0;i<REP_LV.length;i++)if(repFits(fl,i))return i;return 0}
+function repDocHtml(d){const fl=repFlow(d),lv=repLevel(d);d._lv=lv;return `<div class="dr-pgs rep">${memoPages(fl,d,true,0,REP_LV[lv])}${repPhotoPages(d)}</div>`}
 /* ----- ฟอร์ม ----- */
 function repTab(i){DR._tab=i;drFill()}
 function repSet(k,v){DR[k]=v;drPrev()}
@@ -2204,36 +2213,37 @@ ${Array.from({length:repNPg(d)},(_,i)=>`<label class="lb">คำบรรยา�
 return tb+b+nx}
 /* ----- Word ----- */
 async function repDocx(){await drLoad('docx');repSync(DR);const D=window.docx,d=DR,T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunPSK',font={ascii:F,hAnsi:F,cs:F,eastAsia:F},W=MEMO_M.w,has=ordHas;
-const R=(t,o)=>new D.TextRun({text:T(t),font,size:32,sizeComplexScript:32,...(o||{})}),P=(ch,o)=>new D.Paragraph({children:ch,...(o||{})});
+const lv=repLevel(d),LV=REP_LV[lv],lnT=Math.round(LV.lh/25.4*1440);
+const R=(t,o)=>new D.TextRun({text:T(t),font,size:32,sizeComplexScript:32,...(o||{})}),Ph=(ch,o)=>new D.Paragraph({children:ch,...(o||{})}),P=(ch,o)=>new D.Paragraph({children:ch,...(o||{}),...(lv?{spacing:{line:lnT,lineRule:D.LineRuleType.EXACT,...((o&&o.spacing)||{})}}:{})});
 const U={underline:{type:D.UnderlineType.DOTTED,color:'000000'}},L=t=>R(t,{bold:true,boldComplexScript:true,size:40,sizeComplexScript:40}),V=t=>R(t,U),Vt=()=>new D.TextRun({text:'\t',font,size:32,...U});
 const LT_=D.TabStopType.LEFT,RT_=D.TabStopType.RIGHT,tb=(...a)=>a.map(p=>({type:p[0],position:mm(p[1])}));
 const no=(has(d.noN)||has(d.noY))?String(d.noN||'').trim()+'/'+String(d.noY||'').trim():'',sub=String(d.subject||'').replace(/^\s*เรื่อง\s*/,'');
 const gb=Uint8Array.from(atob(DR_GARUDA.split(',')[1]),c=>c.charCodeAt(0));
 const gimg=new D.ImageRun({data:gb,type:'png',transformation:{width:51,height:57},floating:{horizontalPosition:{relative:D.HorizontalPositionRelativeFrom.MARGIN,offset:635},verticalPosition:{relative:D.VerticalPositionRelativeFrom.PARAGRAPH,offset:-95885},wrap:{type:D.TextWrappingType.NONE},behindDocument:true,allowOverlap:true}});
 const cen={indent:{left:mm(25),right:mm(W-25-110)},alignment:D.AlignmentType.CENTER};
-const body=[P([gimg,R('บันทึกข้อความ',{bold:true,boldComplexScript:true,size:58,sizeComplexScript:58})],{alignment:D.AlignmentType.CENTER,spacing:{line:700,lineRule:D.LineRuleType.EXACT,before:0,after:0}}),
-P([L('ส่วนราชการ'),R('\t'),V(String(d.org||'').trim()),Vt()],{tabStops:tb([LT_,27],[RT_,W]),spacing:{before:0,after:0}}),
-P([L('ที่'),R(' '),V(no),Vt(),L('วันที่'),R(' '),V(repDm(d.date)),Vt()],{tabStops:tb([LT_,79],[RT_,W]),spacing:{before:0,after:0}}),
-P([L('เรื่อง'),R(' '),V(sub),Vt()],{tabStops:tb([RT_,W]),spacing:{before:0,after:0}}),
-P([R('เรียน  '+String(d.to||'').trim())],{spacing:{before:120,after:0}})];
-const para=(t,o)=>body.push(P([R(String(t).trim())],{indent:{firstLine:1418},alignment:D.AlignmentType.THAI_DISTRIBUTE,spacing:{before:120,after:0},...(o||{})}));
-const li=(l,o)=>l.forEach((x,i)=>body.push(P([R((i+1)+'.'),R('\t'),R(x)],{indent:{left:mm(33),hanging:mm(8)},tabStops:tb([LT_,33]),alignment:D.AlignmentType.THAI_DISTRIBUTE,spacing:{before:60,after:0},...(o||{})})));
+const body=[Ph([gimg,R('บันทึกข้อความ',{bold:true,boldComplexScript:true,size:58,sizeComplexScript:58})],{alignment:D.AlignmentType.CENTER,spacing:{line:700,lineRule:D.LineRuleType.EXACT,before:0,after:0}}),
+Ph([L('ส่วนราชการ'),R('\t'),V(String(d.org||'').trim()),Vt()],{tabStops:tb([LT_,27],[RT_,W]),spacing:{before:0,after:0}}),
+Ph([L('ที่'),R(' '),V(no),Vt(),L('วันที่'),R(' '),V(repDm(d.date)),Vt()],{tabStops:tb([LT_,79],[RT_,W]),spacing:{before:0,after:0}}),
+Ph([L('เรื่อง'),R(' '),V(sub),Vt()],{tabStops:tb([RT_,W]),spacing:{before:0,after:0}}),
+P([R('เรียน  '+String(d.to||'').trim())],{spacing:{before:mm(LV.m),after:0}})];
+const para=(t,o)=>body.push(P([R(String(t).trim())],{indent:{firstLine:1418},alignment:D.AlignmentType.THAI_DISTRIBUTE,spacing:{before:mm(LV.m),after:0},...(o||{})}));
+const li=(l,o)=>l.forEach((x,i)=>body.push(P([R((i+1)+'.'),R('\t'),R(x)],{indent:{left:mm(33),hanging:mm(8)},tabStops:tb([LT_,33]),alignment:D.AlignmentType.THAI_DISTRIBUTE,spacing:{before:mm(LV.m/2),after:0},...(o||{})})));
 para(repV(d,'p1',repP1));para(repV(d,'p2',repP2));String(d.summary||'').split('\n').filter(has).forEach(t=>para(t));
 const ap=repApply(d);if(ap.length){para(repV(d,'ap0',repAp0),{keepNext:true});li(ap)}
 const dc=repDocs(d);if(dc.length){para(repV(d,'dc0',repDc0),{keepNext:true});li(dc)}
 if(has(d.close))para(d.close,{keepNext:true,keepLines:true});
-{const sg=memoSg(d),lh=MEMO_M.lh,gap=sg.line?lh:0;
-if(d.sig){const sb=Uint8Array.from(atob(d.sig.split(',')[1]),c=>c.charCodeAt(0)),hp=d.sigH*3.7795;body.push(P([new D.ImageRun({data:sb,type:'png',transformation:{width:Math.round(hp*(d.sigAR||1)),height:Math.round(hp)}})],{...cen,spacing:{before:mm(Math.max(0,MEMO_M.sp-gap-d.sigH)),after:0},keepNext:true}))}
-if(sg.line)body.push(P([R('ลงชื่อ'),R('\t'),...(sg.tail?[R(sg.tail)]:[])],{indent:{left:mm(25)},tabStops:[{type:RT_,position:mm(135),leader:D.LeaderType.DOT}],spacing:{before:d.sig?0:mm(MEMO_M.sp-gap),after:0},keepNext:true}));
-body.push(P([R(d.signer)],{...cen,spacing:{before:(!sg.line&&!d.sig)?mm(MEMO_M.sp):0,after:0},keepNext:!!(sg.pm&&has(d.pos))}));
+{const sg=memoSg(d),lh=LV.lh,gap=sg.line?lh:0;
+if(d.sig){const sb=Uint8Array.from(atob(d.sig.split(',')[1]),c=>c.charCodeAt(0)),hp=d.sigH*3.7795;body.push(P([new D.ImageRun({data:sb,type:'png',transformation:{width:Math.round(hp*(d.sigAR||1)),height:Math.round(hp)}})],{...cen,spacing:{before:mm(Math.max(0,LV.sp-gap-d.sigH)),after:0},keepNext:true}))}
+if(sg.line)body.push(P([R('ลงชื่อ'),R('\t'),...(sg.tail?[R(sg.tail)]:[])],{indent:{left:mm(25)},tabStops:[{type:RT_,position:mm(135),leader:D.LeaderType.DOT}],spacing:{before:d.sig?0:mm(LV.sp-gap),after:0},keepNext:true}));
+body.push(P([R(d.signer)],{...cen,spacing:{before:(!sg.line&&!d.sig)?mm(LV.sp):0,after:0},keepNext:!!(sg.pm&&has(d.pos))}));
 if(sg.pm&&has(d.pos))((sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim()).split('\n').forEach((l,i,a)=>body.push(P([R(l)],{...cen,spacing:{before:0,after:0},keepNext:i<a.length-1})));
 if(d.showOp){const dl=()=>P([R('\t')],{tabStops:[{type:RT_,position:mm(W),leader:D.LeaderType.DOT}],spacing:{before:0,after:0},keepNext:true});
-body.push(P([R('ความคิดเห็นของหัวหน้าหน่วยงาน',{bold:true,boldComplexScript:true})],{spacing:{before:mm(8),after:0},keepNext:true}),dl(),dl(),dl());
-if(sg.line)body.push(P([R('ลงชื่อ'),R('\t')],{indent:{left:mm(25)},tabStops:[{type:RT_,position:mm(135),leader:D.LeaderType.DOT}],spacing:{before:mm(10),after:0},keepNext:true}));
-body.push(P([R(actNm(d,'dir'))],{...cen,spacing:{before:sg.line?0:mm(17),after:0},keepNext:true}),P([R((sg.pm==2?'ตำแหน่ง ':'')+actTt(d,'dir'))],{...cen,spacing:{before:0,after:0}}))}}
+body.push(P([R('ความคิดเห็นของหัวหน้าหน่วยงาน',{bold:true,boldComplexScript:true})],{spacing:{before:mm(LV.m*2),after:0},keepNext:true}),dl(),dl(),dl());
+if(sg.line)body.push(P([R('ลงชื่อ'),R('\t')],{indent:{left:mm(25)},tabStops:[{type:RT_,position:mm(135),leader:D.LeaderType.DOT}],spacing:{before:mm(LV.as-4),after:0},keepNext:true}));
+body.push(P([R(actNm(d,'dir'))],{...cen,spacing:{before:sg.line?0:mm(LV.as+1),after:0},keepNext:true}),P([R((sg.pm==2?'ตำแหน่ง ':'')+actTt(d,'dir'))],{...cen,spacing:{before:0,after:0}}))}}
 const at=repAtt(d);if(at.length){body.push(P([R('หมายเหตุ',{bold:true,boldComplexScript:true}),R('  สิ่งที่แนบมาด้วย')],{spacing:{before:mm(6),after:0},keepNext:true}));at.forEach((x,i)=>body.push(P([R((i+1)+'.'),R('\t'),R(x)],{indent:{left:mm(8),hanging:mm(8)},tabStops:tb([LT_,8]),spacing:{before:0,after:0}})))}
-const hdr=new D.Header({children:[P([R('- '),new D.TextRun({children:[D.PageNumber.CURRENT],font,size:32,sizeComplexScript:32}),R(' -')],{alignment:D.AlignmentType.CENTER})]});
-const secs=[{properties:{titlePage:true,page:{size:{width:11906,height:16838},margin:{top:mm(MEMO_M.t1),bottom:mm(MEMO_M.b),left:mm(MEMO_M.l),right:mm(MEMO_M.r),header:mm(25),footer:mm(12.7)},...(d.arab?{}:{pageNumbers:{formatType:D.NumberFormat.THAI_NUMBERS}})}},headers:{default:hdr,first:new D.Header({children:[P([])]})},children:body}];
+const hdr=new D.Header({children:[Ph([R('- '),new D.TextRun({children:[D.PageNumber.CURRENT],font,size:32,sizeComplexScript:32}),R(' -')],{alignment:D.AlignmentType.CENTER,spacing:{before:mm(20),after:0}})]});
+const secs=[{properties:{titlePage:true,page:{size:{width:11906,height:16838},margin:{top:mm(MEMO_M.t1),bottom:mm(LV.b),left:mm(MEMO_M.l),right:mm(MEMO_M.r),header:mm(5),footer:mm(12.7)},...(d.arab?{}:{pageNumbers:{formatType:D.NumberFormat.THAI_NUMBERS}})}},headers:{default:hdr,first:new D.Header({children:[Ph([],{spacing:{line:20,lineRule:D.LineRuleType.EXACT,before:0,after:0}})]})},children:body}];
 if(d.pPhoto){const ph=d.photos||[],n=repNPg(d),ch=[],NB={style:D.BorderStyle.NONE,size:0,color:'FFFFFF'},GB={style:D.BorderStyle.SINGLE,size:4,color:'BBBBBB'},bd=ph.length?{top:NB,bottom:NB,left:NB,right:NB}:{top:GB,bottom:GB,left:GB,right:GB};
 const cw=mm(93),px=v=>Math.round(v*3.7795);
 for(let i=0;i<n;i++){ch.push(P([R(repCap(d,i),{bold:true,boldComplexScript:true})],{alignment:D.AlignmentType.CENTER,pageBreakBefore:i>0,spacing:{before:0,after:mm(4)}}));
