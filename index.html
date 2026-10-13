@@ -1131,7 +1131,7 @@ const DR_CSS=`.dr-a4{box-sizing:border-box;width:210mm;min-height:297mm;backgrou
 .dr-a4 .d-dt{margin:6.6mm 0 0 61mm;width:67mm;text-align:center}
 .dr-a4 .d-lb{display:inline-block;width:12.5mm}.dr-a4 .d-lb2{display:inline-block;width:25.2mm}
 .dr-a4 .d-ln{margin-top:6.6mm;white-space:pre-line;overflow-wrap:anywhere}.dr-a4 .d-ln2{margin-top:0;white-space:pre-line;overflow-wrap:anywhere}
-.dr-a4 .d-rf{margin-top:4.4mm;white-space:pre-line;overflow-wrap:anywhere}.dr-a4 .d-en{margin-top:4.9mm;display:flex;justify-content:space-between;gap:4mm}.dr-a4 .d-en span+span{white-space:nowrap}
+.dr-a4 .d-rf{margin-top:4.4mm;white-space:pre-line;overflow-wrap:anywhere}.dr-a4 .d-en{margin-top:4.9mm;display:flex;justify-content:space-between;gap:4mm}.dr-a4 .d-en span+span{white-space:nowrap}.dr-a4 .d-en2{margin-top:0}.dr-a4 .d-ev{flex:1;padding-left:25.2mm;text-indent:-25.2mm;white-space:normal}.dr-a4 .d-ev.n{padding-left:32.2mm;text-indent:-32.2mm}.dr-a4 .d-ev .d-lb2,.dr-a4 .d-ev .d-nn{text-indent:0}.dr-a4 .d-nn{display:inline-block;width:7mm}
 .dr-a4 .d-bd{margin-top:4.3mm}.dr-a4 .d-z{font-size:0}.dr-a4 .d-p{margin:0;text-indent:25.4mm;text-align:justify;white-space:pre-line;overflow-wrap:anywhere}.dr-a4 .d-p.d-cl{margin-top:4.4mm}
 .dr-a4 .d-sg{width:67mm;margin:9.7mm 0 0 61mm;text-align:center}.dr-a4 .d-sg .d-sp{height:12.9mm}.dr-a4 .d-sg .d-sp.d-sig{height:auto;display:flex;justify-content:center;line-height:0}.dr-a4 .d-sig img{display:block}
 .dr-a4 .d-tl{margin-top:13mm;white-space:pre-line}
@@ -1206,7 +1206,7 @@ const DR_ORG=DR_SCH.name+' '+DR_SCH.addr.replace(/^.*?(อำเภอ\S+).*$/,'
 const DR_CLOSE=['จึงเรียนมาเพื่อโปรดทราบ','จึงเรียนมาเพื่อโปรดทราบ และพิจารณาดำเนินการต่อไป','จึงเรียนมาเพื่อโปรดพิจารณา','จึงเรียนมาเพื่อโปรดทราบและดำเนินการต่อไป'];
 function drDef(){const d=drDef0();drSigInit(d);return d}
 function drDef0(){const dir=PP.find(p=>/ผู้อำนวยการ/.test(p.po||'')&&!/รอง/.test(p.po||''));
-return {no:DR_SCH.pre,name:DR_SCH.name,addr:DR_SCH.addr,prov:DR_SCH.prov,date:toISO(new Date()),subject:'ส่ง',to:DR_SCH.to,ref:'',encl:'',enN:'1',enU:'ชุด',p1:'ตามที่ ',p2:'บัดนี้ '+DR_SCH.name+' ',close:DR_CLOSE[1],salute:'ขอแสดงความนับถือ',signer:dir?'('+dn(dir)+')':'(                    )',pos:dir?((dir.po||'ผู้อำนวยการ')+(/โรงเรียน/.test(dir.po||'')?'':DR_SCH.name)):'ผู้อำนวยการ'+DR_SCH.name,org:DIV[1][1],tel:DR_SCH.tel,mail:DR_SCH.mail,arab:false}}
+return {no:DR_SCH.pre,name:DR_SCH.name,addr:DR_SCH.addr,prov:DR_SCH.prov,date:toISO(new Date()),subject:'ส่ง',to:DR_SCH.to,ref:'',encs:[{t:'',n:'1',u:'ชุด'}],p1:'ตามที่ ',p2:'บัดนี้ '+DR_SCH.name+' ',close:DR_CLOSE[1],salute:'ขอแสดงความนับถือ',signer:dir?'('+dn(dir)+')':'(                    )',pos:dir?((dir.po||'ผู้อำนวยการ')+(/โรงเรียน/.test(dir.po||'')?'':DR_SCH.name)):'ผู้อำนวยการ'+DR_SCH.name,org:DIV[1][1],tel:DR_SCH.tel,mail:DR_SCH.mail,arab:false}}
 let DR=null;
 const drTh=(d,t)=>d.arab?String(t):String(t).replace(/\d/g,c=>'๐๑๒๓๔๕๖๗๘๙'[c]);
 const drDate=iso=>{if(!iso)return '';const a=iso.split('-');return (+a[2])+' '+TMF[+a[1]-1]+' '+(+a[0]+543)};
@@ -1229,7 +1229,7 @@ function drSigSize(v){DR.sigH=+v;const o=document.getElementById('dr_sgv');if(o)
 function drSigDel(){DR.sigO='';DR.sig='';drSigSave();drFill()}
 function drSigField(){return `<h4>ลายเซ็น</h4><div class="drm-sg">${DR.sigO?`<div class="drm-sgp"><img src="${DR.sig||DR.sigO}" alt=""></div><label class="drm-ck"><input type="checkbox" id="dr_sgt" ${DR.sigT?'checked':''} onchange="drSigOpt()"> ลบพื้นหลังสีขาวอัตโนมัติ</label><label class="lb">ขนาดลายเซ็น (ความสูง) <b id="dr_sgv">${DR.sigH} มม.</b><input type="range" min="8" max="22" step="1" value="${DR.sigH}" oninput="drSigSize(this.value)" style="width:100%"></label><div style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn o" style="cursor:pointer">เปลี่ยนรูป<input type="file" accept="image/*" hidden onchange="drSigLoad(this.files[0])"></label><button class="btn o" type="button" onclick="drSigDel()">ลบลายเซ็น</button></div>`:`<label class="drm-up"><input type="file" accept="image/*" hidden onchange="drSigLoad(this.files[0])"><b>อัปโหลดรูปลายเซ็น</b><small>PNG / JPG · ลายเซ็นจะวางเหนือชื่อผู้ลงนามให้อัตโนมัติ</small></label>`}<div class="drm-hint">รูปลายเซ็นจะถูกจำไว้ในเครื่องนี้เท่านั้น ไม่ได้อัปโหลดขึ้นระบบ</div></div>`}
 function drDocHtml(d){if(d.kind=='perm')return permDocHtml(d);if(d.kind=='leave')return levDocHtml(d);if(d.kind=='rep')return repDocHtml(d);if(d.kind=='trip')return tripDocHtml(d);if(d.kind=='loan')return loanDocHtml(d);if(d.kind=='act')return actDocHtml(d);if(d.kind=='order')return ordDocHtml(d);if(d.kind=='memo')return memoDocHtml(d);const T=t=>esc(drTh(d,t)),has=t=>String(t||'').trim();
-const encl=has(d.encl)?`<div class="d-en"><span><span class="d-lb2">สิ่งที่ส่งมาด้วย</span>${T(d.encl)}</span>${has(d.enN)?`<span>จำนวน ${T(d.enN)} ${T(d.enU)}</span>`:''}</div>`:'';
+const ecl=drEncs(d),encl=ecl.map((e,i)=>`<div class="d-en${i?' d-en2':''}"><span class="d-ev${ecl.length>1?' n':''}"><span class="d-lb2">${i?'':'สิ่งที่ส่งมาด้วย'}</span>${ecl.length>1?`<span class="d-nn">${T((i+1)+'.')}</span>`:''}${T(e.t)}</span>${has(e.n)?`<span>จำนวน ${T(e.n)} ${T(e.u)}</span>`:''}</div>`).join('');
 const ps=[d.p1,d.p2,d.close].filter(has);
 return `<div class="dr-a4"><img class="d-g" src="${DR_GARUDA}" alt="">
 <div class="d-r1"><div class="d-no">${has(d.no)?'ที่ '+T(d.no):''}</div><div class="d-ad">${T(d.name)}<br>${T(d.addr)}<br>${T(d.prov)}</div></div>
@@ -1269,7 +1269,7 @@ ${drNoField()}${l?`<div class="drm-hint">ทะเบียนหนังสื
 ${drField('name','ส่วนราชการเจ้าของหนังสือ','in')}<div class="drm-2">${drField('addr','ตำบล / อำเภอ','in')}${drField('prov','จังหวัด / รหัสไปรษณีย์','in')}</div>
 ${drField('date','วันที่ (กดเลือกจากปฏิทิน)','date')}
 <h4>คำขึ้นต้น</h4>${drField('subject','เรื่อง','ta',2)}${drField('to','เรียน','ta',2)}${drField('ref','อ้างถึง (ถ้ามี)','ta',2)}
-<div class="drm-3">${drField('encl','สิ่งที่ส่งมาด้วย (ถ้ามี)','in')}${drField('enN','จำนวน','in')}${drField('enU','หน่วย','in')}</div>
+<h4>สิ่งที่ส่งมาด้วย (เพิ่มได้ไม่จำกัด)</h4>${drEncForm()}
 <h4>เนื้อหา</h4>${drField('p1','ย่อหน้าที่ 1 (ตามที่ …)','ta',4)}${drField('p2','ย่อหน้าที่ 2 (บัดนี้ …)','ta',5)}
 <label class="lb">ประโยคปิด<input class="in" list="dr_cl" value="${esc(DR.close)}" oninput="DR.close=this.value;drPrev()"><datalist id="dr_cl">${DR_CLOSE.map(x=>`<option value="${esc(x)}">`).join('')}</datalist></label>
 <h4>คำลงท้ายและผู้ลงนาม</h4>${drField('salute','คำลงท้าย','in')}${drField('signer','ชื่อผู้ลงนาม','in')}${drField('pos','ตำแหน่ง','in')}
@@ -1305,7 +1305,7 @@ body.push(P([R(drDate(d.date))],{...cen,spacing:S(6.6)}));
 body.push(P([R('เรื่อง'),R('\t'),R(d.subject)],{tabStops:tb(12.5),spacing:S(6.6)}));
 body.push(P([R('เรียน'),R('\t'),R(d.to)],{tabStops:tb(12.5),spacing:S(0)}));
 if(has(d.ref))body.push(P([R('อ้างถึง'),R('\t'),R(d.ref)],{tabStops:tb(12.5),spacing:S(4.4)}));
-if(has(d.encl))body.push(P([R('สิ่งที่ส่งมาด้วย'),R('\t'),R(d.encl),...(has(d.enN)?[R('\t'),R('จำนวน '+d.enN+' '+d.enU)]:[])],{tabStops:[{type:LT_,position:mm(25.2)},{type:D.TabStopType.RIGHT,position:mm(W)}],spacing:S(4.9)}));
+{const ecl=drEncs(d),nn=ecl.length>1,ho=nn?32.2:25.2;ecl.forEach((e,i)=>body.push(P([R(i?'\t':'สิ่งที่ส่งมาด้วย'+'\t'),...(nn?[R((i+1)+'.'),R('\t')]:[]),R(e.t),...(has(e.n)?[R('\t'),R('จำนวน '+e.n+' '+e.u)]:[])],{indent:{left:mm(ho),hanging:mm(ho)},tabStops:[{type:LT_,position:mm(25.2)},{type:D.TabStopType.RIGHT,position:mm(W)}],spacing:S(i?0:4.9)})))}
 [d.p1,d.p2,d.close].filter(has).forEach((t,i)=>body.push(P([R(t)],{indent:{firstLine:mm(25.4)},alignment:D.AlignmentType.THAI_DISTRIBUTE,spacing:S(i==0?4.3:(t===d.close?4.4:0))})));
 body.push(P([R(d.salute)],{...cen,spacing:S(9.7)}));
 if(d.sig){const sb=Uint8Array.from(atob(d.sig.split(',')[1]),c=>c.charCodeAt(0)),hp=d.sigH*3.7795;body.push(P([new D.ImageRun({data:sb,type:'png',transformation:{width:Math.round(hp*(d.sigAR||1)),height:Math.round(hp)}})],{...cen,spacing:{before:0,after:0}}));body.push(P([R(d.signer)],{...cen,spacing:S(0)}))}else body.push(P([R(d.signer)],{...cen,spacing:S(12.9)}));lines(d.pos).forEach(l=>body.push(P([R(l)],{...cen,spacing:S(0)})));
@@ -2495,6 +2495,11 @@ body.push(P([B('หมายเหตุ :'),R(' โปรดขีดเคร�
 const doc=new D.Document({creator:'โรงเรียนบ้านผาเยอ',title:d.subject||'แบบขออนุญาตผู้ปกครอง',styles:{default:{document:{run:{font,size:32,sizeComplexScript:32}}}},sections:[{properties:{page:{size:{width:11906,height:16838},margin:{top:mm(12),bottom:mm(8),left:mm(22),right:mm(20),header:0,footer:0}}},children:body}]});
 return await D.Packer.toBlob(doc)}
 
+const drEncs=d=>(d.encs||[]).filter(e=>String(e.t||'').trim());
+function drEncForm(){const l=DR.encs||(DR.encs=[]);return l.map((e,i)=>`<div class="ln-row" style="grid-template-columns:22px 1fr 56px 64px 34px"><span class="ln-n">${i+1}</span><input class="in" value="${esc(e.t)}" placeholder="ชื่อสิ่งที่ส่งมาด้วย" oninput="drEncS(${i},'t',this.value)"><input class="in" value="${esc(e.n)}" placeholder="จำนวน" oninput="drEncS(${i},'n',this.value)"><input class="in" value="${esc(e.u)}" placeholder="หน่วย" oninput="drEncS(${i},'u',this.value)"><button class="btn o ln-x" type="button" onclick="drEncD(${i})" title="ลบ">✕</button></div>`).join('')+`<button class="btn o" type="button" onclick="drEncA()">+ เพิ่มสิ่งที่ส่งมาด้วย</button><div class="drm-hint">มีหลายอย่างระบบเรียงเลข ๑. ๒. ๓. ให้อัตโนมัติ ถ้ามีอย่างเดียวจะไม่ใส่เลข</div>`}
+function drEncS(i,k,v){DR.encs[i][k]=v;drPrev()}
+function drEncA(){(DR.encs||(DR.encs=[])).push({t:'',n:'1',u:'ชุด'});drFill()}
+function drEncD(i){DR.encs.splice(i,1);drFill()}
 function admMenu(){const can=canManageAdmin(),sent=LT.filter(l=>l.via=='admin'&&l.createdBy==(me&&me._id)).length,pend=mmGroups(m=>!m.ack&&ltAliveItem(m)).length,card=(r,cls,ico,t,d,st)=>`<div class="admn ${cls}" data-r="${r}" role="button" tabindex="0"><i class="lbn-o o1"></i><i class="lbn-o o2"></i><i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i><i class="lbn-sp s3">✦</i><div class="admn-hd"><span class="lbn-ic">${ic(ico)}</span><span class="admn-go">เปิด ›</span></div><div class="admn-t"><h3>${t}</h3><p>${d}</p></div>${st?`<em class="admn-st">${st}</em>`:''}</div>`;
 return `<div class="admn-row">${card('admin:send','admn-s','cloudup','ส่งหนังสือราชการ','ส่งหนังสือ/ไฟล์ถึงครูหลายคน ระบุวันหมดเขต',can?`ส่งแล้ว ${sent} ฉบับ`:'ดูได้เฉพาะครูธุรการ')}${card('admin:memo','admn-m','doc','เกษียนหนังสือราชการ','บันทึกหนังสือ มอบหมายให้บุคลากรรับทราบ',`ยังไม่รับทราบ ${pend} รายการ`)}${card('admin:draft','admn-d','pen','ร่างหนังสือราชการ','ร่างหนังสือนำส่ง ดูตัวอย่างทันที บันทึก Word/PDF พิมพ์ หรือส่งต่อ',can?'หนังสือนำส่ง':'ดูได้เฉพาะครูธุรการ')}</div>`}
 const adSp=()=>'<i class="lbn-o o1"></i><i class="lbn-o o2"></i><i class="lbn-sp s1">✦</i><i class="lbn-sp s2">✦</i><i class="lbn-sp s3">✦</i>';
