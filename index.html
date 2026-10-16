@@ -1381,7 +1381,7 @@ const DR_CSS=`.dr-a4{box-sizing:border-box;width:210mm;min-height:297mm;backgrou
 .dr-a4 .bz{margin-top:0!important}.dr-a4 .bz-g{text-align:center}.dr-a4 .bz-g img{height:28mm}.dr-a4 .bz-ti{text-align:center;font-weight:700;white-space:pre-line}.dr-a4 .bz-c{text-align:center}.dr-a4 .bz-c.b,.dr-a4 .bz-l.b{font-weight:700}.dr-a4 .bz-r{text-align:right}.dr-a4 .bz-l{white-space:pre-wrap;overflow-wrap:anywhere;text-align:justify}
 .dr-a4 .bz-row{display:flex;gap:0}.dr-a4 .bz-row span{white-space:pre-wrap;overflow-wrap:anywhere}
 .dr-a4 .bz-tb{border-collapse:collapse;width:100%;table-layout:fixed;font-size:14pt;line-height:6.4mm}.dr-a4 .bz-tb th,.dr-a4 .bz-tb td{border:.3mm solid #000;padding:.4mm 1.4mm;overflow-wrap:anywhere;vertical-align:middle}.dr-a4 .bz-tb th{text-align:center;font-weight:700}.dr-a4 .bz-tb .c{text-align:center}.dr-a4 .bz-tb .r{text-align:right}.dr-a4 .bz-tb .l{text-align:left}.dr-a4 .bz-tb .b{font-weight:700}
-.dr-a4 .bz-cols{display:flex;align-items:flex-start;gap:0}.dr-a4 .bz-it{white-space:pre-wrap;overflow-wrap:anywhere}.dr-a4 .bz-it.c{text-align:center}.dr-a4 .bz-it.l{text-align:left}.dr-a4 .bz-it.b{font-weight:700}`;
+.dr-a4 .bz-bx{border-collapse:collapse;width:100%;table-layout:fixed;font-size:14pt;line-height:6.4mm}.dr-a4 .bz-bx td{border:.3mm solid #000;padding:1mm 2mm 2mm;vertical-align:top}.dr-a4 .bz-cols{display:flex;align-items:flex-start;gap:0}.dr-a4 .bz-it{white-space:pre-wrap;overflow-wrap:anywhere}.dr-a4 .bz-it.c{text-align:center}.dr-a4 .bz-it.l{text-align:left}.dr-a4 .bz-it.b{font-weight:700}`;
 const DR_SCH={name:'โรงเรียนบ้านผาเยอ',addr:'ตำบลกองก๋อย อำเภอสบเมย',prov:'จังหวัดแม่ฮ่องสอน 58110',pre:'ศธ 04116.136/',to:'ผู้อำนวยการสำนักงานเขตพื้นที่การศึกษาประถมศึกษาแม่ฮ่องสอน เขต 2',tel:'โทร. 065 - 254-1599',mail:'Email : banphayoe@gmail.com'};
 const DR_ORG=DR_SCH.name+' '+DR_SCH.addr.replace(/^.*?(อำเภอ\S+).*$/,'$1')+' '+DR_SCH.prov.replace(/\s*\d+/g,'').trim();
 const DR_CLOSE=['จึงเรียนมาเพื่อโปรดทราบ','จึงเรียนมาเพื่อโปรดทราบ และพิจารณาดำเนินการต่อไป','จึงเรียนมาเพื่อโปรดพิจารณา','จึงเรียนมาเพื่อโปรดทราบและดำเนินการต่อไป'];
@@ -1425,7 +1425,7 @@ return `<div class="drt-row"><div class="drt drt-o" onclick="drOpen('order')" ro
 function drLast(ty){const r=RG.filter(x=>x.type==(ty||drRegType(DR))).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt||'').localeCompare(a.createdAt||''))[0];if(!r)return null;const n=parseInt((rgFmt(r).match(/\d+/)||[])[0]);return isNaN(n)?{t:rgFmt(r)}:{t:rgFmt(r),n}}
 function drField(k,lab,type,extra){const d=DR,v=esc(d[k]);
 if(type=='ta')return `<label class="lb">${lab}<textarea class="in" rows="${extra||3}" oninput="DR.${k}=this.value;drPrev()">${v}</textarea></label>`;
-if(type=='date')return `<label class="lb">${lab}<span class="drd"><input class="in drd-t" readonly placeholder="วว/ดด/พ.ศ." value="${esc(drDmy(d[k]))}" onclick="drPickD(this)"><input type="date" class="drd-i" tabindex="-1" value="${v}" onchange="DR.${k}=this.value;this.previousElementSibling.value=drDmy(this.value);drPrev()"></span></label>`;
+if(type=='date')return `<label class="lb">${lab}<span class="drd"><input class="in drd-t" readonly placeholder="วว/ดด/พ.ศ." value="${esc(drDmy(d[k]))}" onclick="drPickD(this)"><input type="date" class="drd-i" tabindex="-1" value="${v}" onchange="DR.${k}=this.value;this.previousElementSibling.value=drDmy(this.value);drPrev();${extra||''}"></span></label>`;
 return `<label class="lb">${lab}<input class="in" ${extra||''} value="${v}" oninput="DR.${k}=this.value;drPrev()"></label>`}
 const drDmy=iso=>{const a=String(iso||'').split('-');return a.length==3&&a[0]?(('0'+(+a[2])).slice(-2)+'/'+('0'+(+a[1])).slice(-2)+'/'+(+a[0]+543)):''};
 function drPickD(t){const i=t.nextElementSibling;try{i.showPicker()}catch(e){i.focus();i.click()}}
@@ -2010,6 +2010,8 @@ const iv=Math.floor(n),fr=Math.round((n-iv)*100);let t=iv?rd(iv)+'บาท':(fr
 const bzNm=s=>String(s||'').replace(/[()]/g,'').trim();
 const bzP=s=>'( '+(bzNm(s)||'                    ')+' )';
 const bzDm=iso=>iso?(+iso.slice(8,10))+' '+TMF[+iso.slice(5,7)-1]+' '+(+iso.slice(0,4)+543):'……………';
+const bzWork=iso=>{const t=new Date(iso+'T00:00:00'),w=t.getDay();return w>0&&w<6&&!holOf(t.getFullYear(),t.getMonth()+1,t.getDate()).some(x=>x.h)};
+const bzAddWd=(iso,n)=>{let t=new Date(iso+'T00:00:00'),k=+n||0;while(k>0){t.setDate(t.getDate()+1);if(bzWork(toISO(t)))k--}return toISO(t)};
 const bzAdd=(iso,n)=>{const t=new Date(iso+'T00:00:00');t.setDate(t.getDate()+(+n||0));return toISO(t)};
 const bzAmt=x=>{const q=actN(x.q),p=actN(x.p);return q==null||p==null?0:Math.round(q*p*100)/100};
 const bzTot=d=>d.items.reduce((a,x)=>a+bzAmt(x),0);
@@ -2019,13 +2021,13 @@ const bzVat=d=>d.vat?Math.round(bzPrice(d)*7/107*100)/100:0;
 const bzWh=d=>d.wh?Math.round((bzPrice(d)-bzVat(d))*100)/10000:0;
 const bzNet=d=>bzPrice(d)-bzWh(d)-(actN(d.fine)||0);
 function bzFind(re,not){const ok=s=>re.test(s)&&!(not&&not.test(s));const f=PP.find(p=>ok(String(p.po||'')))||PP.find(p=>(p.wp||[]).some(ok));return f?dn(f):''}
-function bzDates(d){d.dCmd=d.dDec=d.dAnn=d.dQuote=d.dReq;d.dPO=bzAdd(d.dReq,1);d.dDue=bzAdd(d.dPO,d.days||7);d.dDeliv=d.dInsp=d.dDue;d.dPay=bzAdd(d.dInsp,3)}
+function bzDates(d){d.dCmd=d.dDec=d.dAnn=d.dQuote=d.dReq;d.dPO=bzAddWd(d.dReq,1);d.dDue=bzAddWd(d.dPO,d.days||7);d.dDeliv=d.dInsp=d.dDue;d.dPay=bzAddWd(d.dInsp,3)}
 function bzDef(){const t=toISO(new Date());
 const d={kind:'buy',org:DR_ORG,affil:'สพป.แม่ฮ่องสอน เขต 2',schAddr:'หมู่ 2 ตำบลกองก๋อย อำเภอสบเมย จังหวัดแม่ฮ่องสอน 58110',to:'ผู้อำนวยการ'+DR_SCH.name,
 pj:'',act:'',item:'',reason:'',plan:'',grp:'',resp:'',budget:'',days:'7',warr:'',
 noReq:'',noCmd:'',noDec:'',noQ:'',noPO:'',noInv:'',noPay:'',dReq:t,dCmd:t,dDec:t,dAnn:t,dQuote:t,dPO:t,dDue:t,dDeliv:t,dInsp:t,dPay:t,
 officer:bzFind(/เจ้าหน้าที่พัสดุ/,/หัวหน้า/),head:bzFind(/หัวหน้า.*พัสดุ/),fin:bzFind(/การเงิน/),dir:bzNm(actAuto('dir')),
-cm:[{n:'',p:''},{n:'',p:''},{n:'',p:''}],vid:'',v:{shop:'',seller:'',addr:'',tel:'',tax:'',cid:'',acct:'',acn:'',bank:'',br:''},
+cm:[{n:'',p:''}],vid:'',v:{shop:'',seller:'',addr:'',tel:'',tax:'',cid:'',acct:'',acn:'',bank:'',br:''},
 items:[{n:'',q:'',u:'',mp:'',p:''}],poQ:'1',poU:'รายการ',vat:0,wh:1,fine:'',sel:Object.fromEntries(BZ_DOCS.map(x=>[x[0],1])),arab:false};
 bzDates(d);const me_=me&&me.sid&&PP.find(x=>x.id==me.sid);if(me_)d.cm[0]={n:dn(me_),p:posDef(me_)};return d}
 /* ---------- ข้อความของเอกสารแต่ละใบ → รายการบล็อก ---------- */
@@ -2045,10 +2047,10 @@ case 'req':return [{t:'memo',no:d.noReq,date:d.dReq,sub:'รายงานข�
 {t:'l',i:1,x:'6.  ซื้อโดยวิธีเฉพาะเจาะจง เนื่องจาก การจัดซื้อพัสดุที่มีการผลิต จำหน่าย ก่อสร้าง  หรือให้บริการทั่วไป และมีวงเงินในการจัดซื้อจัดจ้างครั้งหนึ่งไม่เกิน  ๕๐๐,๐๐๐  บาท  ที่กำหนดในกฎกระทรวง'},
 {t:'l',i:1,x:'7. หลักเกณฑ์การพิจารณาคัดเลือกข้อเสนอ โดยใช้เกณฑ์ราคา'},{t:'l',i:1,x:'8. ข้อเสนออื่น ๆ  เห็นควรแต่งตั้งผู้ตรวจรับพัสดุ ตามเสนอ'},
 {t:'l',i:1,b:1,x:'จึงเรียนมาเพื่อโปรดพิจารณา'},{t:'l',i:2,x:'1. เห็นชอบในรายงานขอซื้อดังกล่าวข้างต้น'},{t:'l',i:2,x:'2. อนุมัติแต่งตั้งบุคคลดังต่อไปนี้เป็นผู้ตรวจรับพัสดุ'},
-...(cm.length?cm:[{n:'',p:''}]).map((c,i)=>({t:'row',i:3,parts:[{x:(i?'':'2.1 ')+(bzNm(c.n)||'………………'),w:70},{x:'ตำแหน่ง '+(c.p||'')}]})),
+...(rp.length?rp:cm.length?cm:[{n:'',p:''}]).map((c,i)=>({t:'row',i:3,parts:[{x:'2.'+(i+1)+' '+(bzNm(c.n)||'………………'),w:70},{x:'ตำแหน่ง '+(c.p||'')}]})),
 {t:'cols',lw:80,l:[{x:'ลงชื่อ'+dots(26)+'เจ้าหน้าที่',al:'c',gap:8},{x:bzP(d.officer),al:'c'},{x:'ลงชื่อ'+dots(22)+'หัวหน้าเจ้าหน้าที่',al:'c',gap:6},{x:bzP(d.head),al:'c'}],
 r:[{x:'- เห็นชอบ',b:1,al:'l'},{x:'- อนุมัติ',b:1,al:'l'},{x:'ลงชื่อ'+dots(30),al:'c',gap:3},{x:bzP(d.dir),al:'c'},{x:dirT,al:'c'},{x:D(d.dReq),al:'c'}]}];
-case 'att1':{const tot=bzTot(d);return [{t:'ti',x:`รายละเอียดแนบท้ายบันทึกข้อความที่ ${d.noReq||'……'} ลงวันที่ ${D(d.dReq)}`},{t:'ti',x:`งานจัดซื้อพัสดุ จำนวน   ${n}   รายการ`},{t:'r',x:`จำนวนทั้งหมด ${n} รายการ`},
+case 'att1':{const tot=bzTot(d);return [{t:'ti',x:`รายละเอียดแนบท้ายบันทึกข้อความที่ ${d.noReq||'……'} ลงวันที่ ${D(d.dReq)}`},{t:'ti',x:`งานจัดซื้อพัสดุ จำนวน   ${n}   รายการ`},
 {t:'tb',w:[10,56,14,14,30,16,20],al:['c','l','c','c','c','c','r'],head:[[{x:'ที่',rs:2},{x:'รายละเอียดของพัสดุที่จะซื้อ',rs:2},{x:'จำนวน',rs:2},{x:'หน่วย',rs:2},{x:'ราคาที่ได้มาจากการสืบจากท้องตลาด',rs:2},{x:'จำนวนและวงเงินที่ขอซื้อครั้งนี้',span:2}],[{x:'หน่วยละ'},{x:'บาท'}]],
 rows:itemRows((x,i)=>[String(i+1),x.n,x.q,x.u,num(x.mp||x.p),num(x.p),num(bzAmt(x)||'')]),foot:[[{x:`รวมเป็นเงินทั้งสิ้น ${bt(tot)}`,span:6,al:'c',b:1},{x:mon(tot),b:1,al:'r'}]]},
 {t:'sp',h:4},{t:'cols',lw:80,l:[{x:'ลงชื่อ'+dots(28)+'เจ้าหน้าที่',al:'c',gap:4},{x:bzP(d.officer),al:'c'},{x:D(d.dReq),al:'c'}],r:[{x:'ลงชื่อ'+dots(24)+'หัวหน้าเจ้าหน้าที่',al:'c',gap:4},{x:bzP(d.head),al:'c'},{x:D(d.dReq),al:'c'}]}]}
@@ -2058,7 +2060,7 @@ case 'cmd':return [{t:'g'},{t:'ti',x:'คำสั่ง'+S},{t:'ti',x:'ที�
 {t:'l',i:1,b:1,x:'อำนาจและหน้าที่'},{t:'p',x:'ให้คณะกรรมการตรวจรับพัสดุ ปฏิบัติหน้าที่ตามพระราชบัญญัติการจัดซื้อจัดจ้างและการบริหารพัสดุภาครัฐ พ.ศ. 2560 และระเบียบกระทรวงการคลังว่าด้วยหลักเกณฑ์การจัดซื้อจัดจ้างและการบริหารพัสดุภาครัฐ พ.ศ. 2560 ข้อ 175 โดยให้คณะกรรมการ ตรวจรับพัสดุรายงานผลภายใน 7 วันทําการ นับแต่วันส่งมอบพัสดุ'},
 {t:'l',i:1,x:'ทั้งนี้ ตั้งแต่บัดนี้เป็นต้นไป'},{t:'cols',lw:70,l:[],r:[{x:`สั่ง ณ วันที่ ${+d.dCmd.slice(8)} เดือน ${TMF[+d.dCmd.slice(5,7)-1]} พ.ศ. ${+d.dCmd.slice(0,4)+543}`,al:'c',gap:2},{x:'ลงชื่อ '+dots(32),al:'c',gap:10},{x:bzP(d.dir),al:'c'},{x:'ตำแหน่ง '+dirT,al:'c'}]}];
 case 'ann':return [{t:'g'},{t:'ti',x:'ประกาศ'+S},{t:'ti',x:`เรื่อง ประกาศผู้ชนะเสนอราคา ซื้อ${itm} โดยวิธีเฉพาะเจาะจง`},{t:'c',x:'---------------------------------------------------------------------------------'},
-{t:'p',x:`ตามที่${S} ได้มีโครงการซื้อ${itm} โดยวิธีเฉพาะเจาะจง จำนวน ${d.poQ} ${d.poU} ผู้ได้รับการคัดเลือกได้แก่ ${sh} โดยเสนอราคาเป็นเงินทั้งสิ้น ${mon(pr)} ${bt(pr)} รวมภาษีมูลค่าเพิ่มและภาษีอื่นๆ ค่าขนส่ง ค่าจดทะเบียน ค่าใช้จ่ายอื่นๆ ทั้งปวง`},
+{t:'p',x:`ตามที่${S} ได้มีโครงการซื้อ${itm} โดยวิธีเฉพาะเจาะจง จำนวน ${d.poQ} ${d.poU} ผู้ได้รับการคัดเลือกได้แก่ ${sh} โดยเสนอราคาเป็นเงินทั้งสิ้น ${mon(bg)} ${bt(bg)} รวมภาษีมูลค่าเพิ่มและภาษีอื่นๆ ค่าขนส่ง ค่าจดทะเบียน ค่าใช้จ่ายอื่นๆ ทั้งปวง`},
 {t:'cols',lw:80,l:[],r:[{x:'ประกาศ ณ วันที่ '+D(d.dAnn),al:'c',gap:6},{x:'ลงชื่อ'+dots(32),al:'c',gap:10},{x:bzP(d.dir),al:'c'},{x:dirT,al:'c'}]}];
 case 'quo':{const tot=bzTot(d)||pr;return [{t:'ti',x:'ใบเสนอราคา',sz:20},{t:'l',x:'เรียน '+dirT},
 {t:'p',x:`1.  ข้าพเจ้า${sh} อยู่บ้านเลขที่ ${d.v.addr||'………………'} เลขที่บัตรประจำตัวประชาชน ${d.v.cid||d.v.tax||'………………'} ข้าพเจ้าขอเสนอพัสดุ ราคารวมทั้งบริการและกำหนดเวลาส่งมอบดังนี้`},
@@ -2081,7 +2083,7 @@ foot:[[{x:'('+bahtText(tot)+')',span:3,al:'c'},{x:'รวมเป็นเง�
 {t:'l',i:1,x:`๔.  ระยะเวลารับประกัน  ${d.warr||'............. - ..............'} วัน`},{t:'l',i:1,x:'๕. สงวนสิทธิ์ค่าปรับกรณีส่งมอบเกินกำหนด  โดยคิดค่าปรับเป็นรายวันในอัตราร้อยละ  ๐.๒๐  ของราคาสิ่งของที่ยังไม่ได้รับมอบแต่จะต้องไม่ต่ำกว่าวันละ  ๑๐๐.๐๐  บาท'},
 {t:'l',i:1,x:'6. โรงเรียนสงวนสิทธิ์ที่จะไม่รับมอบถ้าปรากฏว่าสินค้านั้นมีลักษณะไม่ตรงตามรายการที่ระบุไว้ในใบสั่งซื้อ กรณีนี้ผู้ขายจะต้องดำเนินการเปลี่ยนใหม่ให้ถูกต้องตามใบสั่งซื้อทุกประการ'},
 {t:'cols',lw:80,l:[{x:'ลงชื่อ'+dots(26)+'ผู้สั่งซื้อ',al:'c',gap:8},{x:bzP(d.dir),al:'c'},{x:'ตำแหน่ง '+dirT,al:'c'}],r:[{x:'ลงชื่อ'+dots(26)+'ผู้ขาย',al:'c',gap:8},{x:bzP(sel),al:'c'},{x:'ตำแหน่ง ผู้ขาย',al:'c'}]}]}
-case 'att2':{const tot=bzTot(d);return [{t:'ti',x:`รายละเอียดแนบท้ายใบสั่งซื้อที่ ${d.noPO||'……'} ลงวันที่ ${D(d.dPO)}`},{t:'ti',x:`งานจัดซื้อพัสดุ จำนวน   ${n}   รายการ`},{t:'r',x:`จำนวนทั้งหมด ${n} รายการ`},
+case 'att2':{const tot=bzTot(d);return [{t:'ti',x:`รายละเอียดแนบท้ายใบสั่งซื้อที่ ${d.noPO||'……'} ลงวันที่ ${D(d.dPO)}`},{t:'ti',x:`งานจัดซื้อพัสดุ จำนวน   ${n}   รายการ`},
 {t:'tb',w:[10,62,14,16,26,32],al:['c','l','c','c','c','r'],head:[[{x:'ที่',rs:2},{x:'รายละเอียดของพัสดุที่จะซื้อ',rs:2},{x:'จำนวน',rs:2},{x:'หน่วย',rs:2},{x:'จำนวนและวงเงินที่ขอซื้อครั้งนี้',span:2}],[{x:'หน่วยละ'},{x:'บาท'}]],
 rows:itemRows((x,i)=>[String(i+1),x.n,x.q,x.u,num(x.p),num(bzAmt(x)||'')]),foot:[[{x:`รวมเป็นเงินทั้งสิ้น ${bt(tot)}`,span:5,al:'c',b:1},{x:mon(tot),b:1,al:'r'}]]},
 {t:'sp',h:4},{t:'cols',lw:80,l:[{x:'ลงชื่อ'+dots(28)+'เจ้าหน้าที่',al:'c',gap:4},{x:bzP(d.officer),al:'c'},{x:D(d.dPO),al:'c'}],r:[{x:'ลงชื่อ'+dots(24)+'หัวหน้าเจ้าหน้าที่',al:'c',gap:4},{x:bzP(d.head),al:'c'},{x:D(d.dPO),al:'c'}]}]}
@@ -2102,9 +2104,11 @@ R('มูลค่าสินค้าหรือบริการ','',dt(mon
 {t:'cols',lw:80,l:[{x:'ลงชื่อ ……….………………  เจ้าหน้าที่การเงิน',al:'c',gap:8},{x:bzP(d.fin),al:'c'},{x:D(d.dPay),al:'c'}],r:[{x:'- ทราบ',b:1,al:'l'},{x:'- อนุมัติ',b:1,al:'l'},{x:'ลงชื่อ'+dots(30),al:'c',gap:3},{x:bzP(d.dir),al:'c'},{x:'ตำแหน่ง '+dirT,al:'c'},{x:D(d.dPay),al:'c'}]}]}
 case 'iss':{const c0=rp[0]||cm[0]||{n:'',p:''};return [{t:'ti',x:'ใบเบิกพัสดุ',sz:20},{t:'r',x:'ส่วนราชการ '+S},{t:'r',x:'วันที่ '+D(d.dInsp)},
 {t:'p',x:`ข้าพเจ้า ${bzNm(c0.n)||'………………'} ตำแหน่ง ${c0.p||''}  ข้าพเจ้าขอเบิกพัสดุตามรายการต่อไปนี้ ${d.reason||''}`},
-{t:'tb',w:[14,76,22,22,26],al:['c','l','c','c','l'],head:[[{x:'ที่',rs:2},{x:'รายการ',rs:2},{x:'จำนวนหน่วย',span:2},{x:'หมายเหตุ',rs:2}],[{x:'ขอเบิก'},{x:'เบิกได้'}]],rows:(r=>{while(r.length<10)r.push([String(r.length+1),'','','','']);return r})(itemRows((x,i)=>[String(i+1),x.n,x.q,x.q,'']))},
-{t:'cols',lw:80,l:[{x:'อนุมัติเบิกจ่ายได้',al:'l',gap:4},{x:dots(30)+'ผู้สั่งจ่าย',al:'c',gap:8},{x:'ได้ตรวจจำนวน ลงบัญชีแล้ว',al:'l',gap:3},{x:dots(30)+'เจ้าหน้าที่พัสดุ',al:'c',gap:8},{x:'ได้รับของถูกแล้ว',al:'l',gap:3},{x:dots(40),al:'c',gap:8},{x:bzP(c0.n),al:'c'},{x:'วันที่ '+D(d.dInsp),al:'c'}],
-r:[{x:dots(30)+'ผู้เบิก',al:'c',gap:8},{x:bzP(c0.n),al:'c'},{x:'ตำแหน่ง '+(c0.p||''),al:'c'},{x:'ได้มอบให้ '+dots(30),al:'l',gap:3},{x:'เป็นผู้รับของแทน '+dots(26),al:'l'},{x:'(ลงชื่อ)'+dots(26)+'ผู้มอบ',al:'l',gap:5},{x:'(ลงชื่อ)'+dots(26)+'ผู้รับมอบ',al:'l',gap:5},{x:'วันที่ '+dots(30),al:'l'}]}]}
+{t:'tb',w:[14,76,22,22,26],al:['c','l','c','c','l'],head:[[{x:'ที่',rs:2},{x:'รายการ',rs:2},{x:'จำนวนหน่วย',span:2},{x:'หมายเหตุ',rs:2}],[{x:'ขอเบิก'},{x:'เบิกได้'}]],rows:itemRows((x,i)=>[String(i+1),x.n,x.q,x.q,''])},
+{t:'bx',lw:80,rows:[[{a:[{x:'อนุมัติเบิกจ่ายได้',al:'l',gap:0},{x:dots(30)+'ผู้สั่งจ่าย',al:'c',gap:8}]},{a:[{x:dots(30)+'ผู้เบิก',al:'c',gap:8},{x:bzP(c0.n),al:'c'},{x:'ตำแหน่ง '+(c0.p||''),al:'c'}]}],
+[{a:[{x:'ได้ตรวจจำนวน ลงบัญชีแล้ว',al:'l',gap:0},{x:dots(30)+'เจ้าหน้าที่พัสดุ',al:'c',gap:8}]},{rs:2,a:[{x:'ได้มอบให้ '+dots(30),al:'l',gap:6},{x:'เป็นผู้รับของแทน '+dots(26),al:'l'},{x:'(ลงชื่อ)'+dots(26)+'ผู้มอบ',al:'l',gap:5},{x:'(ลงชื่อ)'+dots(26)+'ผู้รับมอบ',al:'l',gap:5},{x:'วันที่ '+dots(30),al:'l',gap:5}]}],
+[{a:[{x:'ได้รับของถูกแล้ว',al:'l',gap:0},{x:dots(40),al:'c',gap:8},{x:bzP(c0.n),al:'c'},{x:'วันที่ '+D(d.dInsp),al:'c'}]}]]}]
+}
 }return []}
 /* ---------- พรีวิว / พิมพ์ ---------- */
 function bzHead(d,b){const T=t=>esc(drTh(d,t));return `<div class="m-hd"><div class="m-tt">บันทึกข้อความ</div>
@@ -2124,9 +2128,19 @@ case 'l':return `<div class="m-bk bz bz-l${b.b?' b':''}" style="padding-left:${(
 case 'sp':return `<div class="m-bk bz" style="height:${b.h}mm"></div>`;
 case 'row':return `<div class="m-bk bz bz-row" style="padding-left:${(b.i||0)*8}mm">${b.parts.map(p=>`<span${p.w?` style="width:${p.w}mm"`:' style="flex:1"'}>${T(p.x)}</span>`).join('')}</div>`;
 case 'tb':return `<div class="m-bk bz"><table class="bz-tb"><colgroup>${b.w.map(w=>`<col style="width:${w}mm">`).join('')}</colgroup><thead>${b.head.map(r=>`<tr>${r.map(c=>cell(c,1)).join('')}</tr>`).join('')}</thead><tbody>${b.rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${b.al[i]||'l'}">${T(c)}</td>`).join('')}</tr>`).join('')}${(b.foot||[]).map(r=>`<tr>${r.map(cell).join('')}</tr>`).join('')}</tbody></table></div>`;
+case 'bx':{const col=a=>a.map(x=>`<div class="bz-it ${x.al||'l'}${x.b?' b':''}" style="margin-top:${x.gap||0}mm">${T(x.x)}</div>`).join('');return `<div class="m-bk bz"><table class="bz-bx"><colgroup><col style="width:${b.lw}mm"><col></colgroup><tbody>${b.rows.map(r=>`<tr>${r.map(c=>`<td${c.rs?` rowspan="${c.rs}"`:''}>${col(c.a)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
 case 'cols':{const col=a=>a.map(x=>`<div class="bz-it ${x.al||'l'}${x.b?' b':''}" style="margin-top:${x.gap||0}mm">${T(x.x)}</div>`).join('');return `<div class="m-bk bz bz-cols"><div style="width:${b.lw}mm">${col(b.l)}</div><div style="flex:1">${col(b.r)}</div></div>`}
 }return ''}).join('')}
-function bzDocHtml(d){const sel=d.sel||{};let i=0;const pg=BZ_DOCS.filter(x=>sel[x[0]]).map(x=>{const k=x[0],memo=k=='req'||k=='dec'||k=='pay';const fl=bzHtml(bzBlocks(d,k),d);let lv=0;for(let j=0;j<REP_LV.length;j++)if(repFits(fl,j)){lv=j;break}let h=memoPages(fl,d,true,i++,REP_LV[lv]);if(!memo)h=h.replace(/<img class="d-g"[^>]*>/,'');return h});
+function bzSplit(d,bl){const ti=bl.findIndex(b=>b.t=='tb');if(ti<0)return bl;const b=bl[ti],M=Object.assign({},MEMO_M,REP_LV[0]),K=25.4/96;
+const host=document.createElement('div');host.className='dr-a4 d-memo';host.style.cssText=`position:fixed;left:-10000px;top:0;height:auto;min-height:0;padding:0;width:${M.w}mm;box-shadow:none;overflow:visible`;host.innerHTML=bzHtml(bl,d);document.body.appendChild(host);
+const r0=host.getBoundingClientRect(),tb=host.querySelector('.bz-tb'),tr=tb.getBoundingClientRect(),hh=tb.querySelector('thead').getBoundingClientRect().height*K,rows=[...tb.querySelectorAll('tbody tr')],nf=(b.foot||[]).length,nb=rows.length-nf,hs=rows.map(r=>r.getBoundingClientRect().height*K),t0=(tr.top-r0.top)*K,aft=r0.height*K-(tr.bottom-r0.top)*K;host.remove();
+const footH=hs.slice(nb).reduce((x,y)=>x+y,0),cap1=297-M.t1-M.b-.5-t0-hh,capN=297-M.t-M.b-.5-hh;
+const pages=[];let cur=[],av=cap1,u=0;for(let i=0;i<nb;i++){if(u+hs[i]>av&&cur.length){pages.push(cur);cur=[];av=capN;u=0}cur.push(i);u+=hs[i]}
+const carry=[];while(cur.length>1&&u+footH+aft+4>av){const i=cur.pop();u-=hs[i];carry.unshift(i)}
+pages.push(cur);if(carry.length)pages.push(carry);if(pages.length<2)return bl;
+const nbk=pages.map((ix,j)=>({...b,rows:ix.map(i=>b.rows[i]),foot:j==pages.length-1?b.foot:[]}));return [...bl.slice(0,ti),...nbk,...bl.slice(ti+1)]}
+function bzDocHtml(d){const sel=d.sel||{};let i=0;const pg=BZ_DOCS.filter(x=>sel[x[0]]).map(x=>{const k=x[0],memo=k=='req'||k=='dec'||k=='pay';let bl=bzBlocks(d,k),fl=bzHtml(bl,d);let lv=0,fit=false;for(let j=0;j<REP_LV.length;j++)if(repFits(fl,j)){lv=j;fit=true;break}
+if(!fit&&(k=='att1'||k=='att2'||k=='quo'||k=='iss')){bl=bzSplit(d,bl);fl=bzHtml(bl,d);lv=0}let h=memoPages(fl,d,true,i++,REP_LV[lv]);if(!memo)h=h.replace(/<img class="d-g"[^>]*>/,'');return h});
 return `<div class="dr-pgs">${pg.join('')}</div>`}
 /* ---------- Word ---------- */
 async function bzDocx(){await drLoad('docx');const D=window.docx,d=DR,T=t=>drTh(d,String(t==null?'':t)),mm=v=>Math.round(v*56.6929),F='TH SarabunPSK',font={ascii:F,hAnsi:F,cs:F,eastAsia:F},W=MEMO_M.w,AL=D.AlignmentType;
@@ -2153,6 +2167,8 @@ out.push(P(b.parts.flatMap((p,i)=>i?[R('\t'),R(p.x)]:[R(p.x)]),{indent:{left:mm(
 case 'tb':{const cw=b.w.map(mm),occ=[],mk=(c,hd,i0,wd)=>{if(c==null)c='';if(typeof c!='object')c={x:c};const a=hd?'c':(c.al||b.al[i0]||'l');return new D.TableCell({children:[P(lines(c.x,(hd||c.b)?B:{}),{alignment:al(a),spacing:{before:0,after:0}})],width:{size:wd,type:D.WidthType.DXA},columnSpan:c.span||undefined,rowSpan:c.rs||undefined,borders:allB,verticalAlign:D.VerticalAlign.CENTER,margins:{top:30,bottom:30,left:70,right:70}})};
 const rowOf=(r,hd)=>{let ci=0;const busy=occ.map(v=>v>0?v:0),nw=[];const kids=r.map(c=>{const o=typeof c=='object'&&c?c:{};while(busy[ci]>0)ci++;const sp=o.span||1,wd=cw.slice(ci,ci+sp).reduce((x,y)=>x+y,0),cell=mk(c,hd,ci,wd);if(o.rs>1)for(let j=0;j<sp;j++)nw[ci+j]=o.rs-1;ci+=sp;return cell});for(let j=0;j<Math.max(occ.length,nw.length);j++)occ[j]=nw[j]>0?nw[j]:(busy[j]>0?busy[j]-1:0);return new D.TableRow({cantSplit:true,tableHeader:!!hd,children:kids})};
 out.push(new D.Table({width:{size:cw.reduce((x,y)=>x+y,0),type:D.WidthType.DXA},layout:D.TableLayoutType.FIXED,columnWidths:cw,rows:[...b.head.map(r=>rowOf(r,1)),...b.rows.map(r=>new D.TableRow({cantSplit:true,children:r.map((c,i)=>mk({x:c},0,i,cw[i]))})),...(b.foot||[]).map(r=>rowOf(r,0))]}),P([],{spacing:{before:0,after:0}}));break}
+case 'bx':{const cw=[mm(b.lw),mm(W-b.lw)],mc=(c,ci)=>new D.TableCell({children:c.a.map(x=>P(lines(x.x,x.b?B:{}),{alignment:al(x.al),spacing:{before:mm(x.gap||0),after:0}})),width:{size:cw[ci],type:D.WidthType.DXA},rowSpan:c.rs||undefined,borders:allB,margins:{top:30,bottom:60,left:100,right:100}});
+out.push(new D.Table({width:{size:cw[0]+cw[1],type:D.WidthType.DXA},layout:D.TableLayoutType.FIXED,columnWidths:cw,rows:b.rows.map((r,ri)=>new D.TableRow({cantSplit:true,children:r.map((c,i)=>mc(c,ri==2?0:i))}))}));break}
 case 'cols':{const cell=(a,w)=>new D.TableCell({children:a.length?a.map(x=>P(lines(x.x,x.b?B:{}),{alignment:al(x.al),spacing:{before:mm(x.gap||0),after:0}})):[P([])],width:{size:mm(w),type:D.WidthType.DXA},borders:noB});
 out.push(new D.Table({width:{size:mm(W),type:D.WidthType.DXA},layout:D.TableLayoutType.FIXED,columnWidths:[mm(b.lw),mm(W-b.lw)],borders:{...noB,insideHorizontal:NB,insideVertical:NB},rows:[new D.TableRow({cantSplit:true,children:[cell(b.l,b.lw),cell(b.r,W-b.lw)]})]}));break}
 }});return out};
@@ -2161,10 +2177,15 @@ const sel=d.sel||{},secs=BZ_DOCS.filter(x=>sel[x[0]]).map(x=>sec(conv(bzBlocks(d
 const doc=new D.Document({creator:'โรงเรียนบ้านผาเยอ',title:'ชุดเอกสารจัดซื้อจัดจ้าง '+(d.item||''),styles:{default:{document:{run:{font,size:32,sizeComplexScript:32}}}},sections:secs});
 return await D.Packer.toBlob(doc)}
 /* ---------- ฟอร์ม ---------- */
-const bzSet=(k,v)=>{DR[k]=v;drPrev()};
+const bzSet=(k,v)=>{DR[k]=v;if(k=='days')bzDueUpd();drPrev()};
+function bzDueUpd(){DR.dDue=bzAddWd(DR.dPO,DR.days||7);const e=document.getElementById('bz_due');if(e)e.innerHTML=bzDueHtml()}
+const bzDueHtml=()=>`ครบกำหนดส่งมอบ (คำนวณอัตโนมัติ ไม่นับเสาร์-อาทิตย์และวันหยุดราชการตามปฏิทิน): <b>${esc(bzDm(DR.dDue))}</b>`;
 function bzInp(k,lab,ph){return `<label class="lb">${lab}<input class="in" value="${esc(DR[k]||'')}" placeholder="${esc(ph||'')}" oninput="bzSet('${k}',this.value)"></label>`}
 function bzV(k,lab){return `<label class="lb">${lab}<input class="in" value="${esc(DR.v[k]||'')}" oninput="DR.v.${k}=this.value;drPrev()"></label>`}
 function bzPickP(k,id){const p=PP.find(x=>String(x.id)==String(id));DR[k]=p?dn(p):DR[k];drFill()}
+function bzAddCm(){DR.cm.push({n:'',p:''});drFill()}
+function bzDelCm(i){if(DR.cm.length>1){DR.cm.splice(i,1);drFill()}}
+function bzPickR(id){const p=PP.find(x=>String(x.id)==String(id));if(p)DR.resp=dn(p);drFill()}
 function bzPickC(i,id){const p=PP.find(x=>String(x.id)==String(id));if(p)DR.cm[i]={n:dn(p),p:posDef(p)};drFill()}
 function bzPickV(id){const v=VEN.find(x=>x.id==id);DR.vid=id;if(v)DR.v={shop:v.shop||'',seller:v.seller||'',addr:v.addr||'',tel:v.tel||'',tax:v.tax||'',cid:v.cid||'',acct:v.acct||'',acn:v.acn||'',bank:v.bank||'',br:v.br||''};drFill()}
 function bzItem(i,k,v){DR.items[i][k]=v;const e=document.getElementById('bz_tot');if(e)e.innerHTML=bzTotHtml();const a=document.getElementById('bz_a'+i);if(a)a.textContent=bzMon(bzAmt(DR.items[i]));drPrev()}
@@ -2178,7 +2199,7 @@ const dup=v&&RG.find(r=>r.type==t&&rgNorm(rgFmt(r))==v&&r.id!=own&&!(r.createdBy
 const last=rgOf(t).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt||'').localeCompare(a.createdAt||''))[0];
 return dup?`<span style="color:#D9363E">⚠ เลขที่ ${esc(rgFmt(dup))} มีในทะเบียนแล้ว (${esc(dup.title||'')}) กรุณาตรวจสอบ</span>`:(last?'เลขล่าสุดในทะเบียน: <b>'+esc(rgFmt(last))+'</b> ('+esc((last.title||'').slice(0,40))+')':'ยังไม่มีรายการในทะเบียน')}
 function bzNo(k,t,el){DR[k]=el.value;const h=document.getElementById('bz_h_'+k);if(h)h.innerHTML=bzNoHint(k,t);drPrev()}
-function bzNd(nk,dk,lab,t){return `<div class="bz-nd"><div class="bz-ndt">${lab}</div><div class="bz-ndr">${nk?`<label class="lb">เลขที่<input class="in" value="${esc(DR[nk]||'')}" placeholder="เช่น 198/2569" oninput="bzNo('${nk}','${t||''}',this)" autocomplete="off"></label>`:''}${drField(dk,'วันที่','date')}</div>${nk&&t?`<div class="drm-hint" id="bz_h_${nk}">${bzNoHint(nk,t)}</div>`:''}</div>`}
+function bzNd(nk,dk,lab,t,ex){return `<div class="bz-nd"><div class="bz-ndt">${lab}</div><div class="bz-ndr">${nk?`<label class="lb">เลขที่<input class="in" value="${esc(DR[nk]||'')}" placeholder="เช่น 198/2569" oninput="bzNo('${nk}','${t||''}',this)" autocomplete="off"></label>`:''}${drField(dk,'วันที่','date',ex)}</div>${nk&&t?`<div class="drm-hint" id="bz_h_${nk}">${bzNoHint(nk,t)}</div>`:''}</div>`}
 const BZ_REG=[['req','noReq','dReq','bzreq',(d,i)=>'รายงานขอซื้อ '+i,d=>d.to],['cmd','noCmd','dCmd','order',(d,i)=>'แต่งตั้งคณะกรรมการตรวจรับพัสดุ '+i,()=>'คณะกรรมการตรวจรับพัสดุ'],['dec','noDec','dDec','bzreq',(d,i)=>'รายงานผลการพิจารณาและขออนุมัติสั่งซื้อ '+i,d=>d.to],['po','noPO','dPO','bzbuy',(d,i)=>'ใบสั่งซื้อ '+i,d=>d.v.shop||''],['pay','noPay','dPay','bzreq',(d,i)=>'รายงานผลการตรวจรับพัสดุและอนุมัติเบิกจ่ายเงิน '+i,d=>d.to]];
 async function bzAutoReg(){const d=DR;if(!me||d._bzBusy)return d._bzBusy;return d._bzBusy=(async()=>{let n=0,sk=[];d.rgx=d.rgx||{};
 for(const [dk,nk,dtk,t,ti,to] of BZ_REG){const num=String(d[nk]||'').trim().replace(/\s+/g,' '),date=d[dtk];if(!d.sel||!d.sel[dk]||!num||!date)continue;
@@ -2188,7 +2209,7 @@ else{const id=uid();await db.collection('registers').doc(id).set({...data,note:'
 if(n)drFlash('บันทึกเลขที่ลงทะเบียนอัตโนมัติ '+n+' รายการ','#22B573');if(sk.length)drFlash('เลขที่ '+sk.join(', ')+' ซ้ำกับทะเบียนหรือบันทึกไม่ได้ กรุณาตรวจเลขที่','#F5A524')})().finally(()=>{d._bzBusy=null})}
 function bzForm(){const d=DR,ps=[...PP].sort((a,b)=>dn(a).localeCompare(dn(b),'th')),pp=(k,i)=>`<option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>`<option value="${esc(p.id)}" ${i==null?(bzNm(d[k])==dn(p)?'selected':''):(bzNm(d.cm[i].n)==dn(p)?'selected':'')}>${esc(dn(p))}</option>`).join('')}`;
 const per=(k,lab)=>`<label class="lb">${lab}<select class="in" onchange="bzPickP('${k}',this.value)">${pp(k)}</select><input class="in" style="margin-top:4px" value="${esc(d[k]||'')}" oninput="bzSet('${k}',this.value)"></label>`;
-return drSelBlock(BZ_DOCS)+`<h4>ข้อมูลโครงการ / รายการที่จะซื้อ</h4><div class="bz-pick"><label class="lb">ดึงข้อมูลจากหน้าโครงการ (ชื่อ · ผู้รับผิดชอบ · งบประมาณ)<select class="in" id="bz_pjsel"><option value="">— เลือกโครงการ / กิจกรรม —</option>${bzProjOpts()}</select></label><button class="btn" type="button" onclick="bzPickProj()">ดึงข้อมูล</button></div>${BP.length?'':'<div class="drm-hint">ยังไม่มีข้อมูลโครงการในระบบ</div>'}${bzInp('pj','โครงการ')}${bzInp('act','กิจกรรม (ถ้ามี)')}${bzInp('item','รายการที่จะขอซื้อ','เช่น ซื้อพัสดุกิจกรรมห้องเรียนคุณภาพ')}${bzInp('reason','เหตุผลที่จะขอซื้อ','เช่น เพื่อซื้อพัสดุสำหรับ…')}${bzInp('plan','ได้รับอนุมัติเงินจาก (แผนงาน/โครงการ)')}${bzInp('resp','ผู้รับผิดชอบโครงการ/กิจกรรม')}${bzInp('grp','กลุ่มงานที่ขอซื้อ')}${bzInp('budget','งบประมาณ (บาท)')}${bzInp('days','กำหนดส่งมอบ (วัน นับถัดจากวันลงนามใบสั่งซื้อ)')}${bzInp('warr','ระยะเวลารับประกัน (วัน · เว้นว่างได้)')}
+return drSelBlock(BZ_DOCS)+`<h4>ข้อมูลโครงการ / รายการที่จะซื้อ</h4><div class="bz-pick"><label class="lb">ดึงข้อมูลจากหน้าโครงการ (ชื่อ · ผู้รับผิดชอบ · งบประมาณ)<select class="in" id="bz_pjsel"><option value="">— เลือกโครงการ / กิจกรรม —</option>${bzProjOpts()}</select></label><button class="btn" type="button" onclick="bzPickProj()">ดึงข้อมูล</button></div>${BP.length?'':'<div class="drm-hint">ยังไม่มีข้อมูลโครงการในระบบ</div>'}${bzInp('pj','โครงการ')}${bzInp('act','กิจกรรม (ถ้ามี)')}${bzInp('item','รายการที่จะขอซื้อ','เช่น ซื้อพัสดุกิจกรรมห้องเรียนคุณภาพ')}${bzInp('reason','เหตุผลที่จะขอซื้อ','เช่น เพื่อซื้อพัสดุสำหรับ…')}${bzInp('plan','ได้รับอนุมัติเงินจาก (แผนงาน/โครงการ)')}<label class="lb">ผู้รับผิดชอบโครงการ/กิจกรรม → ผู้ตรวจรับพัสดุ (รายงานขอซื้อ · ใบตรวจรับ · ใบเบิกพัสดุ)<select class="in" onchange="bzPickR(this.value)"><option value="">— เลือกจากบุคลากร —</option>${[...PP].sort((a,b)=>dn(a).localeCompare(dn(b),'th')).map(p=>`<option value="${esc(p.id)}" ${bzNm(d.resp)==dn(p)?'selected':''}>${esc(dn(p))}</option>`).join('')}</select><input class="in" style="margin-top:4px" value="${esc(d.resp||'')}" placeholder="ชื่อผู้รับผิดชอบ (หลายคนคั่นด้วย , )" oninput="bzSet('resp',this.value)"></label>${bzInp('grp','กลุ่มงานที่ขอซื้อ')}${bzInp('budget','งบประมาณ (บาท)')}${bzInp('days','กำหนดส่งมอบ (วัน นับถัดจากวันลงนามใบสั่งซื้อ)')}${bzInp('warr','ระยะเวลารับประกัน (วัน · เว้นว่างได้)')}
 <h4>ผู้ขาย / ร้านค้า</h4><label class="lb">เลือกจากทะเบียนร้านค้า (งานพัสดุ › ทะเบียนร้านค้า)<select class="in" onchange="bzPickV(this.value)"><option value="">— เลือกร้านค้า —</option>${VEN.map(v=>`<option value="${esc(v.id)}" ${d.vid==v.id?'selected':''}>${esc(v.shop||'')}</option>`).join('')}</select></label>${bzV('shop','ชื่อร้าน / บริษัท')}${bzV('seller','ชื่อ-สกุล ผู้ขาย')}${bzV('addr','ที่อยู่')}${bzV('tel','โทรศัพท์')}${bzV('tax','เลขประจำตัวผู้เสียภาษี')}${bzV('cid','เลขประจำตัวประชาชน')}${bzV('acct','เลขที่บัญชีธนาคาร')}${bzV('acn','ชื่อบัญชี')}${bzV('bank','ธนาคาร')}${bzV('br','สาขา')}
 <h4>รายการพัสดุ</h4><div class="bz-itl">${d.items.map((x,i)=>`<div class="bz-itr"><b>${i+1}</b><input class="in" placeholder="รายการ" value="${esc(x.n)}" oninput="bzItem(${i},'n',this.value)"><input class="in" placeholder="จำนวน" inputmode="decimal" value="${esc(x.q)}" oninput="bzItem(${i},'q',this.value)"><input class="in" placeholder="หน่วย" value="${esc(x.u)}" oninput="bzItem(${i},'u',this.value)"><input class="in" placeholder="ราคาสืบตลาด/หน่วย" inputmode="decimal" value="${esc(x.mp)}" oninput="bzItem(${i},'mp',this.value)"><input class="in" placeholder="ราคา/หน่วย" inputmode="decimal" value="${esc(x.p)}" oninput="bzItem(${i},'p',this.value)"><span id="bz_a${i}">${bzMon(bzAmt(x))}</span><a class="act-rs" onclick="bzDelItem(${i})">ลบ</a></div>`).join('')}</div><button class="btn o" type="button" onclick="bzAddItem()">+ เพิ่มรายการ</button><div class="drm-hint" id="bz_tot">${bzTotHtml()}</div>
 ${bzInp('poQ','จำนวน (ในใบสั่งซื้อ/ประกาศ)')}${bzInp('poU','หน่วย (ในใบสั่งซื้อ/ประกาศ)','เช่น รายการ')}
@@ -2198,12 +2219,12 @@ ${bzNd('noCmd','dCmd','คำสั่งแต่งตั้งคณะกร
 ${bzNd(null,'dAnn','ประกาศผู้ชนะการเสนอราคา')}
 ${bzNd('noQ','dQuote','ใบเสนอราคา')}
 ${bzNd('noDec','dDec','บันทึกข้อความรายงานผลการพิจารณาและขออนุมัติสั่งซื้อ','bzreq')}
-${bzNd('noPO','dPO','ใบสั่งซื้อ','bzbuy')}${drField('dDue','ครบกำหนดส่งมอบ','date')}
+${bzNd('noPO','dPO','ใบสั่งซื้อ','bzbuy','bzDueUpd()')}<div class="drm-hint" id="bz_due">${bzDueHtml()}</div>
 ${bzNd('noInv','dDeliv','ใบส่งของ/ใบกำกับภาษี')}
 ${drField('dInsp','วันที่ตรวจรับพัสดุ','date')}
 ${bzNd('noPay','dPay','บันทึกข้อความรายงานผลการตรวจรับพัสดุและอนุมัติเบิกจ่ายเงิน','bzreq')}
 <h4>ผู้ลงนาม</h4>${per('officer','เจ้าหน้าที่พัสดุ')}${per('head','หัวหน้าเจ้าหน้าที่พัสดุ')}${per('fin','เจ้าหน้าที่การเงิน')}${per('dir','ผู้อำนวยการ')}
-<h4>คณะกรรมการตรวจรับพัสดุ</h4>${d.cm.map((c,i)=>`<label class="lb">${i?'กรรมการ':'ประธานกรรมการ'} ${i+1}<select class="in" onchange="bzPickC(${i},this.value)">${pp(null,i)}</select><input class="in" style="margin-top:4px" placeholder="ชื่อ" value="${esc(c.n)}" oninput="DR.cm[${i}].n=this.value;drPrev()"><input class="in" style="margin-top:4px" placeholder="ตำแหน่ง" value="${esc(c.p)}" oninput="DR.cm[${i}].p=this.value;drPrev()"></label>`).join('')}
+<h4>คณะกรรมการตรวจรับพัสดุ</h4>${d.cm.map((c,i)=>`<label class="lb">${i?'กรรมการ':'ประธานกรรมการ'} ${i+1}${d.cm.length>1?` <a class="act-rs" onclick="bzDelCm(${i});event.preventDefault()">ลบ</a>`:''}<select class="in" onchange="bzPickC(${i},this.value)">${pp(null,i)}</select><input class="in" style="margin-top:4px" placeholder="ชื่อ" value="${esc(c.n)}" oninput="DR.cm[${i}].n=this.value;drPrev()"><input class="in" style="margin-top:4px" placeholder="ตำแหน่ง" value="${esc(c.p)}" oninput="DR.cm[${i}].p=this.value;drPrev()"></label>`).join('')}<button class="btn o" type="button" onclick="bzAddCm()">+ เพิ่มกรรมการ</button>
 <h4>ภาษี / ค่าปรับ</h4><label class="drm-ck"><input type="checkbox" ${d.vat?'checked':''} onchange="DR.vat=this.checked?1:0;drPrev()"> ผู้ขายจดทะเบียนภาษีมูลค่าเพิ่ม (แยกภาษี 7% ในใบสั่งซื้อ/ใบเบิกจ่าย ราคารวมภาษีแล้ว)</label><label class="drm-ck"><input type="checkbox" ${d.wh?'checked':''} onchange="DR.wh=this.checked?1:0;drPrev()"> หักภาษี ณ ที่จ่าย 1%</label>${bzInp('fine','ค่าปรับ (บาท · เว้นว่างถ้าไม่มี)')}`}
 /* ---------- เปิดจากกิจกรรมในหน้าโครงการ ---------- */
 function bzFromProj(d,p){const par=p.parent?BP.find(x=>x.id==p.parent):null,rs=pjResp(p).length?pjResp(p):(par?pjResp(par):[]),dv=PROJDEPT.find(x=>x[0]==pjDept(par||p));
