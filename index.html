@@ -549,7 +549,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .hero-w .hb-msg p{opacity:1}
 .hero-w .tdy-l{gap:2px;padding:0 28px 18px}
 .hero-w .tdy-r{background:none!important;box-shadow:none!important;color:#fff;padding:4px 10px;border-left:3px solid transparent;border-radius:0;text-shadow:0 2px 8px rgba(0,0,0,.7),0 0 3px rgba(0,0,0,.5)}
-.hero-w .tdy-r em,.hero-w .tdy-r b{color:#fff}.hero-w .tdy-r span,.hero-w .tdy-r small{color:rgba(255,255,255,.88)}
+.hero-w .tdy-r{grid-template-columns:54px 100px auto auto auto;justify-content:start;gap:8px}.hero-w .tdy-r em,.hero-w .tdy-r b{color:#fff}.hero-w .tdy-r span,.hero-w .tdy-r small{color:rgba(255,255,255,.88)}
 .hero-w .tdy-r.now{border-left-color:#6EE7B7}.hero-w .tdy-r.now b{color:#A7F3D0}
 .hero-w .tdy-r u{background:none!important;color:rgba(255,255,255,.9)!important;text-decoration:none;font-size:.78rem}.hero-w .tdy-r.now u{color:#A7F3D0!important;font-weight:600}
 .hero-w .hb{padding-bottom:4px}
@@ -995,6 +995,22 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .rgb .lbn-h>div{min-width:0;flex:1}.rgb .lbn-h h3{font-size:.95rem;line-height:1.25}.ven-rv{cursor:pointer;align-items:center;transition:.15s}.ven-rv:hover{border-color:#14B8D6;box-shadow:0 4px 14px rgba(20,184,214,.18)}.ven-go{color:#2F6BFF;font-size:.82rem;white-space:nowrap}.ven-dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.ven-dl>div{background:#F7F9FF;border:1px solid #E3E8F7;border-radius:12px;padding:8px 12px}.ven-dl small{display:block;color:#6B7691;font-size:.76rem}.ven-dl b{font-weight:500;word-break:break-word}.bz-nd{border:1px solid #E3E8F7;border-radius:12px;padding:8px 10px;margin-bottom:8px;background:#fff}.bz-ndt{font-weight:600;font-size:.85rem;margin-bottom:4px;color:#312E81}.bz-ndr{display:grid;grid-template-columns:1fr 1fr;gap:8px}.bz-ndr .lb{margin:0}.bz-hint{margin-top:6px}.bz-use{color:#2F6BFF;font-weight:600;cursor:pointer;text-decoration:underline}.bz-mode{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:6px}.bz-mode .drm-ck{margin:0}.bz-pick{display:flex;gap:8px;align-items:flex-end;margin-bottom:8px}.bz-pick .lb{flex:1;margin:0}.bz-pick .btn{white-space:nowrap}.ven-sec{font-weight:600;font-size:.82rem;color:#4A5675;margin:10px 0 4px}.ven-l{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}.ven-r{display:flex;gap:8px;justify-content:space-between;align-items:flex-start;padding:10px 12px;border:1px solid #E3E8F7;border-radius:12px;background:#fff}.ven-r small{display:block;color:var(--mute);font-size:.74rem;line-height:1.35}.ven-a{display:flex;gap:6px;flex:none}.ven-a .btn{padding:4px 10px;font-size:.76rem}
 .bz-itl{display:grid;gap:6px;margin-bottom:8px}.bz-itr{display:grid;grid-template-columns:20px 1.7fr .6fr .6fr .8fr .8fr 70px auto;gap:4px;align-items:center;font-size:.78rem}.bz-itr .in{padding:6px 8px;font-size:.8rem;min-width:0}.bz-itr span{text-align:right}
 @media(max-width:560px){.bz-itr{grid-template-columns:18px 1fr 1fr;grid-auto-flow:row}}
+.ttv{display:grid;grid-template-columns:84px 44px repeat(3,minmax(0,1fr)) 34px repeat(3,minmax(0,1fr)) 44px;grid-auto-rows:minmax(74px,auto);grid-template-rows:auto;gap:8px;min-width:980px;padding:2px}
+.ttv-h{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;padding:7px 4px;color:#fff;background:linear-gradient(135deg,#6E7BE0,#5461CF);box-shadow:0 4px 10px -4px rgba(84,97,207,.55),inset 0 1px 0 rgba(255,255,255,.35);line-height:1.25;min-height:46px}
+.ttv-h b{font-size:.84rem;font-weight:600}.ttv-h small{font-size:.7rem;opacity:.92}
+.ttv-c0{background:linear-gradient(135deg,#4B5563,#374151);box-shadow:0 4px 10px -4px rgba(55,65,81,.5),inset 0 1px 0 rgba(255,255,255,.25);font-size:.82rem;font-weight:600}
+.ttv-bk{background:linear-gradient(135deg,#FDBA74,#F59E0B);box-shadow:0 4px 10px -4px rgba(245,158,11,.5),inset 0 1px 0 rgba(255,255,255,.4)}
+.ttv-d{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:14px;border-left:5px solid var(--c);background:linear-gradient(135deg,color-mix(in srgb,var(--c) 26%,#fff),color-mix(in srgb,var(--c) 9%,#fff));box-shadow:0 4px 10px -5px color-mix(in srgb,var(--c) 70%,transparent),inset 0 1px 0 #fff}
+.ttv-d b{font-size:.95rem;color:#1F2A44}.ttv-d small{font-size:.72rem;color:#6B7691}
+.ttv-x{position:relative;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:8px 10px;border-radius:14px;border-left:4px solid var(--c);background:linear-gradient(135deg,color-mix(in srgb,var(--c) 20%,#fff),color-mix(in srgb,var(--c) 6%,#fff));box-shadow:0 5px 12px -6px color-mix(in srgb,var(--c) 75%,transparent),inset 0 1px 0 rgba(255,255,255,.9);transition:transform .2s,box-shadow .2s}
+.ttv-x:hover{transform:translateY(-2px);box-shadow:0 9px 16px -7px color-mix(in srgb,var(--c) 80%,transparent),inset 0 1px 0 #fff}
+.ttv-x b{font-size:.88rem;font-weight:600;color:color-mix(in srgb,var(--c) 45%,#1F2A44);overflow-wrap:anywhere;line-height:1.3}.ttv-x small{font-size:.76rem;color:#5B667E;overflow-wrap:anywhere;line-height:1.3}
+.ttv-x.em{background:#FAFBFF;border:1.5px dashed #E1E6F2;box-shadow:none}.ttv-x.em:hover{transform:none;box-shadow:none}
+.ttv-lunch{display:flex;align-items:center;justify-content:center;border-radius:10px;background:repeating-linear-gradient(135deg,#FFF6DC,#FFF6DC 6px,#FFEFC2 6px,#FFEFC2 12px);color:#9A6B00;font-size:.72rem}.ttv-lunch span,.ttv-s span{writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.5px}
+.ttv-s{display:flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,#F1F3FA,#E9EDF8);color:#6B7691;font-size:.8rem;box-shadow:inset 0 1px 0 #fff}
+.ttv.mini{min-width:0;font-size:4.6px;gap:2px;grid-auto-rows:minmax(14px,auto);grid-template-columns:16px 8px repeat(3,minmax(0,1fr)) 6px repeat(3,minmax(0,1fr)) 8px;padding:0}.ttv.mini>*{border-radius:3px!important;padding:1px 2px!important;min-height:0!important;box-shadow:none!important;border-left-width:1.5px}.ttv.mini small,.ttv.mini .ttv-s span,.ttv.mini .ttv-lunch span{display:none}.ttv.mini b{font-size:4.6px!important}.ttv.mini .ttv-d b{font-size:4.6px!important}.ttv.mini .ttv-h{font-size:0!important}.ttv.mini .ttv-h b,.ttv.mini .ttv-h small{display:none}
+.ttvw{overflow-x:auto;margin-top:14px;padding:4px}.tt-pr{display:none}
+@media print{.ttvw{display:none!important}.tt-pr{display:block!important}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -4241,15 +4257,34 @@ ${ttSigs(`${ttNameLine(PP.find(p=>p.id==d.tid))}<br>ครูผู้สอน`
 <div class="ttbar tt-np"><button class="btn" onclick="ttSaveAll()">บันทึกตารางสอน</button><button class="btn o" onclick="ttClear()">ล้างตาราง</button><small>กดช่องคาบเพื่อเลือกวิชา/ชั้น แล้วกด "บันทึกตารางสอน" เมื่อกรอกเสร็จ ระบบจะเคลียร์ตารางเพื่อกรอกคนต่อไป</small></div>`}
 function ttClassCells(ck){const o={};ttTDocs(ttYear).forEach(d=>Object.keys(d.cells||{}).forEach(c=>{const x=d.cells[c];if(x&&ttLv(x.c)==ttLv(ck))(o[c]=o[c]||[]).push({s:x.s,t:d.ref})}));return o}
 const ttBar=()=>`<div class="ttbar tt-np" style="margin:0 0 14px"><label class="lb" style="display:flex;gap:8px;align-items:center">ปีการศึกษา <select class="in" style="width:auto;margin:0" onchange="ttSet('year',this.value)">${ttYears().map(y=>`<option value="${y}"${y==ttYear?' selected':''}>${y}</option>`).join('')}</select></label></div>`;
+/* ---------- ตารางสอน/ตารางเรียน แบบการ์ดพาสเทล (หน้าจอ) · ตารางเดิมใช้พิมพ์ ---------- */
+const TTV_COL=['#14B8A6','#8B5CF6','#22A06B','#B08968','#EF4444','#5B6BD8','#F59E0B','#EC4899','#3B82F6','#84CC16','#F97316','#06B6D4'],TTV_DAY=['#FACC15','#F472B6','#4ADE80','#FB923C','#60A5FA'];
+let TTV_MAP=null;
+const ttvBase=x=>String(x||'').replace(/[\s\d๐-๙]+$/g,'').trim();
+function ttvColor(sub){if(!TTV_MAP||TTV_MAP._n!=ttSubs().length){TTV_MAP={_n:ttSubs().length};let i=0;ttSubs().forEach(g=>g[1].forEach(n=>{const b=ttvBase(n);if(!(b in TTV_MAP))TTV_MAP[b]=TTV_COL[i++%TTV_COL.length]}))}
+const b=ttvBase(sub);if(b in TTV_MAP)return TTV_MAP[b];let h=0;for(const ch of b)h=(h*31+ch.charCodeAt(0))>>>0;return TTV_COL[h%TTV_COL.length]}
+function ttVis(cells,mode,mini){const H=['<div class="ttv-h ttv-c0">วัน / คาบ</div>'],pl=i=>`<div class="ttv-h"><b>${i==0?'Home room':i==8?'PLC':'คาบ '+(i+1)}</b>${i==0||i==8?'':`<small>${esc(TTP[i][0].replace(/\./g,':').replace(' - ','-'))}</small>`}</div>`;
+let h='';[0,1,2,3].forEach(i=>h+=pl(i));h+='<div class="ttv-h ttv-bk">☕</div>';[5,6,7,8].forEach(i=>h+=pl(i));
+const col=[0,1,2,3,null,5,6,7,8];let g='';
+TTD.forEach((d,r)=>{const row=r+2;let n=0;for(let p=2;p<=8;p++){if(p!=5&&cells[`d${r+1}p${p}`])n++}
+g+=`<div class="ttv-d" style="grid-area:${row}/1;--c:${TTV_DAY[r]}"><b>${d}</b><small>${n} คาบ</small></div>`;
+for(let p=2;p<=8;p++){const ci=p<5?p+1:p+2-1;/* คอลัมน์: 1 วัน,2 HR,3-5 คาบ2-4,6 พัก,7-9 คาบ6-8,10 PLC */const cc=p<5?p+1:p+1;
+if(p==5){g+=`<div class="ttv-lunch" style="grid-area:${row}/6"><span>พักกลางวัน</span></div>`;continue}
+const key=`d${r+1}p${p}`,c=cells[key];let inner='',st='';
+if(mode=='c'){const l=c||[];if(l.length){st=`--c:${ttvColor(l[0].s)}`;inner=`<b>${esc(l[0].s)}</b>`+l.map(x=>`<small>${esc(ttNameOf(x.t))}</small>`).join('')}}
+else if(c){st=`--c:${ttvColor(c.s)}`;inner=`<b>${esc(c.s)}</b>`+(c.c?`<small>${esc(ttShort(c.c))}</small>`:'')}
+g+=`<div class="ttv-x${inner?'':' em'}" style="grid-area:${row}/${p<5?p+1:p+1};${st}">${inner}</div>`}});
+g+=`<div class="ttv-s" style="grid-area:2/2/7/3"><span>Home room กิจกรรมชั้นเรียน</span></div><div class="ttv-s" style="grid-area:2/10/7/11"><span>PLC /กิจกรรมตามโครงการ</span></div>`;
+return `<div class="ttv${mini?' mini':''}">${H[0].replace('ttv-c0','ttv-c0" style="grid-area:1/1')}${pl(0).replace('class="ttv-h"','class="ttv-h" style="grid-area:1/2"')}${[1,2,3].map(i=>pl(i).replace('class="ttv-h"',`class="ttv-h" style="grid-area:1/${i+2}"`)).join('')}<div class="ttv-h ttv-bk" style="grid-area:1/6">☕</div>${[5,6,7].map((i,k)=>pl(i).replace('class="ttv-h"',`class="ttv-h" style="grid-area:1/${k+7}"`)).join('')}${pl(8).replace('class="ttv-h"','class="ttv-h" style="grid-area:1/10"')}${g}</div>`}
 function ttPaperT(id,doc,full){const p=PP.find(x=>x.id==id),n=Object.keys(doc.cells||{}).length;
-return `<div class="ttpaper"><div class="tth"><div>ตารางสอนโรงเรียนบ้านผาเยอ &nbsp;ปีการศึกษา ${ttYear}</div><div>${esc(p?dn(p):'')}</div><div>จำนวน ${n} คาบ / สัปดาห์</div></div><div class="ttw">${ttTable(doc.cells||{},false,'t')}</div>${full&&doc.note?`<div class="ttn"><b>* หมายเหตุ</b> ${esc(doc.note)}</div>`:''}${full?ttSigs(`${ttNameLine(p)}<br>ครูผู้สอน`):''}</div>`}
+return `<div class="ttpaper"><div class="tth"><div>ตารางสอนโรงเรียนบ้านผาเยอ &nbsp;ปีการศึกษา ${ttYear}</div><div>${esc(p?dn(p):'')}</div><div>จำนวน ${n} คาบ / สัปดาห์</div></div><div class="ttvw">${ttVis(doc.cells||{},'t')}</div><div class="ttw tt-pr">${ttTable(doc.cells||{},false,'t')}</div>${full&&doc.note?`<div class="ttn"><b>* หมายเหตุ</b> ${esc(doc.note)}</div>`:''}${full?ttSigs(`${ttNameLine(p)}<br>ครูผู้สอน`):''}</div>`}
 function ttPaperC(ck,full){const cells=ttClassCells(ck),n=Object.keys(cells).length,hrs=[...(HR['m'+ttLv(ck)]||[]),...(HR['b'+ttLv(ck)]||[])].map(i=>PP.find(p=>p.id==i)).filter(Boolean);
-return `<div class="ttpaper"><div class="tth"><div>ตารางเรียนโรงเรียนบ้านผาเยอ &nbsp;ปีการศึกษา ${ttYear}</div><div>${esc(ttCL(ck))}</div><div>จำนวน ${n} คาบ / สัปดาห์</div></div><div class="ttw">${ttTable(cells,false,'c')}</div>${full?ttSigs(`${hrs.length?hrs.map(ttNameLine).join('<br>'):'(............................................)'}<br>ครูประจำชั้น`):''}</div>`}
+return `<div class="ttpaper"><div class="tth"><div>ตารางเรียนโรงเรียนบ้านผาเยอ &nbsp;ปีการศึกษา ${ttYear}</div><div>${esc(ttCL(ck))}</div><div>จำนวน ${n} คาบ / สัปดาห์</div></div><div class="ttvw">${ttVis(cells,'c')}</div><div class="ttw tt-pr">${ttTable(cells,false,'c')}</div>${full?ttSigs(`${hrs.length?hrs.map(ttNameLine).join('<br>'):'(............................................)'}<br>ครูประจำชั้น`):''}</div>`}
 function ttList(kind){const bar=ttBar();
 if(kind=='t'){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length).sort((a,b)=>ttNameOf(a.ref).localeCompare(ttNameOf(b.ref),'th'));
 if(!ds.length)return bar+P('ตารางสอนของครู',E('ยังไม่มีครูท่านใดกรอกตารางสอนในปีการศึกษา '+ttYear+' — ไปที่เมนู "บันทึกตารางสอน" เพื่อกรอก',160));
-return bar+`<div class="ttg">${ds.map(d=>{const p=PP.find(x=>x.id==d.ref);return `<div class="ttcard" data-r="tt:t-${d.ref}"><h4>ตารางสอน · ${esc(p?dn(p):'(ไม่พบครู)')}</h4><div class="ttmini">${ttTable(d.cells,false,'t')}</div><small>${Object.keys(d.cells).length} คาบ/สัปดาห์ · กดเพื่อดูเต็มหน้าจอ</small></div>`}).join('')}</div>`}
-return bar+`<div class="ttg">${ttClasses().map(c=>{const cells=ttClassCells(c);return `<div class="ttcard" data-r="tt:c-${c}"><h4>${esc(ttCL(c))}</h4><div class="ttmini">${ttTable(cells,false,'c')}</div><small>${Object.keys(cells).length} คาบ/สัปดาห์ · กดเพื่อดูเต็มหน้าจอ</small></div>`}).join('')}</div>`}
+return bar+`<div class="ttg">${ds.map(d=>{const p=PP.find(x=>x.id==d.ref);return `<div class="ttcard" data-r="tt:t-${d.ref}"><h4>ตารางสอน · ${esc(p?dn(p):'(ไม่พบครู)')}</h4><div class="ttmini">${ttVis(d.cells,'t',1)}</div><small>${Object.keys(d.cells).length} คาบ/สัปดาห์ · กดเพื่อดูเต็มหน้าจอ</small></div>`}).join('')}</div>`}
+return bar+`<div class="ttg">${ttClasses().map(c=>{const cells=ttClassCells(c);return `<div class="ttcard" data-r="tt:c-${c}"><h4>${esc(ttCL(c))}</h4><div class="ttmini">${ttVis(cells,'c',1)}</div><small>${Object.keys(cells).length} คาบ/สัปดาห์ · กดเพื่อดูเต็มหน้าจอ</small></div>`}).join('')}</div>`}
 function ttFull(id){const isT=id[0]=='t',key=id.slice(2);
 const back=`<div class="ttbar tt-np" style="margin:0 0 14px"><button class="btn o" data-r="tt:${isT?'teach':'class'}">‹ กลับ</button>${ttBar().replace('<div class="ttbar tt-np" style="margin:0 0 14px">','').replace(/<\/div>$/,'')}</div>`;
 if(isT){const doc=TT['t_'+key+'_'+ttYear];if(!doc)return back+P('ตารางสอน',E('ครูท่านนี้ยังไม่ได้กรอกตารางสอนในปีการศึกษา '+ttYear,140));
