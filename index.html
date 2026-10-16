@@ -4125,7 +4125,7 @@ ${l.length?`<div class="wrap"><table class="tb"><tr><th>#</th><th style="width:1
 </div></div>`};
 document.addEventListener('click',async e=>{const a=e.target.closest('[data-sd]');if(!a||!me)return;const idx=+a.dataset.sd,s=ST.find(x=>x.id==stEd);if(!s||!confirm('ลบไฟล์นี้?'))return;
 const d=s.docs[idx];try{await storage.ref(d.path).delete().catch(()=>{});const docs=s.docs.filter((_,i)=>i!=idx);await db.collection('students').doc(stEd).set({docs},{merge:true});s.docs=docs;$('#stdocs').innerHTML=docsBlock(s)}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}});
-V.stu=()=>PT('นักเรียน & ผู้ปกครอง','เลือกหัวข้อที่ต้องการ')+`<div class="grid g4"><div class="card dv" data-r="stud"><div class="bx" style="background:#2F6BFF">${ic('cap')}</div><h4>นักเรียน</h4><span>เปิดดู ›</span></div><div class="card dv" data-r="par"><div class="bx" style="background:#22B573">${ic('users')}</div><h4>ผู้ปกครอง</h4><span>เปิดดู ›</span></div></div>`;
+V.stu=()=>PT('นักเรียน & ผู้ปกครอง','เลือกหัวข้อที่ต้องการ')+`<div class="grid g4"><div class="card dv" style="--c:#F472B6" data-r="stud"><div class="bx" style="background:#F472B6">${ic('cap')}</div><h4>นักเรียน</h4><span>เปิดดูรายชื่อและข้อมูลนักเรียน ›</span></div><div class="card dv" style="--c:#2BB5A0" data-r="par"><div class="bx" style="background:#2BB5A0">${ic('users')}</div><h4>ผู้ปกครอง</h4><span>เปิดดูข้อมูลผู้ปกครอง ›</span></div></div>`;
 const ST_COL=['#F472B6','#2BB5A0','#5B8DEF','#F5B52E','#5CB85C','#A06CF0','#4C9BF0','#F59A3A'];
 function studPicker(){const M=ST.filter(x=>gd(x.tt)=='m').length,F=ST.filter(x=>gd(x.tt)=='f').length;
 const stat=(c,ico,l,v)=>`<div class="sts" style="--c:${c}"><span class="sts-i">${ic(ico)}</span><div><small>${l}</small><b>${v} คน</b></div><span class="sts-ar">›</span></div>`;
