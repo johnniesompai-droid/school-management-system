@@ -1011,6 +1011,9 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .ttv.mini{min-width:0;font-size:4.6px;gap:2px;grid-auto-rows:minmax(14px,auto);grid-template-columns:16px 8px repeat(3,minmax(0,1fr)) 6px repeat(3,minmax(0,1fr)) 8px;padding:0}.ttv.mini>*{border-radius:3px!important;padding:1px 2px!important;min-height:0!important;box-shadow:none!important;border-left-width:1.5px}.ttv.mini small,.ttv.mini .ttv-s span,.ttv.mini .ttv-lunch span{display:none}.ttv.mini b{font-size:4.6px!important}.ttv.mini .ttv-d b{font-size:4.6px!important}.ttv.mini .ttv-h{font-size:0!important}.ttv.mini .ttv-h b,.ttv.mini .ttv-h small{display:none}
 .ttvw{overflow-x:auto;margin-top:14px;padding:4px}.tt-pr{display:none}
 @media print{.ttvw{display:none!important}.tt-pr{display:block!important}}
+.pjd-bar{margin:0 0 14px;padding:12px 16px;border-radius:16px;background:linear-gradient(135deg,#FFF4E5,#FDE9F3);box-shadow:0 6px 16px -10px rgba(244,114,182,.6),inset 0 1px 0 #fff;border:1px solid #FBD9E8}
+.pjd-h{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.pjd-h b{color:#B4437A}.pjd-h span{font-weight:600;color:#1F2A44;flex:1;min-width:160px}
+.pjd-t{margin-top:8px;font-size:.85rem;color:#5B667E;display:flex;gap:6px;flex-wrap:wrap;align-items:center}.pjd-t em{font-style:normal;background:#fff;border-radius:999px;padding:2px 10px;box-shadow:0 2px 6px -3px rgba(0,0,0,.25);color:#B4437A}.pjd-t em a{cursor:pointer;margin-left:6px;color:#999}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -1101,6 +1104,11 @@ const pjMatch=p=>{if(PJ.st&&pjEff(p)!=PJ.st)return false;if(PJ.resp&&!pjResp(p).
 const pjSz=n=>n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
 const pjFiles=p=>{const fs=p.files||[];return `<div class="pj-fl"><span class="pj-fh">ไฟล์แนบ${fs.length?' ('+fs.length+')':''}</span>${fs.map((f,i)=>`<span class="pj-fc"><a href="${esc(f.url)}" target="_blank" rel="noopener" title="${esc(f.name)}">📎 ${esc(f.name)}</a><small>${pjSz(f.size||0)}</small><a class="pj-x" data-pjfd="${p.id}:${i}" title="ลบไฟล์">✕</a></span>`).join('')}<label class="btn o pj-up">+ แนบไฟล์โครงการ/กิจกรรม<input type="file" multiple hidden accept="${ACCEPT}" data-pjup="${p.id}"></label></div>`};
 const pjSteps=stc=>{const i=STAT.findIndex(x=>x[0]==stc);const ix=i<0?0:i;return `<div class="pj-sp4" title="สถานะ: ${esc(STAT[ix][1])}">${STAT.map((x,k)=>{const c=k<ix||(k==ix&&ix==3)?'ok':(k==ix?(ix==0?'cur0':'cur'):'');return `<div class="pj-s4 ${c}${k<=ix&&ix>0?' ln':''}"><i>${c=='ok'?'✓':(c=='cur'?'✓':k+1)}</i><span>${esc(x[1])}</span></div>`}).join('')}</div>`};
+let CALPJ=null,CALBK='';
+function pjDay(id){const p=BP.find(x=>x.id==id);if(!p)return;CALPJ=id;CALBK=CUR;const f=EV.filter(e=>e.pj==id).map(e=>e.d).sort()[0];if(f){cy=+f.slice(0,4);cm=+f.slice(5,7)-1}go('cal')}
+function pjDayDone(){CALPJ=null;go(CALBK||'home')}
+function pjDayToggle(k){const x=EV.find(e=>e.pj==CALPJ&&e.d==k);if(x){EV=EV.filter(e=>e.id!=x.id);db.collection('events').doc(x.id).delete().catch(()=>{})}else{const p=BP.find(q=>q.id==CALPJ);if(!p)return;const r={id:uid(),d:k,t:p.name,pj:p.id};EV.push(r);db.collection('events').doc(r.id).set(r).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message))}$('#view').innerHTML=V.cal()}
+function pjDayBar(){const p=BP.find(x=>x.id==CALPJ);if(!p)return'';const ds=EV.filter(e=>e.pj==CALPJ).sort((a,b)=>a.d.localeCompare(b.d));return `<div class="pjd-bar"><div class="pjd-h"><b>ระบุวันดำเนินการ</b><span>${esc(p.name)}</span><button type="button" class="btn" onclick="pjDayDone()">เสร็จสิ้น ‹ กลับหน้าโครงการ</button></div><div class="pjd-t">คลิกที่วันในปฏิทินเพื่อเพิ่มวันดำเนินการ (คลิกซ้ำที่วันเดิมเพื่อยกเลิก) · วันที่เลือกไว้แล้ว: ${ds.length?ds.map(e=>`<em>${th(e.d)}<a onclick="pjDayToggle('${e.d}')" title="ลบ">✕</a></em>`).join(''):'<i>ยังไม่มี</i>'}</div></div>`}
 function pjRow(p,sub,kids,open){const can=canEditProjStatus(p),stc=pjEff(p),lock=pjAllDone(p),st=STAT.find(s=>s[0]==stc)||STAT[0],adm=canProj(),rs=pjResp(p),ks=kids||[];
 const sum=ks.reduce((a,k)=>a+(+k.budget||0),0),warn=ks.length&&sum&&sum!=(+p.budget||0),dt=can;
 const inner=`<div class="pj-l1">${sub?`<b class="pj-n">${esc(p.seq||'')}</b>`:''}<span class="pj-t">${esc(p.name)}</span><b class="pj-b">${sub?'':'งบประมาณ '}${pjMoney(p.budget)}${+p.budget?' บาท':''}</b></div>${pjSteps(stc)}
@@ -1108,7 +1116,7 @@ const inner=`<div class="pj-l1">${sub?`<b class="pj-n">${esc(p.seq||'')}</b>`:''
 ${warn?`<div class="pj-w">ผลรวมกิจกรรมย่อย ${pjMoney(sum)} ไม่เท่ากับงบโครงการ ${pjMoney(p.budget)}</div>`:''}
 <div class="pj-l3">${can&&!lock?`<select class="pj-st s-${stc}" data-bpstat="${p.id}" title="สถานะการดำเนินงาน">${STAT.map(s=>`<option value="${s[0]}" ${stc==s[0]?'selected':''}>${s[1]}</option>`).join('')}</select>`:`<span class="pj-st s-${stc}"${lock?' title="สถานะตามกิจกรรมย่อย (ครบทุกกิจกรรมแล้ว)"':''}>${st[1]}${lock?' · ครบทุกกิจกรรมย่อย':''}</span>`}
 ${dt?`<label class="pj-dt">วันที่เบิกจ่ายเช็ค<span class="drd"><input class="in drd-t" readonly placeholder="กดเลือกวันที่" value="${p.checkDate?drDmy(p.checkDate):''}" onclick="drPickD(this)"><input type="date" class="drd-i" tabindex="-1" data-bpcheck="${p.id}" value="${p.checkDate||''}"></span>${p.checkDate?`<a class="pj-x" data-bpclr="${p.id}" title="ล้างวันที่">✕</a>`:''}</label>`:(p.checkDate?`<span class="pj-tg">เบิกเช็ค ${th(p.checkDate)}</span>`:'')}
-<span class="pj-sp"></span><button type="button" class="btn" data-pjm="${p.id}">บันทึกข้อความขอดำเนินการ</button><button type="button" class="btn" data-pjs="${p.id}">บันทึกข้อความสรุปโครงการ</button><button type="button" class="btn" data-pjb="${p.id}">จัดซื้อ/จัดจ้าง</button>${adm?`<button type="button" class="btn o" data-pje="${p.id}">แก้ไข</button><button type="button" class="btn r" data-bpd="${p.id}">ลบ</button>`:''}</div>${pjFiles(p)}`;return sub?`<div class="pj-r pj-sub">${inner}</div>`:inner}
+<span class="pj-sp"></span><button type="button" class="btn" data-pjm="${p.id}">บันทึกข้อความขอดำเนินการ</button><button type="button" class="btn" data-pjs="${p.id}">บันทึกข้อความสรุปโครงการ</button><button type="button" class="btn" data-pjb="${p.id}">จัดซื้อ/จัดจ้าง</button><button type="button" class="btn" data-pjd="${p.id}">ระบุวันดำเนินการ</button>${adm?`<button type="button" class="btn o" data-pje="${p.id}">แก้ไข</button><button type="button" class="btn r" data-bpd="${p.id}">ลบ</button>`:''}</div>${pjFiles(p)}`;return sub?`<div class="pj-r pj-sub">${inner}</div>`:inner}
 function pjCard(p,ks,fil){const adm=canProj();return `<div class="pj-cd"><div class="pj-tb"><b>${esc(p.seq||'')}</b></div><div class="pj-bd">${pjRow(p,false,ks)}<div class="pj-sh">กิจกรรมย่อย (${ks.length})</div><div class="pj-sb">${ks.length?ks.map(c=>pjRow(c,true)).join(''):`<div class="pj-em">${fil?'ไม่มีกิจกรรมย่อยที่ตรงกับตัวกรอง':'ไม่มีกิจกรรมย่อย'}</div>`}${adm?`<button type="button" class="btn o pj-ad" data-pjadd="${p.id}">+ เพิ่มกิจกรรมย่อย</button>`:''}</div></div></div>`}
 function pjChart(fy){const tops=BP.filter(p=>(fy=='all'||(p.fy||'')==fy)&&!p.parent),dm={};tops.forEach(p=>{const k=pjDept(p);dm[k]=(dm[k]||0)+(+p.budget||0)});
 const rows=PJ_ORD.filter(k=>dm[k]>0).map(k=>({k,v:dm[k]})),tot=rows.reduce((a,x)=>a+x.v,0);if(!tot)return'';
@@ -1205,7 +1213,7 @@ document.addEventListener('click',async e=>{const t=e.target;let a;
 if(a=t.closest('button[data-pjx]')){const k=a.dataset.pjx;PJX.has(k)?PJX.delete(k):PJX.add(k);render();return}
 if(a=t.closest('[data-pjg]')){const k=a.dataset.pjg;PJG.has(k)?PJG.delete(k):PJG.add(k);render();return}
 if(a=t.closest('[data-pjfd]')){const[id,ix]=a.dataset.pjfd.split(':'),p=BP.find(x=>x.id==id),f=p&&(p.files||[])[+ix];if(!f||!confirm('ลบไฟล์ "'+f.name+'" ?'))return;try{await storage.ref(f.path).delete().catch(()=>{});const nf=p.files.filter((_,i)=>i!=+ix);await db.collection('budgetprojects').doc(id).set({files:nf},{merge:true});p.files=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}return}
-if(a=t.closest('[data-pjm]')){pjMemo(a.dataset.pjm);return}if(a=t.closest('[data-pjs]')){pjSum(a.dataset.pjs);return}if(a=t.closest('[data-pjb]')){pjBuy(a.dataset.pjb);return}
+if(a=t.closest('[data-pjd]')){pjDay(a.dataset.pjd);return}if(a=t.closest('[data-pjm]')){pjMemo(a.dataset.pjm);return}if(a=t.closest('[data-pjs]')){pjSum(a.dataset.pjs);return}if(a=t.closest('[data-pjb]')){pjBuy(a.dataset.pjb);return}
 if(a=t.closest('[data-bpclr]')){const id=a.dataset.bpclr;try{await db.collection('budgetprojects').doc(id).set({checkDate:''},{merge:true});pjEv(id,'')}catch(err){alert('บันทึกไม่สำเร็จ: '+err.message)}return}
 if(t.closest('[data-pjshow]')){if(PJ.show||PJF.id){PJ.show=false;PJF.id='';PJF.resp=[];PJF.pre=''}else PJ.show=true;render();return}
 if(a=t.closest('[data-pjadd]')){PJ.show=true;PJF.id='';PJF.resp=[];PJF.pre=a.dataset.pjadd;render();const f=$('#bp_name');if(f){f.scrollIntoView({block:'center'});f.focus()}return}
@@ -3427,7 +3435,7 @@ default:{const m=M(k);return m?[[k,m]]:[]}}}
 function bcRender(k,s){const v=$('#view');if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;
 const h=`<nav class="bc" aria-label="เส้นทางนำทาง"><a data-r="home" class="bc-h" title="หน้าหลัก">${ic('home')}</a>${t.map((c,i)=>`<i class="bc-s">›</i>${i==t.length-1?`<b>${esc(c[1])}</b>`:`<a data-r="${c[0]}">${esc(c[1])}</a>`}`).join('')}</nav>`;
 v.insertAdjacentHTML('afterbegin',h)}
-function go(r){const[k]=r.split(':');if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
+function go(r){const[k]=r.split(':');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
 CUR=r;render();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving'||k=='att'||k=='hw')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
 const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd'||k=='hw')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
@@ -4377,7 +4385,7 @@ const lunch=now.min>=ttPMin(4)[0]&&now.min<ttPMin(4)[1];
 if(nxt)return{k:'free',rows,h:`<i>${lunch?'พักกลางวัน':'คาบว่าง'}</i><b>${lunch?'ตอนนี้เป็นเวลาพักกลางวัน':'ตอนนี้ไม่มีคาบสอน'}</b><span>คาบถัดไป: ${nm2(nxt)} · คาบ ${nxt.p} เริ่ม ${ttHM(nxt.st)} น. · อีก ${ttDur(nxt.st-now.min)}</span>`};
 return{k:'end',rows,h:`<i>เสร็จสิ้น</i><b>สอนครบทุกคาบของวันนี้แล้ว</b><span>ช่วงที่เหลือเป็นคาบว่าง ขอบคุณที่ตั้งใจสอนนะ</span>`}}
 function ttListHtml(st){const now=ttNowTH(),rows=(st&&st.rows)||[];if(!rows.length)return '';
-return `<div class="tdy-l">${rows.map(r=>{const k=st.cur&&r===st.cur?'now':now.min>=r.en?'past':'fut';return `<div class="tdy-r ${k}"><em>คาบ ${r.p}</em><span>${ttHM(r.st)}-${ttHM(r.en)}</span><b>${esc(r.c.s)}</b><small>${r.c.c?esc(ttShort(r.c.c)):''}</small><u>${k=='now'?'กำลังสอน':k=='past'?'ผ่านไปแล้ว':'ยังไม่ถึง'}</u></div>`}).join('')}</div>`}
+return `<div class="tdy-l">${rows.map(r=>{const k=st.cur&&r===st.cur?'now':now.min>=r.en?'past':'fut';return `<div class="tdy-r ${k}"><em>คาบ ${r.p}</em><span>${ttHM(r.st)}-${ttHM(r.en)}</span><b>${esc(r.c.s)}</b><small>${r.c.c?esc(ttShort(r.c.c)):''}</small></div>`}).join('')}</div>`}
 function ttTodayHtml(){if(!me)return '';if(!window.__hb)ttGreetPick();const st=ttStatus();
 return `<div class="hb"><div class="hb-l"><div class="hb-pill">${ic('cal')}<span id="hb_time">${ttThDate()}</span></div><div class="hb-msg" id="hb_msg"><h2>${esc(window.__hb.t)}</h2><p>${esc(window.__hb.u)}</p></div></div>
 <div class="hb-st st-${st.k}" id="hb_st">${st.h}</div></div><div id="hb_list">${ttListHtml(st)}</div>`}
@@ -4914,9 +4922,9 @@ ${P('คาบที่ชนกัน',cf.length?cf.map(k=>{const[c,lv]=k.split
 <div style="height:16px"></div>${P('สถานะการกรอกตารางสอน',`<div class="wrap"><table class="tb"><tr><th>ลำดับ</th><th style="width:100%">ชื่อ-สกุล</th><th>ตำแหน่ง</th><th>สถานะ</th><th>จัดการ</th></tr>${ppl.map((p,i)=>{const d=done[p.id];return `<tr><td>${i+1}</td><td>${esc(dn(p))}</td><td>${esc(p.po||'-')}</td><td>${d?`<span class="dz-badge" style="background:#22B5731a;color:#14804A">กรอกแล้ว ${Object.keys(d.cells).length} คาบ</span>`:`<span class="dz-badge" style="background:#F5A5241f;color:#B26B00">ยังไม่ได้กรอก</span>`}</td><td>${d?`<a class="btn o" data-r="tt:t-${p.id}">ดูตาราง</a>`:'-'}</td></tr>`}).join('')}</table></div>`)}`}
 
 V.cal=s=>{if(s){const a=s.split('-');cy=+a[0];cm=+a[1]-1}
-return PT('ปฏิทินกิจกรรม','คลิกที่วันเพื่อดูหรือเพิ่มกิจกรรม')+calBoard(cy,cm,'page')};
+return PT('ปฏิทินกิจกรรม',CALPJ?'เลือกวันที่จะดำเนินการโครงการ/กิจกรรม':'คลิกที่วันเพื่อดูหรือเพิ่มกิจกรรม')+(CALPJ?pjDayBar():'')+calBoard(cy,cm,'page')};
 function addEv(){const t=$('#et').value.trim();if(!t||!sel)return;const rec={id:uid(),d:sel,t};EV.push(rec);db.collection('events').doc(rec.id).set(rec).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message));$('#view').innerHTML=V.cal();$('#et').focus()}
-document.addEventListener('click',e=>{if(!me)return;const a=e.target.closest('[data-c]');if(a){sel=a.dataset.c;$('#view').innerHTML=V.cal();return}
+document.addEventListener('click',e=>{if(!me)return;const a=e.target.closest('[data-c]');if(a){if(CALPJ){pjDayToggle(a.dataset.c);return}sel=a.dataset.c;$('#view').innerHTML=V.cal();return}
 const b=e.target.closest('[data-ev]');if(b&&confirm('ลบกิจกรรมนี้?')){EV=EV.filter(x=>x.id!=b.dataset.ev);db.collection('events').doc(b.dataset.ev).delete().catch(()=>{});$('#view').innerHTML=V.cal()}});
 let pim='';
 function setImg(v){pim=v;const p=$('#pprev');v?p.src=v:p.removeAttribute('src');p.classList.toggle('hid',!v);$('#prm').classList.toggle('hid',!v)}
