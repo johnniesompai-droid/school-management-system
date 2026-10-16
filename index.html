@@ -1059,7 +1059,7 @@ const inner=`<div class="pj-l1">${sub?`<b class="pj-n">${esc(p.seq||'')}</b>`:''
 ${warn?`<div class="pj-w">ผลรวมกิจกรรมย่อย ${pjMoney(sum)} ไม่เท่ากับงบโครงการ ${pjMoney(p.budget)}</div>`:''}
 <div class="pj-l3">${can&&!lock?`<select class="pj-st s-${stc}" data-bpstat="${p.id}" title="สถานะการดำเนินงาน">${STAT.map(s=>`<option value="${s[0]}" ${stc==s[0]?'selected':''}>${s[1]}</option>`).join('')}</select>`:`<span class="pj-st s-${stc}"${lock?' title="สถานะตามกิจกรรมย่อย (ครบทุกกิจกรรมแล้ว)"':''}>${st[1]}${lock?' · ครบทุกกิจกรรมย่อย':''}</span>`}
 ${dt?`<label class="pj-dt">วันที่เบิกจ่ายเช็ค<span class="drd"><input class="in drd-t" readonly placeholder="กดเลือกวันที่" value="${p.checkDate?drDmy(p.checkDate):''}" onclick="drPickD(this)"><input type="date" class="drd-i" tabindex="-1" data-bpcheck="${p.id}" value="${p.checkDate||''}"></span>${p.checkDate?`<a class="pj-x" data-bpclr="${p.id}" title="ล้างวันที่">✕</a>`:''}</label>`:(p.checkDate?`<span class="pj-tg">เบิกเช็ค ${th(p.checkDate)}</span>`:'')}
-<span class="pj-sp"></span><button type="button" class="btn" data-pjm="${p.id}">บันทึกข้อความขอดำเนินการ</button>${adm?`<button type="button" class="btn o" data-pje="${p.id}">แก้ไข</button><button type="button" class="btn r" data-bpd="${p.id}">ลบ</button>`:''}</div>${pjFiles(p)}`;return sub?`<div class="pj-r pj-sub">${inner}</div>`:inner}
+<span class="pj-sp"></span><button type="button" class="btn" data-pjm="${p.id}">บันทึกข้อความขอดำเนินการ</button><button type="button" class="btn" data-pjs="${p.id}">บันทึกข้อความสรุปโครงการ</button>${adm?`<button type="button" class="btn o" data-pje="${p.id}">แก้ไข</button><button type="button" class="btn r" data-bpd="${p.id}">ลบ</button>`:''}</div>${pjFiles(p)}`;return sub?`<div class="pj-r pj-sub">${inner}</div>`:inner}
 function pjCard(p,ks,fil){const adm=canProj();return `<div class="pj-cd"><div class="pj-tb"><b>${esc(p.seq||'')}</b></div><div class="pj-bd">${pjRow(p,false,ks)}<div class="pj-sh">กิจกรรมย่อย (${ks.length})</div><div class="pj-sb">${ks.length?ks.map(c=>pjRow(c,true)).join(''):`<div class="pj-em">${fil?'ไม่มีกิจกรรมย่อยที่ตรงกับตัวกรอง':'ไม่มีกิจกรรมย่อย'}</div>`}${adm?`<button type="button" class="btn o pj-ad" data-pjadd="${p.id}">+ เพิ่มกิจกรรมย่อย</button>`:''}</div></div></div>`}
 function pjChart(fy){const tops=BP.filter(p=>(fy=='all'||(p.fy||'')==fy)&&!p.parent),dm={};tops.forEach(p=>{const k=pjDept(p);dm[k]=(dm[k]||0)+(+p.budget||0)});
 const rows=PJ_ORD.filter(k=>dm[k]>0).map(k=>({k,v:dm[k]})),tot=rows.reduce((a,x)=>a+x.v,0);if(!tot)return'';
@@ -1134,6 +1134,10 @@ function pjMemo(id){const p=BP.find(x=>x.id==id);if(!p||!me)return;const par=p.p
 d.proj=(par||p).name.replace(/^โครงการ\s*/,'');d.act=par?p.name.replace(/^กิจกรรม\s*/,''):'';d.budget=+p.budget?String(p.budget):'';if(p.fy)d.fy=p.fy;d.unit=dv?dv[1].replace(/^กลุ่ม/,''):'';
 if(r){d.signer='('+r.name+')';d.rpos=pr?posDef(pr):''}
 d.pjId=p.id;d.pjKey=d.proj+'|'+d.act;DRS.act=d;drOpen('act','doc')}
+function pjSum(id){const p=BP.find(x=>x.id==id);if(!p||!me)return;const par=p.parent?BP.find(x=>x.id==p.parent):null,d=sumDef(),r=pjResp(p)[0]||(par?pjResp(par)[0]:null),pr=r&&r.sid?PP.find(x=>x.id==r.sid):null,dv=PROJDEPT.find(x=>x[0]==pjDept(par||p));
+d.proj=(par||p).name.replace(/^โครงการ\s*/,'');d.act=par?p.name.replace(/^กิจกรรม\s*/,''):'';d.budget=+p.budget?String(p.budget):'';if(p.fy)d.fy=String(p.fy);d.unit=dv?dv[1].replace(/^กลุ่ม/,''):'';d.dChk=p.checkDate||'';
+if(r){d.signer='('+r.name+')';d.rpos=pr?posDef(pr):''}
+d.subject=sumSub(d);d.sa=true;DRS.sum=d;drOpen('sum','doc')}
 async function pjUpload(id,list){const p=BP.find(x=>x.id==id);if(!p||!list.length)return;const lb=document.querySelector('[data-pjup="'+id+'"]'),lab=lb&&lb.parentNode,old=lab?lab.firstChild.textContent:'';let files=[...(p.files||[])],ok=0;
 for(const f of list){if(!allowedFile(f)){alert('ไฟล์ "'+f.name+'" ชนิดไม่รองรับ (PDF, Word, Excel, รูปภาพ)');continue}if(f.size>10*1024*1024){alert('ไฟล์ "'+f.name+'" ใหญ่เกิน 10MB');continue}
 if(lab)lab.firstChild.textContent='กำลังอัปโหลด '+f.name+'...';
@@ -1152,7 +1156,7 @@ document.addEventListener('click',async e=>{const t=e.target;let a;
 if(a=t.closest('button[data-pjx]')){const k=a.dataset.pjx;PJX.has(k)?PJX.delete(k):PJX.add(k);render();return}
 if(a=t.closest('[data-pjg]')){const k=a.dataset.pjg;PJG.has(k)?PJG.delete(k):PJG.add(k);render();return}
 if(a=t.closest('[data-pjfd]')){const[id,ix]=a.dataset.pjfd.split(':'),p=BP.find(x=>x.id==id),f=p&&(p.files||[])[+ix];if(!f||!confirm('ลบไฟล์ "'+f.name+'" ?'))return;try{await storage.ref(f.path).delete().catch(()=>{});const nf=p.files.filter((_,i)=>i!=+ix);await db.collection('budgetprojects').doc(id).set({files:nf},{merge:true});p.files=nf;render()}catch(err){alert('ลบไม่สำเร็จ: '+err.message)}return}
-if(a=t.closest('[data-pjm]')){pjMemo(a.dataset.pjm);return}
+if(a=t.closest('[data-pjm]')){pjMemo(a.dataset.pjm);return}if(a=t.closest('[data-pjs]')){pjSum(a.dataset.pjs);return}
 if(a=t.closest('[data-bpclr]')){const id=a.dataset.bpclr;try{await db.collection('budgetprojects').doc(id).set({checkDate:''},{merge:true});pjEv(id,'')}catch(err){alert('บันทึกไม่สำเร็จ: '+err.message)}return}
 if(t.closest('[data-pjshow]')){if(PJ.show||PJF.id){PJ.show=false;PJF.id='';PJF.resp=[];PJF.pre=''}else PJ.show=true;render();return}
 if(a=t.closest('[data-pjadd]')){PJ.show=true;PJF.id='';PJF.resp=[];PJF.pre=a.dataset.pjadd;render();const f=$('#bp_name');if(f){f.scrollIntoView({block:'center'});f.focus()}return}
@@ -1369,7 +1373,7 @@ function drSigOpt(){DR.sigT=document.getElementById('dr_sgt').checked;drSigProc(
 function drSigSize(v){DR.sigH=+v;const o=document.getElementById('dr_sgv');if(o)o.textContent=v+' มม.';drSigSave();drPrev()}
 function drSigDel(){DR.sigO='';DR.sig='';drSigSave();drFill()}
 function drSigField(){return `<h4>ลายเซ็น</h4><div class="drm-sg">${DR.sigO?`<div class="drm-sgp"><img src="${DR.sig||DR.sigO}" alt=""></div><label class="drm-ck"><input type="checkbox" id="dr_sgt" ${DR.sigT?'checked':''} onchange="drSigOpt()"> ลบพื้นหลังสีขาวอัตโนมัติ</label><label class="lb">ขนาดลายเซ็น (ความสูง) <b id="dr_sgv">${DR.sigH} มม.</b><input type="range" min="8" max="22" step="1" value="${DR.sigH}" oninput="drSigSize(this.value)" style="width:100%"></label><div style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn o" style="cursor:pointer">เปลี่ยนรูป<input type="file" accept="image/*" hidden onchange="drSigLoad(this.files[0])"></label><button class="btn o" type="button" onclick="drSigDel()">ลบลายเซ็น</button></div>`:`<label class="drm-up"><input type="file" accept="image/*" hidden onchange="drSigLoad(this.files[0])"><b>อัปโหลดรูปลายเซ็น</b><small>PNG / JPG · ลายเซ็นจะวางเหนือชื่อผู้ลงนามให้อัตโนมัติ</small></label>`}<div class="drm-hint">รูปลายเซ็นจะถูกจำไว้ในเครื่องนี้เท่านั้น ไม่ได้อัปโหลดขึ้นระบบ</div></div>`}
-function drDocHtml(d){if(d.kind=='net')return netDocHtml(d);if(d.kind=='pack')return packDocHtml(d);if(d.kind=='perm')return permDocHtml(d);if(d.kind=='leave')return levDocHtml(d);if(d.kind=='rep')return repDocHtml(d);if(d.kind=='trip')return tripDocHtml(d);if(d.kind=='loan')return loanDocHtml(d);if(d.kind=='act')return actDocHtml(d);if(d.kind=='order')return ordDocHtml(d);if(d.kind=='memo')return memoDocHtml(d);const T=t=>esc(drTh(d,t)),has=t=>String(t||'').trim();
+function drDocHtml(d){if(d.kind=='net')return netDocHtml(d);if(d.kind=='pack')return packDocHtml(d);if(d.kind=='perm')return permDocHtml(d);if(d.kind=='leave')return levDocHtml(d);if(d.kind=='rep')return repDocHtml(d);if(d.kind=='trip')return tripDocHtml(d);if(d.kind=='loan')return loanDocHtml(d);if(d.kind=='act')return actDocHtml(d);if(d.kind=='sum')return sumDocHtml(d);if(d.kind=='order')return ordDocHtml(d);if(d.kind=='memo')return memoDocHtml(d);const T=t=>esc(drTh(d,t)),has=t=>String(t||'').trim();
 const ecl=drEncs(d),encl=ecl.map((e,i)=>`<div class="d-en${i?' d-en2':''}"><span class="d-ev${ecl.length>1?' n':''}"><span class="d-lb2">${i?'':'สิ่งที่ส่งมาด้วย'}</span>${ecl.length>1?`<span class="d-nn">${T((i+1)+'.')}</span>`:''}${T(e.t)}</span>${has(e.n)?`<span>จำนวน ${T(e.n)} ${T(e.u)}</span>`:''}</div>`).join('');
 const ps=[d.p1,...(d.lst||[]),d.p2,d.close].filter(has);
 return `<div class="dr-a4"><img class="d-g" src="${DR_GARUDA}" alt="">
@@ -1397,15 +1401,15 @@ function drTelField(){const ps=PP.filter(p=>String(p.ph||'').trim()).sort((a,b)=
 return `<label class="lb">เลือกเบอร์โทรจากบุคลากร<select class="in" onchange="drPickTel(this.value)"><option value="">— เลือกครู —</option>${ps.map(p=>`<option value="${esc(p.id)}">${esc(dn(p))} · ${esc(DR_PH(p))}</option>`).join('')}</select></label><label class="lb">โทรศัพท์ (แก้ไขได้)<input class="in" id="dr_tel" value="${esc(DR.tel)}" oninput="DR.tel=this.value;drPrev()"></label>`}
 function drPickTel(id){const p=PP.find(x=>String(x.id)==String(id));if(!p)return;DR.tel='โทร. '+DR_PH(p);const i=document.getElementById('dr_tel');if(i)i.value=DR.tel;drPrev()}
 function drOpen(kind,src){DR_SRC=src=='doc'?'doc':'admin';if(DR_SRC=='admin'&&!canManageAdmin())return;if(DR_SRC=='doc'&&!me)return;drEnsureCss();kind=kind||'send';DR=DRS[kind]||(DRS[kind]=drNew(kind));DR.kind=kind;drClose();const l=drLast();
-const o=document.createElement('div');o.className='rgm';o.id='dr_m';o.innerHTML=`<div class="drm-b" role="dialog"><div class="drm-h"><h3>${({order:'ร่างหนังสือคำสั่ง',memo:'ร่างบันทึกข้อความ',act:'ร่างขออนุมัติดำเนินกิจกรรม/โครงการ',loan:'ร่างสัญญายืมเงิน',trip:'ร่างใบเบิกค่าเดินทางไปราชการ (แบบ ๘๗๐๘)',rep:'ร่างบันทึกข้อความรายงานผลการไปอบรม/ไปราชการ',leave:'ร่างบันทึกข้อความขออนุญาตไปราชการ',perm:'ร่างแบบขออนุญาตผู้ปกครองพานักเรียนไปนอกสถานศึกษา',pack:'ร่างพานักเรียนไปนอกสถานที่ (ส่งเขต)',net:'ร่างขอเบิกค่าเช่าอินเทอร์เน็ต'})[kind]||'ร่างหนังสือนำส่ง'}</h3>
+const o=document.createElement('div');o.className='rgm';o.id='dr_m';o.innerHTML=`<div class="drm-b" role="dialog"><div class="drm-h"><h3>${({order:'ร่างหนังสือคำสั่ง',memo:'ร่างบันทึกข้อความ',act:'ร่างขออนุมัติดำเนินกิจกรรม/โครงการ',sum:'ร่างบันทึกข้อความสรุปโครงการ',loan:'ร่างสัญญายืมเงิน',trip:'ร่างใบเบิกค่าเดินทางไปราชการ (แบบ ๘๗๐๘)',rep:'ร่างบันทึกข้อความรายงานผลการไปอบรม/ไปราชการ',leave:'ร่างบันทึกข้อความขออนุญาตไปราชการ',perm:'ร่างแบบขออนุญาตผู้ปกครองพานักเรียนไปนอกสถานศึกษา',pack:'ร่างพานักเรียนไปนอกสถานที่ (ส่งเขต)',net:'ร่างขอเบิกค่าเช่าอินเทอร์เน็ต'})[kind]||'ร่างหนังสือนำส่ง'}</h3>
 <label style="font-size:.8rem;display:inline-flex;align-items:center;gap:6px"><input type="checkbox" ${DR.arab?'checked':''} onchange="DR.arab=this.checked;drPrev()"> ใช้เลขอารบิก</label>
 <button class="btn o" type="button" onclick="drReset()">ค่าเริ่มต้น</button>
-${drRegOk()?`<button class="btn o" type="button" id="dr_br" onclick="drRegManual()" title="บันทึกเลขที่ วันที่ เรื่อง ลงทะเบียน">บันทึกเลขที่${({order:'คำสั่ง',memo:'บันทึกข้อความ',act:'บันทึกข้อความ',rep:'บันทึกข้อความ',leave:'บันทึกข้อความ',perm:'แบบขออนุญาตผู้ปกครอง'})[kind]||'นำส่ง'}</button>`:''}
+${drRegOk()?`<button class="btn o" type="button" id="dr_br" onclick="drRegManual()" title="บันทึกเลขที่ วันที่ เรื่อง ลงทะเบียน">บันทึกเลขที่${({order:'คำสั่ง',memo:'บันทึกข้อความ',act:'บันทึกข้อความ',sum:'บันทึกข้อความ',rep:'บันทึกข้อความ',leave:'บันทึกข้อความ',perm:'แบบขออนุญาตผู้ปกครอง'})[kind]||'นำส่ง'}</button>`:''}
 <div class="drm-m"><button class="btn o" type="button" id="dr_bs" onclick="drMenu('save')">${drPol().arc?'บันทึก':'ดาวน์โหลด'} ▾</button><div class="drm-menu" id="dr_ms"><button type="button" onclick="drSave('docx')">ไฟล์ Word (.docx)</button><button type="button" onclick="drSave('pdf')">ไฟล์ PDF (.pdf)</button></div></div>
 <button class="btn o" type="button" onclick="drPrint()">พิมพ์</button>
 ${drPol().send?`<div class="drm-m"><button class="btn" type="button" id="dr_bn" onclick="drMenu('send')">ส่ง ▾</button><div class="drm-menu" id="dr_mn"><button type="button" onclick="drSend('docx')">ส่งเป็นไฟล์ Word (.docx)</button><button type="button" onclick="drSend('pdf')">ส่งเป็นไฟล์ PDF (.pdf)</button></div></div>`:''}
 <button class="btn o" type="button" onclick="drClose()">ปิด</button></div>
-<div class="drm-bd"><div class="drm-f" id="dr_f">${kind=='order'?ordForm():kind=='memo'?memoForm():kind=='act'?actForm():kind=='loan'?loanForm():kind=='trip'?tripForm():kind=='rep'?repForm():kind=='leave'?levForm():kind=='perm'?permForm():kind=='pack'?packForm():kind=='net'?netForm():`<h4>หัวหนังสือ</h4>
+<div class="drm-bd"><div class="drm-f" id="dr_f">${kind=='order'?ordForm():kind=='memo'?memoForm():kind=='act'?actForm():kind=='sum'?sumForm():kind=='loan'?loanForm():kind=='trip'?tripForm():kind=='rep'?repForm():kind=='leave'?levForm():kind=='perm'?permForm():kind=='pack'?packForm():kind=='net'?netForm():`<h4>หัวหนังสือ</h4>
 ${drNoField()}${l?`<div class="drm-hint">ทะเบียนหนังสือนำส่งล่าสุด: <b>${esc(l.t)}</b>${l.n!=null?` · <a onclick="DR.no=DR_SCH.pre+${l.n+1};drFill()">ใช้เลข ${l.n+1}</a>`:''}</div>`:''}
 ${drField('name','ส่วนราชการเจ้าของหนังสือ','in')}<div class="drm-2">${drField('addr','ตำบล / อำเภอ','in')}${drField('prov','จังหวัด / รหัสไปรษณีย์','in')}</div>
 ${drField('date','วันที่ (กดเลือกจากปฏิทิน)','date')}
@@ -1429,9 +1433,9 @@ function drMenu(w){const a=document.getElementById('dr_ms'),b=document.getElemen
 document.addEventListener('click',e=>{if(!e.target.closest('.drm-m'))document.querySelectorAll('.drm-menu.on').forEach(m=>m.classList.remove('on'))});
 const DR_LIB={docx:'https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js',h2c:'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',pdf:'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js'};
 const drLoad=k=>new Promise((ok,no)=>{const chk={docx:()=>window.docx,h2c:()=>window.html2canvas,pdf:()=>window.jspdf};if(chk[k]())return ok();const sc=document.createElement('script');sc.src=DR_LIB[k];sc.onload=()=>chk[k]()?ok():no(new Error('โหลดไลบรารีไม่สำเร็จ'));sc.onerror=()=>no(new Error('โหลดไลบรารีไม่สำเร็จ ตรวจสอบอินเทอร์เน็ต'));document.head.appendChild(sc)});
-const drFname=ext=>{if(DR.kind=='net')return 'ชุดขอเบิกค่าเช่าอินเทอร์เน็ต.'+ext;if(DR.kind=='pack')return 'ชุดเอกสารพานักเรียนไปนอกสถานที่.'+ext;if(DR.kind=='trip')return 'ใบเบิกค่าเดินทางไปราชการ'+(String(DR.name||'').trim()?'-'+String(DR.name).trim().replace(/[\\/:*?"<>|\n\r]+/g,' '):'')+'.'+ext;if(DR.kind=='loan')return 'สัญญายืมเงิน'+(String(DR.bname||'').trim()?'-'+String(DR.bname).trim().replace(/[\\/:*?"<>|\n\r]+/g,' '):'')+'.'+ext;let t=String(DR.kind=='act'?'ขออนุมัติกิจกรรมตามโครงการ'+(DR.proj||''):DR.subject||'').replace(/[\\/:*?"<>|\n\r]+/g,' ').replace(/\s+/g,' ').trim().replace(/^เรื่อง\s*/,'').slice(0,60);return (DR.kind=='send'?'หนังสือนำส่ง':drKL())+(t?'เรื่อง'+t:'')+'.'+ext};
+const drFname=ext=>{if(DR.kind=='net')return 'ชุดขอเบิกค่าเช่าอินเทอร์เน็ต.'+ext;if(DR.kind=='pack')return 'ชุดเอกสารพานักเรียนไปนอกสถานที่.'+ext;if(DR.kind=='trip')return 'ใบเบิกค่าเดินทางไปราชการ'+(String(DR.name||'').trim()?'-'+String(DR.name).trim().replace(/[\\/:*?"<>|\n\r]+/g,' '):'')+'.'+ext;if(DR.kind=='loan')return 'สัญญายืมเงิน'+(String(DR.bname||'').trim()?'-'+String(DR.bname).trim().replace(/[\\/:*?"<>|\n\r]+/g,' '):'')+'.'+ext;let t=String(DR.kind=='act'?'ขออนุมัติกิจกรรมตามโครงการ'+(DR.proj||''):DR.kind=='sum'?'รายงานผลโครงการ'+(DR.proj||''):DR.subject||'').replace(/[\\/:*?"<>|\n\r]+/g,' ').replace(/\s+/g,' ').trim().replace(/^เรื่อง\s*/,'').slice(0,60);return (DR.kind=='send'?'หนังสือนำส่ง':drKL())+(t?'เรื่อง'+t:'')+'.'+ext};
 const drMsg=t=>{const m=document.getElementById('dr_msg');if(m)m.textContent=t||''};
-async function drDocx(){if(DR.kind=='perm')return permDocx();if(DR.kind=='leave')return levDocx();if(DR.kind=='rep')return repDocx();if(DR.kind=='trip')return tripDocx();if(DR.kind=='loan')return loanDocx();if(DR.kind=='act')return actDocx();if(DR.kind=='order')return ordDocx();if(DR.kind=='memo')return memoDocx();await drLoad('docx');const D=window.docx,d=DR,T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunIT๙',font={ascii:F,hAnsi:F,cs:F,eastAsia:F};
+async function drDocx(){if(DR.kind=='perm')return permDocx();if(DR.kind=='leave')return levDocx();if(DR.kind=='rep')return repDocx();if(DR.kind=='trip')return tripDocx();if(DR.kind=='loan')return loanDocx();if(DR.kind=='act')return actDocx();if(DR.kind=='sum')return sumDocx();if(DR.kind=='order')return ordDocx();if(DR.kind=='memo')return memoDocx();await drLoad('docx');const D=window.docx,d=DR,T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunIT๙',font={ascii:F,hAnsi:F,cs:F,eastAsia:F};
 const R=(t,o)=>new D.TextRun({text:T(t),font,size:32,sizeComplexScript:32,...(o||{})}),has=t=>String(t||'').trim();
 const P=(ch,o)=>new D.Paragraph({children:ch,...(o||{})});
 const lines=t=>String(t).split('\n');
@@ -1511,7 +1515,7 @@ let drSwept=0;
 async function drSweep(){if(!me||!canManageAdmin()||Date.now()-drSwept<60000)return;const now=new Date().toISOString(),files=AD.forms||[],old=files.filter(f=>f.draft&&f.expiresAt&&f.expiresAt<now);if(!old.length)return;drSwept=Date.now();
 try{for(const f of old){try{await storage.ref(f.path).delete()}catch(e){}}
 await db.collection('admindocs').doc('forms').set({files:files.filter(f=>!old.includes(f))},{merge:true})}catch(e){}}
-async function drAutoReg(){pjMark(DR);const d=DR;if(DR_SRC!='doc'||!me)return;if(d.kind=='act')return actAutoReg();if(d.kind!='memo'&&d.kind!='rep'&&d.kind!='leave')return;
+async function drAutoReg(){pjMark(DR);const d=DR;if(DR_SRC!='doc'||!me)return;if(d.kind=='act')return actAutoReg();if(d.kind!='memo'&&d.kind!='rep'&&d.kind!='leave'&&d.kind!='sum')return;
 if(!/^\d+$/.test(drNum(d.noN))||!/^\d{4}$/.test(drNum(d.noY))||!d.date||!String(d.subject||'').trim())return;
 if(!d.rgId&&ordDup())return drFlash('เลขที่ '+ordNumStr(d)+' ซ้ำกับทะเบียน จึงไม่บันทึกเลขอัตโนมัติ กรุณาตรวจเลขที่','#F5A524');
 await drRegWrite(true)}
@@ -1626,7 +1630,7 @@ function ordMemMv(ci,mi,k){const a=DR.coms[ci].mem,j=mi+k;if(j<0||j>=a.length)re
 function ordPick(ci,mi,id){const m=DR.coms[ci].mem[mi],p=PP.find(x=>String(x.id)==String(id));if(!p){m.pid='';return}m.pid=p.id;m.name=dn(p);m.pos=p.po||'';drFill()}
 function ordMem(ci,mi,k,v){const m=DR.coms[ci].mem[mi];m[k]=v;if(k=='name')m.pid='';ordRoles();drPrev()}
 /* ===== เลขที่คำสั่ง / ทะเบียน ===== */
-const ordNumStr=d=>d.kind=='memo'||d.kind=='act'||d.kind=='rep'||d.kind=='leave'?drAr(d.noN)+'/'+drAr(d.noY):drNum(d.noN)+'/'+drNum(d.noY);
+const ordNumStr=d=>d.kind=='memo'||d.kind=='act'||d.kind=='sum'||d.kind=='rep'||d.kind=='leave'?drAr(d.noN)+'/'+drAr(d.noY):drNum(d.noN)+'/'+drNum(d.noY);
 const ordParse=s=>{const m=String(s||'').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c)).match(/(\d+)\s*\/\s*(\d{4})\s*$/);return m?{n:String(parseInt(m[1],10)),y:m[2]}:null};
 function ordDup(){const n=drNum(DR.noN),y=drNum(DR.noY);if(!/^\d+$/.test(n)||!/^\d{4}$/.test(y))return null;return RG.find(r=>{if(r.type!=drRegType(DR)||r.id==DR.rgId)return false;const p=ordParse(rgFmt(r));return p&&p.n==n&&p.y==y})||null}
 function ordRegManual(){if(!drRegOk())return;const d=DR;
@@ -1673,9 +1677,9 @@ return await D.Packer.toBlob(doc)}
 let DR_SRC='admin';
 const DR_POL={admin:{send:true,arc:true},doc:{send:false,arc:false}};
 const drPol=()=>DR_POL[DR_SRC]||DR_POL.doc;
-const DRAFT_DOCS=[{k:'memo',t:'ร่างบันทึกข้อความ',s:'หนังสือภายใน',d:'ดาวน์โหลด · พิมพ์',ic:'pen',c:'hs5'},{k:'act',t:'ขออนุมัติดำเนินกิจกรรม/โครงการ',s:'บันทึกข้อความ 2 ฉบับ',d:'ดาวน์โหลด · พิมพ์',ic:'doc',c:'hs6'},{k:'loan',t:'ร่างสัญญายืมเงิน',s:'แบบฟอร์มสัญญายืมเงิน',d:'ดาวน์โหลด · พิมพ์',ic:'coin',c:'hs7'},{k:'trip',t:'ร่างใบเบิกค่าเดินทางไปราชการ',s:'แบบ ๘๗๐๘',d:'ดาวน์โหลด · พิมพ์',ic:'cal',c:'hs8'},{k:'rep',t:'รายงานผลการไปอบรม/ไปราชการ',s:'บันทึกข้อความ + หน้ารูปถ่าย',d:'ดาวน์โหลด · พิมพ์',ic:'cap',c:'hs9'},{k:'leave',t:'ร่างขออนุญาตไปราชการ',s:'บันทึกข้อความ 1 หน้า',d:'ดาวน์โหลด · พิมพ์',ic:'doc',c:'hs10'},{k:'perm',t:'ร่างขออนุญาตผู้ปกครอง',s:'พานักเรียนไปนอกสถานศึกษา · 1 หน้า/คน',d:'ดาวน์โหลด · พิมพ์',ic:'users',c:'hs11'},{k:'pack',t:'ร่างพานักเรียนไปนอกสถานที่ (ส่งเขต)',s:'ชุดเอกสาร · กรอกครั้งเดียว ออกหลายฉบับ',d:'PDF รวม · Word ทีละฉบับ',ic:'grid',c:'hs12'},{k:'net',t:'ร่างขอเบิกค่าเช่าอินเทอร์เน็ต',s:'หนังสือนำส่ง + บันทึกข้อความ · กรอกครั้งเดียว',d:'PDF รวม · Word ทีละฉบับ',ic:'cloudup',c:'hs13'}];
-const drNew=k=>k=='net'?netDef():k=='pack'?pkDef():k=='perm'?permDef():k=='leave'?levDef():k=='rep'?repDef():k=='order'?ordDef():k=='memo'?memoDef():k=='act'?actDef():k=='loan'?loanDef():k=='trip'?tripDef():drDef();
-const drRegType=d=>d&&d.kind=='order'?'order':d&&(d.kind=='memo'||d.kind=='act'||d.kind=='rep'||d.kind=='leave')?'letter':'send';
+const DRAFT_DOCS=[{k:'memo',t:'ร่างบันทึกข้อความ',s:'หนังสือภายใน',d:'ดาวน์โหลด · พิมพ์',ic:'pen',c:'hs5'},{k:'act',t:'ขออนุมัติดำเนินกิจกรรม/โครงการ',s:'บันทึกข้อความ 2 ฉบับ',d:'ดาวน์โหลด · พิมพ์',ic:'doc',c:'hs6'},{k:'sum',t:'บันทึกข้อความสรุปโครงการ',s:'รายงานผลการดำเนินโครงการ · 1 ฉบับ',d:'ดาวน์โหลด · พิมพ์',ic:'doc',c:'hs6'},{k:'loan',t:'ร่างสัญญายืมเงิน',s:'แบบฟอร์มสัญญายืมเงิน',d:'ดาวน์โหลด · พิมพ์',ic:'coin',c:'hs7'},{k:'trip',t:'ร่างใบเบิกค่าเดินทางไปราชการ',s:'แบบ ๘๗๐๘',d:'ดาวน์โหลด · พิมพ์',ic:'cal',c:'hs8'},{k:'rep',t:'รายงานผลการไปอบรม/ไปราชการ',s:'บันทึกข้อความ + หน้ารูปถ่าย',d:'ดาวน์โหลด · พิมพ์',ic:'cap',c:'hs9'},{k:'leave',t:'ร่างขออนุญาตไปราชการ',s:'บันทึกข้อความ 1 หน้า',d:'ดาวน์โหลด · พิมพ์',ic:'doc',c:'hs10'},{k:'perm',t:'ร่างขออนุญาตผู้ปกครอง',s:'พานักเรียนไปนอกสถานศึกษา · 1 หน้า/คน',d:'ดาวน์โหลด · พิมพ์',ic:'users',c:'hs11'},{k:'pack',t:'ร่างพานักเรียนไปนอกสถานที่ (ส่งเขต)',s:'ชุดเอกสาร · กรอกครั้งเดียว ออกหลายฉบับ',d:'PDF รวม · Word ทีละฉบับ',ic:'grid',c:'hs12'},{k:'net',t:'ร่างขอเบิกค่าเช่าอินเทอร์เน็ต',s:'หนังสือนำส่ง + บันทึกข้อความ · กรอกครั้งเดียว',d:'PDF รวม · Word ทีละฉบับ',ic:'cloudup',c:'hs13'}];
+const drNew=k=>k=='net'?netDef():k=='pack'?pkDef():k=='perm'?permDef():k=='leave'?levDef():k=='rep'?repDef():k=='order'?ordDef():k=='memo'?memoDef():k=='act'?actDef():k=='sum'?sumDef():k=='loan'?loanDef():k=='trip'?tripDef():drDef();
+const drRegType=d=>d&&d.kind=='order'?'order':d&&(d.kind=='memo'||d.kind=='act'||d.kind=='sum'||d.kind=='rep'||d.kind=='leave')?'letter':'send';
 const drKL=()=>({order:'คำสั่ง',memo:'บันทึกข้อความ',act:'บันทึกข้อความ',loan:'สัญญายืมเงิน',trip:'ใบเบิกค่าเดินทาง',rep:'บันทึกข้อความ',leave:'บันทึกข้อความ',perm:'แบบขออนุญาตผู้ปกครอง'})[DR&&DR.kind]||'นำส่ง';
 const drAr=t=>String(t||'').replace(/\s+/g,'').replace(/[๐-๙]/g,c=>'๐๑๒๓๔๕๖๗๘๙'.indexOf(c));
 const DR_MEMO_CLOSE=['จึงเรียนมาเพื่อโปรดทราบ','จึงเรียนมาเพื่อโปรดพิจารณา','จึงเรียนมาเพื่อโปรดทราบและพิจารณาดำเนินการต่อไป','จึงเรียนมาเพื่อโปรดพิจารณาอนุมัติ','จึงเรียนมาเพื่อโปรดทราบ และเข้าร่วมประชุมโดยพร้อมเพรียงกัน'];
@@ -1720,8 +1724,8 @@ const B=(n,t,e,rec)=>`<button type="button" class="btn o msg${on(n)}${rec?' rec'
 return `<h4>รูปแบบการลงชื่อ</h4><div class="msg-g">${B(0,'ชื่อ + ตำแหน่ง','(ชื่อ สกุล) / ตำแหน่ง · ไม่มีเส้นประ ไม่มีคำต่อท้าย',1)}${B(1,'ลงชื่อ…… (เส้นประ)','ลงชื่อ…… / (ชื่อ) / ตำแหน่ง')}${B(2,'เส้นประ + ข้อความท้าย','ลงชื่อ……ผู้ขออนุมัติ')}${B(3,'ข้อความท้าย + “ตำแหน่ง”','… / ตำแหน่ง ครู')}</div>
 ${g.line?`<label class="lb">ข้อความท้ายเส้นประ (เว้นว่างได้ · เลือกหรือพิมพ์เอง)<input class="in" list="dr_mtl" value="${esc(g.tail)}" placeholder="เช่น ผู้ขออนุมัติ" oninput="memoSgSet('sgTail',this.value)"><datalist id="dr_mtl">${MEMO_TAILS.map(x=>`<option value="${esc(x)}">`).join('')}</datalist></label>`:''}
 <label class="lb">บรรทัดตำแหน่ง<select class="in" onchange="DR.sgPm=+this.value;drFill()"><option value="1" ${g.pm==1?'selected':''}>แสดงตำแหน่ง</option><option value="2" ${g.pm==2?'selected':''}>แสดงโดยมีคำว่า “ตำแหน่ง” นำหน้า</option><option value="0" ${g.pm==0?'selected':''}>ไม่แสดงตำแหน่ง</option></select></label>`}
-function memoPickSigner(id){const p=PP.find(x=>String(x.id)==String(id));if(!p)return;DR.signer='('+dn(p)+')';if(DR.kind=='act')DR.rpos=posDef(p);else DR.pos=posDef(p);drFill()}
-function memoPosPick(v){if(DR.kind=='act')DR.rpos=v;else DR.pos=v;drFill()}
+function memoPickSigner(id){const p=PP.find(x=>String(x.id)==String(id));if(!p)return;DR.signer='('+dn(p)+')';if(DR.kind=='act'||DR.kind=='sum')DR.rpos=posDef(p);else DR.pos=posDef(p);drFill()}
+function memoPosPick(v){if(DR.kind=='act'||DR.kind=='sum')DR.rpos=v;else DR.pos=v;drFill()}
 const memoPosSel=(key)=>{const d=DR,cur=PP.find(p=>'('+dn(p)+')'==d.signer),l=cur?posList(cur):[];return l.length>1||(l.length==1&&l[0]!=String(d[key]||'').trim())?`<label class="lb">เลือกตำแหน่งจากข้อมูลบุคลากร<select class="in" onchange="memoPosPick(this.value)"><option value="">— เลือกตำแหน่ง —</option>${l.map(x=>`<option value="${esc(x)}" ${String(d[key]||'').trim()==x?'selected':''}>${esc(x)}</option>`).join('')}</select></label>`:''};
 function memoLast(){const y=drNum(DR.noY),rows=RG.filter(x=>x.type=='letter').map(x=>{const t=rgFmt(x),m=String(t).match(/(\d+)\s*\/\s*(\d{4})/);return {t,n:m?+m[1]:null,w:m?m[1].length:2,y:m?m[2]:null}});
 return rows.filter(x=>x.n!=null&&x.y==y).sort((a,b)=>b.n-a.n)[0]||rows.filter(x=>x.n!=null).sort((a,b)=>(b.y||'').localeCompare(a.y||'')||b.n-a.n)[0]||null}
@@ -1890,6 +1894,76 @@ const ord=[P([R('คำสั่งผู้อำนวยการ',{bold:true
 const s2=[...head(1),...paras([actBody2(d),d.b2b,d.c2],true),...reqSig(),...bg,P([],{spacing:{before:mm(3),after:0}}),g3,...ord];
 const doc=new D.Document({creator:'โรงเรียนบ้านผาเยอ',title:'ขออนุมัติโครงการ'+(d.proj||''),styles:{default:{document:{run:{font,size:32,sizeComplexScript:32}}}},sections:[...(DR.sel.a1?[sec(s1)]:[]),...(DR.sel.a2?[sec(s2)]:[])]});
 return await D.Packer.toBlob(doc)}
+
+/* ===== บันทึกข้อความสรุปโครงการ (รายงานผลการดำเนินโครงการ · 1 ฉบับ) ===== */
+const sumHdKey=t=>String(t||'').replace(/หัวหน้า|กลุ่มงาน|กลุ่ม|ฝ่าย|บริหารงาน|บริหาร|งาน/g,'').trim();
+const sumHasHd=d=>false;
+const sumHdAuto=d=>{const k=sumHdKey(d.hdT);if(!k)return '';const f=PP.find(p=>/หัวหน้า/.test(String(p.po||''))&&String(p.po||'').includes(k))||PP.find(p=>(p.wp||[]).some(x=>/หัวหน้า/.test(x)&&x.includes(k)));return f?'('+dn(f)+')':''};
+const sumHdNm=d=>{const v=d.hdN!=null?d.hdN:sumHdAuto(d);return String(v||'').trim()||'(                    )'};
+const sumHdTt=d=>String(d.hdT||'').trim();
+function sumDef(){const d=actDef();d.kind='sum';d.pos='ผู้รายงาน';d.sgLine=true;d.sgTail='';d.hdT='';d.hdN=null;d.b1=null;d.b1b='';d.b2=null;d.c1='จึงเรียนมาเพื่อโปรดทราบ';d.dChk='';d.sa=true;d.subject=sumSub(d);return d}
+const sumSub=d=>'รายงานการดำเนินโครงการ'+actB(d.proj,6)+(String(d.act||'').trim()?' กิจกรรม'+String(d.act).trim():'')+' ประจำปีการศึกษา '+actB(d.fy,4);
+const sumFy=d=>actB(d.fy,4);
+const sumB1=d=>d.b1!=null?d.b1:`ข้าพเจ้า ${actWho(d)} ตำแหน่ง ${actB(d.rpos,4)} ได้รับมอบหมายให้เป็นผู้รับผิดชอบ${actProj(d)} ประจำปีการศึกษา ${sumFy(d)} ตามแผนปฏิบัติการประจำปีการศึกษา ${sumFy(d)}`;
+const sumB2=d=>d.b2!=null?d.b2:`บัดนี้ ${actProj(d)} ประจำปีการศึกษา ${sumFy(d)} ได้ดำเนินการเสร็จสิ้นเป็นที่เรียบร้อยแล้ว ข้าพเจ้าขอรายงานผลการดำเนินงาน${actProj(d)} ประจำปีการศึกษา ${sumFy(d)} ตามแบบรายงานการดำเนินงานโครงการ ดังเอกสารตามแนบ`;
+const actDmy=iso=>{const a=actDt(iso);return a?a.d+' '+a.m+' '+a.y:''};
+function sumFlow(d){const T=t=>esc(drTh(d,t)),J=t=>drJ(drTh(d,t)),has=ordHas,P=t=>has(t)?`<p class="m-p">${J(String(t).trim())}</p>`:'';
+const shim={...d,s1:d.subject};
+return actHead(shim,0)+P(sumB1(d))+P(d.b1b)+P(sumB2(d))+P(d.c1)+actReqSg(d)+
+(sumHasHd(d)?`<div class="m-as c"><div class="m-sp${memoSg(d).line?' ln':''}">${memoSg(d).line?'<div class="m-ln"><span>ลงชื่อ</span><i></i></div>':''}</div>${T(sumHdNm(d))}<span class="m-t">${T((memoSg(d).pm==2?'ตำแหน่ง ':'')+sumHdTt(d))}</span></div>`:'')+
+`<div class="m-bk m-op"><b>ความคิดเห็นผู้อำนวยการ</b><div class="m-dl"></div><div class="m-dl"></div><div class="m-dl"></div>${actAsg(d,'dir','c')}</div>`}
+function sumDocHtml(d){return `<div class="dr-pgs">${memoPages(sumFlow(d),d,true,0)}</div>`}
+function sumSyncSub(){if(DR.sa!==false)DR.subject=sumSub(DR);drPrev()}
+function sumHdPick(id){const p=PP.find(x=>String(x.id)==String(id));DR.hdN=p?'('+dn(p)+')':'';drFill()}
+function sumForm(){const d=DR,ps=[...PP].sort((a,b)=>dn(a).localeCompare(dn(b),'th')),cur=ps.find(p=>'('+dn(p)+')'==d.signer),hn=sumHdNm(d),hsel=ps.find(p=>'('+dn(p)+')'==hn);
+const fi=(k,lb,ty,ex)=>`<label class="lb">${lb}<${ty=='ta'?'textarea class="in" rows="'+(ex||2)+'"':'input class="in"'} oninput="DR.${k}=this.value;sumSyncSub()">${ty=='ta'?esc(d[k]):''}${ty=='ta'?'</textarea>':''}</label>`.replace('<input class="in" oninput','<input class="in" value="'+esc(d[k])+'" oninput');
+return `<h4>หัวบันทึกข้อความ</h4>${drField('org','ส่วนราชการ','in')}
+<div class="lb">ที่ (เลขที่ / ปี พ.ศ. เช่น 01/2569)<div class="drm-no dro-no"><input class="in" id="dr_ns" inputmode="numeric" placeholder="เลขที่" value="${esc(d.noN)}" oninput="DR.noN=this.value;drPrev()"><span style="text-align:center">/</span><input class="in" inputmode="numeric" value="${esc(d.noY)}" oninput="DR.noY=this.value;drPrev();memoPopUpd()"><div id="dr_dup" class="drm-dup"></div>${memoPop()}</div></div>
+${drField('date','วันที่ (กดเลือกจากปฏิทิน)','date')}${drField('subject','เรื่อง','ta',2).replace('oninput="','oninput="DR.sa=false;')}${drField('to','เรียน','ta',2)}
+<h4>ข้อมูลโครงการ (ดึงจากแบนเนอร์ แก้ไขได้)</h4>${fi('proj','ชื่อโครงการ','ta',2)}${fi('act','ชื่อกิจกรรม (ไม่บังคับ)','in')}${fi('fy','ปีการศึกษา/ปีงบประมาณ (พ.ศ.)','in')}
+<h4>เนื้อความ</h4>${actAu('b1','ย่อหน้าที่ 1',sumB1,5)}${drField('b1b','ข้อความเพิ่มเติม เช่น วัตถุประสงค์ ระยะเวลา (เว้นว่างได้)','ta',4)}${actAu('b2','ย่อหน้าที่ 2',sumB2,5)}${drField('c1','ภาคสรุป','in')}
+<h4>ผู้รายงาน</h4><label class="lb">เลือกครูผู้รายงาน (ตั้งต้นเป็นผู้รับผิดชอบโครงการ)<select class="in" onchange="memoPickSigner(this.value)"><option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>`<option value="${esc(p.id)}" ${cur&&cur.id==p.id?'selected':''}>${esc(dn(p))}</option>`).join('')}</select></label>${drField('signer','ชื่อผู้รายงาน','in')}${memoPosSel('rpos')}${drField('rpos','ตำแหน่ง (ใช้ในเนื้อความ)','in')}${drField('pos','คำใต้ชื่อ','in')}
+<h4>ผู้อำนวยการ</h4><div class="drm-hint">ช่องความคิดเห็นผู้อำนวยการเว้นเส้นประไว้ให้เขียน ชื่อ ผอ. ดึงจากข้อมูลบุคลากร</div>
+<div class="act-sg"><b>ผู้อำนวยการ</b><select class="in" onchange="actSgPick('dir',this.value)"><option value="">— เลือกจากบุคลากร —</option>${ps.map(p=>{const nm=d.sg.dir.n!=null?d.sg.dir.n:actAuto('dir');return `<option value="${esc(p.id)}" ${'('+dn(p)+')'==nm?'selected':''}>${esc(dn(p))}</option>`}).join('')}</select></div>
+<div class="drm-hint" style="margin:6px 0">รูปแบบการลงชื่อที่เลือก ใช้กับทุกช่องลงชื่อในเอกสาร</div>${memoSgForm()}${drSigField()}`}
+async function sumDocx(){await drLoad('docx');const D=window.docx,d=Object.assign({},DR,{s1:DR.subject}),T=t=>drTh(d,t),mm=v=>Math.round(v*56.6929),F='TH SarabunPSK',font={ascii:F,hAnsi:F,cs:F,eastAsia:F},W=MEMO_M.w,has=ordHas;
+const R=(t,o)=>new D.TextRun({text:T(t),font,size:32,sizeComplexScript:32,...(o||{})}),P=(ch,o)=>new D.Paragraph({children:ch,...(o||{})});
+const U={underline:{type:D.UnderlineType.DOTTED,color:'000000'}},L=t=>R(t,{bold:true,boldComplexScript:true,size:40,sizeComplexScript:40}),V=(t,o)=>R(t,{...U,...(o||{})}),Vt=()=>new D.TextRun({text:'\t',font,size:32,...U});
+const SYM={ascii:'Segoe UI Symbol',hAnsi:'Segoe UI Symbol',cs:'Segoe UI Symbol',eastAsia:'MS Gothic'},CB=sz=>new D.TextRun({text:'○ ',font:SYM,size:sz||32,sizeComplexScript:sz||32});
+const LT_=D.TabStopType.LEFT,RT_=D.TabStopType.RIGHT,tb=(...a)=>a.map(p=>({type:p[0],position:mm(p[1])}));
+const dm=iso=>{if(!iso)return '';const a=iso.split('-');return (+a[2])+' '+TMF[+a[1]-1]+' '+(+a[0]+543)};
+const gb=Uint8Array.from(atob(DR_GARUDA.split(',')[1]),c=>c.charCodeAt(0));
+const cen={indent:{left:mm(25),right:mm(W-25-110)},alignment:D.AlignmentType.CENTER};
+const head=i=>{const nn=i?d.noN2:d.noN,no=(has(nn)||has(d.noY))?String(nn||'').trim()+'/'+String(d.noY||'').trim():'',sub=String(actSub(d,i)).replace(/^\s*เรื่อง\s*/,'');
+const gimg=new D.ImageRun({data:gb,type:'png',transformation:{width:51,height:57},floating:{horizontalPosition:{relative:D.HorizontalPositionRelativeFrom.MARGIN,offset:635},verticalPosition:{relative:D.VerticalPositionRelativeFrom.PARAGRAPH,offset:-95885},wrap:{type:D.TextWrappingType.NONE},behindDocument:true,allowOverlap:true}});
+return [P([gimg,R('บันทึกข้อความ',{bold:true,boldComplexScript:true,size:58,sizeComplexScript:58})],{alignment:D.AlignmentType.CENTER,spacing:{line:700,lineRule:D.LineRuleType.EXACT,before:0,after:0}}),
+P([L('ส่วนราชการ'),R('\t'),V(String(d.org||'').trim()),Vt()],{tabStops:tb([LT_,27],[RT_,W]),spacing:{before:0,after:0}}),
+P([L('ที่'),R(' '),V(no),Vt(),L('วันที่'),R(' '),V(dm(d.date)),Vt()],{tabStops:tb([LT_,79],[RT_,W]),spacing:{before:0,after:0}}),
+P([L('เรื่อง'),R(' '),V(sub),Vt()],{tabStops:tb([RT_,W]),spacing:{before:0,after:0}}),
+P([R('เรียน  '+String(d.to||'').trim())],{spacing:{before:120,after:0}})]};
+const paras=(list,keepLast)=>{const ps=list.filter(has);return ps.map((t,k)=>P([R(String(t).trim())],{indent:{firstLine:1418},alignment:D.AlignmentType.THAI_DISTRIBUTE,spacing:{before:120,after:0},keepNext:keepLast&&k>=ps.length-2,keepLines:keepLast&&k==ps.length-1}))};
+const reqSig=()=>{const out=[],sg=memoSg(d),lh=MEMO_M.lh,gap=sg.line?lh:0;
+if(d.sig){const sb=Uint8Array.from(atob(d.sig.split(',')[1]),c=>c.charCodeAt(0)),hp=d.sigH*3.7795;out.push(P([new D.ImageRun({data:sb,type:'png',transformation:{width:Math.round(hp*(d.sigAR||1)),height:Math.round(hp)}})],{...cen,spacing:{before:mm(Math.max(0,MEMO_M.sp-gap-d.sigH)),after:0},keepNext:true}))}
+if(sg.line)out.push(P([R('ลงชื่อ'),R('\t'),...(sg.tail?[R(sg.tail)]:[])],{indent:{left:mm(25)},tabStops:[{type:RT_,position:mm(135),leader:D.LeaderType.DOT}],spacing:{before:d.sig?0:mm(MEMO_M.sp-gap),after:0},keepNext:true}));
+out.push(P([R(d.signer)],{...cen,spacing:{before:(!sg.line&&!d.sig)?mm(MEMO_M.sp):0,after:0},keepNext:!!(sg.pm&&has(d.pos))}));
+if(sg.pm&&has(d.pos)){((sg.pm==2?'ตำแหน่ง ':'')+String(d.pos).trim()).split('\n').forEach((l,i,a)=>out.push(P([R(l)],{...cen,spacing:{before:0,after:0},keepNext:i<a.length-1})))}return out};
+/* ผู้ลงนามประจำตำแหน่ง: opt.c = จัดกลางแบบกว้าง 110 มม. · opt.w = ความกว้างในช่อง (มม.) · opt.sz = ขนาดตัวอักษร */
+const asg=(r,o)=>{const sg=memoSg(d),sz=o.sz||32,ind=o.c?{indent:{left:mm(25),right:mm(W-25-110)}}:{},tp=o.c?mm(135):mm(o.w);const S=(t,x)=>R(t,{size:sz,sizeComplexScript:sz,...(x||{})}),out=[];
+if(sg.line)out.push(P([S('ลงชื่อ'),S('\t')],{...(o.c?{indent:{left:mm(25)}}:{}),tabStops:[{type:RT_,position:tp,leader:D.LeaderType.DOT}],spacing:{before:mm(o.c?10:9),after:0},keepNext:true}));
+out.push(P([S(actNm(d,r))],{...ind,alignment:D.AlignmentType.CENTER,spacing:{before:sg.line?0:mm(o.c?17:15),after:0},keepNext:true}),P([S((sg.pm==2?'ตำแหน่ง ':'')+actTt(d,r))],{...ind,alignment:D.AlignmentType.CENTER,spacing:{before:0,after:0}}));return out};
+const cbl=(t,sz,x)=>P([CB(sz),R(t,{size:sz,sizeComplexScript:sz})],{spacing:{before:0,after:0},...(x||{})});
+const dl=()=>P([R('\t')],{tabStops:[{type:RT_,position:mm(W),leader:D.LeaderType.DOT}],spacing:{before:0,after:0}});
+const NB={style:D.BorderStyle.NONE,size:0,color:'FFFFFF'},noB={top:NB,bottom:NB,left:NB,right:NB};
+const op1=()=>[P([R('ความเห็นผู้บริหารโรงเรียน',{bold:true,boldComplexScript:true})],{spacing:{before:mm(8),after:0},keepNext:true}),P([CB(),R('อนุมัติ'),R('        '),CB(),R('ไม่อนุมัติ')],{spacing:{before:0,after:0},keepNext:true}),dl(),dl(),dl(),...asg('dir',{c:true})];
+const sec=ch=>({properties:{titlePage:true,page:{size:{width:11906,height:16838},margin:{top:mm(MEMO_M.t1),bottom:mm(MEMO_M.b),left:mm(MEMO_M.l),right:mm(MEMO_M.r),header:mm(25),footer:mm(12.7)},pageNumbers:{start:1,...(d.arab?{}:{formatType:D.NumberFormat.THAI_NUMBERS})}}},headers:{default:new D.Header({children:[P([R('- '),new D.TextRun({children:[D.PageNumber.CURRENT],font,size:32,sizeComplexScript:32}),R(' -')],{alignment:D.AlignmentType.CENTER})]}),first:new D.Header({children:[P([])]})},children:ch});
+const asgC=(nm,tt)=>{const sg=memoSg(d),ind={indent:{left:mm(25),right:mm(W-25-110)}},out=[];
+if(sg.line)out.push(P([R('ลงชื่อ'),R('\t')],{indent:{left:mm(25)},tabStops:[{type:RT_,position:mm(135),leader:D.LeaderType.DOT}],spacing:{before:mm(10),after:0},keepNext:true}));
+out.push(P([R(nm)],{...ind,alignment:D.AlignmentType.CENTER,spacing:{before:sg.line?0:mm(17),after:0},keepNext:true}),P([R((sg.pm==2?'ตำแหน่ง ':'')+tt)],{...ind,alignment:D.AlignmentType.CENTER,spacing:{before:0,after:0}}));return out};
+const opn=()=>[P([R('ความคิดเห็นผู้อำนวยการ',{bold:true,boldComplexScript:true})],{spacing:{before:mm(8),after:0},keepNext:true}),dl(),dl(),dl(),...asgC(actNm(d,'dir'),actTt(d,'dir'))];
+const s1=[...head(0),...paras([sumB1(d),d.b1b,sumB2(d),d.c1],true),...reqSig(),...(sumHasHd(d)?asgC(sumHdNm(d),sumHdTt(d)):[]),...opn()];
+const doc=new D.Document({creator:'โรงเรียนบ้านผาเยอ',title:'รายงานผลโครงการ'+(d.proj||''),styles:{default:{document:{run:{font,size:32,sizeComplexScript:32}}}},sections:[sec(s1)]});
+return await D.Packer.toBlob(doc)}
+
 
 /* ===================== ร่างสัญญายืมเงิน (loan) ===================== */
 const LOAN_MINROWS=6;
@@ -4150,7 +4224,7 @@ const RGT={order:{n:'ทะเบียนเลขที่คำสั่ง�
 letter:{n:'ทะเบียนเลขที่บันทึกข้อความ',s:'บันทึกข้อความ',lab:'เรื่อง / รายละเอียดบันทึกข้อความ',ph:'เช่น ขอความอนุเคราะห์วิทยากรอบรม',to:'ถึง / เรียน',c:'#8B5CF6'},
 send:{n:'ทะเบียนเลขที่หนังสือนำส่ง',s:'หนังสือนำส่ง',lab:'เรื่อง / รายละเอียดสิ่งที่นำส่ง',ph:'เช่น ส่งรายงานผลการดำเนินงานประจำเดือน',to:'ส่งถึง',c:'#22B573'}};
 const rgCan=()=>canManageAdmin();
-const drRegOk=()=>DR_SRC=='doc'?!!(me&&DR&&(DR.kind=='memo'||DR.kind=='act'||DR.kind=='rep'||DR.kind=='leave')):rgCan();
+const drRegOk=()=>DR_SRC=='doc'?!!(me&&DR&&(DR.kind=='memo'||DR.kind=='act'||DR.kind=='sum'||DR.kind=='rep'||DR.kind=='leave')):rgCan();
 const rgBE=d=>d&&/^\d{4}/.test(d)?+d.slice(0,4)+543:+svDay(new Date()).slice(0,4)+543;
 const rgOf=t=>RG.filter(r=>r.type==t);
 const rgFmt=r=>r.num||(r.no!=null?r.no+'/'+r.yr:'');
