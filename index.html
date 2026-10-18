@@ -1040,7 +1040,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 <div class="top"><span class="ico" id="burger" style="cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></span>
 <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="gsearch" autocomplete="off" placeholder="ค้นหาทุกอย่างในระบบ เช่น ชื่อครู นักเรียน โครงการ ร้านค้า หนังสือ เลขที่ ไฟล์ ..."><div id="searchResults"></div></div>
 <div class="chip" id="term_chip">ภาคเรียนที่ 1/2569</div>
-<span class="ico" id="ib"></span><span class="ico" id="ic"></span><span class="ico" id="lo" title="ออกจากระบบ"></span>
+<span class="ico" id="ib" title="การแจ้งเตือน"></span><span class="ico" id="lo" title="ออกจากระบบ"></span>
 <div class="user"><div class="av" id="au"></div><span><b id="un">ชื่อผู้ใช้</b><small id="ur">ตำแหน่ง</small></span></div></div>
 <div id="view"></div>
 <footer><span>School Management System v1.0.0 | โรงเรียนบ้านผาเยอ</span><span>© 2569 โรงเรียนบ้านผาเยอ สพป.แม่ฮ่องสอน เขต 2</span></footer>
@@ -3420,7 +3420,7 @@ draft:()=>PT('ร่างหนังสือราชการ','เลือ
 gen:t=>PT(t)+P(t,E('ยังไม่มีข้อมูล',260))};
 const nav=m=>`<a data-r="${m[0]}">${ic(m[2])}${m[1]}${m[3]?ic('chev','ch'):''}</a>`+(m[3]?`<div class="sub" data-p="${m[0]}">${(m[3]=='div'?DIV.map(d=>['div:'+d[0],d[1]]):m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['hw','น้ำหนัก ส่วนสูง'],['par','ผู้ปกครอง']]:m[3]=='adm'?[['admin:send','ส่งหนังสือราชการ'],['admin:memo','เกษียนหนังสือราชการ'],['admin:draft','ร่างหนังสือราชการ']]:m[3]=='tt'?[['tt:teach','ตารางสอน'],['tt:class','ตารางเรียน'],['tt:entry','บันทึกตารางสอน'],['tt:check','ตรวจสอบตาราง']]:[['org','โครงสร้างบุคลากร']]).map(s=>`<a data-r="${s[0]}">${s[1]}</a>`).join('')}</div>`:'');
 $('#ib').innerHTML=ic('bell');$('#ib').style.cursor='pointer';$('#ib').onclick=e=>{e.stopPropagation();ntfToggle()};
-$('#ic').innerHTML=ic('chat');$('#au').innerHTML=ic('user');
+$('#au').innerHTML=ic('user');
 function updateBell(){if(!me||!$('#ib'))return;const n=ntfList().filter(x=>x.unread).length,old=+($('#ib').dataset.n||0);$('#ib').dataset.n=n;$('#ib').innerHTML=ic('bell')+(n?`<i class="bell-badge${n>old?' pop':''}">${n>99?'99+':n}</i>`:'');if(document.getElementById('ntf_pop')&&!document.getElementById('ntf_pop').classList.contains('hid'))ntfRender()}
 let CUR='home';
 let _rsT=0,_rsF=0,_rsH='',_rsC='',_rsQ=false,_rsE=null;
@@ -3520,9 +3520,20 @@ finally{suppress=false}}
 function mkNav(){const f=me.role=='founder',sys=SYS.filter(m=>f||!['usr','staff','bak'].includes(m[0]));
 $('#nav').innerHTML=MENU.map(nav).join('')+'<h6>ระบบกลาง</h6>'+sys.map(nav).join('');
 const n=U.filter(u=>u.st=='pending').length,a=$('[data-r=usr]');if(a&&n)a.innerHTML+=`<i class="bd">${n}</i>`}
+/* จับคู่ชื่อผู้ใช้ (อังกฤษหรือไทย) กับรายชื่อบุคลากร เพื่อดึงรูปมาแสดง */
+const NM_TH={K:'กขฃคฅฆ',T:'ตถทธฑฒดฎฏฐ',P:'บปผฝพฟภ',S:'สศษซ',J:'จฉชฌ',R:'รฤลฬฦ',N:'นณ',M:'ม',W:'ว'};
+const nmThSkel=w=>{w=String(w||'').replace(/[ๆฯ]/g,'');let o='',cs=[...w];for(let i=0;i<cs.length;i++){const c=cs[i];if(cs[i+1]=='์')continue;if(c=='ง'){o+='NK';continue}if(c=='ญ'){if(i>0)o+='N';continue}if(c=='ห'&&i==0&&cs[i+1]&&'นมยรลวง'.includes(cs[i+1]))continue;for(const k in NM_TH)if(NM_TH[k].includes(c)){o+=k;break}}return o};
+const nmEnSkel=w=>String(w||'').toLowerCase().replace(/[^a-z]/g,'').replace(/ch/g,'J').replace(/sh/g,'S').replace(/th/g,'T').replace(/ph/g,'P').replace(/kh/g,'K').replace(/ng/g,'NK').replace(/[kgcq]/g,'K').replace(/[td]/g,'T').replace(/[pbfv]/g,'P').replace(/[szx]/g,'S').replace(/j/g,'J').replace(/[rl]/g,'R').replace(/n/g,'N').replace(/m/g,'M').replace(/w/g,'W').replace(/[a-z]/g,'');
+const nmLev=(a,b)=>{const m=a.length,n=b.length,d=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]==b[j-1]?0:1));return d[m][n]};
+const nmSim=(a,b)=>{const L=Math.max(a.length,b.length);return L?1-nmLev(a,b)/L:0};
+const nmClean=x=>String(x||'').replace(/^(นางสาว|นาย|นาง|ว่าที่ร้อยตรี|ดร\.?|ครู|ด\.ช\.|ด\.ญ\.|mr\.?|mrs\.?|ms\.?|miss)\s*/i,'').trim();
+function nmMatchPP(name){name=nmClean(name);if(!name||!PP.length)return null;
+if(/[฀-๿]/.test(name)){const k=name.replace(/\s+/g,'');return PP.find(p=>((p.fn||'')+(p.ln||'')).replace(/\s+/g,'')==k)||PP.find(p=>k.includes((p.fn||'').replace(/\s+/g,''))&&k.includes((p.ln||'').replace(/\s+/g,''))&&(p.fn||'')&&(p.ln||''))||null}
+const t=name.split(/\s+/).filter(Boolean);if(t.length<1)return null;const f=nmEnSkel(t[0]),l=t.length>1?nmEnSkel(t[t.length-1]):'';let best=null,bs=0;
+PP.forEach(p=>{const sf=nmSim(f,nmThSkel(p.fn)),sl=l?nmSim(l,nmThSkel(p.ln)):sf,sc=(sf+sl)/2;if(sf>=.6&&sl>=.5&&sc>bs){bs=sc;best=p}});return bs>=.65?best:null}
 function updateUserBadge(){if(!me)return;const s=S.find(x=>x.id==me.sid),pp=me.sid&&PP.find(x=>x.id==me.sid),f=me.role=='founder';
 $('#un').textContent=(!f&&pp)?dn(pp):me.n;$('#ur').textContent=f?'ผู้ก่อตั้ง':(pp&&pp.po)||(s&&s.p)||'สมาชิก';
-const av=$('#au');if(av){const im=!f&&pp&&pp.im;if(av.dataset.im!==(im||'')){av.dataset.im=im||'';av.innerHTML=im?`<img src="${im}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`:ic('user')}}}
+const av=$('#au');if(av){const pa=pp||nmMatchPP(me.n),im=pa&&pa.im;if(av.dataset.im!==(im||'')){av.dataset.im=im||'';av.innerHTML=im?`<img src="${im}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`:ic('user')}}}
 let BD={ids:[]};
 const bdCnt=i=>ST.filter(s=>s.lv==i&&(BD.ids||[]).includes(s.id)).length;
 const gsum=l=>{const m=l.filter(x=>gd(x.tt)=='m').length,f=l.filter(x=>gd(x.tt)=='f').length,u=l.length-m-f;
