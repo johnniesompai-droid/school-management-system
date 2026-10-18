@@ -3421,7 +3421,7 @@ if(x.nodeType!==1){if(x.nodeValue!==y.nodeValue)x.nodeValue=y.nodeValue;continue
 if(x.isEqualNode(y))continue;
 const tg=x.nodeName;
 if(tg=='SCRIPT'||tg=='IFRAME'||tg=='CANVAS'||tg=='VIDEO'){a.replaceChild(y.cloneNode(true),x);continue}
-[...x.attributes].forEach(t=>{if(!y.hasAttribute(t.name))x.removeAttribute(t.name)});
+[...x.attributes].forEach(t=>{if(t.name!='data-h'&&!y.hasAttribute(t.name))x.removeAttribute(t.name)});
 [...y.attributes].forEach(t=>{if(x.getAttribute(t.name)!==t.value&&!((tg=='INPUT'||tg=='TEXTAREA'||tg=='SELECT')&&document.activeElement===x&&t.name=='value'))x.setAttribute(t.name,t.value)});
 if(tg=='SELECT'||tg=='INPUT'||tg=='TEXTAREA'){if(document.activeElement!==x){if(tg=='INPUT'&&(x.type=='checkbox'||x.type=='radio'))x.checked=y.hasAttribute('checked');else if('value' in x&&tg!='SELECT')x.value=y.getAttribute('value')!=null?y.getAttribute('value'):(tg=='TEXTAREA'?y.textContent:x.value)}}
 rsMorph(x,y);
@@ -4435,7 +4435,7 @@ function svHomeHtml(){if(!me)return '';const c=svHomeCalc();
 return `<div class="svhm" data-r="saving" style="cursor:pointer" title="ไปที่เมนูออมเงิน"><div class="svhm-h"><i>${ic('coin')}</i>ออมเงิน<small>${HSVL?'ข้อมูล ณ วันที่ '+thaiFullDate(new Date()):'กำลังโหลด...'}</small></div>
 <div class="svhm-g"><div><small>ยอดเงินออมวันนี้</small><b>฿ ${svFm(c.day)}</b><em>ฝาก ${svFm(c.dep)} · ถอน ${svFm(c.wd)}</em></div><div><small>ยอดเงินออมรวม</small><b>฿ ${svFm(c.tot)}</b><em>ทุกชั้น อนุบาล - ป.6</em></div></div>
 <div class="svhm-r"><div id="sv_rot">${svRotHtml(c)}</div></div></div>`}
-function svHomeUpd(){const el=document.getElementById('sv_home');if(!el||!me)return;el.innerHTML=svHomeHtml()}
+function svHomeUpd(){const el=document.getElementById('sv_home');if(!el||!me)return;setHtmlIf(el,svHomeHtml())}
 function svHomeTick(){const r=document.getElementById('sv_rot');if(!r||!me||!HSVL)return;__svi++;hbSwap(r,svRotHtml(svHomeCalc()))}
 setInterval(svHomeTick,5000);
 
@@ -4561,7 +4561,7 @@ const hwAllK=()=>[...attCls('m'),...attCls('b')];
 const hwKeys=()=>hwAllK().filter(k=>(!hwScope||k[0]==hwScope)&&(hwLvF===''||+k.slice(1)==+hwLvF));
 const hwKLab=k=>LV[+k.slice(1)]+(k[0]=='m'?' · ห้องเรียนหลัก':' · ห้องเรียนสาขา');
 const hwDone=(k,ym)=>{const r=attRoster(k),n=r.filter(x=>{const q=hwRecs(x)[ym];return q&&q.w>0&&q.h>0}).length;return{n:r.length,d:n}};
-function hwRefresh(){if(!me)return;updateBell&&updateBell();const[k,s]=CUR.split(':');if(k=='hw'){if(!s)render();else if(!Object.keys(hwD).length)render()}else if(k=='home')0}
+function hwRefresh(){if(!me)return;updateBell&&updateBell();const[k,s]=CUR.split(':');if(k=='hw'){if(!s)renderSoon();else if(!Object.keys(hwD).length)renderSoon()}else if(k=='home')0}
 /* แจ้งเตือนครูประจำชั้น เมื่อถึงวันที่ 25 แล้วยังบันทึกไม่ครบ */
 function hwReminders(){if(!me||!me.sid||!hwInit)return [];const t=svDay(new Date()),day=+t.slice(8,10),ym=t.slice(0,7);if(day<25)return [];const o=[];
 hwAllK().forEach(k=>{if(!isHomeroomOf(k))return;const c=hwDone(k,ym);if(!c.n||c.d>=c.n)return;o.push({id:'hw:'+k+':'+ym,title:'ถึงเวลาบันทึกน้ำหนัก ส่วนสูง',text:`${LV[+k.slice(1)]}${k[0]=='b'?' (สาขา)':''} · บันทึกแล้ว ${c.d}/${c.n} คน (ครบกำหนดวันที่ 25)`,sub:'',at:ym+'-25T08:00:00',route:'hw:'+k,c:'#2BB5A0',icon:'scale',unread:true})});return o}
@@ -4715,7 +4715,7 @@ const attCan=k=>!!me&&(me.role=='founder'||isHomeroomOf(k));
 function attSub(){const d=attToday();if(attSubDate==d)return;attSubDate=d;if(attUn)attUn();
 attUn=db.collection('attendance').where('date','==',d).onSnapshot(qs=>{qs.docs.forEach(x=>{ATT[x.id]={id:x.id,...x.data()}});attLoaded[d]=1;attRefresh()},e=>{attLoaded[d]=1})}
 function attLoad(d){if(attLoaded[d])return;attLoaded[d]=1;db.collection('attendance').where('date','==',d).get().then(qs=>{qs.docs.forEach(x=>{ATT[x.id]={id:x.id,...x.data()}});attRefresh()}).catch(()=>{})}
-function attRefresh(){const[k,s]=CUR.split(':');if(k=='home'||(k=='att'&&!s))render();else if(k=='att')attClassUpd();updateBell&&0}
+function attRefresh(){const[k,s]=CUR.split(':');if(k=='home'||(k=='att'&&!s))renderSoon();else if(k=='att')attClassUpd();updateBell&&0}
 setInterval(()=>{if(me)attSub()},300000);
 function attSetDate(v){if(!v)return;attDate=v;attTblK='';const q=v.split('-');attMon={y:+q[0],m:+q[1]-1};attLoad(v);render()}
 function attChips(o){return `<span class="atc p">มา ${o.p}</span><span class="atc a">ขาด ${o.a}</span><span class="atc l">ลา ${o.l}</span>`}
@@ -4930,7 +4930,8 @@ return `<div class="wxc wx-${k}" style="--g1:${g1};--g2:${g2}" onclick="wxLoad(t
 <div class="wx-pm" style="--pc:${pc.c}"><i></i><span>PM2.5 <b>${pm==null?'–':r(pm)}</b> µg/ลบ.ม.</span><em>${pc.t}</em></div>
 <div class="wx-ch"><span>💧 ชื้น ${r(c.relative_humidity_2m)}%</span><span>☔ ฝน ${r(d.precipitation_probability_max[0])}%</span><span>🌬 ลม ${r(c.wind_speed_10m)} กม./ชม.</span><span>☀ UV ${r(d.uv_index_max[0])}</span></div></div>`}
 function wxHeroHtml(){if(!me||!WX)return '';const c=WX.w.current,k=wxKind(c.weather_code,c.is_day==1);return `<div class="wxh-i" title="${esc(WXD[c.weather_code]||'')}">${wxScene(k)}<b>${Math.round(c.temperature_2m)}°</b></div>`}
-function wxUpd(){const el=document.getElementById('wx_home');if(el&&me)el.innerHTML=wxHtml();const h=document.getElementById('wx_hero');if(h&&me)h.innerHTML=wxHeroHtml()}
+function setHtmlIf(el,h){const t=document.createElement('div');t.innerHTML=h;if(el.innerHTML===t.innerHTML)return;el.innerHTML=h}
+function wxUpd(){const el=document.getElementById('wx_home');if(el&&me)setHtmlIf(el,wxHtml());const h=document.getElementById('wx_hero');if(h&&me)setHtmlIf(h,wxHeroHtml())}
 setInterval(()=>ttTodayTick(),20000);setInterval(()=>ttGreetTick(),14000);
 function ttCheck(){const ds=ttTDocs(ttYear).filter(d=>d.cells&&Object.keys(d.cells).length),done={};ds.forEach(d=>done[d.ref]=d);
 const mp={};ds.forEach(d=>Object.keys(d.cells).forEach(c=>{const x=d.cells[c];if(!x||!x.c)return;const k=c+'|'+ttLv(x.c);(mp[k]=mp[k]||[]).push({ref:d.ref,s:x.s})}));
