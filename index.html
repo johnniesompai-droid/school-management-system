@@ -1014,6 +1014,10 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 .pjd-bar{margin:0 0 14px;padding:12px 16px;border-radius:16px;background:linear-gradient(135deg,#FFF4E5,#FDE9F3);box-shadow:0 6px 16px -10px rgba(244,114,182,.6),inset 0 1px 0 #fff;border:1px solid #FBD9E8}
 .pjd-h{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.pjd-h b{color:#B4437A}.pjd-h span{font-weight:600;color:#1F2A44;flex:1;min-width:160px}
 .pjd-t{margin-top:8px;font-size:.85rem;color:#5B667E;display:flex;gap:6px;flex-wrap:wrap;align-items:center}.pjd-t em{font-style:normal;background:#fff;border-radius:999px;padding:2px 10px;box-shadow:0 2px 6px -3px rgba(0,0,0,.25);color:#B4437A}.pjd-t em a{cursor:pointer;margin-left:6px;color:#999}
+.bk-p{margin:0 0 10px;color:var(--mute);font-size:.86rem;line-height:1.6}.bk-a{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.bk-f{margin:8px 0;font-size:.86rem}
+.bk-t{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:10px 0}.bk-h,.bk-r{display:grid;grid-template-columns:28px 1fr 90px 120px;gap:8px;align-items:center;padding:7px 12px;font-size:.84rem}.bk-h{background:#F3F6FD;color:var(--mute);font-weight:600}.bk-r{border-top:1px solid var(--line);cursor:pointer}.bk-r.off{opacity:.5}.bk-r span:nth-child(n+3),.bk-h span:nth-child(n+3){text-align:right}
+.bk-md{display:grid;gap:8px;font-size:.86rem;margin:10px 0}.bk-md label{display:block;line-height:1.5}.bk-cf{margin:8px 0;font-size:.86rem;display:flex;align-items:center;flex-wrap:wrap}
+.bk-m{padding:12px 14px;border-radius:12px;background:#E9F7EF;color:#1E6B45;font-size:.86rem;line-height:1.6}.bk-m.bad{background:#FFF1E6;color:#A24410;margin-top:8px}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -3409,7 +3413,7 @@ let CUR='home';
 let _rsT=0,_rsF=0,_rsH='',_rsC='',_rsQ=false,_rsE=null;
 function renderSoon(){if(!_rsF)_rsF=Date.now();clearTimeout(_rsT);const w=Date.now()-_rsF;_rsT=setTimeout(()=>{_rsF=0;_rsQ=true;try{render()}finally{_rsQ=false}},w>1200?0:300)}
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS,HWM].find(x=>x[0]==k);
-const _h=(k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='supply'?V.supply():k=='admin'?V.admin(s):k=='draft'?V.draft():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt(s):k=='ann'?V.ann():k=='att'?V.att(s):k=='hw'?V.hw(s):V.gen(m?m[1]:''));if(_rsQ&&_h===_rsH&&_rsC===CUR&&_rsE&&$('#view').firstElementChild===_rsE){bcRender(k,s);return}if(_rsQ&&_rsC===CUR&&_rsE&&$('#view').firstElementChild===_rsE){const t=document.createElement('template');t.innerHTML=_h;try{rsMorph($('#view'),t.content);_rsH=_h;_rsE=$('#view').firstElementChild;bcRender(k,s);return}catch(e){}}
+const _h=(k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='supply'?V.supply():k=='admin'?V.admin(s):k=='draft'?V.draft():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt(s):k=='ann'?V.ann():k=='att'?V.att(s):k=='hw'?V.hw(s):k=='bak'?V.bak():V.gen(m?m[1]:''));if(_rsQ&&_h===_rsH&&_rsC===CUR&&_rsE&&$('#view').firstElementChild===_rsE){bcRender(k,s);return}if(_rsQ&&_rsC===CUR&&_rsE&&$('#view').firstElementChild===_rsE){const t=document.createElement('template');t.innerHTML=_h;try{rsMorph($('#view'),t.content);_rsH=_h;_rsE=$('#view').firstElementChild;bcRender(k,s);return}catch(e){}}
 _rsH=_h;_rsC=CUR;$('#view').innerHTML=_h;_rsE=$('#view').firstElementChild;bcRender(k,s)}
 /* อัปเดตเฉพาะส่วนที่เปลี่ยน (ไม่สร้างองค์ประกอบใหม่ทั้งหน้า) เพื่อไม่ให้แอนิเมชันเริ่มเล่นซ้ำจนกระพริบ */
 function rsMorph(a,b){const A=[...a.childNodes],B=[...b.childNodes],n=Math.max(A.length,B.length);
@@ -3455,7 +3459,7 @@ default:{const m=M(k);return m?[[k,m]]:[]}}}
 function bcRender(k,s){const v=$('#view');if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;
 const h=`<nav class="bc" aria-label="เส้นทางนำทาง"><a data-r="home" class="bc-h" title="หน้าหลัก">${ic('home')}</a>${t.map((c,i)=>`<i class="bc-s">›</i>${i==t.length-1?`<b>${esc(c[1])}</b>`:`<a data-r="${c[0]}">${esc(c[1])}</a>`}`).join('')}</nav>`;
 v.insertAdjacentHTML('afterbegin',h)}
-function go(r){const[k]=r.split(':');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff')&&me.role!='founder')return go('home');
+function go(r){const[k]=r.split(':');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
 CUR=r;render();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving'||k=='att'||k=='hw')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
 const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd'||k=='hw')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
@@ -3500,7 +3504,7 @@ if(m=='setup'){await db.collection('meta').doc('config').set({founderUid:newUid}
 else{await fbAuth.signOut();suppress=false;auth('login');$('#fm').style.color='#22B573';$('#fm').textContent='ส่งคำขอแล้ว รอผู้ก่อตั้งอนุมัติ'}
 }catch(e){await cred.user.delete().catch(()=>{});msg(ec(e))}
 finally{suppress=false}}
-function mkNav(){const f=me.role=='founder',sys=SYS.filter(m=>f||!['usr','staff'].includes(m[0]));
+function mkNav(){const f=me.role=='founder',sys=SYS.filter(m=>f||!['usr','staff','bak'].includes(m[0]));
 $('#nav').innerHTML=MENU.map(nav).join('')+'<h6>ระบบกลาง</h6>'+sys.map(nav).join('');
 const n=U.filter(u=>u.st=='pending').length,a=$('[data-r=usr]');if(a&&n)a.innerHTML+=`<i class="bd">${n}</i>`}
 function updateUserBadge(){if(!me)return;const s=S.find(x=>x.id==me.sid),pp=me.sid&&PP.find(x=>x.id==me.sid),f=me.role=='founder';
@@ -4950,9 +4954,53 @@ const b=e.target.closest('[data-ev]');if(b&&confirm('ลบกิจกรรม
 let pim='';
 function setImg(v){pim=v;const p=$('#pprev');v?p.src=v:p.removeAttribute('src');p.classList.toggle('hid',!v);$('#prm').classList.toggle('hid',!v)}
 function pickImg(f){if(!f)return;const r=new FileReader();r.onload=e=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');c.width=c.height=240;const s=Math.min(i.width,i.height);c.getContext('2d').drawImage(i,(i.width-s)/2,(i.height-s)*.2,s,s,0,0,240,240);setImg(c.toDataURL('image/jpeg',.8))};i.onerror=()=>alert('อ่านไฟล์รูปไม่สำเร็จ');i.src=e.target.result};r.readAsDataURL(f)}
+/* ===== สำรอง / กู้คืนข้อมูล (เฉพาะผู้ก่อตั้ง) ===== */
+const BK_COLS=[['staff','ทะเบียนบุคลากร'],['people','บุคลากร'],['students','นักเรียน'],['homeroom','ครูประจำชั้น'],['boarding','นักเรียนพักนอน'],['events','ปฏิทิน/กิจกรรม'],['savingtx','รายการออมเงิน'],['announcements','ประกาศ'],['attendance','การมาเรียน'],['growth','น้ำหนัก ส่วนสูง'],['registers','ทะเบียนคุมเลข'],['letters','หนังสือเข้า-ออก'],['divdocs','เอกสารงาน 4 ฝ่าย'],['admindocs','เอกสารงานธุรการ'],['timetables','ตารางสอน'],['memos','เกษียนหนังสือ'],['scoresheets','บันทึกคะแนน'],['budgetprojects','โครงการ/กิจกรรม'],['vendors','ทะเบียนร้านค้า'],['users','ผู้ใช้งาน (สำรองไว้ดูเท่านั้น ไม่กู้คืน)']];
+let BKS={busy:'',msg:'',err:[],file:null,fn:'',cur:null,mode:'add',sel:{}};
+const bkLast=()=>{try{return localStorage.getItem('bkLast')||''}catch(e){return''}};
+const bkEnc=v=>{if(v==null)return v;if(typeof v.toMillis=='function')return{__ts:v.toMillis()};if(Array.isArray(v))return v.map(bkEnc);if(typeof v=='object'){const o={};Object.keys(v).forEach(k=>o[k]=bkEnc(v[k]));return o}return v};
+const bkDec=v=>{if(v==null)return v;if(Array.isArray(v))return v.map(bkDec);if(typeof v=='object'){if(Object.keys(v).length==1&&typeof v.__ts=='number')return firebase.firestore.Timestamp.fromMillis(v.__ts);const o={};Object.keys(v).forEach(k=>o[k]=bkDec(v[k]));return o}return v};
+function bkSet(o){Object.assign(BKS,o);const w=document.getElementById('bk_wrap');if(w)w.innerHTML=bkHtml()}
+async function bkRead(){const out={app:'phayoe-school',ver:1,createdAt:new Date().toISOString(),by:(me&&me.n)||'',collections:{}},err=[];
+for(const[c,lb]of BK_COLS){bkSet({msg:'กำลังอ่านข้อมูล: '+lb+' …'});try{const qs=await db.collection(c).get(),o={};qs.docs.forEach(d=>o[d.id]=bkEnc(d.data()));out.collections[c]=o}catch(e){err.push(lb+' — '+(e.code||e.message))}}
+out.errors=err;return out}
+function bkSave(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}
+const bkStamp=()=>{const d=new Date(),f=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+f(d.getMonth()+1)+'-'+f(d.getDate())+'_'+f(d.getHours())+f(d.getMinutes())};
+async function bkJson(pre,force){if(BKS.busy&&!force)return;bkSet({busy:'dl',err:[]});try{const d=await bkRead(),n=Object.values(d.collections).reduce((a,o)=>a+Object.keys(o).length,0);bkSave(new Blob([JSON.stringify(d)],{type:'application/json'}),(pre||'phayoe-backup')+'-'+bkStamp()+'.json');try{localStorage.setItem('bkLast',new Date().toISOString())}catch(e){}bkSet({busy:'',msg:'ดาวน์โหลดไฟล์สำรองแล้ว · รวม '+n.toLocaleString()+' รายการ',err:d.errors});return d}catch(e){bkSet({busy:'',msg:'สำรองไม่สำเร็จ: '+e.message})}}
+async function bkXls(){if(BKS.busy)return;if(typeof XLSX=='undefined')return alert('โหลดตัวสร้าง Excel ไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');bkSet({busy:'dl',err:[]});try{const d=await bkRead(),wb=XLSX.utils.book_new(),flat=v=>v==null?'':typeof v=='object'?JSON.stringify(v):String(v).slice(0,32000);
+BK_COLS.forEach(([c,lb])=>{const o=d.collections[c];if(!o)return;const ids=Object.keys(o),keys=[...new Set(ids.flatMap(i=>Object.keys(o[i]||{})))],rows=ids.map(i=>{const r={id:i};keys.forEach(k=>r[k]=flat(o[i][k]));return r});XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),lb.replace(/[\\\/\?\*\[\]:]/g,'').slice(0,31))});
+XLSX.writeFile(wb,'phayoe-data-'+bkStamp()+'.xlsx');bkSet({busy:'',msg:'ดาวน์โหลดไฟล์ Excel แล้ว (ใช้เปิดดู — ไม่ใช่ไฟล์สำหรับกู้คืน)',err:d.errors})}catch(e){bkSet({busy:'',msg:'ส่งออกไม่สำเร็จ: '+e.message})}}
+function bkLoad(f){if(!f)return;const r=new FileReader();r.onload=async()=>{try{const d=JSON.parse(r.result);if(d.app!='phayoe-school'||!d.collections)throw new Error('ไม่ใช่ไฟล์สำรองของระบบนี้');const sel={};BK_COLS.forEach(([c])=>{sel[c]=c!='users'&&d.collections[c]&&Object.keys(d.collections[c]).length>0});bkSet({file:d,fn:f.name,sel,cur:null,msg:'อ่านไฟล์สำรองแล้ว กำลังตรวจข้อมูลปัจจุบัน …',err:[],busy:'chk'});const cur={};for(const[c]of BK_COLS){if(!d.collections[c])continue;try{cur[c]=(await db.collection(c).get()).size}catch(e){cur[c]=null}}bkSet({cur,busy:'',msg:''})}catch(e){bkSet({file:null,fn:'',msg:'อ่านไฟล์ไม่สำเร็จ: '+e.message,busy:''})}};r.readAsText(f)}
+async function bkRestore(){const d=BKS.file;if(!d||BKS.busy)return;const cs=BK_COLS.filter(([c])=>c!='users'&&BKS.sel[c]&&d.collections[c]);if(!cs.length)return alert('ยังไม่ได้เลือกข้อมูลที่จะกู้คืน');
+const rep=BKS.mode=='replace';if(rep){const t=document.getElementById('bk_cf');if(!t||t.value.trim()!='กู้คืน')return alert('พิมพ์คำว่า กู้คืน ในช่องยืนยันก่อน')}
+if(!confirm((rep?'แทนที่ข้อมูลทั้งหมด':'เติมเฉพาะที่ขาด')+' ใน '+cs.length+' ชุดข้อมูล\nดำเนินการต่อหรือไม่?'))return;
+bkSet({busy:'rs',err:[],msg:rep?'กำลังสำรองข้อมูลปัจจุบันก่อนกู้คืน …':'เริ่มกู้คืน …'});
+if(rep){const b=await bkJson('before-restore',1);if(!b){bkSet({busy:'',msg:'ยกเลิกการกู้คืน เพราะสำรองข้อมูลปัจจุบันไม่สำเร็จ'});return}bkSet({busy:'rs'})}
+const errs=[],sum=[];
+for(const[c,lb]of cs){bkSet({msg:'กำลังกู้คืน: '+lb+' …'});try{const ex=new Set((await db.collection(c).get()).docs.map(x=>x.id)),src=d.collections[c],ops=[];let add=0,upd=0,del=0;
+Object.keys(src).forEach(id=>{if(rep||!ex.has(id)){ops.push(['s',id,bkDec(src[id])]);ex.has(id)?upd++:add++}});
+if(rep)ex.forEach(id=>{if(!(id in src)){ops.push(['d',id]);del++}});
+for(let i=0;i<ops.length;i+=400){const b=db.batch();ops.slice(i,i+400).forEach(o=>{const r=db.collection(c).doc(o[1]);o[0]=='s'?b.set(r,o[2]):b.delete(r)});await b.commit()}
+sum.push(lb+': เพิ่ม '+add+(rep?' · เขียนทับ '+upd+' · ลบ '+del:''))}catch(e){errs.push(lb+' — '+(e.code||e.message))}}
+bkSet({busy:'',msg:'กู้คืนเสร็จแล้ว\n'+sum.join('\n'),err:errs,file:null,fn:'',cur:null})}
+function bkHtml(){const f=BKS,last=bkLast(),days=last?Math.floor((Date.now()-new Date(last))/864e5):null,busy=!!f.busy;
+const lastTx=last?`สำรองล่าสุดจากเครื่องนี้: <b>${th(last.slice(0,10))}</b> (${days} วันที่แล้ว)${days>30?' <b style="color:#C2410C">· ควรสำรองใหม่</b>':''}`:'<b style="color:#C2410C">เครื่องนี้ยังไม่เคยสำรองข้อมูล</b>';
+const note=(f.msg?`<div class="bk-m">${esc(f.msg).replace(/\n/g,'<br>')}</div>`:'')+(f.err&&f.err.length?`<div class="bk-m bad">อ่าน/เขียนไม่สำเร็จ ${f.err.length} ชุด (ตรวจสอบสิทธิ์ใน Firebase rules)<br>${f.err.map(esc).join('<br>')}</div>`:'');
+let rs='';
+if(f.file){const d=f.file;rs=`<div class="bk-f">ไฟล์: <b>${esc(f.fn)}</b> · สำรองเมื่อ ${esc((d.createdAt||'').replace('T',' ').slice(0,16))}${d.by?' โดย '+esc(d.by):''}</div>
+<div class="bk-t"><div class="bk-h"><span></span><span>ข้อมูล</span><span>ในไฟล์</span><span>ตอนนี้ในระบบ</span></div>${BK_COLS.map(([c,lb])=>{const n=d.collections[c]?Object.keys(d.collections[c]).length:null;if(n==null)return'';return `<label class="bk-r${c=='users'?' off':''}"><input type="checkbox" ${f.sel[c]?'checked':''} ${c=='users'||busy?'disabled':''} onchange="BKS.sel['${c}']=this.checked"><span>${esc(lb)}</span><span>${n.toLocaleString()}</span><span>${f.cur?(f.cur[c]==null?'—':f.cur[c].toLocaleString()):'…'}</span></label>`}).join('')}</div>
+<div class="bk-md"><label><input type="radio" name="bkm" ${f.mode=='add'?'checked':''} onchange="bkSet({mode:'add'})"> <b>เติมเฉพาะที่ขาด</b> — ไม่แตะข้อมูลที่มีอยู่ เพิ่มเฉพาะรายการที่หายไป (ปลอดภัย)</label>
+<label><input type="radio" name="bkm" ${f.mode=='replace'?'checked':''} onchange="bkSet({mode:'replace'})"> <b>แทนที่ทั้งหมด</b> — ทำให้ข้อมูลที่เลือกเหมือนในไฟล์ (เขียนทับและลบรายการที่ไม่มีในไฟล์) · ระบบจะดาวน์โหลดไฟล์สำรองข้อมูลปัจจุบันให้ก่อนอัตโนมัติ</label></div>
+${f.mode=='replace'?`<div class="bk-cf">พิมพ์คำว่า <b>กู้คืน</b> เพื่อยืนยัน <input class="in" id="bk_cf" autocomplete="off" style="max-width:160px;margin-left:6px"></div>`:''}
+<div class="bk-a"><button class="btn" ${busy?'disabled':''} onclick="bkRestore()">เริ่มกู้คืน</button><button class="btn o" ${busy?'disabled':''} onclick="bkSet({file:null,fn:'',cur:null,msg:''})">ยกเลิก</button></div>`}
+return `<div class="card"><h3>สำรองข้อมูล</h3><p class="bk-p">${lastTx}</p><p class="bk-p">ดาวน์โหลดข้อมูลทั้งหมดในระบบเก็บไว้ที่เครื่องของคุณ · ไฟล์จะมีข้อมูลส่วนบุคคล (เช่น เลขบัตรประชาชน) <b>เก็บไว้ในที่ปลอดภัย ไม่ส่งต่อในไลน์กลุ่ม</b> · ไฟล์ที่แนบในระบบ (Storage) ไม่รวมในไฟล์สำรอง เก็บเฉพาะรายชื่อและลิงก์</p>
+<div class="bk-a"><button class="btn" ${busy?'disabled':''} onclick="bkJson()">${f.busy=='dl'?'กำลังสำรอง …':'ดาวน์โหลดไฟล์สำรอง (.json) · ใช้กู้คืนได้'}</button><button class="btn o" ${busy?'disabled':''} onclick="bkXls()">ดาวน์โหลดเป็น Excel · ใช้เปิดดู</button></div></div>
+<div class="card" style="margin-top:16px"><h3>กู้คืนข้อมูล</h3><p class="bk-p">เลือกไฟล์สำรอง (.json) ที่เคยดาวน์โหลดไว้ ระบบจะแสดงตัวอย่างให้ตรวจก่อน ยังไม่เขียนอะไรจนกว่าจะกด "เริ่มกู้คืน"</p>
+${f.file?'':`<input type="file" accept=".json,application/json" ${busy?'disabled':''} onchange="bkLoad(this.files[0]);this.value=''">`}${rs}</div>${note?`<div style="margin-top:16px">${note}</div>`:''}`}
+V.bak=()=>{if(!me||me.role!='founder')return PT('สำรองข้อมูล','เฉพาะผู้ก่อตั้ง');return PT('สำรองข้อมูล','ดาวน์โหลดข้อมูลทั้งหมดเก็บไว้ และกู้คืนกลับเมื่อข้อมูลเสียหาย (เฉพาะผู้ก่อตั้ง)')+`<div id="bk_wrap">${bkHtml()}</div>`};
 function buildIndex(){const idx=[];
 MENU.forEach(m=>idx.push({label:m[1],sub:'เมนู',route:m[0]}));idx.push({label:HWM[1],sub:'เมนู',route:'hw'});
-SYS.forEach(m=>{if(me&&(me.role=='founder'||!['usr','staff'].includes(m[0])))idx.push({label:m[1],sub:'ระบบกลาง',route:m[0]})});
+SYS.forEach(m=>{if(me&&(me.role=='founder'||!['usr','staff','bak'].includes(m[0])))idx.push({label:m[1],sub:'ระบบกลาง',route:m[0]})});
 DIV.forEach(d=>idx.push({label:d[1],sub:'งาน 4 ฝ่าย',route:'div:'+d[0]}));
 PP.forEach(p=>idx.push({label:dn(p).trim(),sub:'บุคลากร'+(p.po?' · '+p.po:''),route:'profile:'+p.id}));
 ST.forEach(s=>idx.push({label:((s.tt||'')+s.fn+' '+s.ln).trim(),sub:'นักเรียน · '+CT[s.ty][0]+' · '+LV[s.lv],route:'stud:'+s.ty+s.lv}));
