@@ -3409,7 +3409,23 @@ let CUR='home';
 let _rsT=0,_rsF=0,_rsH='',_rsC='',_rsQ=false,_rsE=null;
 function renderSoon(){if(!_rsF)_rsF=Date.now();clearTimeout(_rsT);const w=Date.now()-_rsF;_rsT=setTimeout(()=>{_rsF=0;_rsQ=true;try{render()}finally{_rsQ=false}},w>1200?0:300)}
 function render(){const[k,s]=CUR.split(':'),m=[...MENU,...SYS,HWM].find(x=>x[0]==k);
-const _h=(k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='supply'?V.supply():k=='admin'?V.admin(s):k=='draft'?V.draft():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt(s):k=='ann'?V.ann():k=='att'?V.att(s):k=='hw'?V.hw(s):V.gen(m?m[1]:''));if(_rsQ&&_h===_rsH&&_rsC===CUR&&_rsE&&$('#view').firstElementChild===_rsE){bcRender(k,s);return}_rsH=_h;_rsC=CUR;$('#view').innerHTML=_h;_rsE=$('#view').firstElementChild;bcRender(k,s)}
+const _h=(k=='home'?V.home():k=='org'?V.org():k=='profile'?V.profile(s):k=='hr'?V.hr():k=='stu'?V.stu():k=='cal'?V.cal(s):k=='stud'?V.stud(s):k=='bd'?V.bd(s):k=='saving'?V.saving(s):k=='par'?V.par():k=='div'?V.div(s):k=='supply'?V.supply():k=='admin'?V.admin(s):k=='draft'?V.draft():k=='usr'?V.usr():k=='staff'?V.staff():k=='comm'?V.comm():k=='score'?V.score(s):k=='tt'?V.tt(s):k=='ann'?V.ann():k=='att'?V.att(s):k=='hw'?V.hw(s):V.gen(m?m[1]:''));if(_rsQ&&_h===_rsH&&_rsC===CUR&&_rsE&&$('#view').firstElementChild===_rsE){bcRender(k,s);return}if(_rsQ&&_rsC===CUR&&_rsE&&$('#view').firstElementChild===_rsE){const t=document.createElement('template');t.innerHTML=_h;try{rsMorph($('#view'),t.content);_rsH=_h;_rsE=$('#view').firstElementChild;bcRender(k,s);return}catch(e){}}
+_rsH=_h;_rsC=CUR;$('#view').innerHTML=_h;_rsE=$('#view').firstElementChild;bcRender(k,s)}
+/* อัปเดตเฉพาะส่วนที่เปลี่ยน (ไม่สร้างองค์ประกอบใหม่ทั้งหน้า) เพื่อไม่ให้แอนิเมชันเริ่มเล่นซ้ำจนกระพริบ */
+function rsMorph(a,b){const A=[...a.childNodes],B=[...b.childNodes],n=Math.max(A.length,B.length);
+for(let i=0;i<n;i++){const x=A[i],y=B[i];
+if(!y){x.remove();continue}
+if(!x){a.appendChild(y.cloneNode(true));continue}
+if(x.nodeType!==y.nodeType||x.nodeName!==y.nodeName){a.replaceChild(y.cloneNode(true),x);continue}
+if(x.nodeType!==1){if(x.nodeValue!==y.nodeValue)x.nodeValue=y.nodeValue;continue}
+if(x.isEqualNode(y))continue;
+const tg=x.nodeName;
+if(tg=='SCRIPT'||tg=='IFRAME'||tg=='CANVAS'||tg=='VIDEO'){a.replaceChild(y.cloneNode(true),x);continue}
+[...x.attributes].forEach(t=>{if(!y.hasAttribute(t.name))x.removeAttribute(t.name)});
+[...y.attributes].forEach(t=>{if(x.getAttribute(t.name)!==t.value&&!((tg=='INPUT'||tg=='TEXTAREA'||tg=='SELECT')&&document.activeElement===x&&t.name=='value'))x.setAttribute(t.name,t.value)});
+if(tg=='SELECT'||tg=='INPUT'||tg=='TEXTAREA'){if(document.activeElement!==x){if(tg=='INPUT'&&(x.type=='checkbox'||x.type=='radio'))x.checked=y.hasAttribute('checked');else if('value' in x&&tg!='SELECT')x.value=y.getAttribute('value')!=null?y.getAttribute('value'):(tg=='TEXTAREA'?y.textContent:x.value)}}
+rsMorph(x,y);
+if(tg=='SELECT'&&document.activeElement!==x){const o=[...y.querySelectorAll('option')].findIndex(q=>q.hasAttribute('selected'));if(o>=0)x.selectedIndex=o}}}
 
 /* ===== เส้นทางนำทาง (breadcrumb) ===== */
 function bcTrail(k,s){const M=x=>{const m=MENU.find(y=>y[0]==x)||SYS.find(y=>y[0]==x)||(x=='hw'?HWM:null);return m?m[1]:''};
