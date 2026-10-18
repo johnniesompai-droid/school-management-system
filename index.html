@@ -3533,7 +3533,7 @@ unsub.push(db.collection('people').onSnapshot(qs=>{PP=qs.docs.map(d=>({id:d.id,.
 unsub.push(db.collection('students').onSnapshot(qs=>{ST=qs.docs.map(d=>({id:d.id,...d.data()}));renderSoon()},e=>alert('โหลดข้อมูลนักเรียนไม่สำเร็จ: '+e.message)));
 unsub.push(db.collection('homeroom').onSnapshot(qs=>{HR={};qs.docs.forEach(d=>HR[d.id]=d.data().ids||[]);renderSoon()},e=>{}));
 unsub.push(db.collection('events').onSnapshot(qs=>{EV=qs.docs.map(d=>({id:d.id,...d.data()}));renderSoon()},e=>{}));
-unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.data():{ids:[]};render()},e=>{}));
+unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.data():{ids:[]};renderSoon()},e=>{}));
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data()||{});renderSoon()},e=>{}));
 unsub.push(db.collection('vendors').onSnapshot(qs=>{VEN=qs.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(a.shop||'').localeCompare(String(b.shop||''),'th'));if(CUR=='supply')renderSoon();venRefresh()},e=>{}));
 unsub.push(db.collection('budgetprojects').onSnapshot(qs=>{BP=qs.docs.map(d=>({id:d.id,...d.data()}));renderSoon()},e=>{}));
