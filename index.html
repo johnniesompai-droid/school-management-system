@@ -1044,6 +1044,15 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding
 @media(max-width:600px){.stcd{display:none}.str{flex-wrap:wrap}.stm{flex-basis:calc(100% - 120px)}.sbt{margin-left:auto}}@media(prefers-reduced-motion:reduce){.str,.sta,.sdt,.cake{animation:none;transition:none}}
 @media(prefers-reduced-motion:reduce){.hrc,.hrc::before,.hrc::after,.hrc-sh,.hrc-av{animation:none}}
 .tm-now{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}.tm-now b{font-size:1.15rem;color:#1F3F99}.tm-now span{color:var(--mute);font-size:.86rem}.tm-y{display:flex;align-items:center;margin:6px 0 12px;font-size:.88rem}.tm-g{display:grid;gap:10px}.tm-r{display:grid;grid-template-columns:170px 190px 130px 1fr;gap:10px;align-items:center;font-size:.88rem}.tm-r em{font-style:normal;color:var(--mute);font-size:.82rem}.tm-r small{color:var(--mute);font-size:.74rem;text-align:right}@media(max-width:820px){.tm-r{grid-template-columns:1fr}.tm-r small{text-align:left}}
+.sx-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}.sx-tabs a{display:inline-flex;align-items:center;gap:8px;padding:7px 14px 7px 8px;border-radius:999px;background:#fff;border:1px solid var(--line);cursor:pointer;font-size:.84rem;color:#4B5675;transition:transform .2s,box-shadow .2s}.sx-tabs a i{font-style:normal;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#EEF2FF;color:#4F6FD8;font-size:.74rem;font-weight:600}.sx-tabs a:hover{transform:translateY(-2px);box-shadow:0 6px 14px -8px rgba(60,70,150,.5)}.sx-tabs a.on{background:linear-gradient(135deg,#E6EEFF,#F1EAFF);border-color:#B9C8F5;color:#1F2A5C;font-weight:600}.sx-tabs a.on i{background:#4F6FD8;color:#fff}
+.sx-logo{display:flex;gap:16px;align-items:center;margin:10px 0}.sx-logo img{width:76px;height:76px;border-radius:50%;object-fit:contain;background:#fff;border:1px solid var(--line);padding:4px}
+.sx-reg{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 14px;border-radius:14px;margin:6px 0 10px}.sx-reg i{width:12px;height:12px;border-radius:50%}.sx-reg.on{background:#E9F7EF;color:#1E6B45}.sx-reg.on i{background:#2BB58A}.sx-reg.off{background:#FFF1E6;color:#A24410}.sx-reg.off i{background:#EF6B4B}.sx-reg span{font-size:.82rem}
+.sx-r{padding:10px 12px;border:1px solid var(--line);border-radius:14px;margin:8px 0;background:#FBFCFF}.sx-rh{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}.sx-rh>span{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sx-rh>span small{display:block;color:var(--mute);font-size:.76rem;width:100%}.sx-rh select{width:auto;min-width:200px;margin:0}.sx-tg{font-style:normal;font-size:.74rem;padding:2px 10px;border-radius:999px;background:#EEF2FF;color:#4F6FD8}
+.sx-u{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:4px 12px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:.84rem}.sx-u label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.sx-sum{margin:14px 0 6px;font-size:.9rem}.sx-bar{height:10px;border-radius:999px;background:#EAEFFB;overflow:hidden;margin-top:6px}.sx-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#7DA4F7,#A98BEF);transition:width .6s}.sx-bar.s{height:6px;grid-column:1/-1;margin:0}
+.sx-tb{display:grid;gap:6px;margin-top:10px}.sx-tr{display:grid;grid-template-columns:1fr 120px 100px;gap:4px 10px;align-items:center;font-size:.84rem}.sx-tr em{font-style:normal;color:var(--mute);text-align:right}.sx-tr b{text-align:right;font-weight:600}
+.sx-au{display:grid;gap:6px;margin-top:12px}.sx-ar{display:grid;grid-template-columns:14px 150px 150px 60px 140px 1fr;gap:8px;align-items:center;padding:7px 10px;border-radius:12px;background:#F7F9FF;border:1px solid #E6ECFB;font-size:.82rem}.sx-ar i{width:10px;height:10px;border-radius:50%;background:#7DA4F7}.sx-ar.delete i{background:#EF4B5F}.sx-ar.set i{background:#2BB58A}.sx-ar.cleanup i,.sx-ar.restore i{background:#F2A93B}.sx-ar em{font-style:normal;font-weight:600}.au-t,.au-c{color:var(--mute)}.au-d{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:760px){.sx-ar{grid-template-columns:14px 1fr 1fr;}.sx-ar .au-c,.sx-ar .au-d{grid-column:2/-1}.sx-tr{grid-template-columns:1fr 90px}.sx-tr em{display:none}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -1091,7 +1100,7 @@ I.pen='<path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/>';
 const ic=(n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"${c?` class="${c}"`:''}>${I[n]}</svg>`;
 const MENU=[['home','หน้าหลัก','home'],['hr','บุคลากร','users','hr'],['div','งาน 4 ฝ่าย','grid','div'],['admin','งานธุรการ','doc','adm'],['draft','ร่างหนังสือราชการ','pen'],['stu','นักเรียน & ผู้ปกครอง','cap','stu'],['saving','ออมเงิน','coin'],['att','การมาเรียน','cal'],['tt','ตารางสอน & ตารางเรียน','cal','tt'],['score','บันทึกคะแนนนักเรียน','clip'],['comm','หนังสือเข้า & หนังสือออก','chat']];
 const HWM=['hw','น้ำหนัก ส่วนสูง','scale'];
-const SYS=[['staff','ทะเบียนบุคลากร','users'],['usr','ผู้ใช้งาน / สิทธิ์การใช้งาน','user'],['acct','บัญชีของฉัน','user'],['set','ตั้งค่าระบบ','gear'],['bak','สำรองข้อมูล','db'],['ie','Import / Export','ud'],['api','API & Integration','code']];
+const SYS=[['staff','ทะเบียนบุคลากร','users'],['usr','ผู้ใช้งาน / สิทธิ์การใช้งาน','user'],['acct','บัญชีของฉัน','user'],['set','ตั้งค่าระบบ','gear'],['bak','สำรองข้อมูล','db']];
 const DIV=[['academic','กลุ่มบริหารงานวิชาการ','cap','#2F6BFF'],['budget','กลุ่มบริหารงานแผนงานและงบประมาณ','coin','#F5A524'],['personnel','กลุ่มบริหารงานบุคคล','users','#8B5CF6'],['general','กลุ่มบริหารงานทั่วไป','bld','#22B573']];
 const POS_CAT={academic:['หัวหน้าฝ่ายบริหารงานวิชาการ','หัวหน้างานพัฒนาหลักสูตรสถานศึกษา','หัวหน้างานวัดผลและประเมินผลการเรียน','เจ้าหน้าที่งานวัดผลและประเมินผล','หัวหน้างานทะเบียนนักเรียน','เจ้าหน้าที่งานทะเบียน','หัวหน้างานแนะแนวการศึกษา','หัวหน้างานห้องสมุดและแหล่งเรียนรู้ (บรรณารักษ์)','หัวหน้ากลุ่มสาระการเรียนรู้','หัวหน้างานนิเทศการศึกษา','หัวหน้างานส่งเสริมวิจัยและนวัตกรรมการเรียนรู้'],
 budget:['หัวหน้าฝ่ายบริหารงานงบประมาณ','หัวหน้างานพัสดุ','หัวหน้าเจ้าหน้าที่พัสดุ','เจ้าหน้าที่พัสดุ','หัวหน้างานการเงิน','เจ้าหน้าที่การเงิน','หัวหน้างานบัญชี','เจ้าหน้าที่บัญชี','หัวหน้างานระดมทรัพยากรและลงทุนเพื่อการศึกษา','หัวหน้างานแผนงานและสารสนเทศงบประมาณ'],
@@ -1440,10 +1449,10 @@ const DR_CSS=`.dr-a4{box-sizing:border-box;width:210mm;min-height:297mm;backgrou
 .dr-a4 .bz-tb{border-collapse:collapse;width:100%;table-layout:fixed;font-size:14pt;line-height:6.4mm}.dr-a4 .bz-tb th,.dr-a4 .bz-tb td{border:.3mm solid #000;padding:.4mm 1.4mm;overflow-wrap:anywhere;vertical-align:middle}.dr-a4 .bz-tb th{text-align:center;font-weight:700}.dr-a4 .bz-tb .c{text-align:center}.dr-a4 .bz-tb .r{text-align:right}.dr-a4 .bz-tb .l{text-align:left}.dr-a4 .bz-tb .b{font-weight:700}
 .dr-a4 .bz-bx{border-collapse:collapse;width:100%;table-layout:fixed;font-size:14pt;line-height:6.4mm}.dr-a4 .bz-bx td{border:.3mm solid #000;padding:.6mm 2mm 1.2mm;vertical-align:top}.dr-a4 .bz-cols{display:flex;align-items:flex-start;gap:0}.dr-a4 .bz-it{white-space:pre-wrap;overflow-wrap:anywhere}.dr-a4 .bz-it.c{text-align:center}.dr-a4 .bz-it.l{text-align:left}.dr-a4 .bz-it.b{font-weight:700}`;
 const DR_SCH={name:'โรงเรียนบ้านผาเยอ',addr:'ตำบลกองก๋อย อำเภอสบเมย',prov:'จังหวัดแม่ฮ่องสอน 58110',pre:'ศธ 04116.136/',to:'ผู้อำนวยการสำนักงานเขตพื้นที่การศึกษาประถมศึกษาแม่ฮ่องสอน เขต 2',tel:'โทร. 065 - 254-1599',mail:'Email : banphayoe@gmail.com'};
-const DR_ORG=DR_SCH.name+' '+DR_SCH.addr.replace(/^.*?(อำเภอ\S+).*$/,'$1')+' '+DR_SCH.prov.replace(/\s*\d+/g,'').trim();
+let DR_ORG=DR_SCH.name+' '+DR_SCH.addr.replace(/^.*?(อำเภอ\S+).*$/,'$1')+' '+DR_SCH.prov.replace(/\s*\d+/g,'').trim();
 const DR_CLOSE=['จึงเรียนมาเพื่อโปรดทราบ','จึงเรียนมาเพื่อโปรดทราบ และพิจารณาดำเนินการต่อไป','จึงเรียนมาเพื่อโปรดพิจารณา','จึงเรียนมาเพื่อโปรดทราบและดำเนินการต่อไป'];
 function drDef(){const d=drDef0();drSigInit(d);return d}
-function drDef0(){const dir=PP.find(p=>/ผู้อำนวยการ/.test(p.po||'')&&!/รอง/.test(p.po||''));
+function drDef0(){const dir=PP.find(isDirP);
 return {no:DR_SCH.pre,name:DR_SCH.name,addr:DR_SCH.addr,prov:DR_SCH.prov,date:toISO(new Date()),subject:'ส่ง',to:DR_SCH.to,ref:'',encs:[{t:'',n:'1',u:'ชุด'}],p1:'ตามที่ ',p2:'บัดนี้ '+DR_SCH.name+' ',close:DR_CLOSE[1],salute:'ขอแสดงความนับถือ',signer:dir?'('+dn(dir)+')':'(                    )',pos:dir?((dir.po||'ผู้อำนวยการ')+(/โรงเรียน/.test(dir.po||'')?'':DR_SCH.name)):'ผู้อำนวยการ'+DR_SCH.name,org:DIV[1][1],tel:DR_SCH.tel,mail:DR_SCH.mail,arab:false}}
 let DR=null;
 const drTh=(d,t)=>d.arab?String(t):String(t).replace(/\d/g,c=>'๐๑๒๓๔๕๖๗๘๙'[c]);
@@ -2080,7 +2089,7 @@ const bzNet=d=>bzPrice(d)-bzWh(d)-(actN(d.fine)||0);
 function bzFind(re,not){const ok=s=>re.test(s)&&!(not&&not.test(s));const f=PP.find(p=>ok(String(p.po||'')))||PP.find(p=>(p.wp||[]).some(ok));return f?dn(f):''}
 function bzDates(d){d.dCmd=d.dDec=d.dAnn=d.dQuote=d.dReq;d.dPO=bzAddWd(d.dReq,1);d.dDue=bzAddWd(d.dPO,d.days||7);d.dDeliv=d.dInsp=d.dDue;d.dPay=bzAddWd(d.dInsp,3)}
 function bzDef(){const t=toISO(new Date());
-const d={kind:'buy',org:DR_ORG,affil:'สพป.แม่ฮ่องสอน เขต 2',schAddr:'หมู่ 2 ตำบลกองก๋อย อำเภอสบเมย จังหวัดแม่ฮ่องสอน 58110',to:'ผู้อำนวยการ'+DR_SCH.name,
+const d={kind:'buy',org:DR_ORG,affil:SCH_I().affil,schAddr:SCH_I().fullAddr,to:'ผู้อำนวยการ'+DR_SCH.name,
 pj:'',act:'',item:'',reason:'',plan:'',grp:'',resp:'',budget:'',days:'7',warr:'',
 mode:'buy',noReq:'',noCmd:'',noDec:'',noQ:'',noPO:'',noInv:'',noPay:'',dReq:t,dCmd:t,dDec:t,dAnn:t,dQuote:t,dPO:t,dDue:t,dDeliv:t,dInsp:t,dPay:t,
 officer:bzFind(/เจ้าหน้าที่พัสดุ/,/หัวหน้า/),head:bzFind(/หัวหน้า.*พัสดุ/),fin:bzFind(/การเงิน/),dir:bzNm(actAuto('dir')),
@@ -3485,7 +3494,7 @@ default:{const m=M(k);return m?[[k,m]]:[]}}}
 function bcRender(k,s){const v=$('#view');if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;
 const h=`<nav class="bc" aria-label="เส้นทางนำทาง"><a data-r="home" class="bc-h" title="หน้าหลัก">${ic('home')}</a>${t.map((c,i)=>`<i class="bc-s">›</i>${i==t.length-1?`<b>${esc(c[1])}</b>`:`<a data-r="${c[0]}">${esc(c[1])}</a>`}`).join('')}</nav>`;
 v.insertAdjacentHTML('afterbegin',h)}
-function go(r){const[k]=r.split(':');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
+function go(r){const[k]=r.split(':');if(me&&me.role!='founder'&&!routeOk(k))return go('home');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
 CUR=r;render();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving'||k=='att'||k=='hw')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
 const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd'||k=='hw')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
@@ -3505,7 +3514,7 @@ let HSV=[],HSVL=false,__svi=0,AN=[],annSlots=[null,null,null],annSeen={},annTk=0
 let U=[],S=[],PP=[],ST=[],HR={},EV=[],me=null,founderExists=false,suppress=false,unsub=[];
 function auth(m){const fo=founderExists;m=fo?(m||'login'):'setup';
 const T={setup:['ตั้งค่าผู้ก่อตั้งระบบ','สร้างบัญชีผู้ก่อตั้ง (ทำครั้งเดียว)'],login:['เข้าสู่ระบบ','โรงเรียนบ้านผาเยอ'],reg:['สมัครสมาชิก','ต้องมีชื่อในทะเบียนบุคลากร และรอผู้ก่อตั้งอนุมัติ']}[m];
-$('#auth').innerHTML=`<div class="ac"><img src="${$('.brand img').src}"><h2>${T[0]}</h2><p>${T[1]}</p><form onsubmit="act('${m}');return false">${m=='login'?'':'<input id="fn" name="name" placeholder="ชื่อ-นามสกุล" autocomplete="name">'}<input id="fu" name="username" placeholder="ชื่อผู้ใช้ (a-z, 0-9)" autocomplete="username" autocapitalize="none"><div class="pw"><input id="fp" name="password" type="password" placeholder="รหัสผ่าน (อย่างน้อย 6 ตัว)" autocomplete="${m=='login'?'current-password':'new-password'}"><button type="button" class="eye" title="แสดง/ซ่อนรหัสผ่าน" onclick="pwEye('fp',this)">👁</button></div><div id="fm" class="fm"></div><button class="btn" type="submit" style="width:100%">${m=='login'?'เข้าสู่ระบบ':m=='reg'?'ส่งคำขอสมัคร':'สร้างบัญชี'}</button></form>${m=='login'&&fo?`<div class="sw" style="margin-top:6px"><a onclick="$('#fm').style.color='var(--mute)';$('#fm').textContent='ลืมรหัสผ่าน? กรุณาติดต่อผู้ก่อตั้งเพื่อรีเซ็ตบัญชีให้'">ลืมรหัสผ่าน?</a></div>`:''}${fo?`<div class="sw">${m=='login'?`ยังไม่มีบัญชี? <a onclick="auth('reg')">สมัครสมาชิก</a>`:`<a onclick="auth('login')">กลับไปเข้าสู่ระบบ</a>`}</div>`:''}</div>`;
+$('#auth').innerHTML=`<div class="ac"><img src="${$('.brand img').src}"><h2>${T[0]}</h2><p>${m=='login'?esc(SCH_I().name):T[1]}</p><form onsubmit="act('${m}');return false">${m=='login'?'':'<input id="fn" name="name" placeholder="ชื่อ-นามสกุล" autocomplete="name">'}<input id="fu" name="username" placeholder="ชื่อผู้ใช้ (a-z, 0-9)" autocomplete="username" autocapitalize="none"><div class="pw"><input id="fp" name="password" type="password" placeholder="รหัสผ่าน (อย่างน้อย 6 ตัว)" autocomplete="${m=='login'?'current-password':'new-password'}"><button type="button" class="eye" title="แสดง/ซ่อนรหัสผ่าน" onclick="pwEye('fp',this)">👁</button></div><div id="fm" class="fm"></div><button class="btn" type="submit" style="width:100%">${m=='login'?'เข้าสู่ระบบ':m=='reg'?'ส่งคำขอสมัคร':'สร้างบัญชี'}</button></form>${m=='login'&&fo?`<div class="sw" style="margin-top:6px"><a onclick="$('#fm').style.color='var(--mute)';$('#fm').textContent='ลืมรหัสผ่าน? กรุณาติดต่อผู้ก่อตั้งเพื่อรีเซ็ตบัญชีให้'">ลืมรหัสผ่าน?</a></div>`:''}${fo&&!(PUBS.regOpen===false&&m=='login')?`<div class="sw">${m=='login'?`ยังไม่มีบัญชี? <a onclick="auth('reg')">สมัครสมาชิก</a>`:`<a onclick="auth('login')">กลับไปเข้าสู่ระบบ</a>`}</div>`:''}</div>`;
 $('#auth').style.display='grid'}
 const pendingScreen=m=>`<div class="ac"><img src="${$('.brand img').src}"><h2>รอการอนุมัติ</h2><p>${m}</p><button class="btn o" style="width:100%" onclick="out()">ออกจากระบบ</button></div>`;
 async function act(m){const v=i=>$('#'+i)?.value?.trim()||'',msg=t=>{$('#fm').style.color='var(--red)';$('#fm').textContent=t};
@@ -3515,6 +3524,7 @@ if(p.length<6)return msg('รหัสผ่านอย่างน้อย 6 
 const email=uname+'@phayoe-school.app';
 const ec=e=>({'auth/email-already-in-use':'ชื่อผู้ใช้นี้ถูกใช้แล้ว','auth/weak-password':'รหัสผ่านสั้นเกินไป','auth/invalid-credential':'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง','auth/wrong-password':'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง','auth/user-not-found':'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง','auth/too-many-requests':'ลองผิดหลายครั้งเกินไป กรุณารอสักครู่','auth/network-request-failed':'เชื่อมต่ออินเทอร์เน็ตไม่ได้ กรุณาลองใหม่'}[e.code]||('เกิดข้อผิดพลาด: '+e.message));
 if(m=='login'){try{await fbAuth.signInWithEmailAndPassword(email,p)}catch(e){msg(ec(e))}return}
+if(m=='reg'&&PUBS.regOpen===false)return msg('ขณะนี้ปิดรับสมัครสมาชิกใหม่ กรุณาติดต่อผู้ก่อตั้ง');
 if(!n)return msg('กรอกชื่อ-นามสกุล');
 let cred;try{cred=await fbAuth.createUserWithEmailAndPassword(email,p)}catch(e){return msg(ec(e))}
 const newUid=cred.user.uid;suppress=true;
@@ -3531,7 +3541,7 @@ else{await fbAuth.signOut();suppress=false;auth('login');$('#fm').style.color='#
 }catch(e){await cred.user.delete().catch(()=>{});msg(ec(e))}
 finally{suppress=false}}
 function mkNav(){const f=me.role=='founder',sys=SYS.filter(m=>f||!['usr','staff','bak'].includes(m[0]));
-$('#nav').innerHTML=MENU.map(nav).join('')+'<h6>ระบบกลาง</h6>'+sys.map(nav).join('');
+$('#nav').innerHTML=MENU.filter(m=>routeOk(m[0])).map(nav).join('')+'<h6>ระบบกลาง</h6>'+sys.map(nav).join('');
 const n=U.filter(u=>u.st=='pending').length,a=$('[data-r=usr]');if(a&&n)a.innerHTML+=`<i class="bd">${n}</i>`}
 /* จับคู่ชื่อผู้ใช้ (อังกฤษหรือไทย) กับรายชื่อบุคลากร เพื่อดึงรูปมาแสดง */
 const NM_TH={K:'กขฃคฅฆ',T:'ตถทธฑฒดฎฏฐ',P:'บปผฝพฟภ',S:'สศษซ',J:'จฉชฌ',R:'รฤลฬฦ',N:'นณ',M:'ม',W:'ว'};
@@ -3576,7 +3586,7 @@ unsub.push(db.collection('homeroom').onSnapshot(qs=>{HR={};qs.docs.forEach(d=>HR
 unsub.push(db.collection('events').onSnapshot(qs=>{EV=qs.docs.map(d=>({id:d.id,...d.data()}));renderSoon()},e=>{}));
 unsub.push(db.collection('boarding').doc('list').onSnapshot(d=>{BD=d.exists?d.data():{ids:[]};renderSoon()},e=>{}));
 unsub.push(db.collection('divdocs').onSnapshot(qs=>{DD={};qs.docs.forEach(d=>DD[d.id]=d.data()||{});renderSoon()},e=>{}));
-unsub.push(db.collection('settings').doc('school').onSnapshot(d=>{SETT=d.exists?d.data():{};termUpd();if(CUR=='set')renderSoon()},e=>{}));unsub.push(db.collection('vendors').onSnapshot(qs=>{VEN=qs.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(a.shop||'').localeCompare(String(b.shop||''),'th'));if(CUR=='supply')renderSoon();venRefresh()},e=>{}));
+unsub.push(db.collection('settings').doc('public').onSnapshot(d=>{PUBS=d.exists?d.data():{};applyInfo();if(CUR=='set')renderSoon()},e=>{}));unsub.push(db.collection('settings').doc('perm').onSnapshot(d=>{PERM=d.exists?d.data():{};mkNav();if(me&&!routeOk(CUR.split(':')[0]))go('home');else if(CUR!='set')renderSoon()},e=>{}));unsub.push(db.collection('settings').doc('school').onSnapshot(d=>{SETT=d.exists?d.data():{};termUpd();if(CUR=='set')renderSoon()},e=>{}));unsub.push(db.collection('vendors').onSnapshot(qs=>{VEN=qs.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(a.shop||'').localeCompare(String(b.shop||''),'th'));if(CUR=='supply')renderSoon();venRefresh()},e=>{}));
 unsub.push(db.collection('budgetprojects').onSnapshot(qs=>{BP=qs.docs.map(d=>({id:d.id,...d.data()}));renderSoon()},e=>{}));
 unsub.push(db.collection('savingtx').onSnapshot(qs=>{HSV=qs.docs.map(d=>{const x=d.data();return{s:x.studentId,w:x.type=='withdraw'?-1:1,a:+x.amount||0,d:svDay(x.createdAt)}});HSVL=true;svHomeUpd()},e=>{}));
 attSub();wxLoad(true);ltListen();unsub.push(db.collection('registers').onSnapshot(qs=>{RG=qs.docs.map(d=>({id:d.id,...d.data()}));rgUpd();rgNtWatch()},e=>{}));unsub.push(db.collection('growth').onSnapshot(qs=>{HW={};qs.docs.forEach(d=>HW[d.id]=d.data());hwRefresh();if(!hwInit){hwInit=true;setTimeout(hwRemindToast,3500)}},e=>{}));
@@ -3587,7 +3597,7 @@ unsub.push(db.collection('memos').onSnapshot(qs=>{MM=qs.docs.map(d=>({id:d.id,..
 unsub.push(db.collection('notifreads').doc(me._id).onSnapshot(d=>{NR=new Set((d.exists&&d.data().ids)||[]);updateBell()},e=>{}));
 unsub.push(db.collection('scoresheets').where('ownerUid','==',me._id).onSnapshot(qs=>{SC=qs.docs.map(d=>({id:d.id,...d.data()}));if(!(CUR.startsWith('score:')&&qs.metadata.hasPendingWrites))renderSoon()},e=>{}));
 if(me.role=='founder')unsub.push(db.collection('users').onSnapshot(qs=>{U=qs.docs.map(d=>({_id:d.id,...d.data()}));mkNav();renderSoon()},e=>{}))}
-function detachListeners(){unsub.forEach(u=>u());unsub=[];SETT={};S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];if(attUn){attUn();attUn=null}ATT={};HW={};RG=[];LT=[];LTA={};LTB={};ltInit=false;hwInit=false;attLoaded={};attMLoaded={};attSubDate='';annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
+function detachListeners(){unsub.forEach(u=>u());unsub=[];SETT={};PERM={};S=[];PP=[];ST=[];HR={};EV=[];U=[];BD={ids:[]};DD={};AD={};TT={};MM=[];SC=[];BP=[];HSV=[];HSVL=false;AN=[];if(attUn){attUn();attUn=null}ATT={};HW={};RG=[];LT=[];LTA={};LTB={};ltInit=false;hwInit=false;attLoaded={};attMLoaded={};attSubDate='';annSlots=[null,null,null];annSeen={};NR=new Set();annInit=false;annPrev=new Set();mmInit=false;mmPrev=new Set()}
 function enter(){$('#auth').style.display='none';attachListeners();mkNav();updateUserBadge();go('home');termUpd()}
 function out(){fbAuth.signOut();detachListeners();me=null}
 function addS(){const n=$('#sn').value.trim().replace(/\s+/g,' ');if(!n)return;if(S.some(s=>s.n==n))return alert('มีชื่อนี้ในทะเบียนแล้ว');
@@ -3966,7 +3976,7 @@ function personCard(p){const c=PCAT.find(x=>x[0]==p.cat);
 return `<div class="pcard" data-r="profile:${p.id}">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<b>${esc(dn(p))}</b><small>${esc(p.po)||'-'}</small>${p.ph?`<div class="pcard-phone">${ic('phone')}${esc(p.ph)}</div>`:''}${c?`<span class="pcard-badge" style="background:${c[2]}1a;color:${c[2]}">${c[1]}</span>`:''}</div>`}
 function hrBanner(){return `<div class="hrb"><div class="hrb-bg"></div>
 <div class="hrb-c"><div class="hrb-t"><span class="hrb-i">${ic('user')}</span><div><h2>ข้อมูลบุคลากร</h2><p>แสดงรายชื่อบุคลากรของโรงเรียน พร้อมข้อมูลตำแหน่งและหน้าที่</p></div></div></div></div>`}
-function hrOverview(){const dirP=PP.find(p=>/ผู้อำนวยการ/.test(p.po||'')&&!/รอง/.test(p.po||''));
+function hrOverview(){const dirP=PP.find(isDirP);
 const others=PP.filter(p=>p!==dirP).filter(p=>(!hrCat||p.cat==hrCat)&&(!hrPo||p.po==hrPo));
 const poList=[...new Set(PP.map(p=>p.po).filter(Boolean))];
 const stats=`<div class="hrst">${PCAT.map(c=>{const n=PP.filter(p=>p.cat==c[0]).length;
@@ -3985,7 +3995,7 @@ function thaiFullDate(d){return `${d.getDate()} ${TH_MON_FULL[d.getMonth()]} ${d
 async function loadSavingTx(year){SVY=year;try{const qs=await db.collection('savingtx').where('year','==',year).get();SVTX=qs.docs.map(d=>({id:d.id,...d.data()}))}catch(e){SVTX=[];alert('โหลดข้อมูลไม่สำเร็จ: '+e.message)}render()}
 function changeSvYear2(y){svSel=null;loadSavingTx(+y)}
 function studentAgg(sid){let bal=0,dep=0,wd=0;SVTX.filter(t=>t.studentId==sid).forEach(t=>{if(t.type=='deposit'){bal+=+t.amount;dep++}else{bal-=+t.amount;wd++}});return{bal,dep,wd}}
-function isDirector(){if(!me)return false;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&/ผู้อำนวยการ/.test(mp.po||'')&&!/รอง/.test(mp.po||''))}
+function isDirector(){if(!me)return false;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&isDirP(mp))}
 function isHomeroomOf(k){if(!me)return false;const mp=PP.find(p=>p.id==me.sid);return!!(mp&&(HR[k]||[]).includes(mp.id))}
 function canViewSavingsClass(k){return!!me&&(me.role=='founder'||isDirector()||isHomeroomOf(k))}
 function canEditSavingsClass(k){return!!me&&(me.role=='founder'||(me.sv===true&&isHomeroomOf(k)))}
@@ -4144,7 +4154,7 @@ return hrBanner()+hrOverview()
 document.addEventListener('click',e=>{const a=e.target.closest('[data-q]');if(!a||me?.role!='founder')return;const[k,v]=a.dataset.q.split(':');if(k=='e')return openF(v);
 if(confirm('ลบข้อมูลนี้?')){PP=PP.filter(p=>p.id!=v);S=S.filter(s=>s.id!=v);db.collection('people').doc(v).delete().catch(()=>{});db.collection('staff').doc(v).delete().catch(()=>{});go('hr')}});
 const wkParse=v=>{v=tx(v);const R={academic:/วิชาการ/,budget:/แผนงาน|งบประมาณ/,personnel:/บุคคล/,general:/ทั่วไป/};return DIV.filter(d=>R[d[0]].test(v)).map(d=>d[0])};
-V.org=()=>{const dir=p=>/ผู้อำนวยการ/.test(p.po)&&!/รอง/.test(p.po),dep=p=>/รองผู้อำนวยการ/.test(p.po),has=(p,k)=>(p.wk||[]).includes(k),
+V.org=()=>{const dir=isDirP,dep=p=>/รองผู้อำนวยการ/.test(p.po),has=(p,k)=>(p.wk||[]).includes(k),
 pc=(p,c)=>`<div class="pc ${c||''}" style="display:flex;gap:8px;align-items:center;cursor:pointer" data-r="profile:${p.id}">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}</small></span></div>`,gp=PP.filter(p=>!dir(p)&&!(p.wk||[]).length);
 return PT('โครงสร้างบุคลากร','จัดตามตำแหน่งและงานที่รับผิดชอบจากข้อมูลในหน้าบุคลากร (กดที่ชื่อเพื่อดูรายละเอียด)')+`<div class="card oc"><div class="node dark">ผู้อำนวยการโรงเรียน${PP.filter(dir).map(p=>`<div style="margin-top:8px;cursor:pointer" data-r="profile:${p.id}">${p.im?`<img class="ph" style="width:64px;height:64px;border:2px solid #fff;display:block;margin:0 auto 4px" src="${p.im}">`:''}<b style="font-weight:500;font-size:.8rem;display:block">${esc(dn(p))}</b></div>`).join('')}</div><div class="vl"></div><div class="brn">${DIV.map(d=>{const ds=[],ms=PP.filter(p=>!dir(p)&&has(p,d[0]));
 return`<div><div class="node">${d[1]}</div>${ds.map(p=>pc(p,'dp')).join('')}${ms.map(p=>pc(p)).join('')}${ds.length||ms.length?'':'<div class="empty" style="margin-top:12px;min-height:70px">ยังไม่มีข้อมูล</div>'}</div>`}).join('')}</div></div>`+(gp.length?P(`ยังไม่ระบุงานที่รับผิดชอบ (${gp.length})`,gp.map(p=>pc(p)).join('')):'')};
@@ -4317,7 +4327,7 @@ else h+=ttCellHtml(`d${i+1}p${p}`,cells,can,mode)}
 h+='</tr>'});
 return h+'</tbody></table>'}
 const ttNameLine=p=>p?'('+dn(p)+')':'(............................................)';
-function ttSigs(first){const dir=PP.find(p=>/ผู้อำนวยการ/.test(p.po||'')),acad=PP.find(p=>/วิชาการ/.test(p.po||''));
+function ttSigs(first){const dir=PP.find(isDirP),acad=PP.find(p=>/วิชาการ/.test(p.po||''));
 return `<div class="ttsg"><div><i></i>${first}</div><div><i></i>${ttNameLine(acad)}<br>หัวหน้ากลุ่มบริหารงานวิชาการ</div><div><i></i>${ttNameLine(dir)}<br>ผู้อำนวยการโรงเรียนบ้านผาเยอ</div></div>`}
 const ttYears=()=>{const y=[ttYDef()-1,ttYDef(),ttYDef()+1];if(!y.includes(ttYear))y.push(ttYear);return y.sort()};
 const ttYSel=()=>`<select onchange="ttSet('year',this.value)">${ttYears().map(y=>`<option value="${y}"${y==ttYear?' selected':''}>${y}</option>`).join('')}</select>`;
@@ -4601,7 +4611,7 @@ const i=mo-36,M=R[0][i],S=R[1][i],L=R[2][i],z=(Math.pow(bmi/M,L)-1)/(L*S),k=z<-3
 function hwEval(x,rec){if(!rec||!(rec.w>0)||!(rec.h>0))return null;const bmi=hwBmi(rec.w,rec.h),mo=hwAgeMo(x.bd,rec.d||(rec.m?rec.m+'-15':''));return {bmi,mo,cls:hwCls(bmi,gd(x.tt),mo)}}
 function hwLatest(x){const r=hwRecs(x),ks=Object.keys(r).filter(k=>r[k]&&r[k].w>0&&r[k].h>0).sort();if(!ks.length)return null;const k=ks[ks.length-1];return {ym:k,rec:{...r[k],m:k},ev:hwEval(x,{...r[k],m:k})}}
 const hwChip=c=>c?`<span class="hwc" style="background:${c.bg};color:${c.c}" title="${esc(c.s||'')}">${esc(c.t)}</span>`:'';
-const hwCan=k=>!!me&&(me.role=='founder'||isHomeroomOf(k));
+const hwCan=k=>!!me&&(me.role=='founder'||isHomeroomOf(k)||permExtra('growth'));
 const hwAllK=()=>[...attCls('m'),...attCls('b')];
 const hwKeys=()=>hwAllK().filter(k=>(!hwScope||k[0]==hwScope)&&(hwLvF===''||+k.slice(1)==+hwLvF));
 const hwKLab=k=>LV[+k.slice(1)]+(k[0]=='m'?' · ห้องเรียนหลัก':' · ห้องเรียนสาขา');
@@ -4756,7 +4766,7 @@ function attSum(keys,d){const o={n:0,p:0,a:0,l:0,u:0,rooms:0,done:0};keys.forEac
 const attAll=()=>[...attCls('m'),...attCls('b')];
 const attPctOf=o=>(o.p+o.a+o.l)&&o.n?Math.round(o.p/o.n*100):null;
 function attPct(){return attPctOf(attSum(attAll(),attToday()))}
-const attCan=k=>!!me&&(me.role=='founder'||isHomeroomOf(k));
+const attCan=k=>!!me&&(me.role=='founder'||isHomeroomOf(k)||permExtra('att'));
 function attSub(){const d=attToday();if(attSubDate==d)return;attSubDate=d;if(attUn)attUn();
 attUn=db.collection('attendance').where('date','==',d).onSnapshot(qs=>{qs.docs.forEach(x=>{ATT[x.id]={id:x.id,...x.data()}});attLoaded[d]=1;attRefresh()},e=>{attLoaded[d]=1})}
 function attLoad(d){if(attLoaded[d])return;attLoaded[d]=1;db.collection('attendance').where('date','==',d).get().then(qs=>{qs.docs.forEach(x=>{ATT[x.id]={id:x.id,...x.data()}});attRefresh()}).catch(()=>{})}
@@ -5077,12 +5087,12 @@ const terms={...((SETT||{}).terms||{})};if(Object.keys(o).length)terms[Y]=o;else
 db.collection('settings').doc('school').set({terms,updatedAt:new Date().toISOString(),by:me.n||''}).then(()=>{SETT={...SETT,terms};termUpd();render()}).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message))}
 function setTermReset(Y){if(!confirm('ล้างวันที่ที่ตั้งไว้ของปีการศึกษา '+Y+' และกลับไปใช้ค่าเริ่มต้น?'))return;TERM_F.forEach(([k])=>{const e=document.getElementById('tm_'+k);if(e)e.value=''});setTermSave(Y)}
 let SETY=0;
-V.set=()=>{const f=me&&me.role=='founder',cur=termInfo(),Y=SETY||cur.year,g=termGet(Y),d=termDef(Y),ov=termOv(Y),by=new Date().getFullYear()+543,ys=[];for(let y=by-2;y<=by+2;y++)ys.push(y);
+V.set1=np=>{const f=me&&me.role=='founder',cur=termInfo(),Y=SETY||cur.year,g=termGet(Y),d=termDef(Y),ov=termOv(Y),by=new Date().getFullYear()+543,ys=[];for(let y=by-2;y<=by+2;y++)ys.push(y);
 const row=([k,lb])=>`<label class="tm-r"><span>${lb}</span>${f?`<input type="date" class="in" id="tm_${k}" value="${ov[k]||''}" style="margin:0;max-width:190px" oninput="this.nextElementSibling.textContent=this.value?th(this.value):'(ใช้ค่าเริ่มต้น)'"><em>${ov[k]?th(ov[k]):'(ใช้ค่าเริ่มต้น)'}</em>`:`<b>${th(g[k])}</b>`}<small>${ov[k]?'ตั้งเอง':'ค่าเริ่มต้น '+th(d[k])}</small></label>`;
-return PT('ตั้งค่าระบบ','ปีการศึกษาและภาคเรียน'+(f?' · ผู้ก่อตั้งกำหนดวันเปิด-ปิดภาคเรียนได้':''))+`<div class="card"><h3>สถานะปัจจุบัน</h3><div class="tm-now"><b>${esc(cur.label)}</b>${cur.st=='break'?(cur.next?`<span>เปิดภาคเรียนที่ ${cur.next.n}/${cur.next.year} วันที่ ${th(cur.next.open)}</span>`:''):`<span>ปิดภาคเรียนวันที่ ${th(cur.end)}</span>`}</div></div>
+return (np?'':PT('ตั้งค่าระบบ','ปีการศึกษาและภาคเรียน'))+`<div class="card"><h3>สถานะปัจจุบัน</h3><div class="tm-now"><b>${esc(cur.label)}</b>${cur.st=='break'?(cur.next?`<span>เปิดภาคเรียนที่ ${cur.next.n}/${cur.next.year} วันที่ ${th(cur.next.open)}</span>`:''):`<span>ปิดภาคเรียนวันที่ ${th(cur.end)}</span>`}</div></div>
 <div class="card" style="margin-top:16px"><h3>วันเปิด-ปิดภาคเรียน</h3><p class="bk-p">ถ้าไม่ได้ตั้งค่า ระบบใช้ค่าเริ่มต้นทุกปี: เปิดภาคเรียนที่ 1 วันที่ 16 พ.ค. · ปิดภาคเรียนที่ 1 วันที่ 10 ต.ค. · เปิดภาคเรียนที่ 2 วันที่ 1 พ.ย. · ปิดภาคเรียนที่ 2 วันที่ 31 มี.ค. นอกช่วงนี้ถือเป็น "ปิดภาคเรียน"</p>
 <label class="tm-y">ปีการศึกษา <select class="in" style="max-width:140px;margin:0 0 0 8px" onchange="SETY=+this.value;render()">${ys.map(y=>`<option value="${y}" ${y==Y?'selected':''}>${y}</option>`).join('')}</select></label>
-<div class="tm-g">${TERM_F.map(row).join('')}</div>
+<p class="bk-p"><b>ปีการศึกษา ${Y}</b> · เปิด ${th(g.s1o)} · ปิด ${th(g.s2c)}</p><div class="tm-g">${TERM_F.map(row).join('')}</div>
 ${f?`<div class="bk-a"><button class="btn" onclick="setTermSave(${Y})">บันทึก</button><button class="btn o" onclick="setTermReset(${Y})">ล้างค่าที่ตั้ง · ใช้ค่าเริ่มต้น</button></div>`:'<p class="bk-p" style="margin-top:10px">เฉพาะผู้ก่อตั้งที่แก้ไขได้</p>'}</div>`};
 const SRC=['เมนู','ร่างหนังสือ / พัสดุ','บุคลากร','นักเรียน','ชั้นเรียน','ตารางสอน / ตารางเรียน','โครงการ / กิจกรรม','ทะเบียนเลข','ร้านค้า','หนังสือเข้า-ออก','เกษียนหนังสือ','ประกาศ','ปฏิทิน','ไฟล์เอกสาร','บันทึกคะแนน','ผู้ใช้งาน'];
 function buildIndex(){const idx=[],f=me&&me.role=='founder';
@@ -5109,7 +5119,7 @@ Object.keys(DD||{}).forEach(k=>{const dv=DIV.find(x=>x[0]==k.split(':')[0]);Obje
 Object.keys(AD||{}).forEach(k=>(AD[k]||[]).forEach(fl=>{if(fl&&fl.name)add('ไฟล์เอกสาร',fl.name,'ไฟล์ · งานธุรการ','admin')}));
 SC.forEach(x=>add('บันทึกคะแนน',x.subject||x.name||'สมุดคะแนน','สมุดคะแนนของฉัน','score:'+x.id,[x.cls,x.room,x.year].join(' ')));
 if(f)U.forEach(u=>add('ผู้ใช้งาน',u.n,'ผู้ใช้งาน · '+(u.u||''),'usr',u.u));
-return idx}
+return idx.filter(x=>typeof x.go!='string'||routeOk(x.go))}
 const srNorm=x=>String(x||'').toLowerCase().replace(/\s+/g,' ').trim();
 let SRL=[];
 function runSearch(q){const box=$('#searchResults');q=srNorm(q);
@@ -5126,7 +5136,124 @@ $('#gsearch').addEventListener('focus',e=>{if(e.target.value)runSearch(e.target.
 $('#gsearch').addEventListener('keydown',e=>{if(e.key=='Escape'){e.target.value='';$('#searchResults').style.display='none';e.target.blur()}else if(e.key=='Enter'&&SRL.length&&$('#searchResults').style.display=='block')srPick(0)});
 $('#searchResults').addEventListener('click',e=>{const r=e.target.closest('.sres[data-si]');if(r)srPick(+r.dataset.si)});
 document.addEventListener('click',e=>{if(!e.target.closest('.search'))$('#searchResults').style.display='none'});
-(async()=>{try{const cfg=await db.collection('meta').doc('config').get();founderExists=cfg.exists&&!!cfg.data().founderUid}catch(e){}
+/* ===== ตั้งค่าระบบ (หลายหมวด) ===== */
+let PUBS={},PERM={},SETTAB=1,PMD=null,PED=null,SI_LOGO,STG={busy:'',rows:null,msg:''},CLN={cut:'',ids:null,msg:'',busy:false,mon:12,aids:null},AUD={rows:[],last:null,more:false,busy:false,flt:'',done:false};
+const SCH_DEF={name:DR_SCH.name,affil:'สพป.แม่ฮ่องสอน เขต 2',motto:'Smart School\nBetter Future',addr:DR_SCH.addr,prov:DR_SCH.prov,fullAddr:'หมู่ 2 ตำบลกองก๋อย อำเภอสบเมย จังหวัดแม่ฮ่องสอน 58110',pre:DR_SCH.pre,to:DR_SCH.to,tel:DR_SCH.tel,mail:DR_SCH.mail,dirPid:'',logo:''};
+const LOGO0=(document.querySelector('.brand img')||{}).src||'';
+function SCH_I(){return{...SCH_DEF,...((PUBS&&PUBS.info)||{})}}
+function isDirP(p){const id=SCH_I().dirPid;return id?p.id==id:(/ผู้อำนวยการ/.test(p.po||'')&&!/รอง/.test(p.po||''))}
+function applyInfo(){const I=SCH_I();Object.assign(DR_SCH,{name:I.name,addr:I.addr,prov:I.prov,pre:I.pre,to:I.to,tel:I.tel,mail:I.mail});
+DR_ORG=DR_SCH.name+' '+DR_SCH.addr.replace(/^.*?(อำเภอ\S+).*$/,'$1')+' '+DR_SCH.prov.replace(/\s*\d+/g,'').trim();
+const b=document.querySelector('.brand');if(b){const t=b.querySelector('b'),s=b.querySelector('small'),im=b.querySelector('img');if(t&&t.textContent!==I.name)t.textContent=I.name;if(s&&s.textContent!==I.affil)s.textContent=I.affil;const want=I.logo||LOGO0;if(im&&im.src!==want)im.src=want}
+const tg=document.querySelector('aside .tag');if(tg){const h=esc(I.motto).replace(/\n/g,'<br>');if(tg.innerHTML!==h)tg.innerHTML=h}
+const ft=document.querySelectorAll('footer span');if(ft[0])ft[0].textContent='School Management System v1.0.0 | '+I.name;if(ft[1])ft[1].textContent='© '+(new Date().getFullYear()+543)+' '+I.name+' '+I.affil;
+document.title=I.name+' - ระบบบริหารจัดการโรงเรียน'}
+/* เมนูที่ครูเห็น */
+const MENU_KEYS=()=>MENU.map(m=>m[0]).filter(k=>k!='home');
+const ROUTE_MENU={stud:'stu',bd:'stu',hw:'stu',par:'stu',org:'hr',profile:'hr',supply:'admin'};
+const menuOfRoute=k=>MENU_KEYS().includes(k)?k:(ROUTE_MENU[k]||'');
+function menuOk(key){if(!me)return false;if(me.role=='founder')return true;const c=(PERM.menus||{})[key];if(!c||!c.mode||c.mode=='all')return true;if(c.mode=='founder')return false;return(c.uids||[]).includes(me._id)}
+function routeOk(r){const m=menuOfRoute(String(r).split(':')[0]);return !m||menuOk(m)}
+/* สิทธิ์แก้ไขข้อมูล */
+const COL_CAT={students:'students',boarding:'boarding',savings:'saving',savingtx:'saving',budgetprojects:'projects'};
+function permOpen(cat){if(!me)return false;if(me.role=='founder')return true;if((PERM.restrict||{})[cat]!==true)return true;return((PERM.editors||{})[cat]||[]).includes(me._id)}
+const permExtra=cat=>!!me&&((PERM.editors||{})[cat]||[]).includes(me._id);
+let _pdT=0;function permDeny(){if(Date.now()-_pdT<3000)return;_pdT=Date.now();alert('หมวดนี้ผู้ก่อตั้งจำกัดสิทธิ์การแก้ไข คุณดูข้อมูลได้อย่างเดียว')}
+/* ประวัติการแก้ไข (audit log) */
+const AUD_COLS={users:'ผู้ใช้งาน',staff:'ทะเบียนบุคลากร',people:'บุคลากร',students:'นักเรียน',homeroom:'ครูประจำชั้น',savings:'ออมเงิน',savingtx:'ออมเงิน (รายการ)',announcements:'ประกาศ',budgetprojects:'โครงการ/กิจกรรม',vendors:'ร้านค้า',registers:'ทะเบียนคุมเลข',divdocs:'เอกสารงาน 4 ฝ่าย',admindocs:'เอกสารงานธุรการ',settings:'ตั้งค่าระบบ',boarding:'นักเรียนพักนอน',events:'ปฏิทิน',memos:'เกษียนหนังสือ',letters:'หนังสือเข้า-ออก',cleanup:'ล้างข้อมูล',restore:'กู้คืนข้อมูล'};
+const AUD_ACT={set:'บันทึก',update:'แก้ไข',delete:'ลบ',cleanup:'ล้างข้อมูล',restore:'กู้คืน'};
+const SET_ID={school:'ปีการศึกษา/ภาคเรียน',public:'ข้อมูลโรงเรียน/การสมัคร',perm:'สิทธิ์และเมนู'};
+function audLbl(c,id,d){if(c=='settings')return SET_ID[id]||id;if(!d||typeof d!='object')return id;let s=d.n||[d.tt,d.fn,d.ln].filter(Boolean).join(' ')||d.t||d.title||d.name||d.subject||d.shop||d.text||'';if(!s||typeof s!='string')s=id;return s.slice(0,80)}
+function audWrite(a,c,id,d){try{if(!me||!fbAuth.currentUser)return;db.collection('auditlog').add({t:firebase.firestore.FieldValue.serverTimestamp(),uid:me._id,n:me.n||'',a,c,i:String(id||''),d:typeof d=='string'?d.slice(0,120):audLbl(c,id,d)}).catch(()=>{})}catch(e){}}
+(function(){try{const DR=firebase.firestore.DocumentReference.prototype;['set','update','delete'].forEach(m=>{const o=DR[m];if(typeof o!='function'||o.__aud)return;
+const w=function(...a){const c=this.parent&&this.parent.id;if(c&&me&&c!='auditlog'){const cat=COL_CAT[c];if(cat&&!permOpen(cat)){permDeny();return Promise.reject(Object.assign(new Error('ไม่มีสิทธิ์แก้ไขข้อมูลหมวดนี้'),{code:'permission-denied'}))}}
+const p=o.apply(this,a);if(c&&me&&AUD_COLS[c]&&c!='cleanup'&&c!='restore')Promise.resolve(p).then(()=>audWrite(m,c,this.id,a[0]),()=>{});return p};w.__aud=1;DR[m]=w})}catch(e){}})();
+/* หน้าตั้งค่า */
+const SETTABS=[[1,'ปีการศึกษา / ภาคเรียน'],[2,'ข้อมูลโรงเรียน'],[3,'การสมัครสมาชิก'],[4,'เมนูที่ครูเห็น'],[5,'สิทธิ์แก้ไขข้อมูล'],[6,'ข้อมูลและพื้นที่'],[7,'ประวัติการแก้ไข']];
+function setTab(n){SETTAB=n;PMD=null;PED=null;render()}
+V.set=()=>{const f=me&&me.role=='founder';if(!f)return V.set1();
+const body=[null,()=>V.set1(true),setInfoHtml,setRegHtml,setMenuHtml,setEditHtml,setDataHtml,setAudHtml][SETTAB]();
+return PT('ตั้งค่าระบบ','เฉพาะผู้ก่อตั้งแก้ไขได้ · เลือกหมวดที่ต้องการ')+`<div class="sx-tabs">${SETTABS.map(t=>`<a class="${SETTAB==t[0]?'on':''}" onclick="setTab(${t[0]})"><i>${t[0]}</i>${t[1]}</a>`).join('')}</div>`+body};
+const sxMsg=(id,t,ok)=>{const e=document.getElementById(id);if(e){e.style.color=ok?'#14804A':'var(--red)';e.textContent=t}};
+/* 2 ข้อมูลโรงเรียน */
+function setInfoHtml(){const I=SCH_I(),pp=PP.slice().sort((a,b)=>dn(a).localeCompare(dn(b),'th')),F=(k,lb)=>`<label class="lb">${lb}<input class="in" id="si_${k}" value="${esc(I[k]||'')}"></label>`;
+return `<div class="card"><h3>ข้อมูลโรงเรียน</h3><p class="bk-p">ใช้แสดงในแถบเมนู หน้าเข้าสู่ระบบ ท้ายหน้า และหัวหนังสือราชการ ข้อมูลเก็บในฐานข้อมูล ไม่ต้องฝังในซอร์สโค้ด</p>
+<div class="sx-logo"><img id="si_prev" src="${esc(I.logo||LOGO0)}" alt=""><div><input type="file" accept="image/*" onchange="siPick(this.files[0])"><div style="margin-top:6px"><button type="button" class="btn o" onclick="siLogoClr()">ใช้ตราเดิม</button></div></div></div>
+<div class="grid g2">${F('name','ชื่อโรงเรียน')}${F('affil','สังกัด / เขต (แบบย่อ)')}${F('addr','ที่อยู่ (ตำบล อำเภอ)')}${F('prov','จังหวัด และรหัสไปรษณีย์')}${F('tel','โทรศัพท์ (ข้อความที่พิมพ์ในหนังสือ)')}${F('mail','อีเมล (ข้อความที่พิมพ์ในหนังสือ)')}${F('pre','เลขที่หนังสือ (คำนำหน้า)')}${F('to','ส่งถึง (หนังสือส่งออกไปยังเขตพื้นที่ฯ)')}</div>
+<label class="lb">ที่อยู่ฉบับเต็ม (ใช้ในชุดเอกสารพัสดุ)<input class="in" id="si_fullAddr" value="${esc(I.fullAddr||'')}"></label>
+<label class="lb">คำขวัญ (ขึ้นบรรทัดใหม่ได้)<textarea class="in" id="si_motto" rows="2">${esc(I.motto||'')}</textarea></label>
+<label class="lb">ผู้อำนวยการ / ผู้บริหาร (ใช้ในเอกสารราชการ โครงสร้างบุคลากร ตารางสอน)<select class="in" id="si_dirPid"><option value="">ตรวจอัตโนมัติจากตำแหน่ง "ผู้อำนวยการ" (ค่าเริ่มต้น)</option>${pp.map(p=>`<option value="${p.id}" ${p.id==I.dirPid?'selected':''}>${esc(dn(p))}${p.po?' · '+esc(p.po):''}</option>`).join('')}</select></label>
+<div class="bk-a"><button class="btn" onclick="saveInfo()">บันทึกข้อมูลโรงเรียน</button><button class="btn o" onclick="resetInfo()">ล้างค่า · ใช้ค่าเริ่มต้น</button></div><div id="si_msg" class="fm" style="margin-top:8px"></div></div>`}
+function siPick(f){if(!f)return;const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const S=256,c=document.createElement('canvas');c.width=c.height=S;const k=Math.min(S/im.width,S/im.height),w=im.width*k,h=im.height*k;c.getContext('2d').drawImage(im,(S-w)/2,(S-h)/2,w,h);SI_LOGO=c.toDataURL('image/png');document.getElementById('si_prev').src=SI_LOGO};im.onerror=()=>alert('อ่านไฟล์รูปไม่สำเร็จ');im.src=e.target.result};r.readAsDataURL(f)}
+function siLogoClr(){SI_LOGO='';document.getElementById('si_prev').src=LOGO0}
+function saveInfo(){const g=k=>(document.getElementById('si_'+k).value||'').trim(),info={};['name','affil','addr','prov','tel','mail','pre','to','fullAddr','motto','dirPid'].forEach(k=>info[k]=g(k));if(!info.name)return sxMsg('si_msg','กรอกชื่อโรงเรียน');info.logo=SI_LOGO!==undefined?SI_LOGO:(SCH_I().logo||'');
+db.collection('settings').doc('public').set({info,updatedAt:new Date().toISOString(),by:me.n||''},{merge:true}).then(()=>{PUBS={...PUBS,info};SI_LOGO=undefined;applyInfo();sxMsg('si_msg','บันทึกแล้ว',1)}).catch(e=>sxMsg('si_msg','บันทึกไม่สำเร็จ: '+e.message))}
+function resetInfo(){if(!confirm('ล้างข้อมูลโรงเรียนที่ตั้งไว้ แล้วใช้ค่าเริ่มต้น?'))return;db.collection('settings').doc('public').set({info:{},updatedAt:new Date().toISOString(),by:me.n||''},{merge:true}).then(()=>{PUBS={...PUBS,info:{}};SI_LOGO=undefined;applyInfo();render()}).catch(e=>alert('ไม่สำเร็จ: '+e.message))}
+/* 3 การสมัครสมาชิก */
+function setRegHtml(){const open=PUBS.regOpen!==false,pn=U.filter(u=>u.st=='pending').length;
+return `<div class="card"><h3>การสมัครสมาชิกใหม่</h3><div class="sx-reg ${open?'on':'off'}"><i></i><b>${open?'เปิดรับสมัคร':'ปิดรับสมัคร'}</b><span>${open?'ผู้ที่ชื่ออยู่ในทะเบียนบุคลากรสมัครได้ แล้วรอผู้ก่อตั้งอนุมัติ':'หน้าเข้าสู่ระบบจะไม่แสดงปุ่มสมัคร และฐานข้อมูลปฏิเสธคำขอสมัครใหม่'}</span></div>
+<p class="bk-p">แนะนำให้ปิดไว้เมื่อไม่ได้รับครูใหม่ เพื่อลดความเสี่ยงคนแปลกหน้าสมัคร บัญชีที่มีอยู่แล้วเข้าสู่ระบบได้ตามปกติ ${pn?`· ตอนนี้มีคำขอรออนุมัติ <b>${pn}</b> รายการ`:''}</p>
+<div class="bk-a"><button class="btn ${open?'r':''}" onclick="setReg(${!open})">${open?'ปิดรับสมัคร':'เปิดรับสมัคร'}</button></div><div id="rg_msg" class="fm" style="margin-top:8px"></div></div>`}
+function setReg(v){db.collection('settings').doc('public').set({regOpen:v,updatedAt:new Date().toISOString(),by:me.n||''},{merge:true}).then(()=>{PUBS={...PUBS,regOpen:v};render()}).catch(e=>alert('บันทึกไม่สำเร็จ: '+e.message))}
+/* 4 เมนูที่ครูเห็น */
+const usrOk=()=>U.filter(u=>u.st=='approved'&&u.role!='founder').sort((a,b)=>String(a.n).localeCompare(String(b.n),'th'));
+const usrChk=(list,fn)=>usrOk().map(u=>`<label><input type="checkbox" ${(list||[]).includes(u._id)?'checked':''} onchange="${fn}('${u._id}',this.checked)"> ${esc(u.n)}</label>`).join('')||'<small>ยังไม่มีสมาชิกที่อนุมัติแล้ว</small>';
+function pmD(){if(!PMD)PMD=JSON.parse(JSON.stringify(PERM.menus||{}));return PMD}
+function setMenuHtml(){const D=pmD();
+return `<div class="card"><h3>เมนูที่ครูเห็น</h3><p class="bk-p">เลือกว่าแต่ละเมนูให้ใครเห็นได้ ผู้ก่อตั้งเห็นทุกเมนูเสมอ เมนูหน้าหลัก บัญชีของฉัน และตั้งค่าระบบไม่ถูกซ่อน (ซ่อนที่หน้าเว็บ ส่วนสิทธิ์แก้ข้อมูลตั้งที่หมวด "สิทธิ์แก้ไขข้อมูล")</p>
+${MENU.filter(m=>m[0]!='home').map(m=>{const c=D[m[0]]||{mode:'all',uids:[]};return `<div class="sx-r"><div class="sx-rh"><span>${ic(m[2])}${esc(m[1])}</span><select class="in" onchange="pmMode('${m[0]}',this.value)"><option value="all" ${c.mode=='all'?'selected':''}>ทุกคนที่อนุมัติแล้ว</option><option value="sel" ${c.mode=='sel'?'selected':''}>เฉพาะที่เลือก</option><option value="founder" ${c.mode=='founder'?'selected':''}>เฉพาะผู้ก่อตั้ง</option></select></div>${c.mode=='sel'?`<div class="sx-u">${usrChk(c.uids,"pmUid.bind(null,'"+m[0]+"')")}</div>`:''}</div>`}).join('')}
+<div class="bk-a"><button class="btn" onclick="saveMenus()">บันทึก</button></div><div id="pm_msg" class="fm" style="margin-top:8px"></div></div>`}
+function pmMode(k,v){const D=pmD();D[k]={mode:v,uids:(D[k]&&D[k].uids)||[]};render()}
+function pmUid(k,uid,on){const D=pmD(),c=D[k]||(D[k]={mode:'sel',uids:[]}),s=new Set(c.uids||[]);on?s.add(uid):s.delete(uid);c.uids=[...s]}
+function saveMenus(){const D=pmD(),menus={};Object.keys(D).forEach(k=>{if(D[k].mode&&D[k].mode!='all')menus[k]={mode:D[k].mode,uids:D[k].mode=='sel'?(D[k].uids||[]):[]}});
+db.collection('settings').doc('perm').set({menus,updatedAt:new Date().toISOString(),by:me.n||''},{mergeFields:['menus','updatedAt','by']}).then(()=>{PERM={...PERM,menus};mkNav();sxMsg('pm_msg','บันทึกแล้ว',1)}).catch(e=>sxMsg('pm_msg','บันทึกไม่สำเร็จ: '+e.message))}
+/* 5 สิทธิ์แก้ไขข้อมูล */
+const PE_CATS=[['att','การมาเรียน (เช็คชื่อ)','add','ครูประจำชั้นและผู้ก่อตั้งเช็คชื่อได้เสมอ เลือกเพิ่มผู้ที่เช็คชื่อแทนได้ด้วย'],['growth','น้ำหนัก ส่วนสูง','add','ครูประจำชั้นและผู้ก่อตั้งบันทึกได้เสมอ เลือกเพิ่มผู้ที่บันทึกแทนได้ด้วย'],['saving','ออมเงิน','rst','ถ้าจำกัด เฉพาะผู้ที่เลือกเพิ่ม/ลบรายการออมได้ (เช่น ครูการเงิน)'],['students','ข้อมูลนักเรียน (เพิ่ม/แก้ไข/ลบ)','rst','ถ้าจำกัด เฉพาะผู้ที่เลือกแก้ข้อมูลนักเรียนได้'],['boarding','นักเรียนพักนอน','rst','ถ้าจำกัด เฉพาะผู้ที่เลือกจัดรายชื่อพักนอนได้'],['projects','โครงการ/กิจกรรมทั้งหมด','rst','ถ้าจำกัด เฉพาะผู้ที่เลือกเพิ่ม/แก้ไข/ลบโครงการได้']];
+function peD(){if(!PED)PED=JSON.parse(JSON.stringify({restrict:PERM.restrict||{},editors:PERM.editors||{}}));return PED}
+function setEditHtml(){const D=peD();
+return `<div class="card"><h3>สิทธิ์แก้ไขข้อมูลแต่ละหมวด</h3><p class="bk-p">ค่าเริ่มต้น: ทุกคนที่อนุมัติแล้วแก้ไขได้ตามเดิม ผู้ก่อตั้งแก้ไขได้ทุกหมวดเสมอ ทุกคนยังดูข้อมูลได้ตามปกติ ฐานข้อมูลบังคับสิทธิ์เหล่านี้ด้วย (ต้องใช้กฎ Firestore ฉบับล่าสุด)</p>
+${PE_CATS.map(([k,lb,ty,ds])=>{const lim=D.restrict[k]===true;return `<div class="sx-r"><div class="sx-rh"><span><b>${lb}</b><small>${ds}</small></span>${ty=='rst'?`<select class="in" onchange="peRst('${k}',this.value=='1')"><option value="0" ${lim?'':'selected'}>ทุกคนที่อนุมัติแล้ว</option><option value="1" ${lim?'selected':''}>จำกัดเฉพาะที่เลือก</option></select>`:'<em class="sx-tg">เพิ่มผู้แก้ไข</em>'}</div>${ty=='add'||lim?`<div class="sx-u">${usrChk(D.editors[k],"peUid.bind(null,'"+k+"')")}</div>`:''}</div>`}).join('')}
+<div class="bk-a"><button class="btn" onclick="saveEdit()">บันทึก</button></div><div id="pe_msg" class="fm" style="margin-top:8px"></div></div>`}
+function peRst(k,v){const D=peD();D.restrict[k]=v;render()}
+function peUid(k,uid,on){const D=peD(),s=new Set(D.editors[k]||[]);on?s.add(uid):s.delete(uid);D.editors[k]=[...s]}
+function saveEdit(){const D=peD(),restrict={},editors={};PE_CATS.forEach(([k,,ty])=>{if(ty=='rst'&&D.restrict[k]===true)restrict[k]=true;if((D.editors[k]||[]).length&&(ty=='add'||restrict[k]))editors[k]=D.editors[k]});
+db.collection('settings').doc('perm').set({restrict,editors,updatedAt:new Date().toISOString(),by:me.n||''},{mergeFields:['restrict','editors','updatedAt','by']}).then(()=>{PERM={...PERM,restrict,editors};sxMsg('pe_msg','บันทึกแล้ว',1)}).catch(e=>sxMsg('pe_msg','บันทึกไม่สำเร็จ: '+e.message))}
+/* 6 ข้อมูลและพื้นที่ */
+const fmtB=b=>b>=1048576?(b/1048576).toFixed(2)+' MB':b>=1024?(b/1024).toFixed(1)+' KB':b+' B';
+function sxSet(o,tab){Object.assign(STG,o);if(SETTAB==6)render()}
+async function stgCalc(){if(STG.busy)return;const cols=[...BK_COLS,['auditlog','ประวัติการแก้ไข'],['settings','ตั้งค่าระบบ']],rows=[];sxSet({busy:'db',msg:''});
+for(const[c,lb]of cols){sxSet({msg:'กำลังอ่าน: '+lb+' …'});try{const qs=await db.collection(c).get();let b=0;qs.docs.forEach(d=>{b+=d.id.length+JSON.stringify(bkEnc(d.data())).length*1.05});rows.push({c,lb,n:qs.size,b:Math.round(b)})}catch(e){rows.push({c,lb,n:0,b:0,err:1})}}
+rows.sort((a,b)=>b.b-a.b);sxSet({busy:'',rows,msg:'',at:new Date().toISOString()})}
+async function stgFiles(){if(STG.busy)return;sxSet({busy:'st',msg:'กำลังนับไฟล์แนบ …'});let n=0,b=0;try{const walk=async r=>{const l=await r.listAll();for(const i of l.items){try{const m=await i.getMetadata();b+=+m.size||0;n++}catch(e){}}for(const p of l.prefixes)await walk(p)};await walk(storage.ref());sxSet({busy:'',fl:{n,b},msg:''})}catch(e){sxSet({busy:'',msg:'อ่านรายการไฟล์ไม่ได้: '+(e.code||e.message)})}}
+function setDataHtml(){const rows=STG.rows,tot=rows?rows.reduce((a,r)=>a+r.b,0):0,docs=rows?rows.reduce((a,r)=>a+r.n,0):0,mx=rows&&rows[0]?rows[0].b||1:1,GB=1073741824;
+const cut=CLN.cut||(()=>{try{return termGet(termInfo().year).s1o||''}catch(e){return''}})();
+return `<div class="card"><h3>พื้นที่เก็บข้อมูลที่ใช้ไป</h3><p class="bk-p">ระบบอ่านข้อมูลทุกหมวดมานับ (กินโควตาอ่านประมาณเท่าจำนวนรายการ จึงกดเมื่ออยากรู้เท่านั้น) โควตาฟรีของ Firestore คือ 1 GiB ขนาดที่แสดงเป็นค่าประมาณ ขนาดจริงในระบบจะมากกว่าเล็กน้อยเพราะดัชนี</p>
+<div class="bk-a"><button class="btn" onclick="stgCalc()" ${STG.busy?'disabled':''}>${STG.busy=='db'?'กำลังคำนวณ…':'คำนวณขนาดข้อมูล'}</button><button class="btn o" onclick="stgFiles()" ${STG.busy?'disabled':''}>${STG.busy=='st'?'กำลังนับ…':'นับไฟล์แนบ (Storage)'}</button></div>${STG.msg?`<div class="bk-p" style="margin-top:8px">${esc(STG.msg)}</div>`:''}
+${rows?`<div class="sx-sum"><b>${fmtB(tot)}</b> · ${docs.toLocaleString()} รายการ · ${(tot/GB*100).toFixed(2)}% ของโควตาฟรี 1 GiB<div class="sx-bar"><i style="width:${Math.max(.5,Math.min(100,tot/GB*100))}%"></i></div></div><div class="sx-tb">${rows.map(r=>`<div class="sx-tr"><span>${esc(r.lb)}${r.err?' <small>(อ่านไม่ได้)</small>':''}</span><em>${r.n.toLocaleString()} รายการ</em><b>${fmtB(r.b)}</b><div class="sx-bar s"><i style="width:${Math.round(r.b/mx*100)}%"></i></div></div>`).join('')}</div>`:''}
+${STG.fl?`<p class="bk-p" style="margin-top:10px">ไฟล์แนบใน Firebase Storage: <b>${STG.fl.n.toLocaleString()}</b> ไฟล์ · <b>${fmtB(STG.fl.b)}</b> (โควตาฟรีของ Storage ตามแผนที่ใช้)</p>`:''}</div>
+<div class="card" style="margin-top:16px"><h3>ล้างบันทึกการมาเรียนเก่า</h3><p class="bk-p">ลบบันทึกการมาเรียนที่วันที่เก่ากว่าวันที่เลือก ช่วยประหยัดพื้นที่และโควตาอ่านของ Firebase (ลบแล้วกู้คืนไม่ได้ ยกเว้นจากไฟล์สำรอง) ค่าเริ่มต้นคือวันเปิดภาคเรียนที่ 1 ของปีการศึกษาปัจจุบัน</p>
+<label class="lb">ลบข้อมูลที่เก่ากว่าวันที่ <input type="date" class="in" id="cl_cut" value="${esc(cut)}" style="max-width:190px;display:inline-block" onchange="CLN.cut=this.value;CLN.ids=null"></label>
+<div class="bk-a"><button class="btn o" onclick="clnCount()" ${CLN.busy?'disabled':''}>1. ตรวจจำนวนที่จะลบ</button><button class="btn o" onclick="bkJson('before-cleanup')" ${CLN.ids&&CLN.ids.length?'':'disabled'}>2. ดาวน์โหลดสำรองก่อนลบ</button></div>
+${CLN.ids?`<div class="bk-m ${CLN.ids.length?'bad':''}" style="margin-top:10px">พบบันทึกการมาเรียนก่อนวันที่ ${esc(th(CLN.cut||cut))} จำนวน <b>${CLN.ids.length.toLocaleString()}</b> รายการ</div>${CLN.ids.length?`<div class="bk-cf">3. พิมพ์คำว่า <b>ลบ</b> เพื่อยืนยัน <input class="in" id="cl_cf" autocomplete="off" style="max-width:120px;margin:0 8px"><button class="btn r" onclick="clnRun()" ${CLN.busy?'disabled':''}>ลบถาวร</button></div>`:''}`:''}
+${CLN.msg?`<div class="bk-p" style="margin-top:8px">${esc(CLN.msg)}</div>`:''}</div>
+<div class="card" style="margin-top:16px"><h3>ล้างประวัติการแก้ไขเก่า</h3><p class="bk-p">ลบประวัติการแก้ไขที่เก่ากว่าช่วงเวลาที่เลือก</p><div class="bk-a" style="align-items:center"><select class="in" style="max-width:200px;margin:0" onchange="CLN.mon=+this.value;CLN.aids=null"><option value="6" ${CLN.mon==6?'selected':''}>เก่ากว่า 6 เดือน</option><option value="12" ${CLN.mon==12?'selected':''}>เก่ากว่า 12 เดือน</option><option value="24" ${CLN.mon==24?'selected':''}>เก่ากว่า 24 เดือน</option></select><button class="btn o" onclick="clnAudCount()">ตรวจจำนวน</button>${CLN.aids&&CLN.aids.length?`<button class="btn r" onclick="clnAudRun()">ลบ ${CLN.aids.length.toLocaleString()} รายการ</button>`:''}</div>${CLN.aids&&!CLN.aids.length?'<div class="bk-p" style="margin-top:8px">ไม่มีประวัติที่เก่ากว่าช่วงที่เลือก</div>':''}</div>`}
+async function clnBatchDel(col,ids){for(let i=0;i<ids.length;i+=400){const b=db.batch();ids.slice(i,i+400).forEach(id=>b.delete(db.collection(col).doc(id)));await b.commit()}}
+async function clnCount(){const cut=document.getElementById('cl_cut').value;if(!cut)return alert('เลือกวันที่ก่อน');CLN.cut=cut;CLN.busy=true;CLN.msg='กำลังนับ …';render();try{const qs=await db.collection('attendance').where('date','<',cut).get();CLN.ids=qs.docs.map(d=>d.id);CLN.msg=''}catch(e){CLN.ids=null;CLN.msg='นับไม่สำเร็จ: '+(e.code||e.message)}CLN.busy=false;render()}
+async function clnRun(){if(!CLN.ids||!CLN.ids.length)return;const cf=document.getElementById('cl_cf');if(!cf||cf.value.trim()!='ลบ')return alert('พิมพ์คำว่า ลบ เพื่อยืนยัน');CLN.busy=true;CLN.msg='กำลังลบ …';render();try{const n=CLN.ids.length;await clnBatchDel('attendance',CLN.ids);audWrite('cleanup','cleanup','attendance','ลบบันทึกการมาเรียนก่อน '+CLN.cut+' จำนวน '+n+' รายการ');ATT={};attLoaded={};CLN.msg='ลบแล้ว '+n.toLocaleString()+' รายการ';CLN.ids=null}catch(e){CLN.msg='ลบไม่สำเร็จ: '+(e.code||e.message)}CLN.busy=false;render()}
+async function clnAudCount(){try{const d=new Date();d.setMonth(d.getMonth()-CLN.mon);const qs=await db.collection('auditlog').where('t','<',firebase.firestore.Timestamp.fromDate(d)).get();CLN.aids=qs.docs.map(x=>x.id)}catch(e){alert('นับไม่สำเร็จ: '+(e.code||e.message))}render()}
+async function clnAudRun(){if(!CLN.aids||!CLN.aids.length||!confirm('ลบประวัติการแก้ไขเก่า '+CLN.aids.length+' รายการ?'))return;try{await clnBatchDel('auditlog',CLN.aids);CLN.aids=null;AUD={rows:[],last:null,more:false,busy:false,flt:'',done:false}}catch(e){alert('ลบไม่สำเร็จ: '+(e.code||e.message))}render()}
+/* 7 ประวัติการแก้ไข */
+async function audLoad(more){if(AUD.busy)return;AUD.busy=true;if(SETTAB==7)render();try{let q=db.collection('auditlog').orderBy('t','desc').limit(100);if(more&&AUD.last)q=q.startAfter(AUD.last);const qs=await q.get();AUD.rows=(more?AUD.rows:[]).concat(qs.docs.map(d=>({id:d.id,...d.data()})));AUD.last=qs.docs[qs.docs.length-1]||AUD.last;AUD.more=qs.size==100;AUD.done=true;AUD.err=''}catch(e){AUD.err=e.code||e.message;AUD.done=true}AUD.busy=false;if(SETTAB==7)render()}
+function setAudHtml(){if(!AUD.done&&!AUD.busy)setTimeout(()=>audLoad(false),0);
+const fl=AUD.flt,rows=AUD.rows.filter(r=>!fl||r.c==fl),cs=[...new Set(AUD.rows.map(r=>r.c))];
+const tm=r=>{const t=r.t&&r.t.toDate?r.t.toDate():null;return t?t.toLocaleString('th-TH',{dateStyle:'short',timeStyle:'medium'}):'กำลังบันทึก…'};
+return `<div class="card"><h3>ประวัติการแก้ไขสำคัญ</h3><p class="bk-p">บันทึกว่าใครเพิ่ม แก้ไข ลบ อะไรเมื่อไหร่ ในข้อมูลหลัก (ไม่รวมการเช็คชื่อรายวันและการแจ้งเตือน) เห็นได้เฉพาะผู้ก่อตั้ง</p>
+<div class="bk-a" style="align-items:center"><select class="in" style="max-width:240px;margin:0" onchange="AUD.flt=this.value;render()"><option value="">ทุกหมวด</option>${cs.map(c=>`<option value="${esc(c)}" ${c==fl?'selected':''}>${esc(AUD_COLS[c]||c)}</option>`).join('')}</select><button class="btn o" onclick="audLoad(false)" ${AUD.busy?'disabled':''}>รีเฟรช</button></div>
+${AUD.err?`<div class="bk-m bad" style="margin-top:10px">อ่านประวัติไม่ได้: ${esc(AUD.err)} (ตรวจว่าใส่กฎ Firestore ฉบับล่าสุดแล้ว)</div>`:''}
+<div class="sx-au">${rows.map(r=>`<div class="sx-ar ${esc(r.a)}"><i></i><span class="au-t">${esc(tm(r))}</span><b>${esc(r.n||'-')}</b><em>${esc(AUD_ACT[r.a]||r.a)}</em><span class="au-c">${esc(AUD_COLS[r.c]||r.c)}</span><span class="au-d">${esc(r.d||r.i||'')}</span></div>`).join('')||(AUD.busy?'<div class="bk-p">กำลังโหลด …</div>':AUD.err?'':'<div class="bk-p">ยังไม่มีประวัติ</div>')}</div>
+${AUD.more?`<div class="bk-a"><button class="btn o" onclick="audLoad(true)" ${AUD.busy?'disabled':''}>โหลดเพิ่ม</button></div>`:''}</div>`}
+(async()=>{try{const pb=await db.collection('settings').doc('public').get();if(pb.exists){PUBS=pb.data();applyInfo()}}catch(e){}
+try{const cfg=await db.collection('meta').doc('config').get();founderExists=cfg.exists&&!!cfg.data().founderUid}catch(e){}
 let _entU='';
 fbAuth.onAuthStateChanged(async fbUser=>{if(suppress)return;
 if(!fbUser){_entU='';me=null;detachListeners();auth();return}
