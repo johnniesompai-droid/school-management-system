@@ -1113,6 +1113,38 @@ aside{padding:18px 12px 16px;background-image:linear-gradient(180deg,rgba(247,24
 .hb .btn{background:linear-gradient(180deg,#fff,#F1F4FF);text-shadow:none;box-shadow:inset 0 1.5px 0 #fff,0 5px 12px -4px rgba(30,50,120,.35)}
 .dzrow-actions .btn,.ven-a .btn,.pj-l3 .btn,.cb-nav .btn,.lt-ft .dzrow-actions .btn{border-radius:11px}
 .card.pwa{margin-top:14px}.pwa-t{color:var(--mute);font-size:.84rem;line-height:1.6;margin:0 0 10px}.pwa-ok{color:#14804A;margin:0;font-size:.9rem}
+.svp-bar,.svp-x{display:none}
+@media(max-width:700px){
+.svp-wrap.msheet{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;gap:0;padding:max(10px,env(safe-area-inset-top)) 10px 0;background:rgba(232,227,250,.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);overscroll-behavior:contain;animation:svup .28s cubic-bezier(.2,.9,.3,1)}
+@keyframes svup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.svp-x{display:inline-flex;align-items:center;align-self:flex-end;flex:none;margin:0 0 8px;padding:7px 14px;border:0;border-radius:999px;background:rgba(255,255,255,.92);color:#4B2FA6;font:inherit;font-size:.86rem;font-weight:500;box-shadow:0 2px 8px rgba(80,60,160,.18)}
+.svp-wrap.msheet{align-items:stretch}.svp-wrap.msheet .svp-top{flex:0 1 auto;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;width:auto;max-width:none;margin:0}
+.svp-wrap.msheet>div:not(.svp-top){flex:none;display:block;min-width:0;margin-top:auto}
+.svp-wrap.msheet .svp-forms{display:none;grid-template-columns:minmax(0,1fr);margin:10px 0 0;max-height:52dvh;overflow:auto;-webkit-overflow-scrolling:touch}
+.svp-wrap.msheet.mf-dep .svp-forms,.svp-wrap.msheet.mf-wd .svp-forms{display:grid}
+.svp-wrap.msheet.mf-dep .svp-f.wd,.svp-wrap.msheet.mf-wd .svp-f.dep{display:none}
+.svp-bar{display:block;padding:10px 0 calc(10px + env(safe-area-inset-bottom))}
+.svp-mt{color:#14804A;font-size:.86rem;text-align:center;margin-bottom:6px}.svp-mt:empty{display:none}
+.svp-bb{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.svp-b{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid rgba(255,255,255,.5);border-radius:16px;padding:13px 8px;font:inherit;font-size:1rem;font-weight:500;color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.18);cursor:pointer;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),0 6px 14px -5px rgba(0,0,0,.3);transition:transform .15s,box-shadow .2s}
+.svp-b svg{width:18px;height:18px}
+.svp-b.dep{background:linear-gradient(180deg,#7FDDB0,#4CC48F)}.svp-b.wd{background:linear-gradient(180deg,#FFB27A,#F48B4A)}
+.svp-b:active{transform:scale(.97)}.svp-b.on{box-shadow:inset 0 2px 5px rgba(0,0,0,.25),0 0 0 3px rgba(255,255,255,.85)}
+}
+.hrb{background:linear-gradient(120deg,#EFEAFF,#E6F0FF 55%,#FDEBFA)}
+.hrb-o{position:absolute;z-index:0;border-radius:50%;pointer-events:none;filter:blur(2px)}
+.hrb-o.a{right:-50px;top:-60px;width:230px;height:230px;background:radial-gradient(circle,rgba(167,139,250,.5),transparent 66%);animation:hrbf 9s ease-in-out infinite}
+.hrb-o.b{left:28%;bottom:-90px;width:240px;height:200px;background:radial-gradient(circle,rgba(125,190,255,.45),transparent 66%);animation:hrbf 11s ease-in-out infinite reverse}
+.hrb::before{content:"";position:absolute;z-index:1;top:-30%;bottom:-30%;left:-35%;width:26%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-20deg);animation:hrbs 7s ease-in-out infinite;pointer-events:none}
+.hrb::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(120,100,220,.12);pointer-events:none}
+.hrb-i{background:linear-gradient(145deg,#9B86F5,#6C55D8);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),0 8px 18px -4px rgba(108,85,216,.55);animation:hrbi 4.5s ease-in-out infinite}
+.hrb.sm{margin-bottom:18px;min-height:0;padding:26px 24px}
+.hrb.sm .hrb-bg::after{background:linear-gradient(90deg,rgba(247,245,255,.96) 0%,rgba(247,245,255,.86) 34%,rgba(247,245,255,.3) 58%,rgba(247,245,255,0) 76%)}
+.hrb-i{flex:none}@media(max-width:600px){.hrb-t h2{font-size:1.35rem}.hrb-t p{font-size:.8rem}.hrb-i{width:52px;height:52px}.hrb-i svg{width:27px;height:27px}.hrb.sm{padding:22px 16px}}
+@keyframes hrbf{0%,100%{transform:translate(0,0)}50%{transform:translate(-18px,14px)}}
+@keyframes hrbs{0%,55%{left:-35%}100%{left:130%}}
+@keyframes hrbi{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@media(prefers-reduced-motion:reduce){.hrb-o,.hrb::before,.hrb-i{animation:none}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -3577,7 +3609,7 @@ const sbOpen=()=>innerWidth>900?!document.body.classList.contains('hide'):$('asi
 function sbSet(o){document.body.classList.toggle('hide',!o);$('aside').classList.toggle('show',o);sbBtn()}
 function sbBtn(){const b=$('#sbt');if(!b)return;const o=sbOpen();b.textContent=o?'‹':'›';b.title=o?'ซ่อนแถบเมนู':'แสดงแถบเมนู';b.style.left=o?'220px':'0'}
 $('#burger').onclick=()=>sbSet(!sbOpen());
-{const b=document.createElement('button');b.id='sbt';b.type='button';b.onclick=()=>sbSet(!sbOpen());document.body.appendChild(b);addEventListener('resize',sbBtn);sbBtn();
+{const b=document.createElement('button');b.id='sbt';b.type='button';b.onclick=()=>sbSet(!sbOpen());document.body.appendChild(b);addEventListener('resize',sbBtn);addEventListener('orientationchange',sbBtn);addEventListener('pageshow',sbBtn);try{const mo=new MutationObserver(sbBtn);mo.observe($('aside'),{attributes:true,attributeFilter:['class']});mo.observe(document.body,{attributes:true,attributeFilter:['class']})}catch(e){}sbBtn();
 document.addEventListener('click',e=>{if(innerWidth<=900&&sbOpen()&&!e.target.closest('aside,#sbt,#burger')&&e.target.closest('.main'))sbSet(false);if(innerWidth<=900&&sbOpen()&&e.target.closest('aside a,aside [data-r]'))setTimeout(()=>sbSet(false),50)})}
 I.out='<path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/>';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -4047,8 +4079,8 @@ document.addEventListener('touchstart',e=>on(sc(e.target)),{capture:true,passive
 let hrCat='',hrPo='';
 function personCard(p){const c=PCAT.find(x=>x[0]==p.cat);
 return `<div class="pcard" data-r="profile:${p.id}">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<b>${esc(dn(p))}</b><small>${esc(p.po)||'-'}</small>${p.ph?`<div class="pcard-phone">${ic('phone')}${esc(p.ph)}</div>`:''}${c?`<span class="pcard-badge" style="background:${c[2]}1a;color:${c[2]}">${c[1]}</span>`:''}</div>`}
-function hrBanner(){return `<div class="hrb"><div class="hrb-bg"></div>
-<div class="hrb-c"><div class="hrb-t"><span class="hrb-i">${ic('user')}</span><div><h2>ข้อมูลบุคลากร</h2><p>แสดงรายชื่อบุคลากรของโรงเรียน พร้อมข้อมูลตำแหน่งและหน้าที่</p></div></div></div></div>`}
+function hrBanner(t,sub,icn,cls){return `<div class="hrb${cls?' '+cls:''}"><div class="hrb-bg"></div><i class="hrb-o a"></i><i class="hrb-o b"></i>
+<div class="hrb-c"><div class="hrb-t"><span class="hrb-i">${ic(icn||'user')}</span><div><h2>${t||'ข้อมูลบุคลากร'}</h2><p>${sub||'แสดงรายชื่อบุคลากรของโรงเรียน พร้อมข้อมูลตำแหน่งและหน้าที่'}</p></div></div></div></div>`}
 function hrOverview(){const dirP=PP.find(isDirP);
 const others=PP.filter(p=>p!==dirP).filter(p=>(!hrCat||p.cat==hrCat)&&(!hrPo||p.po==hrPo));
 const poList=[...new Set(PP.map(p=>p.po).filter(Boolean))];
@@ -4061,7 +4093,7 @@ const dirCard=dirP?`<div class="hrd"><div class="hrd-m" data-r="profile:${dirP.i
 <div class="hrd-q"><span>“มุ่งพัฒนาผู้เรียน สู่อนาคตที่ยั่งยืน”</span></div></div>
 <div class="hrd-s"><h4>ข้อมูลเพิ่มเติม</h4>${info.map(x=>`<div><span class="hrd-si">${ic(x[0])}</span><span><b>${x[1]} :</b> ${esc(x[2])}</span></div>`).join('')}</div></div>`:'';
 return stats+filters+dirCard+`<div class="grid g4">${others.length?others.map(personCard).join(''):E('ไม่พบบุคลากรตามเงื่อนไขที่เลือก')}</div>`}
-let SVY=null,SVTX=[],svSel=null,svSearch='',svClassKey=null;
+let SVY=null,SVTX=[],svSel=null,svSearch='',svClassKey=null,SVMF=null;
 const WD_REASONS=['ซื้ออุปกรณ์การเรียน','ค่าเดินทาง','ค่ารักษาพยาบาล','กิจกรรมของโรงเรียน','อื่น ๆ'];
 const TH_MON_FULL=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 function thaiFullDate(d){return `${d.getDate()} ${TH_MON_FULL[d.getMonth()]} ${d.getFullYear()+543}`}
@@ -4127,7 +4159,7 @@ return `<div class="bk-stage" id="bk_stage"><div class="bk-scale" id="bk_scale">
 <div class="bk-pg">${svPg==0?'หน้าปก':'หน้า '+svPg+' / '+(total-1)}</div>`}
 function svFit(){const w=$('.svp-wrap'),s=$('#bk_stage'),c=$('#bk_scale');if(!w||!s||!c||!w.clientWidth)return;
 const two=w.classList.contains('two'),side=two&&window.innerWidth>1100;
-const aw=w.clientWidth-24-(side?470:0),top=w.getBoundingClientRect().top+(window.scrollY||0),ah=side?window.innerHeight-top-70:1e9;
+const aw=w.clientWidth-24-(side?470:0)-(w.classList.contains('msheet')&&window.innerWidth<=700?20:0),top=w.getBoundingClientRect().top+(window.scrollY||0),ah=side?window.innerHeight-top-70:1e9;
 const k=Math.max(.3,Math.min(1,aw/BKW,ah/BKH));c.style.transform=`scale(${k})`;s.style.width=Math.round(BKW*k)+'px';s.style.height=Math.round(BKH*k)+'px'}
 function svGo(d){svPg+=d;const w=$('#sv_book'),st=ST.find(x=>x.id==svSel);if(!w||!st)return;w.innerHTML=svBook(st,d);svFit()}
 window.addEventListener('resize',svFit);
@@ -4163,14 +4195,18 @@ return `<div class="svp-forms">
 <textarea id="sv_wd_note" rows="2" placeholder="เช่น ซื้ออุปกรณ์การเรียน" ${d}></textarea>
 <button type="button" class="svp-btn wd" id="sv_wd_btn" ${d} onclick="doWithdraw()">${ic('save')} บันทึกการถอนเงิน</button>
 <div id="sv_wd_msg" class="svp-msg"></div></div></div>
-</div>`}
+</div>
+<div class="svp-bar"><div id="sv_mtoast" class="svp-mt"></div><div class="svp-bb"><button type="button" class="svp-b dep${SVMF=='dep'?' on':''}" onclick="svMF('dep')">${ic('down')} ฝากเงิน</button><button type="button" class="svp-b wd${SVMF=='wd'?' on':''}" onclick="svMF('wd')">${ic('up')} ถอนเงิน</button></div></div>`}
+function svMF(k){SVMF=SVMF==k?null:k;const w=$('.svp-wrap');if(!w)return;w.classList.toggle('mf-dep',SVMF=='dep');w.classList.toggle('mf-wd',SVMF=='wd');document.querySelectorAll('.svp-b').forEach(b=>b.classList.toggle('on',b.classList.contains(SVMF||'-')));if(SVMF){const i=$(SVMF=='dep'?'#sv_dep_amt':'#sv_wd_amt');if(i)setTimeout(()=>{try{i.focus({preventScroll:true})}catch(e){}},120)}}
+function svClose(){svSel=null;SVMF=null;render()}
+function svMToast(t){const e=$('#sv_mtoast');if(!e)return;e.textContent=t;setTimeout(()=>{const x=$('#sv_mtoast');if(x)x.textContent=''},3000)}
 async function doDeposit(){if(!svSel)return;const amt=parseFloat($('#sv_dep_amt').value);
 if(!amt||amt<=0)return alert('กรอกจำนวนเงินให้ถูกต้อง (มากกว่า 0)');
 const btn=$('#sv_dep_btn');btn.disabled=true;btn.textContent='กำลังบันทึก...';
 try{const a=studentAgg(svSel),newBal=a.bal+amt,id=uid(),note=$('#sv_dep_note').value.trim();
 const rec={studentId:svSel,year:SVY,type:'deposit',amount:amt,balanceAfter:newBal,note,reason:'',createdBy:me._id,createdByName:me.n,createdAt:new Date().toISOString()};
 await db.collection('savingtx').doc(id).set(rec);SVTX.push({id,...rec});
-$('#sv_dep_amt').value='';$('#sv_dep_note').value='';svPg=1e9;render();const m=$('#sv_dep_msg');if(m)m.textContent='บันทึกการฝากเงินสำเร็จ'}
+$('#sv_dep_amt').value='';$('#sv_dep_note').value='';svPg=1e9;SVMF=null;render();const m=$('#sv_dep_msg');if(m)m.textContent='บันทึกการฝากเงินสำเร็จ';svMToast('✓ บันทึกการฝากเงินสำเร็จ')}
 catch(e){const m=$('#sv_dep_msg');if(m)m.textContent='บันทึกไม่สำเร็จ: '+e.message}
 finally{const b=$('#sv_dep_btn');if(b){b.disabled=!svSel;b.innerHTML=ic('save')+' บันทึกการฝากเงิน'}}}
 async function doWithdraw(){if(!svSel)return;const amt=parseFloat($('#sv_wd_amt').value),reason='';
@@ -4180,7 +4216,7 @@ const btn=$('#sv_wd_btn');btn.disabled=true;btn.textContent='กำลังบ�
 try{const newBal=a.bal-amt,id=uid(),note=$('#sv_wd_note').value.trim();
 const rec={studentId:svSel,year:SVY,type:'withdraw',amount:amt,balanceAfter:newBal,note,reason,createdBy:me._id,createdByName:me.n,createdAt:new Date().toISOString()};
 await db.collection('savingtx').doc(id).set(rec);SVTX.push({id,...rec});
-$('#sv_wd_amt').value='';$('#sv_wd_note').value='';svPg=1e9;render();const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกการถอนเงินสำเร็จ'}
+$('#sv_wd_amt').value='';$('#sv_wd_note').value='';svPg=1e9;SVMF=null;render();const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกการถอนเงินสำเร็จ';svMToast('✓ บันทึกการถอนเงินสำเร็จ')}
 catch(e){const m=$('#sv_wd_msg');if(m)m.textContent='บันทึกไม่สำเร็จ: '+e.message}
 finally{const b=$('#sv_wd_btn');if(b){b.disabled=!svSel;b.innerHTML=ic('save')+' บันทึกการถอนเงิน'}}}
 function savingClassPage(s){if(svClassKey!==s){svClassKey=s;svSel=null;svSearch=''}
@@ -4196,7 +4232,7 @@ return `<div class="pt"><h2>ออมเงิน · ${esc(classLabel(s))}</h2><
 <div class="card"><h3>ข้อมูลนักเรียน</h3>
 <input class="in" id="sv_search" value="${esc(svSearch)}" placeholder="ค้นหาชื่อ-สกุล / รหัสนักเรียน" style="margin-bottom:12px" oninput="svSearchInput(this.value)">
 <div id="sv_table_wrap">${savingStudentTable(roster)}</div></div>
-<div class="svp-wrap${canEdit?' two':''}">${savingSelectedPanel()}${canEdit?`<div>${savingForms()}</div>`:''}</div>
+<div class="svp-wrap${canEdit?' two':''}${svSel?' msheet':''}${SVMF?' mf-'+SVMF:''}">${svSel?'<button type="button" class="svp-x" onclick="svClose()">✕ ปิด</button>':''}${savingSelectedPanel()}${canEdit?`<div>${savingForms()}</div>`:''}</div>
 </div>`}
 const SV_COL=['#F472B6','#F5B52E','#5B8DEF','#34C38F','#A06CF0','#EF5B5B','#F59A3A','#4F6BE8'];
 function svPicker(){if(SVY===null){SVY=new Date().getFullYear()+543;loadSavingTx(SVY);return PT('ออมเงิน','เลือกชั้นเรียนเพื่อดูและบันทึกข้อมูลการออมเงิน')+P('','กำลังโหลดข้อมูล...')}
@@ -4214,7 +4250,7 @@ return `<div class="card svsec"><div class="svsec-h"><h3>${ic('cap')} ${CT[t][0]
 <div class="svcg">${LV.slice(0,nCls(t)).map((n,i)=>{const cs=ss.filter(x=>x.lv==i),c=SV_COL[i%8];
 return `<div class="svc" style="--c:${c}" data-r="saving:${t}${i}"><h4>${n}</h4><div class="svc-b"><span class="svc-i" style="background:#EAF1FF;color:#2F6BFF">${ic('users')}</span><div class="svc-n"><b>${cs.length} คน</b><small>นักเรียน</small></div><span class="svc-sp"></span><span class="svc-i" style="background:#E3F6EC;color:#22B573">${ic('coin')}</span><div class="svc-m"><small>ยอดออมรวม</small><b>฿ ${svFm(sum(cs))}</b></div></div><span class="svc-ar">›</span></div>`}).join('')}</div></div>`}).join('')}
 V.saving=s=>s?savingClassPage(s):svPicker();
-document.addEventListener('click',e=>{const a=e.target.closest('[data-svpick]');if(!a)return;svSel=a.dataset.svpick;svPg=0;render()});
+document.addEventListener('click',e=>{const a=e.target.closest('[data-svpick]');if(!a)return;svSel=a.dataset.svpick;SVMF=null;svPg=0;render()});
 V.hr=()=>{const F=me.role=='founder',t=T0(),m=imMsg;imMsg='';
 const row=(p,i)=>{const lc=p.lc?dt(p.lc):null,ex=lc&&lc<t,c=PCAT.find(x=>x[0]==p.cat);return`<tr><td>${i+1}</td><td style="white-space:nowrap">${esc(dn(p))}</td><td>${esc(p.po)||'-'}</td><td>${esc(p.pn)||'-'}</td><td>${c?`<span class="pcard-badge" style="background:${c[2]}1a;color:${c[2]}">${c[1]}</span>`:'-'}</td><td>${p.ap?ymd(dt(p.ap),t):'-'}</td><td>${esc(p.ph)||'-'}</td><td class="${ex?'rd':''}">${lc?(ex?'หมดอายุแล้ว':ymd(t,lc)+' เหลือ'):'-'}</td><td><button class="btn o" data-r="profile:${p.id}">ดู</button>${F?` <button class="btn o" data-q="e:${p.id}">แก้ไข</button> <button class="btn r" data-q="d:${p.id}">ลบ</button>`:''}</td></tr>`};
 return hrBanner()+hrOverview()
@@ -4229,7 +4265,7 @@ if(confirm('ลบข้อมูลนี้?')){PP=PP.filter(p=>p.id!=v);S=S.f
 const wkParse=v=>{v=tx(v);const R={academic:/วิชาการ/,budget:/แผนงาน|งบประมาณ/,personnel:/บุคคล/,general:/ทั่วไป/};return DIV.filter(d=>R[d[0]].test(v)).map(d=>d[0])};
 V.org=()=>{const dir=isDirP,dep=p=>/รองผู้อำนวยการ/.test(p.po),has=(p,k)=>(p.wk||[]).includes(k),
 pc=(p,c)=>`<div class="pc ${c||''}" style="display:flex;gap:8px;align-items:center;cursor:pointer" data-r="profile:${p.id}">${p.im?`<img class="ph" src="${p.im}">`:`<span class="ph ph0">${ic('user')}</span>`}<span>${esc(dn(p))}<small>${esc(p.po)||'-'}</small></span></div>`,gp=PP.filter(p=>!dir(p)&&!(p.wk||[]).length);
-return PT('โครงสร้างบุคลากร','จัดตามตำแหน่งและงานที่รับผิดชอบจากข้อมูลในหน้าบุคลากร (กดที่ชื่อเพื่อดูรายละเอียด)')+`<div class="card oc"><div class="node dark">ผู้อำนวยการโรงเรียน${PP.filter(dir).map(p=>`<div style="margin-top:8px;cursor:pointer" data-r="profile:${p.id}">${p.im?`<img class="ph" style="width:64px;height:64px;border:2px solid #fff;display:block;margin:0 auto 4px" src="${p.im}">`:''}<b style="font-weight:500;font-size:.8rem;display:block">${esc(dn(p))}</b></div>`).join('')}</div><div class="vl"></div><div class="brn">${DIV.map(d=>{const ds=[],ms=PP.filter(p=>!dir(p)&&has(p,d[0]));
+return hrBanner('โครงสร้างบุคลากร','จัดตามตำแหน่งและงานที่รับผิดชอบจากข้อมูลในหน้าบุคลากร (กดที่ชื่อเพื่อดูรายละเอียด)','users','sm')+`<div class="card oc"><div class="node dark">ผู้อำนวยการโรงเรียน${PP.filter(dir).map(p=>`<div style="margin-top:8px;cursor:pointer" data-r="profile:${p.id}">${p.im?`<img class="ph" style="width:64px;height:64px;border:2px solid #fff;display:block;margin:0 auto 4px" src="${p.im}">`:''}<b style="font-weight:500;font-size:.8rem;display:block">${esc(dn(p))}</b></div>`).join('')}</div><div class="vl"></div><div class="brn">${DIV.map(d=>{const ds=[],ms=PP.filter(p=>!dir(p)&&has(p,d[0]));
 return`<div><div class="node">${d[1]}</div>${ds.map(p=>pc(p,'dp')).join('')}${ms.map(p=>pc(p)).join('')}${ds.length||ms.length?'':'<div class="empty" style="margin-top:12px;min-height:70px">ยังไม่มีข้อมูล</div>'}</div>`}).join('')}</div></div>`+(gp.length?P(`ยังไม่ระบุงานที่รับผิดชอบ (${gp.length})`,gp.map(p=>pc(p)).join('')):'')};
 V.profile=id=>{const p=PP.find(x=>x.id==id);if(!p)return V.org();
 const t=T0(),rows=(arr)=>arr.filter(x=>x[1]).map(x=>`<div class="pf-row"><span>${x[0]}</span><b>${esc(x[1])}</b></div>`).join('')||'<div class="empty" style="min-height:40px">ยังไม่มีข้อมูล</div>';
