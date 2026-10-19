@@ -1060,6 +1060,30 @@ input.tgl:active::before{width:28px}input.tgl:checked:active::before{transform:t
 input.tgl:disabled{opacity:.45;cursor:not-allowed}input.tgl:focus-visible{outline:2px solid #7DA4F7;outline-offset:2px}
 .sx-sw{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:.86rem;margin-top:4px}
 @media(prefers-reduced-motion:reduce){input.tgl,input.tgl::before{transition:none}}
+/* --- Segmented control --- */
+.seg-wrap{margin:0 0 14px;max-width:100%}
+.seg{position:relative;display:inline-flex;max-width:100%;padding:3px;border-radius:13px;background:rgba(118,128,165,.16);-webkit-tap-highlight-color:transparent}.seg.sc{overflow-x:auto;scrollbar-width:none}.seg.sc::-webkit-scrollbar{display:none}
+.seg>button{position:relative;z-index:1;flex:none;border:0;background:none;padding:7px 16px;border-radius:10px;font:inherit;font-size:.84rem;color:#5B667E;cursor:pointer;white-space:nowrap;transition:color .2s;--th:#fff}
+.seg>button.on{color:#1F2A44;font-weight:600}.seg>button:not(.on):hover{color:#1F2A44}
+.seg-th{position:absolute;z-index:0;top:3px;bottom:3px;left:0;width:0;border-radius:10px;background:#fff;opacity:0;box-shadow:0 1px 2px rgba(0,0,0,.14),0 4px 12px -4px rgba(50,60,130,.35);transition:transform .34s cubic-bezier(.3,1.25,.4,1),width .34s cubic-bezier(.3,1.25,.4,1),background .25s,opacity .2s;pointer-events:none}
+.ac-flt .lbl{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;color:var(--mute)}
+.seg-att{padding:2px;gap:0;border-radius:13px;background:#EEF1F8}.seg-att .att-btn{--th:#fff;min-width:46px;height:34px;border:0;border-radius:11px;background:none;color:#8793AD;animation:none!important;transform:none!important;transition:color .2s}
+.seg-att .att-th,.seg-att .seg-th{top:2px;bottom:2px;border-radius:11px}
+.seg-att .att-btn.p.on{--th:#22B573;color:#fff;background:none}.seg-att .att-btn.a.on{--th:#EF4B63;color:#fff;background:none}.seg-att .att-btn.l.on{--th:#F5B52E;color:#fff;background:none}
+.seg-att .att-btn:hover:not(:disabled):not(.on){background:none;color:#4B5675}
+/* --- Bottom sheet / dialog --- */
+.dlg-ov{position:fixed;inset:0;z-index:99999;display:flex;align-items:flex-end;justify-content:center;padding:12px;background:rgba(18,24,48,.34);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:dlgF .22s both}.dlg-ov.out{animation:dlgFo .19s both}
+.dlg{width:100%;max-width:400px;background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(30px) saturate(1.8);backdrop-filter:blur(30px) saturate(1.8);border-radius:24px;padding:22px 18px 14px;text-align:center;box-shadow:0 30px 60px -20px rgba(20,30,70,.5);animation:dlgU .38s cubic-bezier(.2,1.1,.3,1) both}.dlg-ov.out .dlg{animation:dlgD .19s both}
+.dlg-i{width:46px;height:46px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;background:#E8F0FF;color:#2F6BFF}.dlg.dn .dlg-i{background:#FFE6EA;color:#E5334F}
+.dlg h4{margin:0 0 6px;font-size:1.02rem;color:#1F2A44}.dlg p{margin:0 0 16px;color:#4B5675;font-size:.9rem;line-height:1.55;white-space:pre-line;word-break:break-word;max-height:40vh;overflow:auto}
+.dlg-b{display:flex;flex-direction:column;gap:8px}.dlg-b button{border:0;border-radius:14px;padding:12px;font:inherit;font-size:.95rem;cursor:pointer;transition:transform .12s,filter .15s}.dlg-b button:focus{outline:none}.dlg-b button:focus-visible{outline:2px solid #7DA4F7;outline-offset:2px}.dlg-b button:hover{filter:brightness(.96)}.dlg-b button:active{transform:scale(.97)}.dlg-o{background:#2F6BFF;color:#fff;font-weight:600;order:1}.dlg.dn .dlg-o{background:#E5334F}.dlg-c{background:#EEF1F8;color:#33405F;order:2}
+@keyframes dlgF{from{opacity:0}}@keyframes dlgFo{to{opacity:0}}@keyframes dlgU{from{transform:translateY(46px);opacity:0}}@keyframes dlgD{to{transform:translateY(30px);opacity:0}}@keyframes dlgP{from{transform:scale(.9);opacity:0}}@keyframes dlgPo{to{transform:scale(.95);opacity:0}}
+@media(min-width:700px){.dlg-ov{align-items:center}.dlg{animation-name:dlgP}.dlg-ov.out .dlg{animation-name:dlgPo}.dlg-b{flex-direction:row}.dlg-b button{flex:1}.dlg-c{order:1}.dlg-o{order:2}}
+/* --- Frosted glass + page transition --- */
+.top{background:rgba(255,255,255,.95)}aside{background:rgba(255,255,255,.95)}
+@supports((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.top{background:rgba(255,255,255,.66);-webkit-backdrop-filter:saturate(1.8) blur(22px);backdrop-filter:saturate(1.8) blur(22px);border-bottom-color:rgba(214,222,240,.7)}aside{background:rgba(255,255,255,.7);-webkit-backdrop-filter:saturate(1.8) blur(22px);backdrop-filter:saturate(1.8) blur(22px);border-right-color:rgba(214,222,240,.7)}}
+.pgin{animation:pgIn .36s cubic-bezier(.22,.9,.3,1)}@keyframes pgIn{from{opacity:0;transform:translateY(10px)}}
+@media(prefers-reduced-motion:reduce){.pgin,.dlg-ov,.dlg,.seg-th{animation:none!important;transition:none!important}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -3502,7 +3526,7 @@ function bcRender(k,s){const v=$('#view');if(!v||k=='home')return;let t=[];try{t
 const h=`<nav class="bc" aria-label="เส้นทางนำทาง"><a data-r="home" class="bc-h" title="หน้าหลัก">${ic('home')}</a>${t.map((c,i)=>`<i class="bc-s">›</i>${i==t.length-1?`<b>${esc(c[1])}</b>`:`<a data-r="${c[0]}">${esc(c[1])}</a>`}`).join('')}</nav>`;
 v.insertAdjacentHTML('afterbegin',h)}
 function go(r){const[k]=r.split(':');if(me&&me.role!='founder'&&!routeOk(k))return go('home');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
-CUR=r;render();
+const _pv=CUR;CUR=r;render();if(_pv!==r)pgAnim();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving'||k=='att'||k=='hw')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
 const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd'||k=='hw')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
 $('aside').classList.remove('show');scrollTo(0,0)}
@@ -3772,7 +3796,7 @@ try{await db.collection('scoresheets').doc(id).set({classKey:cls,subject,code,te
 catch(e){$('#sc_msg').textContent='สร้างไม่สำเร็จ: '+e.message}}
 function scoreList(){const mine=SC.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
 return mine.length?mine.map(s=>`<div class="rw"><span style="cursor:pointer" data-r="score:${s.id}"><b>${esc(s.subject)}</b>${s.code?' ('+esc(s.code)+')':''}<small>${esc(classLabel(s.classKey))}${s.teacherName?' · ครูผู้สอน '+esc(s.teacherName):''}</small></span><span><button type="button" class="btn o" data-r="score:${s.id}">เปิด</button> <button type="button" class="btn r" data-scd="${s.id}">ลบ</button></span></div>`).join(''):E('ยังไม่มีใบบันทึกคะแนน')}
-function tabBtn(t,label){return `<button type="button" class="btn ${scTab==t?'':'o'}" data-sctab="${t}" style="margin-right:8px">${label}</button>`}
+function tabBtn(t,label){return `<button type="button" role="tab" class="${scTab==t?'on':''}" data-sctab="${t}">${label}</button>`}
 function colHead(mode,c,ci,total,editableName){return `<th style="min-width:150px">
 ${editableName?`<input class="in ${mode}-name" style="margin:0 0 4px;font-weight:600" data-ci="${ci}" value="${esc(c.name)}" placeholder="ชื่อใบงาน">`:`<div style="font-weight:600;font-size:.82rem;margin-bottom:4px">${esc(c.name)}</div>`}
 <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">
@@ -3913,7 +3937,7 @@ roster.forEach(st=>st._sc=scores[st.id]||{});
 const cc=sheet.collectCols||[],ec=scReal(sheet,'exam'),gs=sheet.gradeScale||defaultGradeScale();
 return `<div class="wsT"><span class="wsT-i">${ic('doc')}</span><div><h2>บันทึกคะแนน</h2><small>บันทึกคะแนนของนักเรียน สามารถเพิ่มใบงานและสอบได้ไม่จำกัด</small></div><a class="bk wsT-b" data-r="score">‹ ห้องเรียนทั้งหมด</a></div>
 <div class="wsI"><label>ปีการศึกษา<span>${scAcadYear(sheet)}</span></label><label>ระดับชั้น<span>${esc(LV[lv]||'')} (${esc(CT[ty]?CT[ty][0]:'')})</span></label><label>รายวิชา<span>${esc(sheet.subject)}${sheet.code?' ('+esc(sheet.code)+')':''}</span></label><label>ครูผู้สอน<span>${esc(sheet.teacherName||scMyName())}</span></label></div>
-<div class="card"><div style="margin-bottom:14px">${tabBtn('collect','1. คะแนนเก็บ')}${tabBtn('exam','2. คะแนนสอบ')}${tabBtn('sum','3. รวมคะแนน')}</div>
+<div class="card"><div class="seg-wrap"><div class="seg sc" data-sg="sctab"><i class="seg-th"></i>${tabBtn('collect','1. คะแนนเก็บ')}${tabBtn('exam','2. คะแนนสอบ')}${tabBtn('sum','3. รวมคะแนน')}</div></div>
 ${scTab=='collect'?wsTable(id,roster,sheet,'collect'):scTab=='exam'?wsTable(id,roster,sheet,'exam'):summaryPage(sheet,roster)}
 </div>`}
 function addCol(id,mode){const sheet=SC.find(x=>x.id==id);if(!sheet)return;const key=mode=='collect'?'collectCols':'examCols';
@@ -4386,7 +4410,7 @@ return back+ttPaperC(key,true)+`<div class="ttbar tt-np"><button class="btn o" o
 V.tt=s=>{ttInit();s=s||'teach';
 const ttl=s=='check'?['ตรวจสอบตารางสอน','ภาพรวมว่าใครกรอกตารางแล้ว ใครยังไม่กรอก และมีคาบที่ชนกันหรือไม่']:s=='entry'?['บันทึกตารางสอน','กรอกตารางสอนของครู แล้วกดบันทึก']:s=='class'||s[0]=='c'?['ตารางเรียน','ตารางเรียนของนักเรียนชั้น ป.1 - ป.6 (โรงเรียนหลักและสาขาใช้ตารางเดียวกัน)']:['ตารางสอน','ตารางสอนของครูทุกคนที่กรอกแล้ว'];
 const body=s=='check'?ttCheck():s=='entry'?ttEntry():s=='class'?ttList('c'):s=='teach'?ttList('t'):s.startsWith('t-')?ttFull('t_'+s.slice(2)):s.startsWith('c-')?ttFull('c_'+s.slice(2)):ttList('t');
-return PT(ttl[0],ttl[1])+`<div class="card tt-np"><div class="tts"><input class="in" id="tt_q" placeholder="ค้นหาตารางสอนของครู หรือตารางเรียนของนักเรียน (พิมพ์ชื่อครู หรือ ป.1, ป.2 ...)" value="${esc(ttQ)}" oninput="ttSearch(this.value)" autocomplete="off"><div id="tt_res">${ttResHtml(ttQ)}</div></div></div>
+return PT(ttl[0],ttl[1])+`<div class="tt-np seg-wrap">${segHtml('ttpg',[['teach','ตารางสอน'],['class','ตารางเรียน'],['entry','บันทึกตารางสอน'],['check','ตรวจสอบตาราง']],(s.startsWith('c-')||s=='class')?'class':(s=='entry'||s=='check')?s:'teach','ttGoSub','sc')}</div><div class="card tt-np"><div class="tts"><input class="in" id="tt_q" placeholder="ค้นหาตารางสอนของครู หรือตารางเรียนของนักเรียน (พิมพ์ชื่อครู หรือ ป.1, ป.2 ...)" value="${esc(ttQ)}" oninput="ttSearch(this.value)" autocomplete="off"><div id="tt_res">${ttResHtml(ttQ)}</div></div></div>
 <div style="margin-top:16px">${body}</div>`};
 function ttPrint(){const st=document.createElement('style');st.textContent='@page{size:A4 landscape;margin:12mm}';document.head.appendChild(st);window.print();setTimeout(()=>st.remove(),500)}
 function ttEditLoad(id){const d=TT['t_'+id+'_'+ttYear];if(!d)return;ttDraft={tid:id,cells:JSON.parse(JSON.stringify(d.cells||{})),note:d.note||''};ttMsg='';go('tt:entry')}
@@ -4657,7 +4681,7 @@ return rows.length?`<div class="ac-xw hw-xw"><table class="ac-x hw-x"><thead><tr
 function hwSummary(){const keys=hwKeys(),cnt={},watch=[];hwRows(keys).forEach(({k,x})=>{const l=hwLatest(x);if(l&&l.ev&&l.ev.cls&&l.ev.cls.k){cnt[l.ev.cls.k]=(cnt[l.ev.cls.k]||0)+1;if(l.ev.cls.k!='ok')watch.push({k,x,l})}});
 const sel=(id,fn,opts,v)=>`<select class="in" onchange="${fn}(this.value)">${opts.map(o=>`<option value="${o[0]}"${String(o[0])==String(v)?' selected':''}>${esc(o[1])}</option>`).join('')}</select>`;
 const yrs=[ttYDef()-1,ttYDef(),ttYDef()+1];
-const flt=`<div class="ac-flt"><label>ห้องเรียน${sel('s','hwSetScope',[['','หลัก + สาขา (รวมกัน)'],['m','ห้องเรียนหลัก'],['b','ห้องเรียนสาขา']],hwScope)}</label><label>ชั้น${sel('l','hwSetLv',[['','ทุกชั้น'],...LV.slice(0,8).map((n,i)=>[i,n])],hwLvF)}</label><label>ปีการศึกษา${sel('y','hwSetYr',yrs.map(y=>[y,y]),hwYear())}</label><span style="margin-left:auto;display:inline-flex;gap:8px"><button class="btn o" onclick="hwXls()">ส่งออก Excel</button></span></div>`;
+const flt=`<div class="ac-flt"><span class="lbl">ห้องเรียน ${segHtml('hwscope',[['','รวมกัน'],['m','หลัก'],['b','สาขา']],hwScope,'hwSetScope')}</span><label>ชั้น${sel('l','hwSetLv',[['','ทุกชั้น'],...LV.slice(0,8).map((n,i)=>[i,n])],hwLvF)}</label><label>ปีการศึกษา${sel('y','hwSetYr',yrs.map(y=>[y,y]),hwYear())}</label><span style="margin-left:auto;display:inline-flex;gap:8px"><button class="btn o" onclick="hwXls()">ส่งออก Excel</button></span></div>`;
 const tiles=Object.keys(HWC).map(q=>`<div class="hwt" style="background:${HWC[q].bg};color:${HWC[q].c}"><b>${cnt[q]||0}</b><span>${HWC[q].t}</span><small>${HWC[q].s}</small></div>`).join('');
 const wl=watch.length?`<div class="ac-low"><b>นักเรียนที่ควรติดตาม (ตามค่าล่าสุดที่บันทึก)</b>${watch.sort((a,b)=>a.l.ev.cls.k.localeCompare(b.l.ev.cls.k)).map(w=>`<span class="hwc" style="background:${w.l.ev.cls.bg};color:${w.l.ev.cls.c};cursor:pointer" data-r="hw:${w.k}">${esc((w.x.tt||'')+w.x.fn+' '+w.x.ln)} · ${esc(ttShort(w.k))}${w.k[0]=='b'?' (สาขา)':''} · BMI ${w.l.ev.bmi.toFixed(1)} · ${w.l.ev.cls.t}</span>`).join('')}</div>`:'';
 return `<div class="stsec" style="margin-top:26px"><h3>${ic('chart')} สรุปน้ำหนัก ส่วนสูง และ BMI ทุกเดือน</h3>${flt}<div class="hwts">${tiles}</div><div class="card" style="margin-top:12px">${hwGridHtml(keys)}${wl}${hwNote()}</div></div>`}
@@ -4823,7 +4847,7 @@ function attSetScope(v){attScope=v;attPSel='';render()}
 function attSetLv(v){attLvF=v;attPSel='';render()}
 function attScopeName(){const t=attScope=='m'?'ห้องเรียนหลัก':attScope=='b'?'ห้องเรียนสาขา':'ห้องเรียนหลัก + สาขา',l=attLvF===''?'ทุกชั้น':LV[+attLvF];return l+' · '+t}
 function attPickerCal(){const{y,m}=attM();attLoadM(y,m);const keys=attScopeKeys(),sm=attMonSum(keys,y,m),nst=keys.reduce((a,k)=>a+attRoster(k).length,0);
-const flt=`<div class="ac-flt"><label>ห้องเรียน<select class="in" onchange="attSetScope(this.value)"><option value=""${attScope==''?' selected':''}>หลัก + สาขา (รวมกัน)</option><option value="m"${attScope=='m'?' selected':''}>ห้องเรียนหลัก</option><option value="b"${attScope=='b'?' selected':''}>ห้องเรียนสาขา</option></select></label>
+const flt=`<div class="ac-flt"><span class="lbl">ห้องเรียน ${segHtml('attscope',[['','รวมกัน'],['m','หลัก'],['b','สาขา']],attScope,'attSetScope')}</span>
 <label>ชั้น<select class="in" onchange="attSetLv(this.value)"><option value=""${attLvF===''?' selected':''}>ทุกชั้น</option>${LV.slice(0,8).map((n,i)=>`<option value="${i}"${attLvF!==''&&+attLvF==i?' selected':''}>${esc(n)}</option>`).join('')}</select></label>
 <span class="atc u">กำลังดู: ${esc(attScopeName())} · ${nst} คน</span></div>`;
 const btn=`<span style="margin-left:auto;display:inline-flex;gap:8px;flex-wrap:wrap"><button class="btn o" onclick="attXls('*')">ส่งออก Excel เดือนนี้</button><button class="btn" onclick="attTblToggle('*',${attTblK=='*'?'false':'true'})">${attTblK=='*'?'‹ ซ่อนตารางเดือน':'ดูทั้งหมด (ตารางเดือน)'}</button></span>`;
@@ -4897,7 +4921,7 @@ return `<div class="att-tb"><label class="lb" style="display:inline-flex;align-i
 ${can?`<span class="att-act"><button class="btn o" onclick="attAllSet('${k}','p')">✓ มาทั้งห้อง</button><button class="btn o" onclick="attAllSet('${k}','')">ล้างทั้งหมด</button></span>`:''}</div>
 <div class="att-hr">ครูประจำชั้น: ${ts?esc(ts):'ยังไม่ได้เลือก'} · ${thaiFullDate(new Date(d+'T00:00:00'))}</div>
 ${r.length?`<div class="att-l">${r.map((x,j)=>{const v=mk[x.id]||'',b=(c,tx,ti)=>`<button type="button" class="att-btn ${c}${v==c?' on':''}" ${can?`onclick="attMark('${k}','${x.id}','${c}')"`:'disabled'} title="${ti}">${tx}</button>`;
-return `<div class="att-r${v?' s-'+v:''}"><span class="att-n">${j+1}</span><span class="att-nm">${esc((x.tt||'')+x.fn+' '+x.ln)}</span><span class="att-b">${b('p','✓','มาเรียน')}${b('a','✕','ขาดเรียน')}${b('l','ลา','ลา')}</span></div>`}).join('')}</div>`:E('ยังไม่มีนักเรียนในชั้นนี้',100)}
+return `<div class="att-r${v?' s-'+v:''}"><span class="att-n">${j+1}</span><span class="att-nm">${esc((x.tt||'')+x.fn+' '+x.ln)}</span><span class="att-b seg seg-att" data-sg="att:${k}:${x.id}"><i class="seg-th"></i>${b('p','✓','มาเรียน')}${b('a','✕','ขาดเรียน')}${b('l','ลา','ลา')}</span></div>`}).join('')}</div>`:E('ยังไม่มีนักเรียนในชั้นนี้',100)}
 <div class="att-ft"><small id="att_msg">${can?'กดปุ่มเพื่อเช็คชื่อ ระบบบันทึกให้อัตโนมัติ (กดซ้ำเพื่อยกเลิก)':''}</small></div>`}
 function attClassUpd(){const w=document.getElementById('att_wrap'),c=document.getElementById('att_cal'),k=CUR.split(':')[1];if(w&&k)w.innerHTML=attClassInner(k);if(c&&k)c.innerHTML=attClassCal(k)}
 function attSave(k,marks){const d=attDate||attToday(),id=attKey(d,k),m=document.getElementById('att_msg');if(m)m.textContent='กำลังบันทึก...';
@@ -5143,6 +5167,38 @@ $('#gsearch').addEventListener('focus',e=>{if(e.target.value)runSearch(e.target.
 $('#gsearch').addEventListener('keydown',e=>{if(e.key=='Escape'){e.target.value='';$('#searchResults').style.display='none';e.target.blur()}else if(e.key=='Enter'&&SRL.length&&$('#searchResults').style.display=='block')srPick(0)});
 $('#searchResults').addEventListener('click',e=>{const r=e.target.closest('.sres[data-si]');if(r)srPick(+r.dataset.si)});
 document.addEventListener('click',e=>{if(!e.target.closest('.search'))$('#searchResults').style.display='none'});
+/* ===== Segmented control / Bottom sheet / page transition ===== */
+let SEGP={},_sgR=0;
+function segHtml(key,items,cur,fn,cls){return `<div class="seg ${cls||''}" data-sg="${key}" role="tablist"><i class="seg-th"></i>${items.map(([v,l])=>`<button type="button" role="tab" class="${String(v)==String(cur)?'on':''}" onclick="${fn}('${v}')">${esc(l)}</button>`).join('')}</div>`}
+function segInit(){document.querySelectorAll('.seg').forEach(sg=>{const th=sg.querySelector(':scope>.seg-th');if(!th)return;const on=sg.querySelector(':scope>button.on'),key=sg.dataset.sg||'';
+if(!on||!sg.offsetWidth){th.style.opacity='0';if(key)SEGP[key]=null;th.dataset.x='';return}
+const x=on.offsetLeft,w=on.offsetWidth,col=getComputedStyle(on).getPropertyValue('--th').trim();
+if(th.dataset.x==x&&th.dataset.w==w){th.style.opacity='1';return}
+const prev=key?SEGP[key]:null,fresh=!th.dataset.x;
+if(fresh){th.style.transition='none';const s=prev||{x,w};th.style.transform=`translateX(${s.x}px)`;th.style.width=s.w+'px';th.style.opacity=prev===null||prev===undefined?'0':'1';void th.offsetWidth;th.style.transition=''}
+th.style.transform=`translateX(${x}px)`;th.style.width=w+'px';th.style.opacity='1';th.style.background=col||'';th.dataset.x=x;th.dataset.w=w;if(key)SEGP[key]={x,w}})}
+new MutationObserver(()=>{if(_sgR)return;_sgR=requestAnimationFrame(()=>{_sgR=0;segInit()})}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+addEventListener('resize',()=>{SEGP={};document.querySelectorAll('.seg-th').forEach(t=>t.dataset.x='');segInit()});
+function ttGoSub(v){go('tt:'+v)}
+function pgAnim(){const v=$('#view');if(!v)return;v.classList.remove('pgin');void v.offsetWidth;v.classList.add('pgin')}
+const DLG={q:[],cur:null};
+function dlgShow(o){return new Promise(res=>{DLG.q.push({...o,res});dlgNext()})}
+function dlgNext(){if(DLG.cur||!DLG.q.length)return;const o=DLG.cur=DLG.q.shift(),ov=document.createElement('div');ov.className='dlg-ov';
+const ttl=o.title||(o.alert?'แจ้งเตือน':o.danger?'ยืนยันการลบ':'ยืนยันการทำรายการ');
+ov.innerHTML=`<div class="dlg ${o.danger?'dn':''}" role="alertdialog" aria-modal="true"><div class="dlg-i">${o.danger?'!':o.alert?'i':'?'}</div><h4>${esc(ttl)}</h4><p>${esc(o.msg)}</p><div class="dlg-b">${o.alert?'':`<button type="button" class="dlg-c">${esc(o.cancel||'ยกเลิก')}</button>`}<button type="button" class="dlg-o">${esc(o.ok||(o.alert?'ตกลง':'ยืนยัน'))}</button></div></div>`;
+const kd=e=>{if(e.key=='Escape'){e.preventDefault();close(false)}};
+const close=v=>{if(ov._d)return;ov._d=1;document.removeEventListener('keydown',kd,true);ov.classList.add('out');try{o.res(v)}catch(e){}setTimeout(()=>{ov.remove();DLG.cur=null;dlgNext()},190)};
+ov.addEventListener('click',e=>{if(e.target===ov)close(!!o.alert);else if(e.target.closest('.dlg-o'))close(true);else if(e.target.closest('.dlg-c'))close(false)});
+document.addEventListener('keydown',kd,true);document.body.appendChild(ov);
+setTimeout(()=>{const b=ov.querySelector(o.danger?'.dlg-c':'.dlg-o')||ov.querySelector('.dlg-o');b&&b.focus()},30)}
+window.alert=function(m){m=String(m==null?'':m);if(DLG.cur&&DLG.cur.msg===m||DLG.q.some(x=>x.msg===m))return;dlgShow({msg:m,alert:true})};
+let CF_OK=new Set(),CF_EL=null,CF_T=0,CF_RP=false;const _cfNative=window.confirm.bind(window);
+document.addEventListener('click',e=>{if(CF_RP||e.target.closest&&e.target.closest('.dlg-ov'))return;CF_EL=e.target;CF_T=Date.now();CF_OK.clear()},true);
+window.confirm=function(m){m=String(m==null?'':m);if(CF_OK.has(m))return true;
+if(!CF_EL||!document.contains(CF_EL)||Date.now()-CF_T>1500||DLG.cur)return _cfNative(m);
+const el=CF_EL,danger=/ลบ|ล้าง|ถาวร|เอา.*ออก/.test(m);
+dlgShow({msg:m,danger,ok:'ยืนยัน'}).then(ok=>{if(!ok)return;if(!document.contains(el)){alert('ข้อมูลมีการเปลี่ยนแปลงระหว่างรอ กรุณากดทำรายการอีกครั้ง');return}CF_OK.add(m);CF_RP=true;CF_T=Date.now();try{el.click()}finally{CF_RP=false}});
+return false};
 /* ===== ตั้งค่าระบบ (หลายหมวด) ===== */
 let PUBS={},PERM={},SETTAB=1,PMD=null,PED=null,SI_LOGO,STG={busy:'',rows:null,msg:''},CLN={cut:'',ids:null,msg:'',busy:false,mon:12,aids:null},AUD={rows:[],last:null,more:false,busy:false,flt:'',done:false};
 const SCH_DEF={name:DR_SCH.name,affil:'สพป.แม่ฮ่องสอน เขต 2',motto:'Smart School\nBetter Future',addr:DR_SCH.addr,prov:DR_SCH.prov,fullAddr:'หมู่ 2 ตำบลกองก๋อย อำเภอสบเมย จังหวัดแม่ฮ่องสอน 58110',pre:DR_SCH.pre,to:DR_SCH.to,tel:DR_SCH.tel,mail:DR_SCH.mail,dirPid:'',logo:''};
@@ -5180,7 +5236,7 @@ const SETTABS=[[1,'ปีการศึกษา / ภาคเรียน'],[
 function setTab(n){SETTAB=n;PMD=null;PED=null;render()}
 V.set=()=>{const f=me&&me.role=='founder';if(!f)return V.set1();
 const body=[null,()=>V.set1(true),setInfoHtml,setRegHtml,setMenuHtml,setEditHtml,setDataHtml,setAudHtml][SETTAB]();
-return PT('ตั้งค่าระบบ','เฉพาะผู้ก่อตั้งแก้ไขได้ · เลือกหมวดที่ต้องการ')+`<div class="sx-tabs">${SETTABS.map(t=>`<a class="${SETTAB==t[0]?'on':''}" onclick="setTab(${t[0]})"><i>${t[0]}</i>${t[1]}</a>`).join('')}</div>`+body};
+return PT('ตั้งค่าระบบ','เฉพาะผู้ก่อตั้งแก้ไขได้ · เลือกหมวดที่ต้องการ')+`<div class="seg-wrap">${segHtml('sxtab',SETTABS.map(t=>[t[0],t[0]+'. '+t[1]]),SETTAB,'setTab','sc')}</div>`+body};
 const sxMsg=(id,t,ok)=>{const e=document.getElementById(id);if(e){e.style.color=ok?'#14804A':'var(--red)';e.textContent=t}};
 /* 2 ข้อมูลโรงเรียน */
 function setInfoHtml(){const I=SCH_I(),pp=PP.slice().sort((a,b)=>dn(a).localeCompare(dn(b),'th')),F=(k,lb)=>`<label class="lb">${lb}<input class="in" id="si_${k}" value="${esc(I[k]||'')}"></label>`;
