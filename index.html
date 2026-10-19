@@ -1277,6 +1277,7 @@ body.tbsh-open #tabbar{opacity:0;pointer-events:none}
 .sps-l{position:static;max-height:none;height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
 .sps-r{height:100%;overflow-y:auto;overscroll-behavior:contain;padding:0 4px 24px 0;scrollbar-width:thin}
 @media(max-width:1200px){.sps{height:calc(100dvh - 312px)}.sps-l,.sps-r{padding-bottom:96px}.sps-l{padding-bottom:110px}}
+.spr{padding:7px 10px}.sps-gp h6{margin-top:9px}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -1347,7 +1348,7 @@ const posList=p=>[...new Set([String(p&&p.po||'').trim(),...((p&&p.wp)||[])].fil
 const posDef=p=>p?(String(p.po||'').trim()||((p.wp||[])[0])||''):'';
 const E=(t='ยังไม่มีข้อมูล',h)=>`<div class="empty"${h?` style="min-height:${h}px"`:''}>${t}</div>`;
 const P=(t,b,l)=>`<div class="card"><h3>${t}${l?`<a>${l}</a>`:''}</h3>${b}</div>`;
-const PT=(t,s='หน้านี้ยังไม่มีข้อมูล จะเพิ่มภายหลัง')=>`<div class="pt"><h2>${t}</h2><p>${s}</p></div>`;
+let SETEMB=false;const PT=(t,s='หน้านี้ยังไม่มีข้อมูล จะเพิ่มภายหลัง')=>SETEMB?'':`<div class="pt"><h2>${t}</h2><p>${s}</p></div>`;
 const cal=()=>{const d=new Date(),y=d.getFullYear(),m=d.getMonth(),f=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate(),
 M='มกราคม กุมภาพันธ์ มีนาคม เมษายน พฤษภาคม มิถุนายน กรกฎาคม สิงหาคม กันยายน ตุลาคม พฤศจิกายน ธันวาคม'.split(' ');
 let h=`<div style="text-align:center;font-weight:600;margin-bottom:8px">${M[m]} ${y+543}</div><div class="cal">`+'อา จ อ พ พฤ ศ ส'.split(' ').map(x=>`<b>${x}</b>`).join('')+'<span></span>'.repeat(f);
@@ -3731,8 +3732,8 @@ default:{const m=M(k);return m?[[k,m]]:[]}}}
 function bcRender(k,s){const v=$('#view');if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;
 const h=`<nav class="bc" aria-label="เส้นทางนำทาง"><a data-r="home" class="bc-h" title="หน้าหลัก">${ic('home')}</a>${t.map((c,i)=>`<i class="bc-s">›</i>${i==t.length-1?`<b>${esc(c[1])}</b>`:`<a data-r="${c[0]}">${esc(c[1])}</a>`}`).join('')}</nav>`;
 v.insertAdjacentHTML('afterbegin',h)}
-function go(r){const[k]=r.split(':');if(me&&me.role!='founder'&&!routeOk(k))return go('home');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
-const _pv=CUR;CUR=r;if(r=='set'&&_pv!='set')SETM=0;render();if(_pv!==r)pgAnim();
+function go(r){let[k]=r.split(':');let _sq=0;if(me&&me.role=='founder'&&({staff:8,usr:9,bak:10})[k]){_sq=({staff:8,usr:9,bak:10})[k];r=k='set'}if(me&&me.role!='founder'&&!routeOk(k))return go('home');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
+const _pv=CUR;CUR=r;if(r=='set'&&_pv!='set')SETM=0;if(_sq){SETTAB=_sq;SETM=_sq;PMD=null;PED=null}render();if(_pv!==r)pgAnim();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving'||k=='att'||k=='hw')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
 const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd'||k=='hw')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
 $('aside').classList.remove('show');try{tbSync();tbClose();upClose()}catch(e){}scrollTo(0,0)}
@@ -3811,12 +3812,12 @@ b.innerHTML=`<a class="tbsh-bk" onclick="tbGrid('')">${ic('chev','tbk')} เม�
 /* ===== เมนูโปรไฟล์ (มุมขวาบน) : บัญชีของฉัน + ระบบกลาง ===== */
 function upToggle(){if(document.getElementById('upop'))return upClose();tbClose();upOpen()}
 function upClose(){const e=document.getElementById('upop');if(e)e.remove()}
-function upOpen(){if(!me)return;const f=me.role=='founder',sys=SYS.filter(m=>m[0]!='acct'&&(f||!['usr','staff','bak'].includes(m[0]))),n=U.filter(u=>u.st=='pending').length,nm=($('#un')||{}).textContent||me.n,ro=($('#ur')||{}).textContent||'',av=($('#au')||{}).innerHTML||'';
+function upOpen(){if(!me)return;const f=me.role=='founder',sys=SYS.filter(m=>(f?m[0]=='set':m[0]!='acct'&&!['usr','staff','bak'].includes(m[0]))),n=U.filter(u=>u.st=='pending').length,nm=($('#un')||{}).textContent||me.n,ro=($('#ur')||{}).textContent||'',av=($('#au')||{}).innerHTML||'';
 const w=document.createElement('div');w.id='upop';w.className='upop';
-w.innerHTML=`<div class="upop-bg" onclick="upClose()"></div><div class="upop-p"><div class="upop-h"><span class="upop-av">${av}</span><div><b>${esc(nm)}</b><small>${esc(ro)}</small></div></div><a class="upop-i" data-r="acct"><i>${ic('user')}</i><span>บัญชีของฉัน</span>${ic('chev','upop-ch')}</a><h6>ระบบกลาง</h6>${sys.map(m=>`<a class="upop-i" data-r="${m[0]}"><i>${ic(m[2])}</i><span>${m[1]}</span>${m[0]=='usr'&&n?`<em>${n}</em>`:''}${ic('chev','upop-ch')}</a>`).join('')}<div class="upop-sp"></div><a class="upop-i out" onclick="upClose();$('#lo').click()"><i>${ic('out')||''}</i><span>ออกจากระบบ</span></a></div>`;
+w.innerHTML=`<div class="upop-bg" onclick="upClose()"></div><div class="upop-p"><div class="upop-h"><span class="upop-av">${av}</span><div><b>${esc(nm)}</b><small>${esc(ro)}</small></div></div>${f?'':`<a class="upop-i" data-r="acct"><i>${ic('user')}</i><span>บัญชีของฉัน</span>${ic('chev','upop-ch')}</a>`}${f?'':'<h6>ระบบกลาง</h6>'}${sys.map(m=>`<a class="upop-i" data-r="${m[0]}"><i>${ic(m[2])}</i><span>${m[1]}</span>${m[0]=='usr'&&n?`<em>${n}</em>`:''}${ic('chev','upop-ch')}</a>`).join('')}<div class="upop-sp"></div><a class="upop-i out" onclick="upClose();$('#lo').click()"><i>${ic('out')||''}</i><span>ออกจากระบบ</span></a></div>`;
 document.body.appendChild(w)}
 document.addEventListener('keydown',e=>{if(e.key=='Escape'){tbClose();upClose()}});
-function mkNav(){const f=me.role=='founder',sys=SYS.filter(m=>f||!['usr','staff','bak'].includes(m[0]));
+function mkNav(){const f=me.role=='founder',sys=SYS.filter(m=>f?m[0]=='set':!['usr','staff','bak'].includes(m[0]));
 $('#nav').innerHTML=MENU.filter(m=>routeOk(m[0])).map(nav).join('')+'<h6>ระบบกลาง</h6>'+sys.map(nav).join('');
 const n=U.filter(u=>u.st=='pending').length,a=$('[data-r=usr]');if(a&&n)a.innerHTML+=`<i class="bd">${n}</i>`;const ue=document.querySelector('.top .user');if(ue)ue.classList.toggle('dot',f&&n>0);tbMk()}
 /* จับคู่ชื่อผู้ใช้ (อังกฤษหรือไทย) กับรายชื่อบุคลากร เพื่อดึงรูปมาแสดง */
@@ -5487,6 +5488,7 @@ const w=function(...a){const c=this.parent&&this.parent.id;if(c&&me&&c!='auditlo
 const p=o.apply(this,a);if(c&&me&&AUD_COLS[c]&&c!='cleanup'&&c!='restore')Promise.resolve(p).then(()=>audWrite(m,c,this.id,a[0]),()=>{});return p};w.__aud=1;DR[m]=w})}catch(e){}})();
 /* หน้าตั้งค่า */
 const SETTABS=[[1,'ปีการศึกษา / ภาคเรียน'],[2,'ข้อมูลโรงเรียน'],[3,'การสมัครสมาชิก'],[4,'เมนูที่ครูเห็น'],[5,'สิทธิ์แก้ไขข้อมูล'],[6,'ข้อมูลและพื้นที่'],[7,'ประวัติการแก้ไข']];
+SETTABS.push([8,'ทะเบียนบุคลากร'],[9,'ผู้ใช้งาน / สิทธิ์การใช้งาน'],[10,'สำรองข้อมูล']);
 function setTab(n){SETTAB=n;PMD=null;PED=null;render()}
 let SETM=0;
 const SET_MQ='(max-width:560px)';
@@ -5494,13 +5496,15 @@ const setMob=()=>{try{const m=Math.min(screen.width,screen.height);return innerW
 try{matchMedia(SET_MQ).addEventListener('change',()=>{if(CUR=='set')render()});addEventListener('resize',()=>{if(CUR=='set'&&setMob()!=(!!document.querySelector('.smh')||!!document.querySelector('.smh-nav')))render()})}catch(e){}
 function setBack(){SETM=0;PMD=null;PED=null;render();scrollTo(0,0)}
 function setOpen(n){SETM=n;setTab(n);scrollTo(0,0)}
-const SET_GR=[['การเรียนการสอนและโรงเรียน',[[1,'cal','#5B8DEF'],[2,'bld','#34C38F']]],['ผู้ใช้งานและความปลอดภัย',[[3,'ud','#F5A524'],[4,'eye','#8B6FE0'],[5,'edit','#F472B6']]],['ข้อมูลและระบบ',[[6,'db','#14B8D6'],[7,'clip','#7C8CF8']]]];
+const SET_GR=[['การเรียนการสอนและโรงเรียน',[[1,'cal','#5B8DEF'],[2,'bld','#34C38F']]],['ผู้ใช้งานและความปลอดภัย',[[3,'ud','#F5A524'],[4,'eye','#8B6FE0'],[5,'edit','#F472B6']]],['ข้อมูลและระบบ',[[6,'db','#14B8D6'],[7,'clip','#7C8CF8']]],['ระบบกลาง',[[8,'users','#0EA5A4'],[9,'user','#EF8354'],[10,'cloudup','#5B9BD5']]]];
 function setHubHtml(){const nm=($('#un')||{}).textContent||me.n,ro=($('#ur')||{}).textContent||'',av=($('#au')||{}).innerHTML||'',tc=($('#term_chip')||{}).textContent||'';
 const val=n=>n==1?tc:n==3?(PUBS.regOpen===false?'ปิดรับ':'เปิดรับ'):'';
 return `<div class="smh"><div class="smh-t">ตั้งค่า</div><div class="smh-pf" data-r="acct"><span class="smh-av">${av}</span><div><b>${esc(nm)}</b><small>${esc(ro)}</small><em>${ic('edit')} ดูบัญชีของฉัน</em></div>${ic('chev','smh-ch')}</div>
 ${SET_GR.map(g=>`<h6 class="smh-h">${g[0]}</h6><div class="smh-g">${g[1].map(r=>`<a class="smh-r" onclick="setOpen(${r[0]})" style="--c:${r[2]}"><i>${ic(r[1])}</i><span>${SETTABS[r[0]-1][1]}</span>${val(r[0])?`<small>${esc(val(r[0]))}</small>`:''}${ic('chev','smh-ch')}</a>`).join('')}</div>`).join('')}</div>`}
-const SET_DESC=[null,'กำหนดวันเปิด-ปิดภาคเรียนของแต่ละปีการศึกษา ระบบใช้ค่านี้แสดงภาคเรียนปัจจุบันและช่วงเวลาทำงานของโรงเรียน','ชื่อ ที่อยู่ ตราโรงเรียน และผู้อำนวยการ ใช้แสดงในแถบเมนู หน้าเข้าสู่ระบบ และหัวหนังสือราชการ','เปิดหรือปิดรับสมัครสมาชิกใหม่ และดูสถานะการรับสมัครในปัจจุบัน','เลือกว่าเมนูใดแสดงให้ใครเห็นบ้าง ผู้ก่อตั้งเห็นทุกเมนูเสมอ','กำหนดผู้ที่แก้ไขข้อมูลของแต่ละหมวดได้ นอกเหนือจากผู้ก่อตั้ง','ตรวจสอบพื้นที่จัดเก็บ และล้างข้อมูลเก่าที่ไม่จำเป็น','ดูว่าใครแก้ไขหรือลบข้อมูลอะไร เมื่อใด'];
-const setVal=n=>n==1?(($('#term_chip')||{}).textContent||''):n==3?(PUBS.regOpen===false?'ปิดรับ':'เปิดรับ'):'';
+const SETBODY=[null,()=>V.set1(true),setInfoHtml,setRegHtml,setMenuHtml,setEditHtml,setDataHtml,setAudHtml,()=>setEmb(V.staff),()=>setEmb(V.usr),()=>setEmb(V.bak)];
+function setEmb(f){SETEMB=true;try{return f()}finally{SETEMB=false}}
+const SET_DESC=[null,'กำหนดวันเปิด-ปิดภาคเรียนของแต่ละปีการศึกษา ระบบใช้ค่านี้แสดงภาคเรียนปัจจุบันและช่วงเวลาทำงานของโรงเรียน','ชื่อ ที่อยู่ ตราโรงเรียน และผู้อำนวยการ ใช้แสดงในแถบเมนู หน้าเข้าสู่ระบบ และหัวหนังสือราชการ','เปิดหรือปิดรับสมัครสมาชิกใหม่ และดูสถานะการรับสมัครในปัจจุบัน','เลือกว่าเมนูใดแสดงให้ใครเห็นบ้าง ผู้ก่อตั้งเห็นทุกเมนูเสมอ','กำหนดผู้ที่แก้ไขข้อมูลของแต่ละหมวดได้ นอกเหนือจากผู้ก่อตั้ง','ตรวจสอบพื้นที่จัดเก็บ และล้างข้อมูลเก่าที่ไม่จำเป็น','ดูว่าใครแก้ไขหรือลบข้อมูลอะไร เมื่อใด','เพิ่มรายชื่อบุคลากรไว้ล่วงหน้า ใช้ตรวจสอบเมื่อสมาชิกใหม่สมัครเข้าระบบ','อนุมัติสมาชิกใหม่ ผูกบัญชีกับรายชื่อบุคลากร และกำหนดสิทธิ์การใช้งาน','ดาวน์โหลดข้อมูลทั้งหมดของระบบเก็บไว้เป็นไฟล์สำรอง'];
+const setVal=n=>n==9?((U.filter(u=>u.st=='pending').length)?U.filter(u=>u.st=='pending').length+' รออนุมัติ':''):n==1?(($('#term_chip')||{}).textContent||''):n==3?(PUBS.regOpen===false?'ปิดรับ':'เปิดรับ'):'';
 function setFilter(v){v=(v||'').trim();document.querySelectorAll('.sps-l .spr').forEach(a=>{a.style.display=!v||a.textContent.includes(v)?'':'none'});document.querySelectorAll('.sps-l .sps-gp').forEach(g=>{g.style.display=[...g.querySelectorAll('.spr')].some(a=>a.style.display!='none')?'':'none'})}
 function setSplitHtml(bd){const nm=($('#un')||{}).textContent||me.n,ro=($('#ur')||{}).textContent||'',av=($('#au')||{}).innerHTML||'',col=Object.fromEntries(SET_GR.flatMap(g=>g[1].map(r=>[r[0],r])));const c=col[SETTAB];
 return `<div class="sps"><div class="sps-l"><div class="sps-sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="ค้นหาการตั้งค่า" oninput="setFilter(this.value)"></div>
@@ -5508,9 +5512,9 @@ return `<div class="sps"><div class="sps-l"><div class="sps-sw"><svg viewBox="0 
 ${SET_GR.map(g=>`<div class="sps-gp"><h6>${g[0]}</h6>${g[1].map(r=>`<a class="spr${SETTAB==r[0]?' on':''}" onclick="setTab(${r[0]})" style="--c:${r[2]}"><i>${ic(r[1])}</i><span>${SETTABS[r[0]-1][1]}</span>${setVal(r[0])?`<small>${esc(setVal(r[0]))}</small>`:''}</a>`).join('')}</div>`).join('')}</div>
 <div class="sps-r"><div class="sps-hero" style="--c:${c[2]}"><i>${ic(c[1])}</i><h2>${SETTABS[SETTAB-1][1]}</h2><p>${SET_DESC[SETTAB]}</p></div>${bd}</div></div>`}
 V.set=()=>{const f=me&&me.role=='founder';if(!f)return V.set1();
-if(!setMob())return setSplitHtml([null,()=>V.set1(true),setInfoHtml,setRegHtml,setMenuHtml,setEditHtml,setDataHtml,setAudHtml][SETTAB]());
-if(setMob()){if(!SETM)return setHubHtml();const bd=[null,()=>V.set1(true),setInfoHtml,setRegHtml,setMenuHtml,setEditHtml,setDataHtml,setAudHtml][SETM]();return `<div class="smh-nav"><a onclick="setBack()">${ic('chev','smh-bk')} ตั้งค่า</a><b>${SETTABS[SETM-1][1]}</b><span></span></div>`+bd}
-const body=[null,()=>V.set1(true),setInfoHtml,setRegHtml,setMenuHtml,setEditHtml,setDataHtml,setAudHtml][SETTAB]();
+if(!setMob())return setSplitHtml(SETBODY[SETTAB]());
+if(setMob()){if(!SETM)return setHubHtml();const bd=SETBODY[SETM]();return `<div class="smh-nav"><a onclick="setBack()">${ic('chev','smh-bk')} ตั้งค่า</a><b>${SETTABS[SETM-1][1]}</b><span></span></div>`+bd}
+const body=SETBODY[SETTAB]();
 return PT('ตั้งค่าระบบ','เฉพาะผู้ก่อตั้งแก้ไขได้ · เลือกหมวดที่ต้องการ')+`<div class="seg-wrap">${segHtml('sxtab',SETTABS.map(t=>[t[0],t[0]+'. '+t[1]]),SETTAB,'setTab','sc')}</div>`+body};
 const sxMsg=(id,t,ok)=>{const e=document.getElementById(id);if(e){e.style.color=ok?'#14804A':'var(--red)';e.textContent=t}};
 /* 2 ข้อมูลโรงเรียน */
