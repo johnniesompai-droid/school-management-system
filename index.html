@@ -1148,6 +1148,22 @@ aside{padding:18px 12px 16px;background-image:linear-gradient(180deg,rgba(247,24
 #sbt:hover{background:linear-gradient(180deg,#F3EEFF,#ECE4FF);color:#6C4FD8;width:24px}
 #sbt:active svg{transform:scale(.85)}
 .svp-amt{align-items:stretch}.svp-wrap .svp-amt input,.svp-amt input{margin:0!important;box-sizing:border-box}.svp-amt span{box-sizing:border-box;min-width:54px;justify-content:center;border:1px solid var(--line)}
+@media(max-width:700px){
+.svp-wrap.msheet{padding:max(6px,env(safe-area-inset-top)) 8px calc(8px + env(safe-area-inset-bottom))}
+.svp-x{margin:0 0 6px;padding:5px 12px;font-size:.8rem}
+.svp-wrap.msheet .svp-top{padding:8px}
+.svp-wrap.msheet .svp-forms{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:8px}
+.svp-wrap.msheet .svp-fh{padding:7px 9px;font-size:.84rem;gap:6px}
+.svp-wrap.msheet .svp-fi{width:26px;height:26px;border-radius:8px}.svp-wrap.msheet .svp-fi svg{width:15px;height:15px}
+.svp-wrap.msheet .svp-fb{padding:8px 9px}
+.svp-wrap.msheet .svp-fb label{font-size:.68rem;margin:0 0 3px;line-height:1.2}
+.svp-wrap.msheet .svp-amt{margin-bottom:7px}
+.svp-wrap.msheet .svp-fb input,.svp-wrap.msheet .svp-fb textarea{font-size:.8rem;padding:6px 8px;min-width:0}
+.svp-wrap.msheet .svp-fb textarea{height:34px;min-height:0;resize:none;margin-bottom:8px}
+.svp-wrap.msheet .svp-amt span{min-width:0;padding:0 8px;font-size:.74rem}
+.svp-wrap.msheet .svp-btn{padding:8px 4px;font-size:.74rem;gap:4px;white-space:nowrap}.svp-wrap.msheet .svp-btn svg{width:14px;height:14px}
+.svp-wrap.msheet .svp-msg{font-size:.7rem;margin-top:4px}
+}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -4163,7 +4179,7 @@ return `<div class="bk-stage" id="bk_stage"><div class="bk-scale" id="bk_scale">
 <div class="bk-pg">${svPg==0?'หน้าปก':'หน้า '+svPg+' / '+(total-1)}</div>`}
 function svFit(){const w=$('.svp-wrap'),s=$('#bk_stage'),c=$('#bk_scale');if(!w||!s||!c||!w.clientWidth)return;
 const two=w.classList.contains('two'),side=two&&window.innerWidth>1100;
-const aw=w.clientWidth-24-(side?470:0)-(w.classList.contains('msheet')&&window.innerWidth<=700?20:0),top=w.getBoundingClientRect().top+(window.scrollY||0),ah=side?window.innerHeight-top-70:1e9;
+const ms=w.classList.contains('msheet')&&window.innerWidth<=700;const aw=w.clientWidth-24-(side?470:0)-(w.classList.contains('msheet')&&window.innerWidth<=700?20:0),top=w.getBoundingClientRect().top+(window.scrollY||0),ah=ms?window.innerHeight-330:side?window.innerHeight-top-70:1e9;
 const k=Math.max(.3,Math.min(1,aw/BKW,ah/BKH));c.style.transform=`scale(${k})`;s.style.width=Math.round(BKW*k)+'px';s.style.height=Math.round(BKH*k)+'px'}
 function svGo(d){svPg+=d;const w=$('#sv_book'),st=ST.find(x=>x.id==svSel);if(!w||!st)return;w.innerHTML=svBook(st,d);svFit()}
 window.addEventListener('resize',svFit);
@@ -4187,14 +4203,14 @@ function savingForms(){const d=!svSel?'disabled':'';
 return `<div class="svp-forms">
 <div class="svp-f dep"><div class="svp-fh"><span class="svp-fi">${ic('down')}</span>ฝากเงิน</div><div class="svp-fb">
 <label>จำนวนเงินฝาก (บาท) <i>*</i></label>
-<div class="svp-amt"><input id="sv_dep_amt" type="number" min="0" step="any" placeholder="กรอกจำนวนเงิน" ${d}><span>บาท</span></div>
+<div class="svp-amt"><input id="sv_dep_amt" type="number" min="0" step="any" placeholder="จำนวนเงิน" ${d}><span>บาท</span></div>
 <label>หมายเหตุ (ถ้ามี)</label>
 <textarea id="sv_dep_note" rows="2" placeholder="เช่น ออมประจำสัปดาห์" ${d}></textarea>
 <button type="button" class="svp-btn dep" id="sv_dep_btn" ${d} onclick="doDeposit()">${ic('save')} บันทึกการฝากเงิน</button>
 <div id="sv_dep_msg" class="svp-msg"></div></div></div>
 <div class="svp-f wd"><div class="svp-fh"><span class="svp-fi">${ic('up')}</span>ถอนเงิน</div><div class="svp-fb">
 <label>จำนวนเงินถอน (บาท) <i>*</i></label>
-<div class="svp-amt"><input id="sv_wd_amt" type="number" min="0" step="any" placeholder="กรอกจำนวนเงิน" ${d}><span>บาท</span></div>
+<div class="svp-amt"><input id="sv_wd_amt" type="number" min="0" step="any" placeholder="จำนวนเงิน" ${d}><span>บาท</span></div>
 <label>หมายเหตุ (ถ้ามี)</label>
 <textarea id="sv_wd_note" rows="2" placeholder="เช่น ซื้ออุปกรณ์การเรียน" ${d}></textarea>
 <button type="button" class="svp-btn wd" id="sv_wd_btn" ${d} onclick="doWithdraw()">${ic('save')} บันทึกการถอนเงิน</button>
