@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><meta name="theme-color" content="#F4F0FF"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Banphayoe"><meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>โรงเรียนบ้านผาเยอ - ระบบบริหารจัดการโรงเรียน</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@400;700&display=swap');
@@ -1112,6 +1112,7 @@ aside{padding:18px 12px 16px;background-image:linear-gradient(180deg,rgba(247,24
 .btn:disabled{opacity:.55;transform:none;filter:none;cursor:not-allowed}
 .hb .btn{background:linear-gradient(180deg,#fff,#F1F4FF);text-shadow:none;box-shadow:inset 0 1.5px 0 #fff,0 5px 12px -4px rgba(30,50,120,.35)}
 .dzrow-actions .btn,.ven-a .btn,.pj-l3 .btn,.cb-nav .btn,.lt-ft .dzrow-actions .btn{border-radius:11px}
+.card.pwa{margin-top:14px}.pwa-t{color:var(--mute);font-size:.84rem;line-height:1.6;margin:0 0 10px}.pwa-ok{color:#14804A;margin:0;font-size:.9rem}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -1137,6 +1138,16 @@ const firebaseConfig={apiKey:"AIzaSyCetA8GzKLX805V9nEpPXjdoh8eGtVMqXY",authDomai
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+/* PWA: ติดตั้งเป็นแอป */
+let PWA_EV=null;
+const pwaStd=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const pwaIos=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA_EV=e;if(typeof CUR!=='undefined'&&CUR==='acct'&&typeof renderSoon==='function')renderSoon()});
+window.addEventListener('appinstalled',()=>{PWA_EV=null;if(typeof CUR!=='undefined'&&CUR==='acct'&&typeof renderSoon==='function')renderSoon()});
+function pwaCard(){let b;if(pwaStd())b='<p class="pwa-ok">✓ ติดตั้งเป็นแอปบนเครื่องนี้แล้ว</p>';else if(PWA_EV)b='<p class="pwa-t">เพิ่มไอคอนโรงเรียนไว้บนหน้าจอ เปิดใช้งานเต็มจอเหมือนแอป</p><button class="btn" type="button" onclick="pwaInstall()">ติดตั้งแอป</button>';else if(pwaIos())b='<p class="pwa-t">บน iPhone / iPad: เปิดหน้านี้ด้วย Safari แล้วกดปุ่มแชร์ (สี่เหลี่ยมมีลูกศรขึ้น) จากนั้นเลือก <b>เพิ่มไปยังหน้าจอโฮม</b></p>';else b='<p class="pwa-t">บน Android: เปิดด้วย Chrome แล้วกดเมนูสามจุดมุมขวาบน เลือก <b>ติดตั้งแอป</b> หรือ <b>เพิ่มไปยังหน้าจอหลัก</b></p>';return `<div class="card pwa"><h3 style="margin:0 0 6px">ติดตั้งเป็นแอปบนมือถือ</h3>${b}</div>`}
+async function pwaInstall(){if(!PWA_EV)return;try{PWA_EV.prompt();await PWA_EV.userChoice}catch(e){}PWA_EV=null;if(typeof renderSoon==='function')renderSoon()}
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
+
 /* toggle: ให้สวิตช์เลื่อนจนจบก่อน แล้วค่อยรันงานหนักตามหลัง */
 document.addEventListener('change',e=>{const t=e.target;if(!t||!t.classList||!t.classList.contains('tgl')||t._rp)return;e.stopImmediatePropagation();setTimeout(()=>{t._rp=1;try{t.dispatchEvent(new Event('change',{bubbles:true}))}finally{t._rp=0}},240)},true);
 
@@ -5116,7 +5127,7 @@ V.acct=()=>{if(!me)return '';const f=me.role=='founder';return PT('บัญช�
 <form onsubmit="pwChange();return false"><input type="text" name="username" value="${esc(me.u)}" autocomplete="username" hidden>
 <h3 style="margin:16px 0 4px">เปลี่ยนรหัสผ่าน</h3>${pwBox('pw_old','รหัสผ่านปัจจุบัน','current-password')}${pwBox('pw_new','รหัสผ่านใหม่ (อย่างน้อย 6 ตัว)','new-password')}${pwBox('pw_new2','ยืนยันรหัสผ่านใหม่','new-password')}
 <div id="pw_msg" class="fm" style="margin:8px 0"></div><button class="btn" type="submit" id="pw_btn">บันทึกรหัสผ่านใหม่</button></form>
-<p style="color:var(--mute);font-size:.78rem;margin:12px 0 0">เพื่อความปลอดภัย ระบบไม่เก็บและไม่แสดงรหัสผ่านเดิม หากให้เบราว์เซอร์จำรหัสผ่านไว้ สามารถดูได้ในตัวจัดการรหัสผ่านของเบราว์เซอร์</p></div>`};
+<p style="color:var(--mute);font-size:.78rem;margin:12px 0 0">เพื่อความปลอดภัย ระบบไม่เก็บและไม่แสดงรหัสผ่านเดิม หากให้เบราว์เซอร์จำรหัสผ่านไว้ สามารถดูได้ในตัวจัดการรหัสผ่านของเบราว์เซอร์</p></div>${pwaCard()}`};
 async function pwChange(){const g=i=>document.getElementById(i).value,m=(t,ok)=>{const e=document.getElementById('pw_msg');e.style.color=ok?'var(--green,#14804A)':'var(--red)';e.textContent=t};
 const o=g('pw_old'),n=g('pw_new'),n2=g('pw_new2');
 if(!o)return m('กรอกรหัสผ่านปัจจุบัน');if(n.length<6)return m('รหัสผ่านใหม่อย่างน้อย 6 ตัว');if(n!==n2)return m('รหัสผ่านใหม่ทั้งสองช่องไม่ตรงกัน');if(n===o)return m('รหัสผ่านใหม่ต้องไม่เหมือนรหัสเดิม');
