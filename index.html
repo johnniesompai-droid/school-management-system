@@ -1118,12 +1118,10 @@ aside{padding:18px 12px 16px;background-image:linear-gradient(180deg,rgba(247,24
 .svp-wrap.msheet{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;gap:0;padding:max(10px,env(safe-area-inset-top)) 10px 0;background:rgba(232,227,250,.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);overscroll-behavior:contain;animation:svup .28s cubic-bezier(.2,.9,.3,1)}
 @keyframes svup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
 .svp-x{display:inline-flex;align-items:center;align-self:flex-end;flex:none;margin:0 0 8px;padding:7px 14px;border:0;border-radius:999px;background:rgba(255,255,255,.92);color:#4B2FA6;font:inherit;font-size:.86rem;font-weight:500;box-shadow:0 2px 8px rgba(80,60,160,.18)}
-.svp-wrap.msheet{align-items:stretch}.svp-wrap.msheet .svp-top{flex:0 1 auto;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;width:auto;max-width:none;margin:0}
-.svp-wrap.msheet>div:not(.svp-top){flex:none;display:block;min-width:0;margin-top:auto}
-.svp-wrap.msheet .svp-forms{display:none;grid-template-columns:minmax(0,1fr);margin:10px 0 0;max-height:52dvh;overflow:auto;-webkit-overflow-scrolling:touch}
-.svp-wrap.msheet.mf-dep .svp-forms,.svp-wrap.msheet.mf-wd .svp-forms{display:grid}
-.svp-wrap.msheet.mf-dep .svp-f.wd,.svp-wrap.msheet.mf-wd .svp-f.dep{display:none}
-.svp-bar{display:block;padding:10px 0 calc(10px + env(safe-area-inset-bottom))}
+.svp-wrap.msheet{align-items:stretch}.svp-wrap.msheet{overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(16px + env(safe-area-inset-bottom))}.svp-wrap.msheet .svp-top{flex:none;overflow:visible;width:auto;max-width:none;margin:0}
+.svp-wrap.msheet>div:not(.svp-top){flex:none;display:block;min-width:0}
+.svp-wrap.msheet .svp-forms{display:grid;grid-template-columns:minmax(0,1fr);margin:12px 0 0;gap:12px}
+.svp-bar{display:none!important}.svp-x{position:sticky;top:0;z-index:5}.svp-wrap.msheet .svp-fb textarea{min-height:0;rows:1}.svp-wrap.msheet .svp-fb{padding:12px 14px}
 .svp-mt{color:#14804A;font-size:.86rem;text-align:center;margin-bottom:6px}.svp-mt:empty{display:none}
 .svp-bb{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .svp-b{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid rgba(255,255,255,.5);border-radius:16px;padding:13px 8px;font:inherit;font-size:1rem;font-weight:500;color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.18);cursor:pointer;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),0 6px 14px -5px rgba(0,0,0,.3);transition:transform .15s,box-shadow .2s}
@@ -1149,6 +1147,7 @@ aside{padding:18px 12px 16px;background-image:linear-gradient(180deg,rgba(247,24
 #sbt svg{width:13px;height:13px;transition:transform .2s}
 #sbt:hover{background:linear-gradient(180deg,#F3EEFF,#ECE4FF);color:#6C4FD8;width:24px}
 #sbt:active svg{transform:scale(.85)}
+.svp-amt{align-items:stretch}.svp-wrap .svp-amt input,.svp-amt input{margin:0!important;box-sizing:border-box}.svp-amt span{box-sizing:border-box;min-width:54px;justify-content:center;border:1px solid var(--line)}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
