@@ -1057,6 +1057,7 @@ input.tgl{-webkit-appearance:none;appearance:none;position:relative;flex:none;wi
 input.tgl::before{content:"";position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#fff 55%,#F1F1F1);box-shadow:0 2px 5px rgba(0,0,0,.35);transition:transform .28s cubic-bezier(.3,1.5,.5,1)}
 input.tgl:checked{background:#2BB58A}input.tgl:checked::before{transform:translateX(20px)}
 input.tgl:active::before{width:28px}input.tgl:checked:active::before{transform:translateX(16px)}
+input.tgl{touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:background .25s ease}input.tgl::before{will-change:transform;transition:transform .3s cubic-bezier(.3,1.4,.5,1),width .2s ease}
 input.tgl:disabled{opacity:.45;cursor:not-allowed}input.tgl:focus-visible{outline:2px solid #7DA4F7;outline-offset:2px}
 .sx-sw{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:.86rem;margin-top:4px}
 @media(prefers-reduced-motion:reduce){input.tgl,input.tgl::before{transition:none}}
@@ -1136,6 +1137,9 @@ const firebaseConfig={apiKey:"AIzaSyCetA8GzKLX805V9nEpPXjdoh8eGtVMqXY",authDomai
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+/* toggle: ให้สวิตช์เลื่อนจนจบก่อน แล้วค่อยรันงานหนักตามหลัง */
+document.addEventListener('change',e=>{const t=e.target;if(!t||!t.classList||!t.classList.contains('tgl')||t._rp)return;e.stopImmediatePropagation();setTimeout(()=>{t._rp=1;try{t.dispatchEvent(new Event('change',{bubbles:true}))}finally{t._rp=0}},240)},true);
+
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 window.addEventListener('pageshow',()=>{window.scrollTo(0,0)});
 const $=q=>document.querySelector(q);
