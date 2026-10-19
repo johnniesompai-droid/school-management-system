@@ -1166,6 +1166,60 @@ aside{padding:18px 12px 16px;background-image:linear-gradient(180deg,rgba(247,24
 .svp-wrap.msheet .svp-btn{padding:8px 4px;font-size:.74rem;gap:4px;white-space:nowrap}.svp-wrap.msheet .svp-btn svg{width:14px;height:14px}
 .svp-wrap.msheet .svp-msg{font-size:.7rem;margin-top:4px}
 }
+
+/* ===== Liquid Glass tab bar + sheets ===== */
+#tabbar,.tbsh,.upop{display:none}
+.user{position:relative;cursor:pointer}.user.dot::after{content:"";position:absolute;top:-1px;left:27px;width:11px;height:11px;border-radius:50%;background:#F26B78;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.upop{display:block;position:fixed;inset:0;z-index:96}.upop-bg{position:absolute;inset:0;background:rgba(30,25,70,.12)}
+.upop-p{position:absolute;top:calc(env(safe-area-inset-top) + 62px);right:12px;width:min(300px,calc(100vw - 24px));max-height:calc(100dvh - 90px);overflow:auto;padding:10px;border-radius:24px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:saturate(1.9) blur(26px);backdrop-filter:saturate(1.9) blur(26px);border:1px solid rgba(255,255,255,.75);box-shadow:0 18px 44px -10px rgba(50,40,120,.35),inset 0 1px 0 rgba(255,255,255,.95);transform-origin:top right;animation:upin .22s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes upin{from{opacity:0;transform:scale(.92) translateY(-6px)}to{opacity:1;transform:none}}
+.upop-h{display:flex;align-items:center;gap:10px;padding:8px 8px 12px;border-bottom:1px solid rgba(120,100,200,.14);margin-bottom:6px}.upop-h b{display:block;font-weight:500;color:#2B2F5E}.upop-h small{color:var(--mute);font-size:.78rem}
+.upop-av{width:42px;height:42px;border-radius:50%;overflow:hidden;background:#ECE4FF;color:#7A5CE0;display:grid;place-items:center;flex:none}.upop-av svg{width:22px;height:22px}.upop-av img{width:100%;height:100%;object-fit:cover}
+.upop h6{margin:10px 10px 4px;font-size:.72rem;font-weight:500;color:#9A8FC0;letter-spacing:.3px}
+.upop-i{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:15px;color:#2B2F5E;cursor:pointer;transition:background .15s}.upop-i:hover,.upop-i:active{background:rgba(139,111,224,.14)}
+.upop-i>i{width:32px;height:32px;border-radius:10px;background:linear-gradient(145deg,#F4F0FF,#E8E0FF);color:#7A5CE0;display:grid;place-items:center;flex:none;box-shadow:inset 0 1px 0 #fff}.upop-i>i svg{width:17px;height:17px}
+.upop-i span{flex:1;font-size:.9rem}.upop-i em{font-style:normal;background:#F26B78;color:#fff;font-size:.7rem;padding:1px 7px;border-radius:999px}.upop-ch{width:14px;height:14px;opacity:.4}
+.upop-sp{height:1px;background:rgba(120,100,200,.14);margin:8px 6px}.upop-i.out{color:#D4505E}.upop-i.out>i{background:#FDE8EA;color:#D4505E}
+@media(max-width:1200px){
+aside,#sbt,#burger{display:none!important}
+.main{padding-bottom:calc(98px + env(safe-area-inset-bottom))}
+#tabbar{display:flex;gap:10px;align-items:center;position:fixed;z-index:70;left:50%;transform:translateX(-50%);bottom:max(12px,env(safe-area-inset-bottom));width:min(560px,calc(100vw - 24px))}
+.tb-cap,.tb-more{background:linear-gradient(180deg,rgba(255,255,255,.62),rgba(255,255,255,.42));-webkit-backdrop-filter:saturate(2) blur(22px);backdrop-filter:saturate(2) blur(22px);border:1px solid rgba(255,255,255,.8);box-shadow:0 14px 34px -10px rgba(60,45,140,.38),0 2px 6px rgba(60,45,140,.1),inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1.5px 3px rgba(150,130,230,.16)}
+.tb-cap{position:relative;flex:1;min-width:0;display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));height:66px;padding:5px;border-radius:33px}
+.tb-ind{position:absolute;top:5px;bottom:5px;left:5px;width:calc((100% - 10px)/var(--n,4));border-radius:28px;background:linear-gradient(180deg,rgba(190,170,255,.55),rgba(150,125,240,.38));border:1px solid rgba(255,255,255,.7);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.9),inset 0 -2px 4px rgba(120,95,220,.2),0 6px 14px -6px rgba(110,85,220,.55);transform:translateX(calc(var(--i,0) * 100%));transition:transform .38s cubic-bezier(.3,1.3,.5,1),opacity .2s;pointer-events:none}
+.tb-cap.none .tb-ind{opacity:0}
+.tb-cap a{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6C7794;font-size:.66rem;line-height:1.15;text-align:center;-webkit-tap-highlight-color:transparent;transition:color .2s,transform .15s}
+.tb-cap a svg{width:23px;height:23px}.tb-cap a span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.tb-cap a.on{color:#4B2FA6;font-weight:500}.tb-cap a:active{transform:scale(.92)}
+.tb-more{flex:none;width:66px;height:66px;border-radius:50%;display:grid;place-items:center;color:#6C7794;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s,color .2s}
+.tb-more svg{width:24px;height:24px}.tb-more:active{transform:scale(.92)}.tb-more.on{color:#4B2FA6}
+body.tbsh-open #tabbar{opacity:0;pointer-events:none}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.tb-cap,.tb-more{background:#fff}}
+.tbsh{display:block;position:fixed;inset:0;z-index:95}
+.tbsh-bg{position:absolute;inset:0;background:rgba(30,25,70,.28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:tbfade .25s}
+@keyframes tbfade{from{opacity:0}to{opacity:1}}
+.tbsh-p{position:absolute;left:50%;bottom:0;width:min(640px,100%);transform:translateX(-50%);max-height:82dvh;display:flex;flex-direction:column;padding:8px 16px calc(18px + env(safe-area-inset-bottom));border-radius:30px 30px 0 0;background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(247,244,255,.78));-webkit-backdrop-filter:saturate(1.9) blur(30px);backdrop-filter:saturate(1.9) blur(30px);border:1px solid rgba(255,255,255,.8);border-bottom:0;box-shadow:0 -18px 50px -14px rgba(50,40,120,.4),inset 0 1.5px 0 rgba(255,255,255,.95);animation:tbup .34s cubic-bezier(.2,.9,.3,1)}
+@keyframes tbup{from{transform:translate(-50%,60px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+.tbsh-grab{width:42px;height:5px;border-radius:3px;background:rgba(120,100,200,.3);margin:2px auto 8px}
+.tbsh-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.tbsh-h b{font-size:1.05rem;font-weight:500;color:#2B2F5E}
+.tbsh-h button{width:32px;height:32px;border-radius:50%;border:0;background:rgba(139,111,224,.14);color:#6A4FD0;font-size:.9rem;cursor:pointer}
+.tbsh-sw{display:flex;align-items:center;gap:8px;padding:0 12px;border-radius:14px;background:rgba(120,100,200,.1);margin-bottom:12px;color:#8A80B8}.tbsh-sw svg{width:17px;height:17px;flex:none}
+.tbsh-sw input{flex:1;min-width:0;border:0;background:transparent;padding:11px 0;font:inherit;font-size:.92rem;outline:0;color:#2B2F5E}
+.tbsh-b{overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;min-height:120px}
+.tbt-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tbt{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px 12px;border-radius:22px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);box-shadow:0 6px 16px -10px rgba(60,45,140,.35),inset 0 1px 0 #fff;text-align:center;color:#2B2F5E;font-size:.78rem;line-height:1.25;cursor:pointer;transition:transform .15s}
+.tbt:active{transform:scale(.95)}.tbt.on{background:linear-gradient(180deg,#ECE4FF,#F6F1FF);border-color:#D9CCFF}
+.tbt>i{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,color-mix(in srgb,var(--c) 65%,#fff),var(--c));box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),0 6px 12px -5px var(--c)}.tbt>i svg{width:23px;height:23px}
+.tbt-ch{position:absolute;top:8px;right:8px;width:12px;height:12px;opacity:.35}
+.tbsh-bk{display:inline-flex;align-items:center;gap:4px;padding:4px 10px 4px 4px;margin-bottom:8px;color:#6A4FD0;font-size:.88rem;cursor:pointer}.tbk{width:16px;height:16px;transform:rotate(180deg)}
+.tbr-l{display:flex;flex-direction:column;gap:8px}
+.tbr{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:18px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);box-shadow:0 4px 12px -9px rgba(60,45,140,.4);color:#2B2F5E;cursor:pointer}.tbr:active{background:#ECE4FF}
+.tbr>i{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,color-mix(in srgb,var(--c) 65%,#fff),var(--c));flex:none}.tbr>i svg{width:18px;height:18px}
+.tbr span{font-size:.92rem}.tbr small{display:block;color:var(--mute);font-size:.74rem}
+.tbsh-em{text-align:center;color:var(--mute);padding:28px 0}
+}
+@media(prefers-reduced-motion:reduce){.tb-ind,.tbsh-p,.upop-p,.tbsh-bg{animation:none;transition:none}}
+@media print{#tabbar,.tbsh,.upop{display:none!important}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -3624,7 +3678,7 @@ function go(r){const[k]=r.split(':');if(me&&me.role!='founder'&&!routeOk(k))retu
 const _pv=CUR;CUR=r;render();if(_pv!==r)pgAnim();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving'||k=='att'||k=='hw')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
 const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd'||k=='hw')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
-$('aside').classList.remove('show');scrollTo(0,0)}
+$('aside').classList.remove('show');try{tbSync();tbClose();upClose()}catch(e){}scrollTo(0,0)}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-r]');if(a)go(a.dataset.r)});
 const sbOpen=()=>innerWidth>900?!document.body.classList.contains('hide'):$('aside').classList.contains('show');
 function sbSet(o){document.body.classList.toggle('hide',!o);$('aside').classList.toggle('show',o);sbBtn()}
@@ -3667,9 +3721,47 @@ if(m=='setup'){await db.collection('meta').doc('config').set({founderUid:newUid}
 else{await fbAuth.signOut();suppress=false;auth('login');$('#fm').style.color='#22B573';$('#fm').textContent='ส่งคำขอแล้ว รอผู้ก่อตั้งอนุมัติ'}
 }catch(e){await cred.user.delete().catch(()=>{});msg(ec(e))}
 finally{suppress=false}}
+
+/* ===== แถบเมนูล่างสไตล์ Liquid Glass (มือถือ / iPad) ===== */
+const TB_TABS=[['home','หน้าหลัก','home'],['div','งาน 4 ฝ่าย','grid'],['saving','ออมเงิน','coin'],['att','การมาเรียน','cal']];
+const TB_DOTS='<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="12" cy="19" r="2.2"/></svg>';
+const TB_COL=['#8B6FE0','#5B8DEF','#34C38F','#F5A524','#F472B6','#14B8D6','#EF7B5B','#7C8CF8'];
+const tbKey=r=>{const k=String(r).split(':')[0];return k=='supply'?'div':k};
+function tbMk(){let el=document.getElementById('tabbar');if(!me){if(el)el.remove();return}
+const tabs=TB_TABS.filter(t=>routeOk(t[0]));
+if(!el){el=document.createElement('nav');el.id='tabbar';document.body.appendChild(el)}
+el.innerHTML=`<div class="tb-cap" style="--n:${tabs.length}"><i class="tb-ind"></i>${tabs.map(t=>`<a data-r="${t[0]}" data-tb="${t[0]}">${ic(t[2])}<span>${t[1]}</span></a>`).join('')}</div><button type="button" class="tb-more" onclick="tbMore()" aria-label="เมนูอื่นๆ">${TB_DOTS}</button>`;tbSync()}
+function tbSync(){const el=document.getElementById('tabbar');if(!el)return;const k=tbKey(CUR),as=[...el.querySelectorAll('.tb-cap a')],i=as.findIndex(a=>a.dataset.tb==k);
+as.forEach((a,j)=>a.classList.toggle('on',j==i));const cap=el.querySelector('.tb-cap');if(cap){cap.style.setProperty('--i',Math.max(i,0));cap.classList.toggle('none',i<0)}
+const m=el.querySelector('.tb-more');if(m)m.classList.toggle('on',i<0)}
+const tbSubOf=m=>m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['hw','น้ำหนัก ส่วนสูง'],['par','ผู้ปกครอง']]:m[3]=='adm'?[['admin:send','ส่งหนังสือราชการ'],['admin:memo','เกษียนหนังสือราชการ'],['admin:draft','ร่างหนังสือราชการ']]:m[3]=='tt'?[['tt:teach','ตารางสอน'],['tt:class','ตารางเรียน'],['tt:entry','บันทึกตารางสอน'],['tt:check','ตรวจสอบตาราง']]:m[3]=='hr'?[['org','โครงสร้างบุคลากร']]:[];
+const tbItems=()=>MENU.filter(m=>routeOk(m[0])&&!TB_TABS.some(t=>t[0]==m[0]));
+let TBQ='';
+function tbMore(){tbClose();upClose();const w=document.createElement('div');w.id='tbsh';w.className='tbsh';
+w.innerHTML=`<div class="tbsh-bg" onclick="tbClose()"></div><div class="tbsh-p"><div class="tbsh-grab"></div><div class="tbsh-h"><b id="tbsh_t">เมนูทั้งหมด</b><button type="button" onclick="tbClose()" aria-label="ปิด">✕</button></div><div class="tbsh-sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="tbsh_q" placeholder="ค้นหาเมนู" autocomplete="off" oninput="tbFilter(this.value)"></div><div id="tbsh_b" class="tbsh-b"></div></div>`;
+document.body.appendChild(w);document.body.classList.add('tbsh-open');tbGrid('')}
+function tbClose(){const w=document.getElementById('tbsh');if(w)w.remove();document.body.classList.remove('tbsh-open')}
+function tbTile(m,i,q){const sub=tbSubOf(m).length;return `<a class="tbt${CUR.split(':')[0]==m[0]?' on':''}" ${sub?`onclick="tbDrill('${m[0]}')"`:`data-r="${m[0]}"`} style="--c:${TB_COL[i%TB_COL.length]}"><i>${ic(m[2])}</i><span>${m[1]}</span>${sub?ic('chev','tbt-ch'):''}</a>`}
+function tbGrid(q){const b=document.getElementById('tbsh_b');if(!b)return;const t=document.getElementById('tbsh_t');if(t)t.textContent='เมนูทั้งหมด';
+q=(q||'').trim();const its=tbItems();
+if(!q){b.innerHTML=`<div class="tbt-g">${its.map((m,i)=>tbTile(m,i)).join('')}</div>`;return}
+const hit=[];its.forEach((m,i)=>{if(m[1].includes(q))hit.push(`<a class="tbr" data-r="${m[0]}"><i style="--c:${TB_COL[i%8]}">${ic(m[2])}</i><span>${m[1]}</span></a>`);tbSubOf(m).forEach(s=>{if(s[1].includes(q))hit.push(`<a class="tbr" data-r="${s[0]}"><i style="--c:${TB_COL[i%8]}">${ic(m[2])}</i><span>${s[1]}<small>${m[1]}</small></span></a>`)})});
+b.innerHTML=hit.length?`<div class="tbr-l">${hit.join('')}</div>`:'<div class="tbsh-em">ไม่พบเมนูที่ค้นหา</div>'}
+function tbFilter(v){tbGrid(v)}
+function tbDrill(k){const m=MENU.find(x=>x[0]==k);if(!m)return;const b=document.getElementById('tbsh_b'),t=document.getElementById('tbsh_t'),q=document.getElementById('tbsh_q');if(!b)return;if(q)q.value='';
+if(t)t.textContent=m[1];const i=MENU.indexOf(m);
+b.innerHTML=`<a class="tbsh-bk" onclick="tbGrid('')">${ic('chev','tbk')} เมนูทั้งหมด</a><div class="tbr-l"><a class="tbr" data-r="${m[0]}"><i style="--c:${TB_COL[i%8]}">${ic(m[2])}</i><span>ภาพรวม ${m[1]}</span></a>${tbSubOf(m).map(s=>`<a class="tbr" data-r="${s[0]}"><i style="--c:${TB_COL[i%8]}">${ic('chev')}</i><span>${s[1]}</span></a>`).join('')}</div>`}
+/* ===== เมนูโปรไฟล์ (มุมขวาบน) : บัญชีของฉัน + ระบบกลาง ===== */
+function upToggle(){if(document.getElementById('upop'))return upClose();tbClose();upOpen()}
+function upClose(){const e=document.getElementById('upop');if(e)e.remove()}
+function upOpen(){if(!me)return;const f=me.role=='founder',sys=SYS.filter(m=>m[0]!='acct'&&(f||!['usr','staff','bak'].includes(m[0]))),n=U.filter(u=>u.st=='pending').length,nm=($('#un')||{}).textContent||me.n,ro=($('#ur')||{}).textContent||'',av=($('#au')||{}).innerHTML||'';
+const w=document.createElement('div');w.id='upop';w.className='upop';
+w.innerHTML=`<div class="upop-bg" onclick="upClose()"></div><div class="upop-p"><div class="upop-h"><span class="upop-av">${av}</span><div><b>${esc(nm)}</b><small>${esc(ro)}</small></div></div><a class="upop-i" data-r="acct"><i>${ic('user')}</i><span>บัญชีของฉัน</span>${ic('chev','upop-ch')}</a><h6>ระบบกลาง</h6>${sys.map(m=>`<a class="upop-i" data-r="${m[0]}"><i>${ic(m[2])}</i><span>${m[1]}</span>${m[0]=='usr'&&n?`<em>${n}</em>`:''}${ic('chev','upop-ch')}</a>`).join('')}<div class="upop-sp"></div><a class="upop-i out" onclick="upClose();$('#lo').click()"><i>${ic('out')||''}</i><span>ออกจากระบบ</span></a></div>`;
+document.body.appendChild(w)}
+document.addEventListener('keydown',e=>{if(e.key=='Escape'){tbClose();upClose()}});
 function mkNav(){const f=me.role=='founder',sys=SYS.filter(m=>f||!['usr','staff','bak'].includes(m[0]));
 $('#nav').innerHTML=MENU.filter(m=>routeOk(m[0])).map(nav).join('')+'<h6>ระบบกลาง</h6>'+sys.map(nav).join('');
-const n=U.filter(u=>u.st=='pending').length,a=$('[data-r=usr]');if(a&&n)a.innerHTML+=`<i class="bd">${n}</i>`}
+const n=U.filter(u=>u.st=='pending').length,a=$('[data-r=usr]');if(a&&n)a.innerHTML+=`<i class="bd">${n}</i>`;const ue=document.querySelector('.top .user');if(ue)ue.classList.toggle('dot',f&&n>0);tbMk()}
 /* จับคู่ชื่อผู้ใช้ (อังกฤษหรือไทย) กับรายชื่อบุคลากร เพื่อดึงรูปมาแสดง */
 const NM_TH={K:'กขฃคฅฆ',T:'ตถทธฑฒดฎฏฐ',P:'บปผฝพฟภ',S:'สศษซ',J:'จฉชฌ',R:'รฤลฬฦ',N:'นณ',M:'ม',W:'ว'};
 const nmThSkel=w=>{w=String(w||'').replace(/[ๆฯ]/g,'');let o='',cs=[...w];for(let i=0;i<cs.length;i++){const c=cs[i];if(cs[i+1]=='์')continue;if(c=='ง'){o+='NK';continue}if(c=='ญ'){if(i>0)o+='N';continue}if(c=='ห'&&i==0&&cs[i+1]&&'นมยรลวง'.includes(cs[i+1]))continue;for(const k in NM_TH)if(NM_TH[k].includes(c)){o+=k;break}}return o};
@@ -5194,7 +5286,7 @@ try{const u=fbAuth.currentUser;await u.reauthenticateWithCredential(firebase.aut
 ['pw_old','pw_new','pw_new2'].forEach(i=>document.getElementById(i).value='');m('เปลี่ยนรหัสผ่านเรียบร้อยแล้ว',true)}
 catch(e){m(({'auth/wrong-password':'รหัสผ่านปัจจุบันไม่ถูกต้อง','auth/invalid-credential':'รหัสผ่านปัจจุบันไม่ถูกต้อง','auth/too-many-requests':'ลองผิดหลายครั้งเกินไป กรุณารอสักครู่','auth/weak-password':'รหัสผ่านใหม่สั้นเกินไป','auth/network-request-failed':'เชื่อมต่ออินเทอร์เน็ตไม่ได้'})[e.code]||('เกิดข้อผิดพลาด: '+(e.message||e.code)))}
 b.disabled=false}
-document.addEventListener('click',e=>{if(e.target.closest('.topbar .user, header .user, .user'))go('acct')});
+document.addEventListener('click',e=>{if(e.target.closest('.top .user')){e.stopPropagation();upToggle()}});
 V.bak=()=>{if(!me||me.role!='founder')return PT('สำรองข้อมูล','เฉพาะผู้ก่อตั้ง');return PT('สำรองข้อมูล','ดาวน์โหลดข้อมูลทั้งหมดเก็บไว้ และกู้คืนกลับเมื่อข้อมูลเสียหาย (เฉพาะผู้ก่อตั้ง)')+`<div id="bk_wrap">${bkHtml()}</div>`};
 /* ===== ปีการศึกษา / ภาคเรียน (ค่าเริ่มต้นตามหลักจริง ผู้ก่อตั้งตั้งเองได้ในเมนูตั้งค่าระบบ) ===== */
 let SETT={};
