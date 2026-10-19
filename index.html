@@ -1283,6 +1283,7 @@ body.tbsh-open #tabbar{opacity:0;pointer-events:none}
 .dvpg .dv-ph{margin-top:0}.dvpg h3>a[data-r=div]{display:none}
 .dvbk{display:flex;width:fit-content;align-items:center;gap:2px;margin:0 0 10px;padding:7px 14px 7px 8px;border-radius:999px;background:#fff;color:#4B2FA6;font-size:.88rem;font-weight:500;white-space:nowrap;box-shadow:0 2px 8px rgba(80,60,160,.14);cursor:pointer}.dvbk svg{width:18px;height:18px;transform:rotate(180deg)}
 .drsh{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;padding:16px;background:rgba(70,58,140,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}.drsh-p{width:min(380px,100%);background:#fff;border-radius:24px;padding:20px;box-shadow:0 24px 50px -16px rgba(50,40,120,.45);display:flex;flex-direction:column;gap:10px}.drsh-p h4{margin:0;font-size:1.05rem}.drsh-p p{margin:0;color:var(--mute);font-size:.85rem;line-height:1.5;word-break:break-all}.drsh-p .btn{width:100%;justify-content:center}
+.svp-wrap.msheet .svp-fb input,.svp-wrap.msheet .svp-fb textarea{font-size:16px!important}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -5519,6 +5520,8 @@ let SETM=0;
 const SET_MQ='(max-width:560px)';
 const setMob=()=>{try{const m=Math.min(screen.width,screen.height);return innerWidth<=560||(m<600&&innerWidth<=900)}catch(e){return false}};
 try{matchMedia(SET_MQ).addEventListener('change',()=>{if(CUR=='set')render()});addEventListener('resize',()=>{if(CUR=='set'&&setMob()!=(!!document.querySelector('.smh')||!!document.querySelector('.smh-nav')))render()})}catch(e){}
+/* iOS: ซูมกลับอัตโนมัติหลังกรอกเสร็จ (กันกรณีหน้าซูมเข้าไปแล้ว) */
+document.addEventListener('focusout',e=>{if(!e.target.matches||!e.target.matches('input,textarea,select'))return;setTimeout(()=>{try{if(document.activeElement&&document.activeElement.matches('input,textarea,select'))return;const vv=window.visualViewport;if(!vv||vv.scale<=1.01)return;const m=document.querySelector('meta[name=viewport]');if(!m)return;const o=m.getAttribute('content');m.setAttribute('content',o.replace(/,?\s*(maximum|minimum)-scale=[^,]*/g,'')+',maximum-scale=1,minimum-scale=1');setTimeout(()=>m.setAttribute('content',o),350)}catch(x){}},120)});
 function setBack(){SETM=0;PMD=null;PED=null;render();scrollTo(0,0)}
 function setOpen(n){SETM=n;setTab(n);scrollTo(0,0)}
 const SET_GR=[['การเรียนการสอนและโรงเรียน',[[1,'cal','#5B8DEF'],[2,'bld','#34C38F']]],['ผู้ใช้งานและความปลอดภัย',[[3,'ud','#F5A524'],[4,'eye','#8B6FE0'],[5,'edit','#F472B6']]],['ข้อมูลและระบบ',[[6,'db','#14B8D6'],[7,'clip','#7C8CF8']]],['ระบบกลาง',[[8,'users','#0EA5A4'],[9,'user','#EF8354'],[10,'cloudup','#5B9BD5']]]];
