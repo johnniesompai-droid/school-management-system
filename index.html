@@ -5205,7 +5205,7 @@ o+=`<text x="60" y="66" text-anchor="middle" class="atm-t">${tot&&(t.p+t.a+t.l)?
 return `<div class="atm"><svg viewBox="0 0 120 120" class="atm-d">${o}</svg><div class="atm-l">${segs.map(g=>`<div><i style="background:${ATC[g[0]]}"></i><span>${g[1]} ${g[2]} คน</span><em>${pc(g[2])}</em></div>`).join('')}<small>นักเรียนทั้งหมด ${tot} คน</small></div></div>`}
 
 let attFW=0,attFH=0;
-function attFit(){const b=document.querySelector('.hrow .atcd-b');if(!b||!me)return;if(attMobP()){if(!b.querySelector('.amb'))b.innerHTML=attBarMob();b.dataset.fit='';attFW=0;return}if(b.querySelector('.amb')){b.dataset.fit='';attFW=0;attFH=0}const cs=getComputedStyle(b),w=Math.round(b.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)),h=Math.round(b.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom));
+function attFit(){const b=document.querySelector('.hrow .atcd-b');if(!b||!me)return;if(attMobP()){if(!b.querySelector('.amb'))b.innerHTML=attBarMob();b.dataset.fit='';attFW=0;return}if(b.querySelector('.amb')){b.innerHTML=attBarInner();b.dataset.fit='';attFW=0;attFH=0}const cs=getComputedStyle(b),w=Math.round(b.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)),h=Math.round(b.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom));
 if(w<300||h<200)return;if(Math.abs(w-attFW)<3&&Math.abs(h-attFH)<3&&b.dataset.fit)return;attFW=w;attFH=h;b.dataset.fit=1;b.innerHTML=attBarInner(w,h)}
 (function(){const r=render;render=function(){const x=r.apply(this,arguments);attFW=0;attFH=0;attFit();return x};addEventListener('resize',()=>{clearTimeout(window.__aft);window.__aft=setTimeout(attFit,120)})})();
 
