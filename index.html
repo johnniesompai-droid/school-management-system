@@ -5485,9 +5485,9 @@ const p=o.apply(this,a);if(c&&me&&AUD_COLS[c]&&c!='cleanup'&&c!='restore')Promis
 const SETTABS=[[1,'ปีการศึกษา / ภาคเรียน'],[2,'ข้อมูลโรงเรียน'],[3,'การสมัครสมาชิก'],[4,'เมนูที่ครูเห็น'],[5,'สิทธิ์แก้ไขข้อมูล'],[6,'ข้อมูลและพื้นที่'],[7,'ประวัติการแก้ไข']];
 function setTab(n){SETTAB=n;PMD=null;PED=null;render()}
 let SETM=0;
-const SET_MQ='(max-width:700px), (max-height:500px) and (max-width:1000px)';
-const setMob=()=>{try{return matchMedia(SET_MQ).matches}catch(e){return false}};
-try{matchMedia(SET_MQ).addEventListener('change',()=>{if(CUR=='set')render()})}catch(e){}
+const SET_MQ='(max-width:560px)';
+const setMob=()=>{try{const m=Math.min(screen.width,screen.height);return innerWidth<=560||(m<600&&innerWidth<=900)}catch(e){return false}};
+try{matchMedia(SET_MQ).addEventListener('change',()=>{if(CUR=='set')render()});addEventListener('resize',()=>{if(CUR=='set'&&setMob()!=(!!document.querySelector('.smh')||!!document.querySelector('.smh-nav')))render()})}catch(e){}
 function setBack(){SETM=0;PMD=null;PED=null;render();scrollTo(0,0)}
 function setOpen(n){SETM=n;setTab(n);scrollTo(0,0)}
 const SET_GR=[['การเรียนการสอนและโรงเรียน',[[1,'cal','#5B8DEF'],[2,'bld','#34C38F']]],['ผู้ใช้งานและความปลอดภัย',[[3,'ud','#F5A524'],[4,'eye','#8B6FE0'],[5,'edit','#F472B6']]],['ข้อมูลและระบบ',[[6,'db','#14B8D6'],[7,'clip','#7C8CF8']]]];
