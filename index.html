@@ -1297,7 +1297,7 @@ body.tbsh-open #tabbar{opacity:0;pointer-events:none}
 <span class="ico" id="ib" title="การแจ้งเตือน"></span><span class="ico" id="lo" title="ออกจากระบบ"></span>
 <div class="user"><div class="av" id="au"></div><span><b id="un">ชื่อผู้ใช้</b><small id="ur">ตำแหน่ง</small></span></div></div>
 <div id="view"></div>
-<footer><span>School Management System v1.0.0 | โรงเรียนบ้านผาเยอ</span><span>© 2569 โรงเรียนบ้านผาเยอ สพป.แม่ฮ่องสอน เขต 2</span></footer>
+<footer><span>School Management System v1.0.0 · build 19.10.69-C | โรงเรียนบ้านผาเยอ</span><span>© 2569 โรงเรียนบ้านผาเยอ สพป.แม่ฮ่องสอน เขต 2</span></footer>
 </div></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -3813,7 +3813,8 @@ const tbKey=r=>{const k=String(r).split(':')[0];return k=='supply'?'div':k};
 function tbMk(){let el=document.getElementById('tabbar');if(!me){if(el)el.remove();return}
 const tabs=TB_TABS.filter(t=>routeOk(t[0]));
 if(!el){el=document.createElement('nav');el.id='tabbar';document.body.appendChild(el)}
-el.innerHTML=`<div class="tb-cap" style="--n:${tabs.length}"><i class="tb-ind"></i>${tabs.map(t=>`<a data-r="${t[0]}" data-tb="${t[0]}">${ic(t[2])}<span>${t[1]}</span></a>`).join('')}</div><button type="button" class="tb-more" onclick="tbMore()" aria-label="เมนูอื่นๆ">${TB_DOTS}</button>`;tbSync()}
+el.innerHTML=`<div class="tb-cap" style="--n:${tabs.length}"><i class="tb-ind"></i>${tabs.map(t=>`<a data-r="${t[0]}" data-tb="${t[0]}">${ic(t[2])}<span>${t[1]}</span></a>`).join('')}</div><button type="button" class="tb-more" onclick="tbMore()" aria-label="เมนูอื่นๆ">${TB_DOTS}</button>`;tbSync();tbBind()}
+function tbBind(){const c=document.querySelector('#tabbar .tb-cap');if(!c||c._dragB)return;c._dragB=1;window.tbDragBind&&window.tbDragBind(c)}
 function tbSync(){const el=document.getElementById('tabbar');if(!el)return;const k=tbKey(CUR),as=[...el.querySelectorAll('.tb-cap a')],i=as.findIndex(a=>a.dataset.tb==k);
 as.forEach((a,j)=>a.classList.toggle('on',j==i));const cap=el.querySelector('.tb-cap');if(cap){cap.style.setProperty('--i',Math.max(i,0));cap.classList.toggle('none',i<0)}
 const m=el.querySelector('.tb-more');if(m)m.classList.toggle('on',i<0)}
@@ -5489,7 +5490,7 @@ function applyInfo(){const I=SCH_I();Object.assign(DR_SCH,{name:I.name,addr:I.ad
 DR_ORG=DR_SCH.name+' '+DR_SCH.addr.replace(/^.*?(อำเภอ\S+).*$/,'$1')+' '+DR_SCH.prov.replace(/\s*\d+/g,'').trim();
 const b=document.querySelector('.brand');if(b){const t=b.querySelector('b'),s=b.querySelector('small'),im=b.querySelector('img');if(t&&t.textContent!==I.name)t.textContent=I.name;if(s&&s.textContent!==I.affil)s.textContent=I.affil;const want=I.logo||LOGO0;if(im&&im.src!==want)im.src=want}
 const tg=document.querySelector('aside .tag');if(tg){const h=esc(I.motto).replace(/\n/g,'<br>');if(tg.innerHTML!==h)tg.innerHTML=h}
-const ft=document.querySelectorAll('footer span');if(ft[0])ft[0].textContent='School Management System v1.0.0 | '+I.name;if(ft[1])ft[1].textContent='© '+(new Date().getFullYear()+543)+' '+I.name+' '+I.affil;
+const ft=document.querySelectorAll('footer span');if(ft[0])ft[0].textContent='School Management System v1.0.0 · build 19.10.69-C | '+I.name;if(ft[1])ft[1].textContent='© '+(new Date().getFullYear()+543)+' '+I.name+' '+I.affil;
 document.title=I.name+' - ระบบบริหารจัดการโรงเรียน'}
 /* เมนูที่ครูเห็น */
 const MENU_KEYS=()=>MENU.map(m=>m[0]).filter(k=>k!='home');
@@ -5547,6 +5548,8 @@ document.addEventListener('pointerdown',e=>{if(TOUCH&&e.pointerType=='touch')ret
 document.addEventListener('pointermove',e=>{if(TOUCH&&e.pointerType=='touch')return;move(e.clientX,e)},true);
 document.addEventListener('pointerup',e=>{if(TOUCH&&e.pointerType=='touch')return;end(e.clientX,false)},true);
 document.addEventListener('pointercancel',e=>{if(TOUCH&&e.pointerType=='touch')return;end(0,true)},true);
+window.tbDragBind=c=>{c.addEventListener('touchstart',e=>{if(e.touches.length==1)start(c,e.touches[0].clientX)},{passive:true});c.addEventListener('touchmove',e=>{if(st&&e.touches.length)move(e.touches[0].clientX,e)},{passive:false});c.addEventListener('touchend',e=>{const t=e.changedTouches&&e.changedTouches[0];end(t?t.clientX:0,false)});c.addEventListener('touchcancel',()=>end(0,true))};
+try{tbBind()}catch(_){}
 document.addEventListener('click',e=>{if(sup&&capOf(e.target)){e.preventDefault();e.stopPropagation()}},true);
 document.addEventListener('dragstart',e=>{if(capOf(e.target))e.preventDefault()},true);
 })();
