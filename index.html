@@ -5523,20 +5523,32 @@ const setMob=()=>{try{const m=Math.min(screen.width,screen.height);return innerW
 try{matchMedia(SET_MQ).addEventListener('change',()=>{if(CUR=='set')render()});addEventListener('resize',()=>{if(CUR=='set'&&setMob()!=(!!document.querySelector('.smh')||!!document.querySelector('.smh-nav')))render()})}catch(e){}
 /* iOS: ซูมกลับอัตโนมัติหลังกรอกเสร็จ (กันกรณีหน้าซูมเข้าไปแล้ว) */
 document.addEventListener('focusout',e=>{if(!e.target.matches||!e.target.matches('input,textarea,select'))return;setTimeout(()=>{try{if(document.activeElement&&document.activeElement.matches('input,textarea,select'))return;const vv=window.visualViewport;if(!vv||vv.scale<=1.01)return;const m=document.querySelector('meta[name=viewport]');if(!m)return;const o=m.getAttribute('content');m.setAttribute('content',o.replace(/,?\s*(maximum|minimum)-scale=[^,]*/g,'')+',maximum-scale=1,minimum-scale=1');setTimeout(()=>m.setAttribute('content',o),350)}catch(x){}},120)});
-/* ลากแถบ liquid glass ไปซ้าย-ขวา แล้วปล่อย → เปิดเมนูที่อยู่ตรงนั้น */
-(function(){let st=null,sup=false;
+/* ลากแถบ liquid glass ไปซ้าย-ขวา แล้วปล่อย → เปิดเมนูที่อยู่ตรงนั้น (รองรับทั้งนิ้ว/เมาส์) */
+(function(){let st=null,sup=false;const TOUCH='ontouchstart' in window;
 const geo=c=>{const r=c.getBoundingClientRect(),n=+getComputedStyle(c).getPropertyValue('--n')||4;return{r,n,w:(r.width-10)/n}};
 const idxAt=(c,x)=>{const g=geo(c);return Math.max(0,Math.min(g.n-1,Math.floor((x-g.r.left-5)/g.w)))};
-document.addEventListener('pointerdown',e=>{const c=e.target.closest&&e.target.closest('#tabbar .tb-cap');if(!c)return;st={c,x:e.clientX,id:e.pointerId,drag:false}},true);
-document.addEventListener('pointermove',e=>{if(!st||e.pointerId!=st.id)return;const c=st.c;
-if(!st.drag){if(Math.abs(e.clientX-st.x)<8)return;st.drag=true;try{c.setPointerCapture(e.pointerId)}catch(_){}c.classList.add('drag');c.classList.remove('none')}
-const g=geo(c),ind=c.querySelector('.tb-ind');let x=e.clientX-g.r.left-5-g.w/2;x=Math.max(0,Math.min(g.w*(g.n-1),x));ind.style.transform='translateX('+x+'px)';
-const i=idxAt(c,e.clientX);c.querySelectorAll('a').forEach((a,j)=>a.classList.toggle('on',j==i))},true);
-const end=e=>{if(!st||e.pointerId!=st.id)return;const s=st;st=null;if(!s.drag)return;sup=true;setTimeout(()=>{sup=false},400);const c=s.c,ind=c.querySelector('.tb-ind'),as=[...c.querySelectorAll('a')],i=e.type=='pointercancel'?-1:idxAt(c,e.clientX);
+const capOf=t=>t&&t.closest?t.closest('#tabbar .tb-cap'):null;
+function start(c,x){st={c,x,drag:false}}
+function move(x,ev){if(!st)return;const c=st.c;
+if(!st.drag){if(Math.abs(x-st.x)<6)return;st.drag=true;c.classList.add('drag');c.classList.remove('none')}
+if(ev&&ev.cancelable)ev.preventDefault();
+const g=geo(c),ind=c.querySelector('.tb-ind');let px=x-g.r.left-5-g.w/2;px=Math.max(0,Math.min(g.w*(g.n-1),px));ind.style.transform='translateX('+px+'px)';
+const i=idxAt(c,x);c.querySelectorAll('a').forEach((a,j)=>a.classList.toggle('on',j==i))}
+function end(x,cancel){if(!st)return;const s=st;st=null;if(!s.drag)return;sup=true;setTimeout(()=>{sup=false},500);const c=s.c,ind=c.querySelector('.tb-ind'),as=[...c.querySelectorAll('a')],i=cancel?-1:idxAt(c,x);
 c.classList.remove('drag');if(i<0||!as[i]){ind.style.transform='';tbSync();return}
-c.style.setProperty('--i',i);ind.style.transform='';if(navigator.vibrate)try{navigator.vibrate(8)}catch(_){}go(as[i].dataset.r)};
-document.addEventListener('pointerup',end,true);document.addEventListener('pointercancel',end,true);
-document.addEventListener('click',e=>{if(sup&&e.target.closest&&e.target.closest('#tabbar')){e.preventDefault();e.stopPropagation()}},true);
+c.style.setProperty('--i',i);ind.style.transform='';if(navigator.vibrate)try{navigator.vibrate(8)}catch(_){}go(as[i].dataset.r)}
+if(TOUCH){
+document.addEventListener('touchstart',e=>{const c=capOf(e.target);if(c&&e.touches.length==1)start(c,e.touches[0].clientX)},{capture:true,passive:true});
+document.addEventListener('touchmove',e=>{if(st&&e.touches.length)move(e.touches[0].clientX,e)},{capture:true,passive:false});
+document.addEventListener('touchend',e=>{const t=e.changedTouches&&e.changedTouches[0];end(t?t.clientX:0,false)},true);
+document.addEventListener('touchcancel',()=>end(0,true),true);
+}
+document.addEventListener('pointerdown',e=>{if(TOUCH&&e.pointerType=='touch')return;const c=capOf(e.target);if(c){start(c,e.clientX);try{if(e.pointerType!='touch')c.setPointerCapture(e.pointerId)}catch(_){}}},true);
+document.addEventListener('pointermove',e=>{if(TOUCH&&e.pointerType=='touch')return;move(e.clientX,e)},true);
+document.addEventListener('pointerup',e=>{if(TOUCH&&e.pointerType=='touch')return;end(e.clientX,false)},true);
+document.addEventListener('pointercancel',e=>{if(TOUCH&&e.pointerType=='touch')return;end(0,true)},true);
+document.addEventListener('click',e=>{if(sup&&capOf(e.target)){e.preventDefault();e.stopPropagation()}},true);
+document.addEventListener('dragstart',e=>{if(capOf(e.target))e.preventDefault()},true);
 })();
 function setBack(){SETM=0;PMD=null;PED=null;render();scrollTo(0,0)}
 function setOpen(n){SETM=n;setTab(n);scrollTo(0,0)}
