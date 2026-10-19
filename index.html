@@ -1278,6 +1278,7 @@ body.tbsh-open #tabbar{opacity:0;pointer-events:none}
 .sps-r{height:100%;overflow-y:auto;overscroll-behavior:contain;padding:0 4px 24px 0;scrollbar-width:thin}
 @media(max-width:1200px){.sps{height:calc(100dvh - 312px)}.sps-l,.sps-r{padding-bottom:96px}.sps-l{padding-bottom:110px}}
 .spr{padding:7px 10px}.sps-gp h6{margin-top:9px}
+.sps-pf{border-radius:18px;margin-bottom:4px;transition:background .18s}.sps-pf:hover{background:#F6F4FE}.sps-pf.on{background:linear-gradient(135deg,#E6DDFF,#F1EBFF);box-shadow:inset 0 0 0 1px rgba(150,120,235,.18)}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -1307,8 +1308,8 @@ const firebaseConfig={apiKey:"AIzaSyCetA8GzKLX805V9nEpPXjdoh8eGtVMqXY",authDomai
 let PWA_EV=null;
 const pwaStd=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
 const pwaIos=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA_EV=e;if(typeof CUR!=='undefined'&&CUR==='acct'&&typeof renderSoon==='function')renderSoon()});
-window.addEventListener('appinstalled',()=>{PWA_EV=null;if(typeof CUR!=='undefined'&&CUR==='acct'&&typeof renderSoon==='function')renderSoon()});
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA_EV=e;if(typeof CUR!=='undefined'&&(CUR==='acct'||(CUR==='set'&&SETTAB===11))&&typeof renderSoon==='function')renderSoon()});
+window.addEventListener('appinstalled',()=>{PWA_EV=null;if(typeof CUR!=='undefined'&&(CUR==='acct'||(CUR==='set'&&SETTAB===11))&&typeof renderSoon==='function')renderSoon()});
 function pwaCard(){let b;if(pwaStd())b='<p class="pwa-ok">✓ ติดตั้งเป็นแอปบนเครื่องนี้แล้ว</p>';else if(PWA_EV)b='<p class="pwa-t">เพิ่มไอคอนโรงเรียนไว้บนหน้าจอ เปิดใช้งานเต็มจอเหมือนแอป</p><button class="btn" type="button" onclick="pwaInstall()">ติดตั้งแอป</button>';else if(pwaIos())b='<p class="pwa-t">บน iPhone / iPad: เปิดหน้านี้ด้วย Safari แล้วกดปุ่มแชร์ (สี่เหลี่ยมมีลูกศรขึ้น) จากนั้นเลือก <b>เพิ่มไปยังหน้าจอโฮม</b></p>';else b='<p class="pwa-t">บน Android: เปิดด้วย Chrome แล้วกดเมนูสามจุดมุมขวาบน เลือก <b>ติดตั้งแอป</b> หรือ <b>เพิ่มไปยังหน้าจอหลัก</b></p>';return `<div class="card pwa"><h3 style="margin:0 0 6px">ติดตั้งเป็นแอปบนมือถือ</h3>${b}</div>`}
 async function pwaInstall(){if(!PWA_EV)return;try{PWA_EV.prompt();await PWA_EV.userChoice}catch(e){}PWA_EV=null;if(typeof renderSoon==='function')renderSoon()}
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
@@ -3732,7 +3733,7 @@ default:{const m=M(k);return m?[[k,m]]:[]}}}
 function bcRender(k,s){const v=$('#view');if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;
 const h=`<nav class="bc" aria-label="เส้นทางนำทาง"><a data-r="home" class="bc-h" title="หน้าหลัก">${ic('home')}</a>${t.map((c,i)=>`<i class="bc-s">›</i>${i==t.length-1?`<b>${esc(c[1])}</b>`:`<a data-r="${c[0]}">${esc(c[1])}</a>`}`).join('')}</nav>`;
 v.insertAdjacentHTML('afterbegin',h)}
-function go(r){let[k]=r.split(':');let _sq=0;if(me&&me.role=='founder'&&({staff:8,usr:9,bak:10})[k]){_sq=({staff:8,usr:9,bak:10})[k];r=k='set'}if(me&&me.role!='founder'&&!routeOk(k))return go('home');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
+function go(r){let[k]=r.split(':');let _sq=0;if(me&&me.role=='founder'&&({staff:8,usr:9,bak:10,acct:11})[k]){_sq=({staff:8,usr:9,bak:10,acct:11})[k];r=k='set'}if(me&&me.role!='founder'&&!routeOk(k))return go('home');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
 const _pv=CUR;CUR=r;if(r=='set'&&_pv!='set')SETM=0;if(_sq){SETTAB=_sq;SETM=_sq;PMD=null;PED=null}render();if(_pv!==r)pgAnim();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving'||k=='att'||k=='hw')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
 const g=k=='org'?'hr':(k=='stud'||k=='par'||k=='bd'||k=='hw')?'stu':k;document.querySelectorAll('.sub').forEach(e=>e.classList.toggle('open',e.dataset.p==g));document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('op',a.dataset.r==g));
@@ -5488,8 +5489,9 @@ const w=function(...a){const c=this.parent&&this.parent.id;if(c&&me&&c!='auditlo
 const p=o.apply(this,a);if(c&&me&&AUD_COLS[c]&&c!='cleanup'&&c!='restore')Promise.resolve(p).then(()=>audWrite(m,c,this.id,a[0]),()=>{});return p};w.__aud=1;DR[m]=w})}catch(e){}})();
 /* หน้าตั้งค่า */
 const SETTABS=[[1,'ปีการศึกษา / ภาคเรียน'],[2,'ข้อมูลโรงเรียน'],[3,'การสมัครสมาชิก'],[4,'เมนูที่ครูเห็น'],[5,'สิทธิ์แก้ไขข้อมูล'],[6,'ข้อมูลและพื้นที่'],[7,'ประวัติการแก้ไข']];
-SETTABS.push([8,'ทะเบียนบุคลากร'],[9,'ผู้ใช้งาน / สิทธิ์การใช้งาน'],[10,'สำรองข้อมูล']);
+SETTABS.push([8,'ทะเบียนบุคลากร'],[9,'ผู้ใช้งาน / สิทธิ์การใช้งาน'],[10,'สำรองข้อมูล'],[11,'บัญชีของฉัน']);
 function setTab(n){SETTAB=n;PMD=null;PED=null;render()}
+(function(){const r=render;render=function(){const l=document.querySelector('.sps-l'),lt=l?l.scrollTop:0,rr=document.querySelector('.sps-r'),rt=rr?rr.scrollTop:0,tb=window.__spTab;const x=r.apply(this,arguments);try{const l2=document.querySelector('.sps-l');if(l2&&l)l2.scrollTop=lt;const r2=document.querySelector('.sps-r');if(r2&&rr&&tb===SETTAB)r2.scrollTop=rt;window.__spTab=SETTAB}catch(e){}return x}})();
 let SETM=0;
 const SET_MQ='(max-width:560px)';
 const setMob=()=>{try{const m=Math.min(screen.width,screen.height);return innerWidth<=560||(m<600&&innerWidth<=900)}catch(e){return false}};
@@ -5499,16 +5501,16 @@ function setOpen(n){SETM=n;setTab(n);scrollTo(0,0)}
 const SET_GR=[['การเรียนการสอนและโรงเรียน',[[1,'cal','#5B8DEF'],[2,'bld','#34C38F']]],['ผู้ใช้งานและความปลอดภัย',[[3,'ud','#F5A524'],[4,'eye','#8B6FE0'],[5,'edit','#F472B6']]],['ข้อมูลและระบบ',[[6,'db','#14B8D6'],[7,'clip','#7C8CF8']]],['ระบบกลาง',[[8,'users','#0EA5A4'],[9,'user','#EF8354'],[10,'cloudup','#5B9BD5']]]];
 function setHubHtml(){const nm=($('#un')||{}).textContent||me.n,ro=($('#ur')||{}).textContent||'',av=($('#au')||{}).innerHTML||'',tc=($('#term_chip')||{}).textContent||'';
 const val=n=>n==1?tc:n==3?(PUBS.regOpen===false?'ปิดรับ':'เปิดรับ'):'';
-return `<div class="smh"><div class="smh-t">ตั้งค่า</div><div class="smh-pf" data-r="acct"><span class="smh-av">${av}</span><div><b>${esc(nm)}</b><small>${esc(ro)}</small><em>${ic('edit')} ดูบัญชีของฉัน</em></div>${ic('chev','smh-ch')}</div>
+return `<div class="smh"><div class="smh-t">ตั้งค่า</div><div class="smh-pf" onclick="setOpen(11)"><span class="smh-av">${av}</span><div><b>${esc(nm)}</b><small>${esc(ro)}</small><em>${ic('edit')} ดูบัญชีของฉัน</em></div>${ic('chev','smh-ch')}</div>
 ${SET_GR.map(g=>`<h6 class="smh-h">${g[0]}</h6><div class="smh-g">${g[1].map(r=>`<a class="smh-r" onclick="setOpen(${r[0]})" style="--c:${r[2]}"><i>${ic(r[1])}</i><span>${SETTABS[r[0]-1][1]}</span>${val(r[0])?`<small>${esc(val(r[0]))}</small>`:''}${ic('chev','smh-ch')}</a>`).join('')}</div>`).join('')}</div>`}
-const SETBODY=[null,()=>V.set1(true),setInfoHtml,setRegHtml,setMenuHtml,setEditHtml,setDataHtml,setAudHtml,()=>setEmb(V.staff),()=>setEmb(V.usr),()=>setEmb(V.bak)];
+const SETBODY=[null,()=>V.set1(true),setInfoHtml,setRegHtml,setMenuHtml,setEditHtml,setDataHtml,setAudHtml,()=>setEmb(V.staff),()=>setEmb(V.usr),()=>setEmb(V.bak),()=>setEmb(V.acct)];
 function setEmb(f){SETEMB=true;try{return f()}finally{SETEMB=false}}
-const SET_DESC=[null,'กำหนดวันเปิด-ปิดภาคเรียนของแต่ละปีการศึกษา ระบบใช้ค่านี้แสดงภาคเรียนปัจจุบันและช่วงเวลาทำงานของโรงเรียน','ชื่อ ที่อยู่ ตราโรงเรียน และผู้อำนวยการ ใช้แสดงในแถบเมนู หน้าเข้าสู่ระบบ และหัวหนังสือราชการ','เปิดหรือปิดรับสมัครสมาชิกใหม่ และดูสถานะการรับสมัครในปัจจุบัน','เลือกว่าเมนูใดแสดงให้ใครเห็นบ้าง ผู้ก่อตั้งเห็นทุกเมนูเสมอ','กำหนดผู้ที่แก้ไขข้อมูลของแต่ละหมวดได้ นอกเหนือจากผู้ก่อตั้ง','ตรวจสอบพื้นที่จัดเก็บ และล้างข้อมูลเก่าที่ไม่จำเป็น','ดูว่าใครแก้ไขหรือลบข้อมูลอะไร เมื่อใด','เพิ่มรายชื่อบุคลากรไว้ล่วงหน้า ใช้ตรวจสอบเมื่อสมาชิกใหม่สมัครเข้าระบบ','อนุมัติสมาชิกใหม่ ผูกบัญชีกับรายชื่อบุคลากร และกำหนดสิทธิ์การใช้งาน','ดาวน์โหลดข้อมูลทั้งหมดของระบบเก็บไว้เป็นไฟล์สำรอง'];
+const SET_DESC=[null,'กำหนดวันเปิด-ปิดภาคเรียนของแต่ละปีการศึกษา ระบบใช้ค่านี้แสดงภาคเรียนปัจจุบันและช่วงเวลาทำงานของโรงเรียน','ชื่อ ที่อยู่ ตราโรงเรียน และผู้อำนวยการ ใช้แสดงในแถบเมนู หน้าเข้าสู่ระบบ และหัวหนังสือราชการ','เปิดหรือปิดรับสมัครสมาชิกใหม่ และดูสถานะการรับสมัครในปัจจุบัน','เลือกว่าเมนูใดแสดงให้ใครเห็นบ้าง ผู้ก่อตั้งเห็นทุกเมนูเสมอ','กำหนดผู้ที่แก้ไขข้อมูลของแต่ละหมวดได้ นอกเหนือจากผู้ก่อตั้ง','ตรวจสอบพื้นที่จัดเก็บ และล้างข้อมูลเก่าที่ไม่จำเป็น','ดูว่าใครแก้ไขหรือลบข้อมูลอะไร เมื่อใด','เพิ่มรายชื่อบุคลากรไว้ล่วงหน้า ใช้ตรวจสอบเมื่อสมาชิกใหม่สมัครเข้าระบบ','อนุมัติสมาชิกใหม่ ผูกบัญชีกับรายชื่อบุคลากร และกำหนดสิทธิ์การใช้งาน','ดาวน์โหลดข้อมูลทั้งหมดของระบบเก็บไว้เป็นไฟล์สำรอง','ดูชื่อบัญชีและเปลี่ยนรหัสผ่านของตัวเอง'];
 const setVal=n=>n==9?((U.filter(u=>u.st=='pending').length)?U.filter(u=>u.st=='pending').length+' รออนุมัติ':''):n==1?(($('#term_chip')||{}).textContent||''):n==3?(PUBS.regOpen===false?'ปิดรับ':'เปิดรับ'):'';
 function setFilter(v){v=(v||'').trim();document.querySelectorAll('.sps-l .spr').forEach(a=>{a.style.display=!v||a.textContent.includes(v)?'':'none'});document.querySelectorAll('.sps-l .sps-gp').forEach(g=>{g.style.display=[...g.querySelectorAll('.spr')].some(a=>a.style.display!='none')?'':'none'})}
-function setSplitHtml(bd){const nm=($('#un')||{}).textContent||me.n,ro=($('#ur')||{}).textContent||'',av=($('#au')||{}).innerHTML||'',col=Object.fromEntries(SET_GR.flatMap(g=>g[1].map(r=>[r[0],r])));const c=col[SETTAB];
+function setSplitHtml(bd){const nm=($('#un')||{}).textContent||me.n,ro=($('#ur')||{}).textContent||'',av=($('#au')||{}).innerHTML||'',col=Object.fromEntries(SET_GR.flatMap(g=>g[1].map(r=>[r[0],r])));const c=col[SETTAB]||[11,'user','#8B6FE0'];
 return `<div class="sps"><div class="sps-l"><div class="sps-sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="ค้นหาการตั้งค่า" oninput="setFilter(this.value)"></div>
-<div class="sps-pf" data-r="acct"><span class="smh-av">${av}</span><div><b>${esc(nm)}</b><small>${esc(ro)} · บัญชีของฉัน</small></div></div>
+<div class="sps-pf${SETTAB==11?' on':''}" onclick="setTab(11)"><span class="smh-av">${av}</span><div><b>${esc(nm)}</b><small>${esc(ro)} · บัญชีของฉัน</small></div></div>
 ${SET_GR.map(g=>`<div class="sps-gp"><h6>${g[0]}</h6>${g[1].map(r=>`<a class="spr${SETTAB==r[0]?' on':''}" onclick="setTab(${r[0]})" style="--c:${r[2]}"><i>${ic(r[1])}</i><span>${SETTABS[r[0]-1][1]}</span>${setVal(r[0])?`<small>${esc(setVal(r[0]))}</small>`:''}</a>`).join('')}</div>`).join('')}</div>
 <div class="sps-r"><div class="sps-hero" style="--c:${c[2]}"><i>${ic(c[1])}</i><h2>${SETTABS[SETTAB-1][1]}</h2><p>${SET_DESC[SETTAB]}</p></div>${bd}</div></div>`}
 V.set=()=>{const f=me&&me.role=='founder';if(!f)return V.set1();
