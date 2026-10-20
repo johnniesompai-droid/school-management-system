@@ -1322,6 +1322,10 @@ body:has(.svm) .bc{display:none}body:has(.svm) #view{padding-top:8px}
 .bk-cv2 .bk-spp img{width:100%;height:100%;object-fit:cover;display:block}.bk-cv2 .bk-spp svg{width:58px;height:58px}
 .bk-cv2 .bk-spn{margin-top:12px;color:#fff;font-size:20px;font-weight:600;line-height:1.25;text-shadow:0 1px 2px rgba(20,8,70,.95),0 2px 10px rgba(20,8,70,.85),0 0 22px rgba(20,8,70,.6)}
 .bk-cv2 .bk-spc{margin-top:3px;color:#EDE6FF;font-size:13px;font-weight:400;text-shadow:0 1px 2px rgba(20,8,70,.95),0 1px 8px rgba(20,8,70,.8)}
+@media(max-width:1200px){.top{transition:transform .45s cubic-bezier(.4,0,.2,1),margin-bottom .45s cubic-bezier(.4,0,.2,1)}
+body.top-off .top{transform:translateY(-110%);margin-bottom:calc(var(--toph,64px) * -1);pointer-events:none}
+body.top-off .svm{height:calc(100dvh - 172px)}}
+@media(max-width:1200px) and (orientation:landscape) and (max-height:500px){body.top-off .svm{height:calc(100dvh - 64px)}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -3852,7 +3856,7 @@ const tabs=TB_TABS.filter(t=>routeOk(t[0]));
 if(!el){el=document.createElement('nav');el.id='tabbar';document.body.appendChild(el)}
 el.innerHTML=`<div class="tb-cap" style="--n:${tabs.length}"><i class="tb-ind"></i>${tabs.map(t=>`<a data-r="${t[0]}" data-tb="${t[0]}">${ic(t[2])}<span>${t[1]}</span></a>`).join('')}</div><button type="button" class="tb-more" onclick="tbMore()" aria-label="เมนูอื่นๆ">${TB_DOTS}</button>`;tbSync();tbBind()}
 function tbBind(){const c=document.querySelector('#tabbar .tb-cap');if(!c||c._dragB)return;c._dragB=1;window.tbDragBind&&window.tbDragBind(c)}
-function tbSync(){const el=document.getElementById('tabbar');if(!el)return;const k=tbKey(CUR),as=[...el.querySelectorAll('.tb-cap a')],i=as.findIndex(a=>a.dataset.tb==k);
+function tbSync(){try{const t=document.querySelector('.top');if(t)document.documentElement.style.setProperty('--toph',t.offsetHeight+'px');document.body.classList.toggle('top-off',String(CUR).split(':')[0]!='home')}catch(e){}const el=document.getElementById('tabbar');if(!el)return;const k=tbKey(CUR),as=[...el.querySelectorAll('.tb-cap a')],i=as.findIndex(a=>a.dataset.tb==k);
 as.forEach((a,j)=>a.classList.toggle('on',j==i));const cap=el.querySelector('.tb-cap');if(cap){cap.style.setProperty('--i',Math.max(i,0));cap.classList.toggle('none',i<0)}
 const m=el.querySelector('.tb-more');if(m)m.classList.toggle('on',i<0)}
 const tbSubOf=m=>m[3]=='stu'?[['stud','นักเรียน'],['bd','นักเรียนพักนอน'],['hw','น้ำหนัก ส่วนสูง'],['par','ผู้ปกครอง']]:m[3]=='adm'?[['admin:send','ส่งหนังสือราชการ'],['admin:memo','เกษียนหนังสือราชการ'],['admin:draft','ร่างหนังสือราชการ']]:m[3]=='tt'?[['tt:teach','ตารางสอน'],['tt:class','ตารางเรียน'],['tt:entry','บันทึกตารางสอน'],['tt:check','ตรวจสอบตาราง']]:m[3]=='hr'?[['org','โครงสร้างบุคลากร']]:[];
