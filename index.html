@@ -1353,6 +1353,19 @@ body.top-off .svm{height:calc(100dvh - 172px)}}
 .svm-bal{background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:0!important;padding:0!important;border-radius:0!important}
 .svm-bal small{opacity:1!important;text-shadow:0 1px 2px rgba(30,15,100,.95),0 2px 8px rgba(30,15,100,.75),0 0 16px rgba(30,15,100,.5)!important}
 .svm-bal b{text-shadow:0 1px 2px rgba(30,15,100,.95),0 3px 10px rgba(30,15,100,.8),0 0 20px rgba(30,15,100,.55)!important}
+.bcb2{display:none!important}
+@media(max-width:1200px){
+.bcin>.bc{display:none!important}
+.bcb2{display:inline-grid!important;flex:none;width:38px;height:38px}
+.hb2.pt{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center}
+.hb2.pt>.bcb2{grid-row:1/3;grid-column:1}.hb2.pt>h2,.hb2.pt>p{grid-column:2}
+.hb2.pt>h2{align-self:end}.hb2.pt>p{align-self:start}
+.hb2.svh-t>.svh-i,.hb2.hrb-t>.hrb-i{display:none}
+.hb2.svh-t,.hb2.hrb-t{gap:12px}
+}
+.smh-nav{display:none!important}
+@media(max-width:560px){.hb2:is(h3){display:flex;align-items:center;justify-content:flex-start;text-align:left;gap:12px}.hb2:is(h3)>.bcb2{width:34px;height:34px}}
+@media(max-width:1200px){.bcno>.bc{display:none!important}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -3823,10 +3836,11 @@ case 'cal':return[['cal','ปฏิทินดำเนินการ']];
 case 'ann':return[['ann','ประกาศ']];
 default:{const m=M(k);return m?[[k,m]]:[]}}}
 const NAVH=[];function navSec(r){const b=String(r||'').split(':')[0];try{return menuOfRoute(b)||b}catch(e){return b}}
-function navBack(){let p;while((p=NAVH.pop())&&p===CUR);if(p&&navSec(p)!==navSec(CUR)){NAVH.length=0;p='home'}window.__nb=1;try{go(p||'home')}finally{window.__nb=0}}
-function bcRender(k,s){const v=$('#view');if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;
+function navBack(){if(String(CUR).split(':')[0]=='set'&&SETM&&setMob())return setBack();let p;while((p=NAVH.pop())&&p===CUR);if(p&&navSec(p)!==navSec(CUR)){NAVH.length=0;p='home'}window.__nb=1;try{go(p||'home')}finally{window.__nb=0}}
+function bcRender(k,s){const v=$('#view');if(v){v.classList.remove('bcin','bcno');if(k=='set'&&(!setMob()||!SETM))v.classList.add('bcno')}if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;
 const h=`<nav class="bc" aria-label="เส้นทางนำทาง"><a class="bcb" onclick="navBack()" aria-label="ย้อนกลับ">${ic('chev')}</a><span class="bcm"><a data-r="home" class="bc-h" title="หน้าหลัก">${ic('home')}</a>${t.map((c,i)=>`<i class="bc-s">›</i>${i==t.length-1?`<b>${esc(c[1])}</b>`:`<a data-r="${c[0]}">${esc(c[1])}</a>`}`).join('')}</span></nav>`;
-v.insertAdjacentHTML('afterbegin',h)}
+v.insertAdjacentHTML('afterbegin',h);try{bcInline(v)}catch(e){}}
+function bcInline(v){v.classList.remove('bcin');let H=v.querySelector(':scope>.pt, :scope>.svh>.svh-t, :scope>.svh2>.svh-t, :scope>.hrb .hrb-t');if(!H&&CUR=='set'&&SETM&&setMob()){let f=[...v.children].find(x=>!x.classList.contains('bc')&&!x.classList.contains('smh-nav'));if(f&&f.id=='bk_wrap')f=f.firstElementChild;const h=f&&f.classList.contains('card')?f.firstElementChild:null;if(h&&h.tagName=='H3')H=h}if(!H)return;const b='<a class="bcb bcb2" onclick="navBack()" aria-label="ย้อนกลับ">'+ic('chev')+'</a>';H.insertAdjacentHTML('afterbegin',b);H.classList.add('hb2');v.classList.add('bcin')}
 function go(r){let[k]=r.split(':');let _sq=0;if(me&&me.role=='founder'&&({staff:8,usr:9,bak:10,acct:11})[k]){_sq=({staff:8,usr:9,bak:10,acct:11})[k];r=k='set'}if(me&&me.role!='founder'&&!routeOk(k))return go('home');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
 const _pv=CUR;if(!window.__nb&&_pv&&_pv!==r){NAVH.push(_pv);if(NAVH.length>60)NAVH.shift()}CUR=r;if(r=='set'&&_pv!='set')SETM=0;if(_sq){SETTAB=_sq;SETM=_sq;PMD=null;PED=null}render();if(_pv!==r)pgAnim();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving'||k=='att'||k=='hw')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
@@ -5445,7 +5459,7 @@ return `<div class="card"><h3>สำรองข้อมูล</h3><p class="bk
 ${f.file?'':`<input type="file" accept=".json,application/json" ${busy?'disabled':''} onchange="bkLoad(this.files[0]);this.value=''">`}${rs}</div>${note?`<div style="margin-top:16px">${note}</div>`:''}`}
 function pwEye(id,b){const i=document.getElementById(id);if(!i)return;const sh=i.type=='password';i.type=sh?'text':'password';b.classList.toggle('on',sh)}
 const pwBox=(id,l,ac)=>`<label class="lb">${l}<div class="pw"><input class="in" id="${id}" type="password" autocomplete="${ac}" style="margin-bottom:0"><button type="button" class="eye" title="แสดง/ซ่อนรหัสผ่าน" onclick="pwEye('${id}',this)">👁</button></div></label>`;
-V.acct=()=>{if(!me)return '';const f=me.role=='founder';return PT('บัญชีของฉัน','ดูชื่อบัญชีและเปลี่ยนรหัสผ่านของตัวเอง')+`<div class="card acct"><div class="row"><span>ชื่อ-นามสกุล</span><b>${esc(me.n)}</b></div><div class="row"><span>ชื่อบัญชี (ใช้เข้าสู่ระบบ)</span><b>${esc(me.u)}</b></div><div class="row"><span>สิทธิ์</span><b>${f?'ผู้ก่อตั้ง':'สมาชิก'}</b></div>
+V.acct=()=>{if(!me)return '';const f=me.role=='founder';return PT('บัญชีของฉัน','ดูชื่อบัญชีและเปลี่ยนรหัสผ่านของตัวเอง')+`<div class="card acct">${typeof setMob=='function'&&setMob()?'<h3 style="margin:0 0 8px">บัญชีของฉัน</h3>':''}<div class="row"><span>ชื่อ-นามสกุล</span><b>${esc(me.n)}</b></div><div class="row"><span>ชื่อบัญชี (ใช้เข้าสู่ระบบ)</span><b>${esc(me.u)}</b></div><div class="row"><span>สิทธิ์</span><b>${f?'ผู้ก่อตั้ง':'สมาชิก'}</b></div>
 <form onsubmit="pwChange();return false"><input type="text" name="username" value="${esc(me.u)}" autocomplete="username" hidden>
 <h3 style="margin:16px 0 4px">เปลี่ยนรหัสผ่าน</h3>${pwBox('pw_old','รหัสผ่านปัจจุบัน','current-password')}${pwBox('pw_new','รหัสผ่านใหม่ (อย่างน้อย 6 ตัว)','new-password')}${pwBox('pw_new2','ยืนยันรหัสผ่านใหม่','new-password')}
 <div id="pw_msg" class="fm" style="margin:8px 0"></div><button class="btn" type="submit" id="pw_btn">บันทึกรหัสผ่านใหม่</button></form>
