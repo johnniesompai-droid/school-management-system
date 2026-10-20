@@ -1371,6 +1371,25 @@ body.top-off .svm{height:calc(100dvh - 172px)}}
 @media(max-width:1200px) and (orientation:landscape){.sps{height:calc(100dvh - 40px)}}
 @media(max-width:1200px){body:has(.sps) footer{display:none!important}}
 @media(max-width:1200px){.main:has(.sps){padding-bottom:0!important}}
+.svm-bk{display:none!important}
+@media(max-width:1200px){
+#view:has(.svm)>.bc{display:none!important}
+.svm-bk{display:inline-grid!important;flex:none}
+#view:has(.svm){padding-top:max(8px,env(safe-area-inset-top))!important;padding-bottom:0!important}
+.main:has(.svm){padding-bottom:0!important}
+body:has(.svm) footer{display:none!important}
+body.top-off .svm,body .svm{height:calc(100dvh - 20px - env(safe-area-inset-top))!important}
+.bcb,.bcb2{width:42px!important;height:42px!important;min-width:42px;aspect-ratio:1;padding:0;border-radius:50%!important;
+background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,255,255,.2))!important;
+-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);
+border:1px solid rgba(255,255,255,.8)!important;
+box-shadow:inset 0 1.5px 1px rgba(255,255,255,.95),inset 0 -8px 12px rgba(150,130,255,.22),inset 0 0 0 1px rgba(255,255,255,.25),0 10px 20px -8px rgba(70,50,170,.5),0 2px 5px rgba(70,50,170,.15)!important;color:#4B2FA6}
+.bcb svg,.bcb2 svg{width:21px;height:21px}
+.hb2:is(h3)>.bcb2{width:36px!important;height:36px!important;min-width:36px}
+}
+@media(max-width:1200px){.hb2.wsT>.wsT-i{display:none}.hb2.wsT{gap:12px;flex-wrap:nowrap}.hb2.wsT>div{min-width:0;flex:1}.hb2.wsT .wsT-b{flex:none}
+.dvd>h3.hb2{display:flex;align-items:center;gap:12px}
+#view:has(.dvpg){padding-top:max(8px,env(safe-area-inset-top))!important}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -3841,11 +3860,11 @@ case 'cal':return[['cal','ปฏิทินดำเนินการ']];
 case 'ann':return[['ann','ประกาศ']];
 default:{const m=M(k);return m?[[k,m]]:[]}}}
 const NAVH=[];function navSec(r){const b=String(r||'').split(':')[0];try{return menuOfRoute(b)||b}catch(e){return b}}
-function navBack(){if(String(CUR).split(':')[0]=='set'&&SETM&&setMob())return setBack();const rt=String(CUR).split(':')[0];if(rt==String(CUR))return;let p;while((p=NAVH.pop())&&p===CUR);if(!p||navSec(p)!==navSec(CUR)){p=rt}window.__nb=1;try{go(p||'home')}finally{window.__nb=0}}
-function bcRender(k,s){const v=$('#view');if(v){v.classList.remove('bcin','bcno');if(k=='set'?(!setMob()||!SETM):!s)v.classList.add('bcno')}if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;
+function navBack(){if(String(CUR).split(':')[0]=='set'&&SETM&&setMob())return setBack();const rt=String(CUR).split(':')[0],mn=menuOfRoute(rt)||rt;if(String(CUR)==mn)return;let p;while((p=NAVH.pop())&&p===CUR);if(!p||navSec(p)!==navSec(CUR)){p=String(CUR).includes(':')?rt:mn}window.__nb=1;try{go(p||'home')}finally{window.__nb=0}}
+function bcRender(k,s){const v=$('#view');if(v){v.classList.remove('bcin','bcno');if(k=='set'&&(!setMob()||!SETM))v.classList.add('bcno')}if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;if(k!='set'&&!s&&MENU_KEYS().includes(k))v.classList.add('bcno');
 const h=`<nav class="bc" aria-label="เส้นทางนำทาง"><a class="bcb" onclick="navBack()" aria-label="ย้อนกลับ">${ic('chev')}</a><span class="bcm"><a data-r="home" class="bc-h" title="หน้าหลัก">${ic('home')}</a>${t.map((c,i)=>`<i class="bc-s">›</i>${i==t.length-1?`<b>${esc(c[1])}</b>`:`<a data-r="${c[0]}">${esc(c[1])}</a>`}`).join('')}</span></nav>`;
 v.insertAdjacentHTML('afterbegin',h);try{if(!v.classList.contains('bcno'))bcInline(v)}catch(e){}}
-function bcInline(v){v.classList.remove('bcin');let H=v.querySelector(':scope>.pt, :scope>.svh>.svh-t, :scope>.svh2>.svh-t, :scope>.hrb .hrb-t');if(!H&&CUR=='set'&&SETM&&setMob()){let f=[...v.children].find(x=>!x.classList.contains('bc')&&!x.classList.contains('smh-nav'));if(f&&f.id=='bk_wrap')f=f.firstElementChild;const h=f&&f.classList.contains('card')?f.firstElementChild:null;if(h&&h.tagName=='H3')H=h}if(!H)return;const b='<a class="bcb bcb2" onclick="navBack()" aria-label="ย้อนกลับ">'+ic('chev')+'</a>';H.insertAdjacentHTML('afterbegin',b);H.classList.add('hb2');v.classList.add('bcin')}
+function bcInline(v){v.classList.remove('bcin');let H=v.querySelector(':scope>.pt, :scope>.svh>.svh-t, :scope>.svh2>.svh-t, :scope>.hrb .hrb-t, :scope>.wsT');if(!H&&CUR=='set'&&SETM&&setMob()){let f=[...v.children].find(x=>!x.classList.contains('bc')&&!x.classList.contains('smh-nav'));if(f&&f.id=='bk_wrap')f=f.firstElementChild;const h=f&&f.classList.contains('card')?f.firstElementChild:null;if(h&&h.tagName=='H3')H=h}if(!H){const d=v.querySelector(':scope>.dvpg>.card>h3:first-child');if(d)H=d}if(!H)return;const b='<a class="bcb bcb2" onclick="navBack()" aria-label="ย้อนกลับ">'+ic('chev')+'</a>';H.insertAdjacentHTML('afterbegin',b);H.classList.add('hb2');v.classList.add('bcin')}
 function go(r){let[k]=r.split(':');let _sq=0;if(me&&me.role=='founder'&&({staff:8,usr:9,bak:10,acct:11})[k]){_sq=({staff:8,usr:9,bak:10,acct:11})[k];r=k='set'}if(me&&me.role!='founder'&&!routeOk(k))return go('home');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
 const _pv=CUR;if(!window.__nb&&_pv&&_pv!==r){NAVH.push(_pv);if(NAVH.length>60)NAVH.shift()}CUR=r;if(r=='set'&&_pv!='set')SETM=0;if(_sq){SETTAB=_sq;SETM=_sq;PMD=null;PED=null}render();if(_pv!==r)pgAnim();
 document.querySelectorAll('.nav a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==((k=='stud'||k=='bd'||k=='saving'||k=='att'||k=='hw')?k:(k=='tt'?'tt:'+((['entry','check'].includes(r.split(':')[1]))?r.split(':')[1]:((r.split(':')[1]||'')=='class'||(r.split(':')[1]||'').startsWith('c-'))?'class':'teach'):r))));
@@ -4402,7 +4421,7 @@ return rows.map(st=>{const tx=svTxOf(st.id),last=tx[tx.length-1],bal=tx.reduce((
 return `<div class="svm-r${svSel==st.id?' on':''}" data-svpick="${st.id}"><span class="svm-av">${st.im?`<img src="${st.im}" alt="">`:ic('user')}</span><div class="svm-n"><b>${esc((st.tt||'')+st.fn+' '+st.ln)}</b><small>${last?(dep?'ฝากเงิน':'ถอนเงิน')+' · '+svDt(last.createdAt):'ยังไม่มีรายการ'}</small></div><div class="svm-a"><b>฿ ${svFm(bal)}</b><small class="${last?(dep?'up':'dn'):''}">${last?(dep?'+':'−')+svFm(last.amount):'-'}</small></div></div>`}).join('')}
 function svMobPage(s,canEdit,roster){const hs=HR[s]||[],tp=PP.find(p=>p.id==hs[0])||(me&&PP.find(p=>p.id==me.sid)),tn=tp?dn(tp):(me?me.n:''),more=hs.length>1?' +'+(hs.length-1):'';
 const tot=roster.reduce((a,x)=>a+studentAgg(x.id).bal,0);
-return `<div class="svm"><div class="svm-top"><span class="svm-tp">${tp&&tp.im?`<img src="${tp.im}" alt="">`:ic('user')}</span><div class="svm-tn"><small>${svGreet()}</small><b>${esc(tn)}${more}</b></div><select class="svm-yr" onchange="changeSvYear2(this.value)">${[SVY-1,SVY,SVY+1].map(y=>`<option value="${y}" ${y==SVY?'selected':''}>${y}</option>`).join('')}</select></div>
+return `<div class="svm"><div class="svm-top"><a class="bcb svm-bk" onclick="navBack()" aria-label="ย้อนกลับ">${ic('chev')}</a><span class="svm-tp">${tp&&tp.im?`<img src="${tp.im}" alt="">`:ic('user')}</span><div class="svm-tn"><small>${svGreet()}</small><b>${esc(tn)}${more}</b></div><select class="svm-yr" onchange="changeSvYear2(this.value)">${[SVY-1,SVY,SVY+1].map(y=>`<option value="${y}" ${y==SVY?'selected':''}>${y}</option>`).join('')}</select></div>
 <div class="svm-cw"><div class="svm-card" style="background-image:url(${SV_CARD})"><div class="svm-bal"><small>ยอดเงินออมรวมทั้งชั้น</small><b>฿ ${svFm(tot)}</b></div></div>
 </div>
 <div class="svm-list" id="sv_table_wrap">${svRowsM(roster)}</div></div>`
