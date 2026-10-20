@@ -1366,6 +1366,11 @@ body.top-off .svm{height:calc(100dvh - 172px)}}
 .smh-nav{display:none!important}
 @media(max-width:560px){.hb2:is(h3){display:flex;align-items:center;justify-content:flex-start;text-align:left;gap:12px}.hb2:is(h3)>.bcb2{width:34px;height:34px}}
 @media(max-width:1200px){.bcno>.bc{display:none!important}}
+@media(max-width:1200px){.bcno .svh-t>.svh-i,.bcno .hrb-t>.hrb-i{display:none}}
+@media(max-width:1200px){.sps{height:calc(100dvh - 40px);min-height:300px}main:has(.sps){padding-bottom:0!important}#view:has(.sps){padding-bottom:0!important}}
+@media(max-width:1200px) and (orientation:landscape){.sps{height:calc(100dvh - 40px)}}
+@media(max-width:1200px){body:has(.sps) footer{display:none!important}}
+@media(max-width:1200px){.main:has(.sps){padding-bottom:0!important}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -3836,10 +3841,10 @@ case 'cal':return[['cal','ปฏิทินดำเนินการ']];
 case 'ann':return[['ann','ประกาศ']];
 default:{const m=M(k);return m?[[k,m]]:[]}}}
 const NAVH=[];function navSec(r){const b=String(r||'').split(':')[0];try{return menuOfRoute(b)||b}catch(e){return b}}
-function navBack(){if(String(CUR).split(':')[0]=='set'&&SETM&&setMob())return setBack();let p;while((p=NAVH.pop())&&p===CUR);if(p&&navSec(p)!==navSec(CUR)){NAVH.length=0;p='home'}window.__nb=1;try{go(p||'home')}finally{window.__nb=0}}
-function bcRender(k,s){const v=$('#view');if(v){v.classList.remove('bcin','bcno');if(k=='set'&&(!setMob()||!SETM))v.classList.add('bcno')}if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;
+function navBack(){if(String(CUR).split(':')[0]=='set'&&SETM&&setMob())return setBack();const rt=String(CUR).split(':')[0];if(rt==String(CUR))return;let p;while((p=NAVH.pop())&&p===CUR);if(!p||navSec(p)!==navSec(CUR)){p=rt}window.__nb=1;try{go(p||'home')}finally{window.__nb=0}}
+function bcRender(k,s){const v=$('#view');if(v){v.classList.remove('bcin','bcno');if(k=='set'?(!setMob()||!SETM):!s)v.classList.add('bcno')}if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;
 const h=`<nav class="bc" aria-label="เส้นทางนำทาง"><a class="bcb" onclick="navBack()" aria-label="ย้อนกลับ">${ic('chev')}</a><span class="bcm"><a data-r="home" class="bc-h" title="หน้าหลัก">${ic('home')}</a>${t.map((c,i)=>`<i class="bc-s">›</i>${i==t.length-1?`<b>${esc(c[1])}</b>`:`<a data-r="${c[0]}">${esc(c[1])}</a>`}`).join('')}</span></nav>`;
-v.insertAdjacentHTML('afterbegin',h);try{bcInline(v)}catch(e){}}
+v.insertAdjacentHTML('afterbegin',h);try{if(!v.classList.contains('bcno'))bcInline(v)}catch(e){}}
 function bcInline(v){v.classList.remove('bcin');let H=v.querySelector(':scope>.pt, :scope>.svh>.svh-t, :scope>.svh2>.svh-t, :scope>.hrb .hrb-t');if(!H&&CUR=='set'&&SETM&&setMob()){let f=[...v.children].find(x=>!x.classList.contains('bc')&&!x.classList.contains('smh-nav'));if(f&&f.id=='bk_wrap')f=f.firstElementChild;const h=f&&f.classList.contains('card')?f.firstElementChild:null;if(h&&h.tagName=='H3')H=h}if(!H)return;const b='<a class="bcb bcb2" onclick="navBack()" aria-label="ย้อนกลับ">'+ic('chev')+'</a>';H.insertAdjacentHTML('afterbegin',b);H.classList.add('hb2');v.classList.add('bcin')}
 function go(r){let[k]=r.split(':');let _sq=0;if(me&&me.role=='founder'&&({staff:8,usr:9,bak:10,acct:11})[k]){_sq=({staff:8,usr:9,bak:10,acct:11})[k];r=k='set'}if(me&&me.role!='founder'&&!routeOk(k))return go('home');if(k!='cal')CALPJ=null;if((k=='usr'||k=='staff'||k=='bak')&&me.role!='founder')return go('home');
 const _pv=CUR;if(!window.__nb&&_pv&&_pv!==r){NAVH.push(_pv);if(NAVH.length>60)NAVH.shift()}CUR=r;if(r=='set'&&_pv!='set')SETM=0;if(_sq){SETTAB=_sq;SETM=_sq;PMD=null;PED=null}render();if(_pv!==r)pgAnim();
