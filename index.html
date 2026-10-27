@@ -1390,6 +1390,8 @@ box-shadow:inset 0 1.5px 1px rgba(255,255,255,.95),inset 0 -8px 12px rgba(150,13
 @media(max-width:1200px){.hb2.wsT>.wsT-i{display:none}.hb2.wsT{gap:12px;flex-wrap:nowrap}.hb2.wsT>div{min-width:0;flex:1}.hb2.wsT .wsT-b{flex:none}
 .dvd>h3.hb2{display:flex;align-items:center;justify-content:flex-start!important;text-align:left;gap:12px}
 #view:has(.dvpg){padding-top:max(8px,env(safe-area-inset-top))!important}}
+.spd-b{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;margin-right:10px;vertical-align:middle;font-size:1.3rem;line-height:1;color:#4B2FA6;cursor:pointer;background:linear-gradient(145deg,rgba(255,255,255,.7),rgba(255,255,255,.25));border:1px solid rgba(255,255,255,.85);box-shadow:inset 0 1.5px 1px rgba(255,255,255,.95),inset 0 -6px 10px rgba(150,130,255,.2),0 8px 16px -8px rgba(70,50,170,.45)}
+@media(max-width:560px){.spd-b{display:none}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -3860,7 +3862,7 @@ case 'cal':return[['cal','ปฏิทินดำเนินการ']];
 case 'ann':return[['ann','ประกาศ']];
 default:{const m=M(k);return m?[[k,m]]:[]}}}
 const NAVH=[];function navSec(r){const b=String(r||'').split(':')[0];try{return menuOfRoute(b)||b}catch(e){return b}}
-function navBack(){if(CUR=='cal'&&CALPJ&&CALBK){window.__nb=1;try{pjDayDone()}finally{window.__nb=0}return}if(String(CUR).split(':')[0]=='set'&&SETM&&setMob())return setBack();const rt=String(CUR).split(':')[0],mn=menuOfRoute(rt)||rt;if(String(CUR)==mn){if(!MENU_KEYS().includes(mn)){window.__nb=1;try{go('home')}finally{window.__nb=0}}return}let p;while((p=NAVH.pop())&&p===CUR);if(!p||navSec(p)!==navSec(CUR)){p=String(CUR).includes(':')?rt:mn}window.__nb=1;try{go(p||'home')}finally{window.__nb=0}}
+function navBack(){if(typeof SPV!='undefined'&&SPV&&SETTAB==12&&String(CUR).split(':')[0]=='set'&&(!setMob()||SETM==12)){spBack();return}if(CUR=='cal'&&CALPJ&&CALBK){window.__nb=1;try{pjDayDone()}finally{window.__nb=0}return}if(String(CUR).split(':')[0]=='set'&&SETM&&setMob())return setBack();const rt=String(CUR).split(':')[0],mn=menuOfRoute(rt)||rt;if(String(CUR)==mn){if(!MENU_KEYS().includes(mn)){window.__nb=1;try{go('home')}finally{window.__nb=0}}return}let p;while((p=NAVH.pop())&&p===CUR);if(!p||navSec(p)!==navSec(CUR)){p=String(CUR).includes(':')?rt:mn}window.__nb=1;try{go(p||'home')}finally{window.__nb=0}}
 function bcRender(k,s){const v=$('#view');if(v){v.classList.remove('bcin','bcno');if(k=='set'&&(!setMob()||!SETM))v.classList.add('bcno')}if(!v||k=='home')return;let t=[];try{t=bcTrail(k,s)}catch(e){}if(!t.length)return;if(k!='set'&&!s&&MENU_KEYS().includes(k))v.classList.add('bcno');
 const h=`<nav class="bc" aria-label="เส้นทางนำทาง"><a class="bcb" onclick="navBack()" aria-label="ย้อนกลับ">${ic('chev')}</a><span class="bcm"><a data-r="home" class="bc-h" title="หน้าหลัก">${ic('home')}</a>${t.map((c,i)=>`<i class="bc-s">›</i>${i==t.length-1?`<b>${esc(c[1])}</b>`:`<a data-r="${c[0]}">${esc(c[1])}</a>`}`).join('')}</span></nav>`;
 v.insertAdjacentHTML('afterbegin',h);try{if(!v.classList.contains('bcno'))bcInline(v)}catch(e){}}
@@ -5672,7 +5674,7 @@ const p=o.apply(this,a);if(c&&me&&AUD_COLS[c]&&c!='cleanup'&&c!='restore')Promis
 const SETTABS=[[1,'ปีการศึกษา / ภาคเรียน'],[2,'ข้อมูลโรงเรียน'],[3,'การสมัครสมาชิก'],[4,'เมนูที่ครูเห็น'],[5,'สิทธิ์แก้ไขข้อมูล'],[6,'ข้อมูลและพื้นที่'],[7,'ประวัติการแก้ไข']];
 SETTABS.push([8,'ทะเบียนบุคลากร'],[9,'ผู้ใช้งาน'],[10,'สำรองข้อมูล'],[11,'บัญชีของฉัน']);
 SETTABS.push([12,'สิทธิ์การใช้งาน']);
-function setTab(n){SETTAB=n;PMD=null;PED=null;render()}
+function setTab(n){SETTAB=n;if(n!=12)SPV='';PMD=null;PED=null;render()}
 (function(){const r=render;render=function(){const l=document.querySelector('.sps-l'),lt=l?l.scrollTop:0,rr=document.querySelector('.sps-r'),rt=rr?rr.scrollTop:0,tb=window.__spTab;const x=r.apply(this,arguments);try{const l2=document.querySelector('.sps-l');if(l2&&l)l2.scrollTop=lt;const r2=document.querySelector('.sps-r');if(r2&&rr&&tb===SETTAB)r2.scrollTop=rt;window.__spTab=SETTAB}catch(e){}return x}})();
 const divNarrow=()=>{try{return matchMedia('(max-width:1200px)').matches}catch(e){return false}};try{matchMedia('(max-width:1200px)').addEventListener('change',()=>{if(String(CUR).split(':')[0]=='div')render()})}catch(e){}
 let SETM=0;
@@ -5710,7 +5712,7 @@ try{tbBind()}catch(_){}
 document.addEventListener('click',e=>{if(sup&&capOf(e.target)){e.preventDefault();e.stopPropagation()}},true);
 document.addEventListener('dragstart',e=>{if(capOf(e.target))e.preventDefault()},true);
 })();
-function setBack(){SETM=0;PMD=null;PED=null;render();scrollTo(0,0)}
+function setBack(){SETM=0;SPV='';PMD=null;PED=null;render();scrollTo(0,0)}
 function setOpen(n){SETM=n;setTab(n);scrollTo(0,0)}
 const SET_GR=[['การเรียนการสอนและโรงเรียน',[[1,'cal','#5B8DEF'],[2,'bld','#34C38F']]],['ผู้ใช้งานและความปลอดภัย',[[3,'ud','#F5A524'],[4,'eye','#8B6FE0'],[5,'edit','#F472B6']]],['ข้อมูลและระบบ',[[6,'db','#14B8D6'],[7,'clip','#7C8CF8']]],['ระบบกลาง',[[8,'users','#0EA5A4'],[9,'user','#EF8354'],[12,'scale','#E8590C'],[10,'cloudup','#5B9BD5']]]];
 function setHubHtml(){const nm=($('#un')||{}).textContent||me.n,ro=($('#ur')||{}).textContent||'',av=($('#au')||{}).innerHTML||'',tc=($('#term_chip')||{}).textContent||'';
@@ -5767,21 +5769,24 @@ function saveMenus(){const D=pmD(),menus={};Object.keys(D).forEach(k=>{if(D[k].m
 db.collection('settings').doc('perm').set({menus,updatedAt:new Date().toISOString(),by:me.n||''},{mergeFields:['menus','updatedAt','by']}).then(()=>{PERM={...PERM,menus};mkNav();sxMsg('pm_msg','บันทึกแล้ว',1)}).catch(e=>sxMsg('pm_msg','บันทึกไม่สำเร็จ: '+e.message))}
 
 /* 12 สิทธิ์การใช้งาน (ผู้ก่อตั้งกำหนดได้ทุกอย่างรายบุคคล) */
-let SPU='';
+let SPU='',SPV='';
+function spOpen(id){SPU=id;SPV=id;render();try{scrollTo(0,0);document.querySelectorAll('.sps-r').forEach(e=>e.scrollTop=0)}catch(e){}}
+function spBack(){SPV='';render();try{document.querySelectorAll('.sps-r').forEach(e=>e.scrollTop=0)}catch(e){}}
 const spKeys=()=>Object.keys(CT).flatMap(t=>LV.slice(0,CT[t][1]).map((n,i)=>t+i));
 const spMenuOn=(k,uid)=>{const c=(PERM.menus||{})[k];if(!c||!c.mode||c.mode=='all')return true;if(c.mode=='founder')return false;return(c.uids||[]).includes(uid)};
 const spEditOn=(k,ty,uid)=>{const D={restrict:PERM.restrict||{},editors:PERM.editors||{}};const inE=(D.editors[k]||[]).includes(uid);return ty=='add'?inE:(D.restrict[k]!==true||inE)};
 const spUser=()=>usrOk().find(u=>u._id==SPU)||null;
 function spBadges(u){const b=[],hr=spKeys().filter(k=>(HR[k]||[]).includes(u.sid)).map(k=>classLabel(k));if(hr.length)b.push('ครูประจำชั้น '+hr.join(', '));if(u.sv)b.push('บันทึกออมเงิน');if(u.adm===true||PP.some(p=>p.id==u.sid&&/ธุรการ/.test(p.po||'')))b.push('งานธุรการ');const wk=(PP.find(p=>p.id==u.sid)||{}).wk||u.wk||[];if(wk.length)b.push('ฝ่าย: '+wk.map(k=>(DIV.find(d=>d[0]==k)||[])[1]||k).join(', '));
 const hid=MENU.filter(m=>m[0]!='home'&&!spMenuOn(m[0],u._id)).length;if(hid)b.push('ซ่อน '+hid+' เมนู');const nE=PE_CATS.filter(([k,,ty])=>ty=='rst'&&!spEditOn(k,ty,u._id)).length;if(nE)b.push('แก้ไขไม่ได้ '+nE+' หมวด');return b}
-function setPermHtml(){const us=usrOk(),all=U.filter(u=>u.role!='founder'&&u.st!='pending').sort((a,b)=>String(a.n).localeCompare(String(b.n),'th'));if(!SPU||!all.some(u=>u._id==SPU))SPU=all[0]?all[0]._id:'';
+function setPermHtml(){const us=usrOk(),all=U.filter(u=>u.role!='founder'&&u.st!='pending').sort((a,b)=>String(a.n).localeCompare(String(b.n),'th'));if(SPV&&!all.some(u=>u._id==SPV))SPV='';SPU=SPV;
 const u=all.find(x=>x._id==SPU);
-const ov=all.map(x=>{const bd=x.st=='approved'?spBadges(x):['ระงับการเข้าใช้งาน'];return `<div class="rw" style="cursor:pointer;${x._id==SPU?'background:#F1EEFF;border-radius:12px;':''}" onclick="SPU='${x._id}';render()"><span><b>${esc((x.tt||'')+x.n)}</b><small>${esc(x.u||'')}${bd.length?' · '+esc(bd.join(' · ')):' · สิทธิ์เริ่มต้น (ไม่มีสิทธิ์พิเศษ)'}</small></span><span>${x._id==SPU?'<em>กำลังแก้ไข</em>':'<button class="btn o">เลือก</button>'}</span></div>`}).join('');
-let h=P('สมาชิกทั้งหมด ('+all.length+') — เลือกคนที่จะกำหนดสิทธิ์',`<p style="margin:0 0 10px;color:var(--mute);font-size:.84rem">แสดงสิทธิ์พิเศษที่แต่ละคนมีอยู่ ผู้ก่อตั้งมีสิทธิ์ทุกอย่างเสมอและไม่แสดงในรายการนี้ การเปลี่ยนแต่ละข้อบันทึกทันที</p>${ov||E('ยังไม่มีสมาชิก',70)}`);
+const ov=all.map(x=>{const bd=x.st=='approved'?spBadges(x):['ระงับการเข้าใช้งาน'];return `<div class="rw" style="cursor:pointer" onclick="spOpen('${x._id}')"><span><b>${esc((x.tt||'')+x.n)}</b><small>${esc(x.u||'')}${bd.length?' · '+esc(bd.join(' · ')):' · สิทธิ์เริ่มต้น (ไม่มีสิทธิ์พิเศษ)'}</small></span><span style="color:var(--mute);font-size:1.3rem">›</span></div>`}).join('');
+let h=P('สมาชิกทั้งหมด ('+all.length+') — กดชื่อเพื่อกำหนดสิทธิ์',`<p style="margin:0 0 10px;color:var(--mute);font-size:.84rem">แสดงสิทธิ์พิเศษที่แต่ละคนมีอยู่ ผู้ก่อตั้งมีสิทธิ์ทุกอย่างเสมอและไม่แสดงในรายการนี้ การเปลี่ยนแต่ละข้อบันทึกทันที</p>${ov||E('ยังไม่มีสมาชิก',70)}`);
 if(!u)return h;
+h='';
 const sw=(kind,key,on,lb,ds,dis)=>`<div class="rw"><span><b>${lb}</b>${ds?`<small>${ds}</small>`:''}</span><label class="sx-sw" style="margin:0"><input type="checkbox" class="tgl" ${on?'checked':''} ${dis?'disabled':''} onchange="spSet('${kind}','${key}',this.checked)"></label></div>`;
 const nosid=!u.sid||!PP.some(p=>p.id==u.sid);
-h+=P('การเข้าใช้งาน: '+esc((u.tt||'')+u.n),sw('st','x',u.st=='approved','อนุญาตให้เข้าใช้ระบบ','ปิด = ระงับบัญชี (เข้าได้แค่หน้ารอการอนุมัติ ข้อมูลที่เคยบันทึกยังอยู่)',false));
+h+=P('<span style="display:inline-flex;align-items:center;gap:0;text-align:left"><a class="spd-b" onclick="spBack()" aria-label="ย้อนกลับ">‹</a>'+esc((u.tt||'')+u.n)+'</span>',`<p style="margin:0 0 6px;color:var(--mute);font-size:.84rem">ชื่อผู้ใช้ ${esc(u.u||'')}${(PP.find(p=>p.id==u.sid)||{}).po?' · '+esc((PP.find(p=>p.id==u.sid)||{}).po):''}</p>`+sw('st','x',u.st=='approved','อนุญาตให้เข้าใช้ระบบ','ปิด = ระงับบัญชี (เข้าได้แค่หน้ารอการอนุมัติ ข้อมูลที่เคยบันทึกยังอยู่)',false));
 h+=P('เมนูที่เห็น',`<p style="margin:0 0 8px;color:var(--mute);font-size:.8rem">ถ้าปิดเมนูที่ตั้งเป็น "ทุกคน" ระบบจะเปลี่ยนเมนูนั้นเป็น "เฉพาะที่เลือก" และให้คนอื่นยังเห็นอยู่ แต่สมาชิกใหม่ที่เข้ามาภายหลังจะไม่เห็นจนกว่าจะเปิดให้</p>`+MENU.filter(m=>m[0]!='home').map(m=>sw('menu',m[0],spMenuOn(m[0],u._id),esc(m[1]),'',false)).join(''));
 h+=P('แก้ไขข้อมูลแต่ละหมวด',PE_CATS.map(([k,lb,ty,ds])=>sw('edit',k,spEditOn(k,ty,u._id),esc(lb),esc(ds),false)).join(''));
 h+=P('ออมเงิน',sw('sv','x',!!u.sv,'อนุญาตให้บันทึกฝาก/ถอนออมเงิน','ต้องเป็นครูประจำชั้นของชั้นนั้นด้วย จึงจะบันทึกของชั้นตัวเองได้',false));
