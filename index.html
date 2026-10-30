@@ -1040,7 +1040,7 @@
         </div>
         <input type="file" id="import-file" accept=".json,application/json" style="display:none;">
       </div>
-    <p class="hint" style="margin-top:14px; text-align:center;">เวอร์ชันแอพ: ui-13</p>
+    <p class="hint" style="margin-top:14px; text-align:center;">เวอร์ชันแอพ: ui-14</p>
     </section>
 
   </main>
@@ -2730,6 +2730,27 @@
     window.addEventListener("appinstalled", function(){ installBtn.style.display = "none"; deferredInstallPrompt = null; toast("ติดตั้งแอพเรียบร้อยแล้ว"); });
     installBtn.addEventListener("click", function(){ if(deferredInstallPrompt){ var p = deferredInstallPrompt; deferredInstallPrompt = null; p.prompt(); return; } showInstallHelp(); });
   }
+  // ---------- auto-update check (installed apps stay open in memory for days) ----------
+  var APP_VERSION = "ui-14";
+  function checkForNewVersion(){
+    if(!/^https?:$/.test(location.protocol)) return;
+    fetch(location.pathname + "?v=" + Date.now(), {cache:"no-store"}).then(function(r){ return r.ok ? r.text() : ""; }).then(function(t){
+      var m = /เวอร์ชันแอพ: (ui-\d+)/.exec(t || "");
+      if(!m || m[1] === APP_VERSION || document.getElementById("update-banner")) return;
+      var bar = document.createElement("div");
+      bar.id = "update-banner";
+      bar.style.cssText = "position:fixed; left:12px; right:12px; top:calc(10px + env(safe-area-inset-top, 0px)); z-index:11000; background:#C25A12; color:#fff; border-radius:14px; padding:12px 14px; display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; box-shadow:0 8px 24px rgba(0,0,0,.3);";
+      bar.innerHTML = '<span style="flex:1;">✨ มีเวอร์ชันใหม่ (' + m[1] + ')</span><button type="button" style="border:none; background:#fff; color:#C25A12; font-weight:700; border-radius:10px; padding:8px 14px; font-family:inherit; font-size:14px;">อัปเดตเลย</button>';
+      bar.querySelector("button").addEventListener("click", function(){
+        var go = function(){ location.reload(); };
+        if("caches" in window){ caches.keys().then(function(ks){ return Promise.all(ks.map(function(k){ return caches.delete(k); })); }).then(go, go); } else { go(); }
+      });
+      document.body.appendChild(bar);
+    }).catch(function(){});
+  }
+  window.addEventListener("load", function(){ setTimeout(checkForNewVersion, 2500); });
+  document.addEventListener("visibilitychange", function(){ if(document.visibilityState === "visible") checkForNewVersion(); });
+
   if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
     window.addEventListener("load", function(){ navigator.serviceWorker.register("./sw.js").catch(function(){}); });
   }

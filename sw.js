@@ -1,23 +1,71 @@
-/* Banphayoe service worker
-   - ไฟล์ของเว็บเอง: โหลดจากเน็ตก่อนเสมอ (อัปเดต index.html แล้วเห็นของใหม่ทันที) ถ้าเน็ตหลุดค่อยใช้ของที่เก็บไว้
-   - Firebase / Google / ฟอนต์ ฯลฯ (ข้ามโดเมน): ไม่แตะต้อง ปล่อยผ่านตามปกติ */
-const CACHE = 'banphayoe-shell-v2';
-const SHELL = ['./', 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL).catch(() => {})).then(() => self.skipWaiting()));
+// เปลี่ยนเลขเวอร์ชันนี้ทุกครั้งที่อัปเดต index.html เพื่อให้เครื่องผู้ใช้โหลดของใหม่
+const VERSION = "dm-v5";
+const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png"];
+const CDN = [
+  "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css",
+  "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"
+];
+
+self.addEventListener("install", (e) => {
+  e.waitUntil((async () => {
+    const c = await caches.open(VERSION);
+    await c.addAll(SHELL);
+    await Promise.all(CDN.map((u) => c.add(new Request(u, { mode: "no-cors" })).catch(() => {})));
+    await self.skipWaiting();
+  })());
 });
-self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+
+self.addEventListener("activate", (e) => {
+  e.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k)));
+    await self.clients.claim();
+  })());
 });
-self.addEventListener('fetch', e => {
-  const r = e.request;
-  if (r.method !== 'GET') return;
-  const u = new URL(r.url);
-  if (u.origin !== location.origin) return;
-  e.respondWith(
-    fetch(r, { cache: 'no-cache' }).then(res => {
-      if (res && res.ok) { const cp = res.clone(); caches.open(CACHE).then(c => c.put(r, cp)).catch(() => {}); }
+
+self.addEventListener("fetch", (e) => {
+  const req = e.request;
+  if (req.method !== "GET") return;
+  const url = new URL(req.url);
+
+  // แผนที่/ค้นหาที่อยู่/Firebase: ไม่ยุ่ง ปล่อยให้เบราว์เซอร์ทำเอง
+  if (url.hostname.endsWith("tile.openstreetmap.org") || url.hostname.includes("nominatim")) return;
+  if (url.hostname.endsWith("googleapis.com") || url.hostname.endsWith("firebaseio.com") || url.hostname.endsWith("firebaseapp.com")) return;
+
+  // ไฟล์ตั้งค่า Firebase: เน็ตก่อนเสมอ เพื่อให้แก้ค่าแล้วมีผลทันที
+  if (url.origin === location.origin && url.pathname.endsWith("firebase-config.js")) {
+    e.respondWith((async () => {
+      try { return await fetch(req); } catch (_) { return (await caches.match(req)) || Response.error(); }
+    })());
+    return;
+  }
+
+  // หน้าเว็บ: เน็ตก่อน ถ้าไม่มีเน็ตใช้ของที่เก็บไว้
+  if (req.mode === "navigate") {
+    e.respondWith((async () => {
+      try {
+        const fresh = await fetch(req, { cache: "no-cache" });
+        const c = await caches.open(VERSION);
+        c.put("./index.html", fresh.clone());
+        return fresh;
+      } catch (_) {
+        return (await caches.match("./index.html")) || (await caches.match("./"));
+      }
+    })());
+    return;
+  }
+
+  // ไฟล์อื่น (ไลบรารี, ฟอนต์, ไอคอน): ใช้ที่เก็บไว้ก่อน แล้วอัปเดตเงียบๆ
+  e.respondWith((async () => {
+    const cached = await caches.match(req);
+    const net = fetch(req).then(async (res) => {
+      if (res && (res.ok || res.type === "opaque")) {
+        const c = await caches.open(VERSION);
+        c.put(req, res.clone());
+      }
       return res;
-    }).catch(() => caches.match(r).then(m => m || (r.mode === 'navigate' ? caches.match('index.html') : undefined)))
-  );
+    }).catch(() => cached);
+    return cached || net;
+  })());
 });
