@@ -1392,6 +1392,9 @@ box-shadow:inset 0 1.5px 1px rgba(255,255,255,.95),inset 0 -8px 12px rgba(150,13
 #view:has(.dvpg){padding-top:max(8px,env(safe-area-inset-top))!important}}
 .spd-b{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;margin-right:10px;vertical-align:middle;font-size:1.3rem;line-height:1;color:#4B2FA6;cursor:pointer;background:linear-gradient(145deg,rgba(255,255,255,.7),rgba(255,255,255,.25));border:1px solid rgba(255,255,255,.85);box-shadow:inset 0 1.5px 1px rgba(255,255,255,.95),inset 0 -6px 10px rgba(150,130,255,.2),0 8px 16px -8px rgba(70,50,170,.45)}
 @media(max-width:560px){.spd-b{display:none}}
+#updBar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(92px + env(safe-area-inset-bottom));z-index:99999;display:flex;align-items:center;gap:12px;padding:8px 8px 8px 18px;border-radius:999px;background:rgba(40,30,90,.92);color:#fff;font-size:.9rem;box-shadow:0 12px 30px -8px rgba(40,30,90,.6);backdrop-filter:blur(10px)}
+#updBar button{border:0;border-radius:999px;padding:8px 16px;background:#fff;color:#4B2FA6;font:inherit;font-weight:600;cursor:pointer}
+@media(min-width:1025px){#updBar{bottom:24px}}
 </style></head><body>
 <div id="auth" class="auth"></div>
 <div class="app">
@@ -1426,6 +1429,18 @@ window.addEventListener('appinstalled',()=>{PWA_EV=null;if(typeof CUR!=='undefin
 function pwaCard(){let b;if(pwaStd())b='<p class="pwa-ok">✓ ติดตั้งเป็นแอปบนเครื่องนี้แล้ว</p>';else if(PWA_EV)b='<p class="pwa-t">เพิ่มไอคอนโรงเรียนไว้บนหน้าจอ เปิดใช้งานเต็มจอเหมือนแอป</p><button class="btn" type="button" onclick="pwaInstall()">ติดตั้งแอป</button>';else if(pwaIos())b='<p class="pwa-t">บน iPhone / iPad: เปิดหน้านี้ด้วย Safari แล้วกดปุ่มแชร์ (สี่เหลี่ยมมีลูกศรขึ้น) จากนั้นเลือก <b>เพิ่มไปยังหน้าจอโฮม</b></p>';else b='<p class="pwa-t">บน Android: เปิดด้วย Chrome แล้วกดเมนูสามจุดมุมขวาบน เลือก <b>ติดตั้งแอป</b> หรือ <b>เพิ่มไปยังหน้าจอหลัก</b></p>';return `<div class="card pwa"><h3 style="margin:0 0 6px">ติดตั้งเป็นแอปบนมือถือ</h3>${b}</div>`}
 async function pwaInstall(){if(!PWA_EV)return;try{PWA_EV.prompt();await PWA_EV.userChoice}catch(e){}PWA_EV=null;if(typeof renderSoon==='function')renderSoon()}
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
+/* ตรวจเวอร์ชันใหม่อัตโนมัติ: เทียบ index.html บนเซิร์ฟเวอร์กับที่โหลดไว้ตอนเปิดแอพ แล้วขึ้นแถบให้กดอัปเดต */
+(function(){if(!/^https?:$/.test(location.protocol))return;
+let base=null,busy=0,shown=0;
+const hs=t=>{let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return t.length+':'+h};
+const get=async()=>{const r=await fetch('index.html?_='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;return hs(await r.text())};
+function bar(){if(shown)return;shown=1;const d=document.createElement('div');d.id='updBar';d.innerHTML='<span>มีเวอร์ชันใหม่</span><button type="button">อัปเดตเลย</button>';d.querySelector('button').onclick=async()=>{try{const rg=await navigator.serviceWorker.getRegistration();if(rg)await rg.update()}catch(e){}location.reload()};document.body.appendChild(d)}
+async function chk(){if(busy||shown)return;busy=1;try{const h=await get();if(base===null)base=h;else if(h!==base)bar()}catch(e){}busy=0}
+chk();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});
+addEventListener('focus',chk);addEventListener('online',chk);
+setInterval(()=>{if(!document.hidden)chk()},300000);
+})();
 
 /* toggle: ให้สวิตช์เลื่อนจนจบก่อน แล้วค่อยรันงานหนักตามหลัง */
 document.addEventListener('change',e=>{const t=e.target;if(!t||!t.classList||!t.classList.contains('tgl')||t._rp)return;e.stopImmediatePropagation();setTimeout(()=>{t._rp=1;try{t.dispatchEvent(new Event('change',{bubbles:true}))}finally{t._rp=0}},240)},true);
