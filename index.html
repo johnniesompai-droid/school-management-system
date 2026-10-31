@@ -5795,7 +5795,7 @@ function spBadges(u){const b=[],hr=spKeys().filter(k=>(HR[k]||[]).includes(u.sid
 const hid=MENU.filter(m=>m[0]!='home'&&!spMenuOn(m[0],u._id)).length;if(hid)b.push('ซ่อน '+hid+' เมนู');const nE=PE_CATS.filter(([k,,ty])=>ty=='rst'&&!spEditOn(k,ty,u._id)).length;if(nE)b.push('แก้ไขไม่ได้ '+nE+' หมวด');return b}
 function setPermHtml(){const us=usrOk(),all=U.filter(u=>u.role!='founder'&&u.st!='pending').sort((a,b)=>String(a.n).localeCompare(String(b.n),'th'));if(SPV&&!all.some(u=>u._id==SPV))SPV='';SPU=SPV;
 const u=all.find(x=>x._id==SPU);
-const ov=all.map(x=>{const bd=x.st=='approved'?spBadges(x):['ระงับการเข้าใช้งาน'];return `<div class="rw" style="cursor:pointer" onclick="spOpen('${x._id}')"><span><b>${esc((x.tt||'')+x.n)}</b></span><span style="color:var(--mute);font-size:1.3rem">›</span></div>`}).join('');
+const ov=all.map(x=>{const bd=x.st=='approved'?spBadges(x):['ระงับการเข้าใช้งาน'];return `<div class="rw" style="cursor:pointer" onclick="spOpen('${x._id}')"><span><b>${esc((x.tt||'')+x.n)}</b><small>${esc(x.u||'')}</small></span><span style="color:var(--mute);font-size:1.3rem">›</span></div>`}).join('');
 let h=P('สมาชิกทั้งหมด ('+all.length+') — กดชื่อเพื่อกำหนดสิทธิ์',`<p style="margin:0 0 10px;color:var(--mute);font-size:.84rem">แสดงสิทธิ์พิเศษที่แต่ละคนมีอยู่ ผู้ก่อตั้งมีสิทธิ์ทุกอย่างเสมอและไม่แสดงในรายการนี้ การเปลี่ยนแต่ละข้อบันทึกทันที</p>${ov||E('ยังไม่มีสมาชิก',70)}`);
 if(!u)return h;
 h='';
